@@ -40,6 +40,25 @@ services:
       - "8081:8081"
     volumes:
       - "nexus-data:/nexus-data"
+
+  vault:
+    image: "docker.io/library/vault:1.12.1"
+    cap_add:
+      - IPC_LOCK
+    entrypoint: /mnt/init/init.sh
+    # Original command parameters are no longer relevant
+    command:
+      - "-dev"
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: "vault_development_token"
+      # Accessible at http://localhost:8200/ui
+      VAULT_LOCAL_CONFIG: '{"ui": true}'
+      VAULT_ADDR: "http://localhost:8200"
+      APPLICATION_NAME: "example"
+    ports:
+      - 8200:8200
+    volumes:
+      - "./vault/:/mnt/init"
   #mariadb:
   #  image: "docker.io/library/mariadb:10.9.4"
   #  environment:
