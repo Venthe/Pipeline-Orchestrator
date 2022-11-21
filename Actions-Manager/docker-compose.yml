@@ -41,6 +41,7 @@ services:
     volumes:
       - "nexus-data:/nexus-data"
 
+  #curl --silent --header "X-Vault-Token:vault_development_token" http://localhost:8200/v1/secret/data/example | jq '.data.data'
   vault:
     image: "docker.io/library/vault:1.12.1"
     cap_add:
