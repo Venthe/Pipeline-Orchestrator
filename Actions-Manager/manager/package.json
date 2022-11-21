@@ -1,0 +1,30 @@
+{
+  "name": "runner-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mjs",
+  "scripts": {
+    "build": "ncc build -o dist/",
+    "build:watch": "npm run build -- --watch"
+  },
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@types/cli-color": "^2.0.2",
+    "@types/got": "^9.6.12",
+    "@types/js-yaml": "^4.0.5",
+    "@types/node": "^18.11.9",
+    "@types/nunjucks": "^3.2.1",
+    "@vercel/ncc": "^0.34.0"
+  },
+  "dependencies": {
+    "cli-color": "^2.0.3",
+    "got": "^12.5.2",
+    "js-yaml": "^4.1.0",
+    "nunjucks": "^3.2.3"
+  },
+  "$COMMENT": {
+    "jsonschema": "^1.4.1"
+  }
+}

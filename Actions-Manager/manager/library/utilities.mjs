@@ -1,0 +1,1 @@
+export const print = (data) => console.log(JSON.stringify(data, undefined, 2))

@@ -1,0 +1,21 @@
+{
+  "name": "mediator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mjs",
+  "scripts": {
+    "build": "ncc build -o dist/",
+    "build:watch": "npm run build -- --watch"
+  },
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@types/got": "^9.6.12",
+    "@types/node": "^18.11.9",
+    "@vercel/ncc": "^0.34.0"
+  },
+  "dependencies": {
+    "got": "^12.5.2"
+  }
+}
