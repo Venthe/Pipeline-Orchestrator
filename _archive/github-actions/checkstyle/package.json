@@ -1,0 +1,34 @@
+{
+  "name": "checkstyle-github-action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "prepare": "npx ncc build src/index.js --out dist --minify --license ../LICENSE.md && npm run copy:action",
+    "copy:action": "copyfiles ./action.yml ./dist",
+    "all": "npm run lint && npm run prepare && npm run test"
+  },
+  "keywords": [
+    "GitHub",
+    "Actions",
+    "JavaScript"
+  ],
+  "author": "Jacek Lipiec",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/artifact": "^1.1.0",
+    "@actions/core": "^1.10.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^5.1.1",
+    "@actions/tool-cache": "^2.0.1",
+    "@octokit/rest": "^19.0.5",
+    "semver": "^7.3.8"
+  },
+  "devDependencies": {
+    "@actions/io": "^1.1.2",
+    "@vercel/ncc": "^0.34.0",
+    "eslint": "^8.26.0",
+    "copyfiles": "latest"
+  }
+}

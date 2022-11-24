@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/_Pipeline.iml" filepath="$PROJECT_DIR$/.idea/_Pipeline.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/analysis.main.iml" filepath="$PROJECT_DIR$/.idea/modules/analysis.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gerrit_mediator.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gerrit_mediator.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gerrit_mediator.test.iml" filepath="$PROJECT_DIR$/.idea/modules/gerrit_mediator.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/local_cluster_example.main.iml" filepath="$PROJECT_DIR$/.idea/modules/local_cluster_example.main.iml" />
+    </modules>
+  </component>
+</project>

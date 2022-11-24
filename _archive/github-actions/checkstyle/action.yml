@@ -1,0 +1,72 @@
+name: Checkstyle
+description: Execute Checkstyle static code analysis.
+inputs:
+  token:
+    description: >-
+      Personal access token (PAT) used to query the latest Checkstyle release
+      and the download URL for Checkstyle.
+
+      By default the automatic token for GitHub Actions is used. [Learn more
+      about automatic token
+      authentication](https://docs.github.com/en/actions/security-guides/automatic-token-authentication)
+
+      [Learn more about creating and using encrypted
+      secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
+    required: false
+    default: '${{ github.token }}'
+  version:
+    description: >-
+      Checkstyle version to use. Using "latest" automatically downloads the
+      latest version.
+
+      Available versions: <https://github.com/checkstyle/checkstyle/releases>
+
+      Note: Only Checkstyle 8.43 and later is supported due to required support
+      for [Sarif report
+      format](https://checkstyle.sourceforge.io/apidocs/com/puppycrawl/tools/checkstyle/SarifLogger.html).
+    required: false
+    default: latest
+  sourcePath:
+    description: Root directory for sources
+    required: false
+    default: .
+  rulesets:
+    description: Comma separated list of ruleset names to use
+    required: true
+  analyzeModifiedFilesOnly:
+    description: >-
+      Instead of analyze all files under "sourcePath", only the files that have
+      been touched in a pull request or push will be analyzed. This makes the
+      analysis faster and helps especially bigger projects which gradually want
+      to introduce Checkstyle. This helps in enforcing that no new code
+      violation is introduced.
+
+      Depending on the analyzed language, the results might be less accurate
+      results. At the moment, this is not a problem, as Checkstyle mostly
+      analyzes each file individually, but that might change in the future.
+
+      If the change is very big, not all files might be analyzed. Currently the
+      maximum number of modified files is 300.
+
+      Note: When using Checkstyle as a code scanner in order to create "Code
+      scanning alerts" on GitHub, all files should be analyzed in order to
+      produce a complete picture of the project. Otherwise alerts might get
+      closed too soon.
+    required: false
+    default: 'true'
+  createGitHubAnnotations:
+    description: >-
+      By default, all detected violations are added as annotations to the pull 
+      request. You can disable this by setting FALSE. This can be useful if you 
+      are using another tool for this purpose.
+    required: false
+    default: 'true'
+outputs:
+  violations:
+    description: Number of violations found
+runs:
+  using: node16
+  main: index.js
+branding:
+  icon: code
+  color: white

@@ -1,0 +1,51 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: jacek.lipiec.bc@gmail.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: Gerrit
+  version: v3.7.0-rc1-118-gc88efa760e
+
+paths:
+  # Access Right related REST endpoints
+  /access: {}
+  # Account related REST endpoints
+  /accounts: {}
+  # Change related REST endpoints
+  /changes/:
+    get:
+      parameters:
+        - in: query
+          name: project
+          schema:
+            type: array
+            style: simple
+            items:
+              type: string
+          collectionFormat: multi
+          responses:
+            '200':
+              description: |-
+                200 response
+              schema:
+                $ref: '#/components/schemas/Pet'
+          description: |
+            Lists the access rights for projects.
+            The projects for which the access rights should be
+            returned must be specified as project options.
+            The project can be specified multiple times.
+  # Config related REST endpoints
+  /config: {}
+  # Group related REST endpoints
+  /groups: {}
+  # Plugin related REST endpoints
+  /plugins: {}
+  # Project related REST endpoints
+  /projects: {}
+  # Documentation related REST endpoints
+  /Documentation: {}
+
+components:
+  schemas: {}
