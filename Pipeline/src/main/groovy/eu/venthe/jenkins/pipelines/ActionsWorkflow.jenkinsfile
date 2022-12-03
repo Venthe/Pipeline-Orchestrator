@@ -1,0 +1,230 @@
+package eu.venthe.jenkins.pipelines
+
+@groovy.lang.Grapes([
+  @Grab('com.fasterxml.jackson.core:jackson-databind:2.13.3'),
+  @Grab('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3'),
+  @Grab('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3'),
+  @Grab('org.apache.commons:commons-lang3:3.12.0')
+])
+@com.cloudbees.groovy.cps.NonCPS
+
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import org.apache.commons.lang3.exception.ExceptionUtils
+
+properties([parameters([
+  string(name: 'EXECUTION_ENVIRONMENT', defaultValue: 'docker', description: ''),
+  stashedFile(name: 'INPUT', description: '')
+])])
+
+def onKubernetes(body) {
+  if (params.EXECUTION_ENVIRONMENT == "kubernetes") {
+    body.call()
+  }
+}
+
+def onDocker(body) {
+  if (params.EXECUTION_ENVIRONMENT == "docker") {
+    body.call()
+  }
+}
+
+def globalExecutor(body) {
+  onKubernetes {
+    podTemplate {
+      node(POD_LABEL) {
+        body.call()
+      }
+    }
+  }
+  onDocker {
+    node {
+      body.call()
+    }
+  }
+}
+
+def runner(image, body) {
+  onKubernetes {
+      podTemplate(yaml: """\
+                        kind: Pod
+                        spec:
+                          containers:
+                            - name: runner
+                              image: ${image}
+                              imagePullPolicy: Always
+                              securityContext:
+                                privileged: true
+                              command:
+                                - sleep
+                              args:
+                                - 9999999""".stripIndent()) {
+      node(POD_LABEL) {
+        container("runner") {
+          body.call()
+        }
+      }
+    }
+  }
+  onDocker {
+    docker.image(image).inside("--entrypoint=") {
+      body.call()
+    }
+  }
+}
+
+def mapper = new ObjectMapper(new YAMLFactory())
+
+static Map parseYaml(input, mapper) {
+  def parsedJson = mapper.readTree(input)
+  return mapper.convertValue(parsedJson, Map.class)
+}
+
+static String provideName(name, uses) {
+  if (!name && !uses) {
+    return "Shell"
+  }
+
+  if (name && uses) {
+    return "[$uses] $name"
+  }
+
+  return name ? "$name" : "$uses"
+}
+
+// FIXME
+// def enrich(data) {
+//     def engine = new groovy.text.SimpleTemplateEngine()
+//     def tempParams = [:]
+//     tempParams.putAll(params)
+//     return engine.createTemplate(data.toString()).make(tempParams).toString()
+// }
+
+def run(it, additionalEnvironmentVariables, actionsDirectory) {
+  def uses = it['uses']
+  def run = it['run']
+
+  if (uses) {
+    def result = loadAction(uses, it, additionalEnvironmentVariables, actionsDirectory)
+    if (result) {
+      println result
+    }
+  }
+
+  if (run) {
+    sh run
+  }
+}
+
+def run2(workflowFile, jobName) {
+    sh "ls && pwd && hostname && printenv && echo ${workflowFile} && echo ${jobName}"
+    //sh 'node \${RUNNER_MANAGER_DIRECTORY}/index.mjs'
+}
+
+
+//
+// static def prepareEnvVariablesForWithEnv(Map additionalEnvironmentVariables) {
+//     return additionalEnvironmentVariables.collect { "${it.key}=${it.value}" }
+// }
+
+def handles(events, input) {
+  if (events==null) {
+    return false;
+  }
+
+  return events.collect { it.toLowerCase() }.contains(input["type"].toLowerCase())
+}
+
+// static def getStepName(job) {
+//   def stepName = provideName(job['name'], job['uses'])
+//   def stepDescription = job['description']
+//
+//   return stepDescription ? "${stepName} - ${stepDescription}" : stepName
+// }
+
+// def loadAction(name, context, additionalEnvironmentVariables, actionsDirectory) {
+//
+//   binding.variables["with"] = context["with"]
+//   binding.variables["uses"] = context["uses"]
+//   binding.variables["additionalEnvironmentVariables"] = additionalEnvironmentVariables
+//   binding.variables["params"] = params
+//   binding.variables["stepName"] = getStepName(context)
+//
+//   return load("${actionsDirectory}/${name}.groovy")
+// }
+
+def prepareWorkflow(workflowFile, mapper, input) {
+  try {
+    println "Loading workflow: ${workflowFile.toString()}"
+    def workflow = parseYaml(readFile(workflowFile.toString()), mapper)
+    if (workflow == null) {
+         throw new Exception("Workflow should not be null")
+    }
+    println workflow
+
+    def workflowName = workflow['name']  ? "${workflow['name']} - ${workflowFile.name}" : workflowFile.name
+
+    if (!handles(workflow['on'], input)) {
+      print "Event ${input['type']} not handled in ${workflow['on']}"
+      return;
+    }
+
+    def action = {
+      workflow['jobs'].each { jobName, job ->
+        runner(job['runs-on']) {
+          cleanWs()
+          dir("/runner/metadata") {
+            unstash 'INPUT'
+          }
+          stage("[${workflow['name']}/${jobName}]") {
+            echo job['steps'].toString();
+              run2(workflowFile, jobName)
+          }
+        }
+      }
+    };
+    return ["${workflowName}": action];
+  } catch (Exception e) {
+    return ["${workflowFile.toString()}": {
+      stage("${workflowFile.toString()}") {
+        error("File content:\n${readFile(workflowFile.toString())}\n\n${e.getMessage()}\n${ExceptionUtils.getStackTrace(e)}")
+      }
+    }]
+  }
+}
+
+globalExecutor {
+  def input;
+  stage("Load input") {
+    cleanWs()
+    unstash 'INPUT'
+    input = parseYaml(readFile("INPUT"), mapper)
+    sh "cat INPUT"
+  }
+  def workflows;
+  stage("Prepare workflows") {
+    println "Checking out actions"
+    checkout([$class: 'GitSCM',
+      branches: [
+        [name: "${input['patchSet']['revision']}"]
+      ],
+      extensions: [
+        [$class: 'CloneOption', shallow: true],
+        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path: '.pipeline/']]]
+      ],
+      userRemoteConfigs: [
+        [credentialsId: 'gerrit',
+          refspec: "${input['patchSet']['ref']}",
+          url: "ssh://admin@gerrit:29418/${input['change']['project']}"
+        ]
+      ]
+    ])
+    workflows = findFiles(glob: '.pipeline/workflows/*.y*ml')
+      .collect { prepareWorkflow(it, mapper, input) }
+      .findAll { it != null }
+      .collectEntries { it }
+    workflows.failFast = false;
+    println workflows
+  }
+  parallel workflows
+}
