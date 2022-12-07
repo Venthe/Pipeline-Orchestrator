@@ -1,0 +1,18 @@
+#[submodule "Services/Pipeline-Deployment"]
+#	path = Services/Pipeline-Deployment
+#	url = git@github.com:Venthe/Pipeline-Deployment.git
+[submodule "Services/Deployment"]
+	path = Services/Deployment
+	url = git@github.com:Venthe/Pipeline-Deployment.git
+[submodule "Services/Example-Service"]
+	path = Services/Example-Service
+	url = git@github.com:Venthe/Pipeline-Example-Service.git
+[submodule "Action-Runner"]
+	path = Action-Runner
+	url = git@github.com:Venthe/Pipeline-Action-Runner.git
+[submodule "Jenkins"]
+	path = Jenkins
+	url = git@github.com:Venthe/Pipeline-Jenkins.git
+[submodule "Gerrit-To-Bus-Mediator"]
+	path = Gerrit-To-Bus-Mediator
+	url = git@github.com:Venthe/Pipeline-Gerrit-To-Bus-Mediator.git
