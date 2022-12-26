@@ -2,12 +2,10 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Action-Runner" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Gerrit-To-Bus-Mediator" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Gerrit/All-Projects" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Jenkins" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Jenkins-Actions-Runner" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Services/Deployment" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Services/Example" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/_archive/PipelineArchive/tilt-avatars" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Services/Example-Service" vcs="Git" />
   </component>
 </project>

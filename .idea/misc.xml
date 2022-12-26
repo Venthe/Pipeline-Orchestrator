@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="web" url="file://$PROJECT_DIR$/_archive/analysis" />
-    <file type="web" url="file://$PROJECT_DIR$/_archive/gerrit/gerrit-pipeline-actor" />
-    <file type="web" url="file://$PROJECT_DIR$/Gerrit-To-Bus-Mediator" />
-    <file type="web" url="file://$PROJECT_DIR$/Services/Example" />
-  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/_archive/analysis/.analyzers/pmd/lib/pmd-apex-jorje-6.51.0.pom" />
-        <option value="$PROJECT_DIR$/Gerrit-To-Bus-Mediator/build/generated/pom.xml" />
+        <option value="$PROJECT_DIR$/Jenkins/Pipeline/pom.xml" />
       </list>
     </option>
   </component>
   <component name="PDMPlugin">
     <option name="skipTestSources" value="false" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="temurin-17" project-jdk-type="JavaSDK" />
 </project>
