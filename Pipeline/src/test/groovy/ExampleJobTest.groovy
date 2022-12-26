@@ -1,6 +1,4 @@
 import com.lesfurets.jenkins.unit.BasePipelineTest
-import com.lesfurets.jenkins.unit.declarative.DeclarativePipelineTest
-import eu.venthe.jenkins.pipelines.RunActions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -25,6 +23,12 @@ class ExampleJobTest extends BasePipelineTest {
             it.delegate = delegate
             helper.callClosure(it)
         })
+        helper.registerAllowedMethod('unstash', [Closure], {
+            it.delegate = delegate
+            helper.callClosure(it)
+        })
+        helper.registerAllowedMethod('stashedFile', [Closure], {
+        })
     }
 
     private String readContentOfFile(file) {
@@ -47,19 +51,18 @@ class ExampleJobTest extends BasePipelineTest {
 //        addEnvVar("JENKINS_HOME", "src/main/groovy/eu/venthe/jenkins")
 //        addEnvVar("PATH", "/usr/bin")
         addEnvVar("ACTIONS_HOME", "./src/main/groovy/eu/venthe/jenkins")
-        addParam('EVENT_NAME', 'push')
-        addParam('REF', 'false')
-        addParam('PROJECT_NAME', 'false')
+        addParam('EXECUTION_ENVIRONMENT', 'docker')
+        addParam('INPUT', '')
 
         //when
-        runScript(fromClass(RunActions))
+        runScript("ActionsWorkflow.jenkinsfile")
 
         // then
         assertJobStatusSuccess()
         printCallStack()
     }
 
-    private static fromClass(def it) { "${it.getSimpleName()}.groovy".toString() }
+    private static fromClass(def it) { "${it.getSimpleName()}.jenkinsfile".toString() }
 }
 /*
 helper.addShMock("cat `pwd`/.jenkins/workflows/example.yml", WORK, 0)

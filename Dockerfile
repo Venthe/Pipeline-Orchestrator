@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:lts-jdk11
+FROM jenkins/jenkins:2.382-jdk11
 COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
 RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
 USER root
@@ -15,8 +15,8 @@ RUN curl -fsSLO https://download.docker.com/$(uname -s | awk '{print tolower($0)
 #  $(lsb_release -cs) \
 #  stable” && \
 #  apt-get update && \
-#  apt-get -y install docker-ce-cli 
-# #containerd.io docker-ce 
+#  apt-get -y install docker-ce-cli
+# #containerd.io docker-ce
 # RUN curl -L “https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-$(uname -s)-$(uname -m)” -o /usr/local/bin/docker-compose && \
 #  chmod +x /usr/local/bin/docker-compose && \
 #  ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose

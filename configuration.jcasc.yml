@@ -16,7 +16,10 @@ jenkins:
             dockerTemplateBase:
               cpuPeriod: 0
               cpuQuota: 0
-              image: "docker.io/bibinwilson/jenkins-slave:latest"
+              image: "docker.io/venthe/jenkins-slave:latest"
+#              mounts:
+#                - "/var/jenkins_home/pipeline/ActionsWorkflow.jenkinsfile=/var/jenkins_home/pipeline/ActionsWorkflow.jenkinsfile"
+#              mountsString: "/var/jenkins_home/pipeline/ActionsWorkflow.jenkinsfile=/var/jenkins_home/pipeline/ActionsWorkflow.jenkinsfile"
             name: "default"
             pullStrategy: PULL_ALWAYS
             pullTimeout: 300
@@ -29,7 +32,7 @@ jenkins:
   markupFormatter: "plainText"
   mode: NORMAL
   myViewsTabBar: "standard"
-  numExecutors: 2
+  numExecutors: 8
   primaryView:
     all:
       name: "all"
@@ -93,7 +96,7 @@ unclassified:
   gitHubConfiguration:
     apiRateLimitChecker: ThrottleForNormalize
   gitHubPluginConfig:
-    hookUrl: "http://localhost:8080/github-webhook/"
+    hookUrl: "http://localhost:8082/github-webhook/"
   gitSCM:
     addGitTagAction: false
     allowSecondFetch: false
@@ -109,7 +112,7 @@ unclassified:
     storage: "file"
   location:
     adminAddress: "address not configured yet <nobody@nowhere>"
-    url: "http://localhost:8080/"
+    url: "http://localhost:8082/"
   mailer:
     charset: "UTF-8"
     useSsl: false
