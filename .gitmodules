@@ -16,3 +16,6 @@
 [submodule "Gerrit-To-Bus-Mediator"]
 	path = Gerrit-To-Bus-Mediator
 	url = git@github.com:Venthe/Pipeline-Gerrit-To-Bus-Mediator.git
+[submodule "Gerrit"]
+	path = Gerrit
+	url = ssh://admin@localhost:29418/All-Projects

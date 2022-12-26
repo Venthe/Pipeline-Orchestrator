@@ -2,10 +2,10 @@
 
 set -o xtrace
 
+#        --verbose \
 function upload() {
     curl \
         --fail \
-        --verbose \
         --user admin:secret \
         --upload-file \
         "${1}" \
@@ -13,4 +13,6 @@ function upload() {
 }
 
 upload ./zulu17.38.21-ca-jdk17.0.5-linux_x64.tar.gz java/jdk/zulu17.38.21-ca-jdk17.0.5-linux_x64.tar.gz
-upload ./gradle-7.5.1-all.zip gradle/gradle-7.5.1-all.zip
+upload ./gradle-7.6-all.zip gradle/gradle-7.6-all.zip
+upload ./kubectl-linux-adm64-v1.26.0 kubernetes/kubectl-linux-adm64-v1.26.0
+upload ./docker-20.10.22.tgz ./docker/docker-20.10.22.tgz
