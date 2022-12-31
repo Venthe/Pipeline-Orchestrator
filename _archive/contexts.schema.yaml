@@ -4687,9 +4687,9 @@ definitions:
     description:
       The full event webhook payload. You can access individual properties
       of the event using this context. This object is identical to the webhook
-      payload of the event that triggered the workflow run, and is different for
+      payload of the event that triggered the workflow.ts run, and is different for
       each event. The webhooks for each GitHub Actions event is linked in "Events
-      that trigger workflows." For example, for a workflow run triggered by the
+      that trigger workflows." For example, for a workflow.ts run triggered by the
       push event, this object contains the contents of the push webhook payload.
 properties:
   env: {}
@@ -4746,9 +4746,9 @@ properties:
       actor:
         type: string
         description:
-          The username of the user that triggered the initial workflow
-          run. If the workflow run is a re-run, this value may differ from github.triggering_actor.
-          Any workflow re-runs will use the privileges of github.actor, even if the
+          The username of the user that triggered the initial workflow.ts
+          run. If the workflow.ts run is a re-run, this value may differ from github.triggering_actor.
+          Any workflow.ts re-runs will use the privileges of github.actor, even if the
           actor initiating the re-run (github.triggering_actor) has different privileges.
       api_url:
         type: string
@@ -4770,7 +4770,7 @@ properties:
         $ref: "#/definitions/event"
       event_name:
         type: string
-        description: The name of the event that triggered the workflow run.
+        description: The name of the event that triggered the workflow.ts run.
       event_path:
         type: string
         description: |
@@ -4795,11 +4795,11 @@ properties:
         type: string
         description:
           The fully-formed ref of the branch or tag that triggered the
-          workflow run. For workflows triggered by push, this is the branch or tag
+          workflow.ts run. For workflows triggered by push, this is the branch or tag
           ref that was pushed. For workflows triggered by pull_request, this is the
           pull request merge branch. For workflows triggered by release, this is the
           release tag created. For other triggers, this is the branch or tag ref that
-          triggered the workflow run. This is only set if a branch or tag is available
+          triggered the workflow.ts run. This is only set if a branch or tag is available
           for the event type. The ref given is fully-formed, meaning that for branches
           the format is refs/heads/<branch_name>, for pull requests it is refs/pull/<pr_number>/merge,
           and for tags it is refs/tags/<tag_name>. For example, refs/heads/feature-branch-1.
@@ -4817,7 +4817,7 @@ properties:
       ref_type:
         type: string
         description:
-          The type of ref that triggered the workflow run. Valid values
+          The type of ref that triggered the workflow.ts run. Valid values
           are branch or tag.
       path:
         type: string
@@ -4837,7 +4837,7 @@ properties:
         description: "The Git URL to the repository. For example, git: //github.com/codertocat/hello-world.git."
       retention_days:
         type: string
-        description: The number of days that workflow run logs and artifacts are kept.
+        description: The number of days that workflow.ts run logs and artifacts are kept.
       run_id:
         type: string
         description: |
@@ -4852,13 +4852,13 @@ properties:
       run_attempt:
         type: string
         description:
-          A unique number for each attempt of a particular workflow run
-          in a repository. This number begins at 1 for the workflow run's first attempt,
+          A unique number for each attempt of a particular workflow.ts run
+          in a repository. This number begins at 1 for the workflow.ts run's first attempt,
           and increments with each re-run.
       secret_source:
         type: string
         description:
-          The source of a secret used in a workflow. Possible values are
+          The source of a secret used in a workflow.ts. Possible values are
           None, Actions, Dependabot, or Codespaces.
       server_url:
         type: string
@@ -4866,8 +4866,8 @@ properties:
       sha:
         type: string
         description:
-          The commit SHA that triggered the workflow. The value of this
-          commit SHA depends on the event that triggered the workflow. For more information,
+          The commit SHA that triggered the workflow.ts. The value of this
+          commit SHA depends on the event that triggered the workflow.ts. For more information,
           see "Events that trigger workflows." For example, ffac537e6cbbf934b08745a378932722df287a53.
       token:
         type: string

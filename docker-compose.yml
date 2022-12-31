@@ -54,6 +54,7 @@ services:
     restart: on-failure
     ports:
       - "8081:8081"
+      - "5000:5000"
     volumes:
       - "nexus-data:/nexus-data"
   #curl --silent --header "X-Vault-Token:vault_development_token" http://localhost:8200/v1/secret/data/example | jq '.data.data'
