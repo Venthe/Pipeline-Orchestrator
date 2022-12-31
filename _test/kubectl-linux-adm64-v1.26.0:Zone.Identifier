@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://gcsweb.k8s.io/
+HostUrl=https://storage.googleapis.com/kubernetes-release/release/v1.26.0/bin/linux/amd64/kubectl
