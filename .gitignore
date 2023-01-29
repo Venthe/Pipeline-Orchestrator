@@ -16,3 +16,4 @@ _archive/**/dind//**/*
 _archive/**/display-proxy/**/*
 _archive/**/tilt-avatars/**/*
 Gerrit/All-Projects/**/*
+node_modules/**/*

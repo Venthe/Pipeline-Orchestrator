@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/_Pipeline.iml" filepath="$PROJECT_DIR$/.idea/_Pipeline.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/eu.venthe.pipeline.gerrit_mediator.main.iml" filepath="$PROJECT_DIR$/.idea/modules/eu.venthe.pipeline.gerrit_mediator.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gerrit_mediator.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gerrit_mediator.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Jenkins/Pipeline/pipeline.iml" filepath="$PROJECT_DIR$/Jenkins/Pipeline/pipeline.iml" />
     </modules>
   </component>
 </project>

@@ -11,6 +11,7 @@ docker-entrypoint.sh server "$@" &
 
 >&2 echo "Waiting for vault to start..."
 while [[ "$(is_running)" -ne "0" ]]; do
+  echo "waiting..."
   sleep 1
 done
 
@@ -21,6 +22,6 @@ cd /mnt/init/secrets
 
 >&2 echo "  Loading JSON secrets"
 find . -type f -name '*.json' \
-    | xargs -I{} docker-entrypoint.sh kv put "secret/${APPLICATION_NAME}" "@{}"
+    | xargs -I{} docker-entrypoint.sh kv put -format=json "secret/${APPLICATION_NAME}" "@{}"
 
-wait 
+wait
