@@ -4,7 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/_Pipeline.iml" filepath="$PROJECT_DIR$/.idea/_Pipeline.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/eu.venthe.pipeline.gerrit_mediator.main.iml" filepath="$PROJECT_DIR$/.idea/modules/eu.venthe.pipeline.gerrit_mediator.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gerrit_mediator.aot.iml" filepath="$PROJECT_DIR$/.idea/modules/gerrit_mediator.aot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gerrit_mediator.aotTest.iml" filepath="$PROJECT_DIR$/.idea/modules/gerrit_mediator.aotTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gerrit_mediator.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gerrit_mediator.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gerrit_mediator.test.iml" filepath="$PROJECT_DIR$/.idea/modules/gerrit_mediator.test.iml" />
     </modules>
   </component>
 </project>

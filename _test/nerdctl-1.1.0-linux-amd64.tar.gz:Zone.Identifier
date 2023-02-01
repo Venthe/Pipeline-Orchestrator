@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://github.com/
+HostUrl=https://objects.githubusercontent.com/github-production-release-asset-2e65be/318476701/de70dd15-37da-4946-b980-9ef9bea28824?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20230129%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230129T182947Z&X-Amz-Expires=300&X-Amz-Signature=de7ba0e5714c7cfe20c884bc02e432e725bcf22a181bee9b50b59ff3d7607839&X-Amz-SignedHeaders=host&actor_id=1686874&key_id=0&repo_id=318476701&response-content-disposition=attachment%3B%20filename%3Dnerdctl-1.1.0-linux-amd64.tar.gz&response-content-type=application%2Foctet-stream

@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://github.com/
+HostUrl=https://objects.githubusercontent.com/github-production-release-asset-2e65be/92969352/e2b7f8e4-a002-4ea4-b0e2-b24fe487198d?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20230129%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230129T184803Z&X-Amz-Expires=300&X-Amz-Signature=a2095cbbeeb973dd120fed7360d5684d78ed1f799d5aad3a65202043b42f02a7&X-Amz-SignedHeaders=host&actor_id=1686874&key_id=0&repo_id=92969352&response-content-disposition=attachment%3B%20filename%3Dbuildkit-v0.11.2.linux-amd64.tar.gz&response-content-type=application%2Foctet-stream

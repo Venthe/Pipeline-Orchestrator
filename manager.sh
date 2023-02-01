@@ -5,6 +5,10 @@ set -o pipefail
 
 . ./.env
 
+function push() {
+  docker login
+}
+
 function buildMediator() {
     cd Gerrit-To-Bus-Mediator
     npm run build
@@ -36,6 +40,20 @@ sudo apt install shellcheck ansiblelint --assume-yes
 
 function up() {
     docker compose up -d --build
+}
+
+function deploy() {
+  cd Gerrit-To-Bus-Mediator
+  docker run \
+    --rm \
+    -u gradle \
+    -v "$PWD":/home/gradle/project \
+    -w "/home/gradle/project" \
+    "docker.io/library/gradle:7.6.0-jdk11-alpine" \
+    gradle build
+  docker build . --tag docker.home.arpa/build-mediator:latest
+  docker login docker.home.arpa --username admin
+  docker push docker.home.arpa/build-mediator:latest
 }
 
 if [[ ${#} -ne 0 ]]; then
