@@ -7,11 +7,16 @@ import { Action, ActionResult } from './actions';
 import {rerenderTemplate} from "../utilities/template";
 
 export class ActionStep<T extends object = {}> implements Step<ActionStepDefinition<T>> {
-  constructor(private readonly step: ActionStepDefinition<T>, private readonly index: number) {
+  constructor(private readonly step: ActionStepDefinition<T>,
+              private readonly index: number) {
   }
 
   get name(): string {
-    return this.step.name ?? this.step.id ?? this.step.uses;
+    const newVar = this.step.name ?? this.id;
+    if (newVar === undefined) {
+      throw new Error("Name cannot be set");
+    }
+    return newVar
   }
 
   async run(parentStepRunner: StepRunner,

@@ -378,6 +378,73 @@ describe("Tests", () => {
         }))
     })
     describe("Common", () => {
+        it("Get details in step", () => test({
+            given: () => {
+                const elements = [
+                    "runner.arch: ${{ runner.arch }}",
+                    "runner.os: ${{ runner.os }}",
+                    // "internal.event: ${{ internal.event | stringify }}",
+                    "internal.workspace: ${{ internal.workspace }}",
+                    "internal.binariesDirectory: ${{ internal.binariesDirectory }}",
+                    "internal.actionsDirectory: ${{ internal.actionsDirectory }}",
+                    "internal.pipelinesDirectory: ${{ internal.pipelinesDirectory }}",
+                    "internal.gerritUrl: ${{ internal.gerritUrl }}",
+                    "internal.projectUrl: ${{ internal.projectUrl }}",
+                    "internal.nexusUrl: ${{ internal.nexusUrl }}",
+                    // "internal.dockerUrl: ${{ internal.dockerUrl }}",
+                    // "internal.jenkinsUrl: ${{ internal.jenkinsUrl }}",
+                    // "internal.action: ${{ internal.action }}",
+                    // "internal.actionPath: ${{ internal.actionPath }}",
+                    // "internal.actionRevision: ${{ internal.actionRevision }}",
+                    // "internal.actionRepository: ${{ internal.actionRepository }}",
+                    // "internal.actionStatus: ${{ internal.actionStatus }}",
+                    // "internal.actor: ${{ internal.actor }}",
+                    // "internal.baseRevisions: ${{ internal.baseRevisions }}",
+                    // "internal.env: ${{ internal.env }}",
+                    "internal.eventName: ${{ internal.eventName }}",
+                    // "internal.eventPath: ${{ internal.eventPath }}",
+                    // "internal.headRef: ${{ internal.headRef }}",
+                    "internal.job: ${{ internal.job }}",
+                    // "internal.ref: ${{ internal.ref }}",
+                    // "internal.refName: ${{ internal.refName }}",
+                    // "internal.refProtected: ${{ internal.refProtected }}",
+                    // "internal.refType: ${{ internal.refType }}",
+                    // "internal.path: ${{ internal.path }}",
+                    // "internal.repository: ${{ internal.repository }}",
+                    // "internal.repositoryOwner: ${{ internal.repositoryOwner }}",
+                    // "internal.repositoryUrl: ${{ internal.repositoryUrl }}",
+                    // "internal.retentionDays: ${{ internal.retentionDays }}",
+                    // "internal.runId: ${{ internal.runId }}",
+                    // "internal.runNumber: ${{ internal.runNumber }}",
+                    // "internal.runAttempt: ${{ internal.runAttempt }}",
+                    // "internal.secretSource: ${{ internal.secretSource }}",
+                    // "internal.serverUrl: ${{ internal.serverUrl }}",
+                    // "internal.runNumber: ${{ internal.runNumber }}",
+                    // "internal.triggeringActor: ${{ internal.triggeringActor }}",
+                    "internal.workflow: ${{ internal.workflow }}",
+                    // "internal.graphqlUrl: ${{ internal.graphqlUrl }}",
+                    // "internal.token: ${{ internal.token }}",
+                    // "internal.sha: ${{ internal.sha }}"
+                ]
+
+                context.steps = [
+                    {run: `echo '\n${elements.join("\n")}\n'`}
+                ]
+            },
+            then: ({result, log}) => {
+                expect(result).toBe("success");
+                assertFilter(log, line => line.includes("runner.arch: x64"));
+                assertFilter(log, line => line.includes("runner.os: linux"));
+                assertFilter(log, line => line.includes("internal.workspace: /workdir"));
+                assertFilter(log, line => line.includes("internal.binariesDirectory: /runner/bin"));
+                assertFilter(log, line => line.includes("internal.actionsDirectory: /runner/actions"));
+                assertFilter(log, line => line.includes("internal.pipelinesDirectory: /runner/pipeline"));
+                assertFilter(log, line => line.includes("internal.gerritUrl: ssh://admin@ssh.gerrit.home.arpa:29418"));
+                assertFilter(log, line => line.includes("internal.projectUrl: http://host.docker.internal:"));
+                assertFilter(log, line => line.includes("internal.nexusUrl: https://nexus.home.arpa/repository/raw-hosted"));
+                assertFilter(log, line => line.includes("internal.eventName: PatchsetCreated"));
+            }
+        }), timeout)
         it('call-shell', async () => test({
             given: () => {
                 context.directory = "call-shell"
@@ -589,7 +656,6 @@ async function test({given, then}) {
     await run(given)
 
     writeEvent();
-    console.log(context.steps)
     if (context.steps !== undefined) {
         const workflow = JSON.stringify({
             name: "Tested workflow",
@@ -610,6 +676,7 @@ async function test({given, then}) {
     }
     await uploadRepository()
     let newVar = await executeRunner();
+
     context.output = {
         ...JSON.parse(readFileSync(context.resultPath, {encoding: "utf-8"})),
         log: newVar.raw.split("\r\n")
@@ -618,9 +685,11 @@ async function test({given, then}) {
 }
 
 async function copyRepository() {
-    const source = `${process.cwd()}/resources/${context.directory}`;
+    if(context.directory) {
+        const source = `${process.cwd()}/resources/${context.directory}`;
 
-    cpSync(source, context.repositoryPath, {recursive: true})
+        cpSync(source, context.repositoryPath, {recursive: true})
+    }
 }
 
 function repository(projectName = "repository.git") {
@@ -634,7 +703,7 @@ async function uploadRepository() {
     return command(`
             git init
             git add --all
-            git commit -m "Initial commit"
+            git commit -m "Initial commit" --allow-empty
             git push ${repository().url}/${repository().name} --force
         `, {cwd: context.repositoryPath})
 }
@@ -683,6 +752,7 @@ function executeRunner() {
             '--volume "/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro"',
             '--volume "/usr/local/share/ca-certificates/k8s/ca.crt:/certs/ca.crt:ro"',
             '--privileged',
+            '--entrypoint bash',
             '--env PIPELINE_JOB_NAME="TestedJob"',
             '--env PIPELINE_BUILD_ID="1"',
             '--env PIPELINE_DEBUG="0"',
@@ -708,6 +778,15 @@ function writeEvent() {
             ...(context.event?.metadata ?? {})
         }
     };
+    if (obj.additionalProperties === undefined) {
+        obj.additionalProperties = {}
+    }
+    if (obj.additionalProperties.commit === undefined) {
+        obj.additionalProperties.commit = {}
+    }
+    if (obj.additionalProperties.commit.subject === undefined) {
+        obj.additionalProperties.commit.subject = "Example"
+    }
     writeFileSync(context.eventPath, yaml.dump(obj), "UTF-8")
 }
 
