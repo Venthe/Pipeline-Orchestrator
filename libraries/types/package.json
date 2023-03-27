@@ -1,5 +1,5 @@
 {
-  "name": "@pipeline/types",
+  "name": "@actions/types",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.d.ts",

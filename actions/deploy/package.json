@@ -1,5 +1,5 @@
 {
-  "name": "@actions/template",
+  "name": "@actions/deploy",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -23,10 +23,5 @@
   "dependencies": {
     "@pipeline/process": "*",
     "@pipeline/core": "*"
-  },
-  "workspaces": [
-    "../../libraries/types",
-    "../../libraries/process",
-    "../../libraries/core"
-  ]
+  }
 }

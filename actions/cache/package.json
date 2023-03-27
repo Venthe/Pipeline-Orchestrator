@@ -25,11 +25,5 @@
     "@pipeline/process": "*",
     "@pipeline/utilities": "*",
     "@pipeline/core": "*"
-  },
-  "workspaces": [
-    "../../libraries/types",
-    "../../libraries/utilities",
-    "../../libraries/process",
-    "../../libraries/core"
-  ]
+  }
 }

@@ -20,8 +20,5 @@
   },
   "dependencies": {
     "@pipeline/utilities": "*"
-  },
-  "workspaces": [
-    "../utilities"
-  ]
+  }
 }

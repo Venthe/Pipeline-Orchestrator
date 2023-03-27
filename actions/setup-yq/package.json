@@ -22,9 +22,5 @@
   "dependencies": {
     "@pipeline/process": "*",
     "@pipeline/core": "*"
-  },
-  "workspaces": [
-    "../../libraries/process",
-    "../../libraries/core"
-  ]
+  }
 }

@@ -1,7 +1,7 @@
 import {Container} from "@pipeline/types";
 import {GenericContainer} from "testcontainers";
-import {PortWithOptionalBinding} from "testcontainers/dist/port";
-import {BindMode, BindMount} from "testcontainers/dist/docker/types";
+import {PortWithOptionalBinding} from "testcontainers/dist/src/port";
+import { BindMode, BindMount } from "testcontainers/dist/src/docker/types";
 
 export const toContainer = (containerDefinition: Container, name: string): GenericContainer => {
     const container = new GenericContainer(containerDefinition.image);
