@@ -61,6 +61,60 @@ describe("Tests", () => {
         }), timeout)
     })
     describe("Actions", () => {
+        describe("cache", () => {
+            describe("cache-key", () => {
+                it("arbitrary-command-output", () => test({
+                    given: () => {
+                        context.steps = [
+                            {run: "mkdir -p path/to/dependencies"},
+                            {run: "echo 'test' >> path/to/dependencies/lockfiles"},
+                            {
+                                name: "Get Date",
+                                id: "getDate",
+                                run: "echo \"date=$(/bin/date -u \"+%Y%m%d\")\" >> $ACTION_OUTPUT"
+                            },
+                            {
+                                uses: "actions/cache@main",
+                                with: {
+                                    path: "path/to/dependencies",
+                                    key: "${{ runner.os }}-${{ steps.getDate.outputs.date }}-${{ hashFiles('**/lockfiles') }}"
+                                }
+                            }
+                        ]
+                    },
+                    then: ({result, log}) => {
+                    }
+                }), timeout)
+                it("hash-key", () => test({
+                    given: () => {
+                        context.steps = []
+                    },
+                    then: ({result, log}) => {
+                    }
+                }), timeout)
+            })
+            it("restory-and-save", () => test({
+                given: () => {
+                    context.steps = []
+                },
+                then: ({result, log}) => {
+                }
+            }), timeout)
+            it("single-action", () => test({
+                given: () => {
+                    context.steps = []
+                },
+                then: ({result, log}) => {
+                }
+            }), timeout)
+            it("skip-on-cache-hit", () => test({
+                given: () => {
+                    context.steps = []
+                },
+                then: ({result, log}) => {
+                }
+            }), timeout)
+        })
         describe("setup-node", () => {
             it("latest", () => test({
                 given: () => {

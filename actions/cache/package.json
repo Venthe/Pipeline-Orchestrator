@@ -2,13 +2,14 @@
   "name": "@actions/cache",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
   "private": true,
   "scripts": {
     "ncc": "ncc",
     "jest": "jest",
     "test": "jest --config=./jest.config.ts",
-    "build": "(mkdir -p dist || true) && rm -rf dist/* && ncc cache clean && ncc build src/index.ts --out dist --source-map --quiet --no-cache"
+    "build": "npm run build:save && npm run build:restore",
+    "build:save": "(mkdir -p dist/save || true) && rm -rf dist/save/* && ncc cache clean && ncc build src/save.ts --out dist/save --source-map --quiet --no-cache",
+    "build:restore": "(mkdir -p dist/restore || true) && rm -rf dist/restore/* && ncc cache clean && ncc build src/restore.ts --out dist/restore --source-map --quiet --no-cache"
   },
   "author": "",
   "license": "MIT",

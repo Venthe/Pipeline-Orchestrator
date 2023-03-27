@@ -31,6 +31,6 @@ outputs:
     description: 'A boolean value to indicate an exact match was found for the primary key'
 runs:
   using: 'node16'
-  main: 'dist/restore/index.js'
-  post: 'dist/save/index.js'
+  main: 'dist/save/index.js'
+  post: 'dist/restore/index.js'
   post-if: success()
