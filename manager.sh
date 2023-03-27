@@ -32,7 +32,7 @@ NODE_VERSION=19
 RUNNER_IMAGE="${_DOCKER_TAG}/venthe/ubuntu-runner:22.10"
 
 function cleanPipeline() {
-  rm -rf ./node_modules/@pipeline
+  (cd runner/application && rm -rf ./node_modules/@pipeline)
 }
 
 function buildActions() {
@@ -46,25 +46,25 @@ function buildAction() {
 function buildLibraries() {
   (cd ./libraries && bash ./manager.sh)
   cleanPipeline
-  npm install
+  (cd runner/application && npm install)
 }
 
 function buildLibrary() {
   (cd ./libraries && bash ./manager.sh buildSingle "${1}")
   cleanPipeline
-  npm install
+  (cd runner/application && npm install)
 }
 
 function prepare() {
   if [[ "${REBUILD_LIBRARIES}" -eq "1" ]]; then
     buildLibraries
   fi
-  npm install
+  (cd runner/application && npm install)
 }
 
 function buildManager() {
-  npm install
-  npm run build
+  (cd runner/application && npm install)
+  (cd runner/application && npm run build)
 }
 
 function buildContainer() {
@@ -120,13 +120,13 @@ function execute() {
     --rm --interactive --tty \
     --volume "${HOME}/.kube/config:/root/.kube_test/config:ro" \
     --volume "${HOME}/.ssh/:/root/.ssh_test:ro" \
-    --volume "${PWD}/dist/index.js:/runner/index.js" \
-    --volume "${PWD}/dist/sourcemap-register.js:/runner/sourcemap-register.js" \
-    --volume "${PWD}/dist/index.js.map:/runner/index.js.map" \
+    --volume "${PWD}/runner/application/dist/index.js:/runner/index.js" \
+    --volume "${PWD}/runner/application/dist/sourcemap-register.js:/runner/sourcemap-register.js" \
+    --volume "${PWD}/runner/application/dist/index.js.map:/runner/index.js.map" \
     --volume "${envPath}:/runner/metadata/env:ro" \
     --volume "${eventFile}:/runner/metadata/event.yaml:ro" \
     --volume "${secretsPath}:/runner/metadata/secrets:ro" \
-    --volume "${PWD}/test/test.sh:/test.sh" \
+    --volume "${PWD}/runner/application/test/test.sh:/test.sh" \
     --volume "/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro" \
     --volume "/usr/local/share/ca-certificates/k8s/ca.crt:/certs/ca.crt:ro" \
     \

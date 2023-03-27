@@ -1,5 +1,5 @@
 *
 
-!dist/
-!dist/**/*
-!runner.sh
+!runner/application/dist/
+!runner/application/dist/**/*
+!runner/application/runner.sh
