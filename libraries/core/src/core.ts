@@ -20,10 +20,17 @@ export enum MessageType {
 }
 
 export const { step, context, callbacks }: Core = (() => {
-  const [step, context]: CoreArguments = JSON.parse(process.argv[2] ?? '[{},{}]');
+  const coreArgs = (): CoreArguments => {
+    // FIXME: Do not expect for the params to be at the second place..
+    try {
+      return JSON.parse(process.argv[2] ?? '[{},{}]');
+    } catch (e) {
+      return [{}, {}] as CoreArguments
+    }
+  };
   return {
-    step: step,
-    context,
+    get step() {return coreArgs()[0]},
+    get context() {return coreArgs()[1]},
     callbacks: {
       addToPath: (path: string) => {
         process.env['PATH'] = `${path}:${process.env['PATH']}`;
