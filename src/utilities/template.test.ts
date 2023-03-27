@@ -1,5 +1,9 @@
-import { renderTemplate, rerenderTemplate } from './template';
-import { ContextSnapshot } from '@pipeline/types';
+import {renderTemplate, rerenderTemplate} from './template';
+import {ContextSnapshot} from '@pipeline/types';
+import {mkdirSync, mkdtempSync, rmSync, writeFileSync} from "fs";
+import {join} from "path";
+import {tmpdir} from "os";
+import {createHash} from "crypto";
 
 describe('Template', () => {
   it('Mona the Octocat', () => {
@@ -232,4 +236,49 @@ describe('Custom functions', () => {
         .toEqual(true);
     });
   });
+  describe("hashFiles", () => {
+    let files
+    const tpl = (str) => "${{ hashFiles('" + str + "', '" + files+ "') }}"
+    const hashFiles = (str) => renderTemplate(tpl(str), { } as any as ContextSnapshot);
+    const hash = data => createHash("sha256").update(data).digest("hex")
+    const hashHash = data => hash(hash(data))
+
+    const lockfileData = "Lockfile content"
+    const filehw = "Hello world!"
+    const filea = "File A"
+    const fileb = "File B"
+
+    beforeEach(() => {
+      const randomString = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+      files = mkdtempSync(join(tmpdir(), randomString()));
+      mkdirSync(`${files}/testDir2`, {recursive: true})
+      mkdirSync(`${files}/testDir1`, {recursive: true})
+      mkdirSync(`${files}/testDir3`, {recursive: true})
+      writeFileSync(`${files}/testDir1/hw.txt`, filehw)
+      writeFileSync(`${files}/testDir2/lockfiles`, lockfileData)
+      writeFileSync(`${files}/testDir3/a.txt`, filea)
+      writeFileSync(`${files}/testDir3/b.txt`, fileb)
+    })
+
+    afterEach(() => {
+      rmSync(files, {recursive: true})
+    })
+
+    it("Single lockfile", () => {
+      expect(hashFiles("**/lockfiles")).toEqual(hashHash(lockfileData));
+    })
+
+    it("Multiple files", () => {
+      expect(hashFiles("./**/*")).toEqual(hash(`${hash(filehw)}${hash(lockfileData)}${hash(filea)}${hash(fileb)}`));
+    })
+
+    it("List of files", () => {
+      expect(hashFiles("testDir3/a.txt\ntestDir3/b.txt")).toEqual(hash(`${hash(filea)}${hash(fileb)}`));
+    })
+
+    it("No files matched", () => {
+      expect(hashFiles("./")).toEqual("");
+    })
+  })
 });
