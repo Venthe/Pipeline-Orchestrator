@@ -4,6 +4,7 @@ import { ContextManager } from '../context/contextManager';
 import { getId as gid, Step } from './step';
 import { throwThis } from '@pipeline/utilities';
 import { Action, ActionResult } from './actions';
+import {rerenderTemplate} from "../utilities/template";
 
 export class ActionStep<T extends object = {}> implements Step<ActionStepDefinition<T>> {
   constructor(private readonly step: ActionStepDefinition<T>, private readonly index: number) {
@@ -16,7 +17,8 @@ export class ActionStep<T extends object = {}> implements Step<ActionStepDefinit
   async run(parentStepRunner: StepRunner,
             contextManager: ContextManager): Promise<ActionResult> {
     try {
-      const action = await Action.load(this.step, contextManager, parentStepRunner);
+        const stepDefinition = {...this.step, ...(this.step.with ? {with: rerenderTemplate(this.step.with ?? {}, contextManager.contextSnapshot)}  : {})};
+        const action = await Action.load(stepDefinition, contextManager, parentStepRunner);
       return action.run();
     } catch (e) {
       return { outcome: "failure" }
@@ -29,10 +31,6 @@ export class ActionStep<T extends object = {}> implements Step<ActionStepDefinit
 
   get id(): string {
     return gid(this.step, this.index);
-  }
-
-  get with(): T | undefined {
-    return this.step.with;
   }
 
   get if(): string | undefined {
