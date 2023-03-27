@@ -57,7 +57,7 @@ export class ContextManager<T extends GerritEventSnapshot & object = GerritEvent
         workflow: this.environmentVariables.PIPELINE_WORKFLOW,
         actionsDirectory: this.environmentVariables.RUNNER_ACTIONS_DIRECTORY,
         binariesDirectory: this.environmentVariables.RUNNER_BINARIES_DIRECTORY,
-        eventName: '0xDEADBEEF',
+        eventName: this.event.type,
         job: this.environmentVariables.PIPELINE_JOB_NAME
       },
       ...({ inputs: this.inputs }),
