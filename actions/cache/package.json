@@ -8,8 +8,8 @@
     "jest": "jest",
     "test": "jest --config=./jest.config.ts",
     "build": "npm run build:save && npm run build:restore",
-    "build:save": "(mkdir -p dist/save || true) && rm -rf dist/save/* && ncc cache clean && ncc build src/save.ts --out dist/save --source-map --quiet --no-cache",
-    "build:restore": "(mkdir -p dist/restore || true) && rm -rf dist/restore/* && ncc cache clean && ncc build src/restore.ts --out dist/restore --source-map --quiet --no-cache"
+    "build:save": "(mkdir -p dist/save || true) && rm -rf dist/save/* && ncc cache clean && ncc build src/save.ts --out dist/save --source-map --quiet",
+    "build:restore": "(mkdir -p dist/restore || true) && rm -rf dist/restore/* && ncc cache clean && ncc build src/restore.ts --out dist/restore --source-map --quiet"
   },
   "author": "",
   "license": "MIT",
