@@ -8,8 +8,8 @@
     "jest": "jest",
     "test": "jest --config=./jest.config.ts",
     "clean": "(mkdir -p dist || true) && rm -rf dist/*",
-    "build": "npm run --quiet clean && tsc --project tsconfig.json",
-    "build:watch": "npm run --quiet build -- --watch"
+    "build": "npm run --silent clean && tsc --project tsconfig.json",
+    "build:watch": "npm run --silent build -- --watch"
   },
   "author": "",
   "license": "MIT",
