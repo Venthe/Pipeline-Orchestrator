@@ -14,6 +14,7 @@ import fs from 'fs';
 import {throwThis} from '@pipeline/utilities';
 import * as childProcess from 'child_process';
 import {StepRunner, StepRunnerResult} from './stepRunner';
+import { debug } from '@pipeline/core';
 
 export interface ActionResult {
   outcome: FinalStatus,
@@ -51,7 +52,7 @@ export class Action {
   private async postConstruct() {
     const actionDir = await this.prepareActionDirectory(this.uses, this.contextManager);
 
-    console.debug(`Loading ${this.uses}`);
+    debug(`Loading ${this.uses}`);
     const actionDefinition: BaseActionDefinition = this.loadActionDefinition(actionDir);
     this.action = await this.loadAction(actionDir, actionDefinition);
   }
@@ -65,10 +66,12 @@ export class Action {
     } = this.extractName(actionName);
 
     if (remote) {
-      console.debug('Loading remote action: ' + actionName);
+      debug('Loading remote action: ' + actionName);
       if (project === undefined || revision === undefined) throw new Error(`Remote name expected for action name ${actionName}`);
 
-      console.debug(project, revision, context.contextSnapshot.internal.actionsDirectory, project);
+      debug(`${JSON.stringify(project)}\n
+             ${JSON.stringify(revision)}\n
+             ${JSON.stringify(context.contextSnapshot.internal.actionsDirectory)}`);
       await checkout({
         project,
         revision,
@@ -143,7 +146,7 @@ export class Action {
       });
 
       script.on('exit', (code: string) => {
-        console.debug(`child process exited with code ${code}`);
+        debug(`child process exited with code ${code}`);
         if (+code === 0) {
           resolveSuccess({ outcome: 'success', outputs });
         } else {
@@ -162,12 +165,12 @@ export class Action {
 
   private manageCompositeAction = (compositeAction: CompositeActionDefinition): LocalActionExpression =>
     async (_, __): Promise<ActionResult> => (async () => {
-        console.debug(
-          '[Creating composite action]',
-          JSON.stringify(this.step, undefined, 2),
-          JSON.stringify(_, undefined, 2),
-          JSON.stringify(__, undefined, 2),
-          JSON.stringify(compositeAction, undefined, 2)
+        debug(
+          `[Creating composite action]\n
+          ${ JSON.stringify(this.step, undefined, 2) }\n
+          ${ JSON.stringify(_, undefined, 2) }\n
+          ${ JSON.stringify(__, undefined, 2) }\n
+          ${ JSON.stringify(compositeAction, undefined, 2) }`
         );
         return this.mapToStepResult(await this.stepRunner.forCompositeStep(this.step, compositeAction).run());
       }

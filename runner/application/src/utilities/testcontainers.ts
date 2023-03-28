@@ -1,39 +1,40 @@
 import {Container} from "@pipeline/types";
 import {GenericContainer} from "testcontainers";
 import {PortWithOptionalBinding} from "testcontainers/dist/src/port";
-import { BindMode, BindMount } from "testcontainers/dist/src/docker/types";
+import {BindMode, BindMount} from "testcontainers/dist/src/docker/types";
+import {debug, error} from "@pipeline/core";
 
 export const toContainer = (containerDefinition: Container, name: string): GenericContainer => {
     const container = new GenericContainer(containerDefinition.image);
 
     if (containerDefinition.env) {
-        console.debug(`Adding env variables to ${name}`, containerDefinition.env)
+        debug(`Adding env variables to ${name}\n${JSON.stringify(containerDefinition.env)}`)
         container.withEnvironment(containerDefinition.env)
     }
 
     if (containerDefinition.ports) {
         const ports: PortWithOptionalBinding[] = containerDefinition.ports?.map(port => mapPortToPortWithOptionalBinding(port));
-        console.debug(`Adding ports to ${name}`, ports)
+        debug(`Adding ports to ${name}\n${JSON.stringify(ports)}`)
         container.withExposedPorts(...ports)
     }
 
     if (containerDefinition.volumes) {
         const volumes = containerDefinition.volumes?.map(volume => mapVolume(volume));
-        console.debug(`Adding volumes to ${name}`, volumes)
+        debug(`Adding volumes to ${name}\n${JSON.stringify(volumes)}`)
         container.withBindMounts(volumes)
     }
 
     if (containerDefinition.credentials) {
-        console.error("Unsupported option: Container credential")
+        error("Unsupported option: Container credential")
     }
 
     if (containerDefinition.command) {
-        console.debug(`Setting cmd to ${name}`, containerDefinition.command)
+        debug(`Setting cmd to ${name}\n${containerDefinition.command}`)
         container.withCommand(containerDefinition.command)
     }
 
     if (containerDefinition.entrypoint) {
-        console.debug(`Setting entrypoint to ${name}`, containerDefinition.entrypoint)
+        debug(`Setting entrypoint to ${name}\n${containerDefinition.entrypoint}`)
         container.withEntrypoint(containerDefinition.entrypoint)
     }
 

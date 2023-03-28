@@ -2,7 +2,7 @@ import * as process from 'process';
 import { WorkflowOrchestrator } from './workflow/workflowOrchestrator';
 import { PipelineEnvironmentVariables } from './configuration/environment';
 import { configureGit, exceptionMapper, saveObjectAsFile } from './utilities';
-import { error } from '@pipeline/utilities';
+import { error } from '@pipeline/core';
 
 export const main = async () => {
   try {
@@ -17,7 +17,7 @@ export const main = async () => {
       process.exit(1)
     }
   } catch (exception: any) {
-    console.error(error(`Unhandled fatal exception: ${exceptionMapper(exception)}`));
+    error(`Unhandled fatal exception: ${exceptionMapper(exception)}`);
     throw (exception instanceof Error ? exception : new Error(JSON.stringify(exception)));
   }
 };

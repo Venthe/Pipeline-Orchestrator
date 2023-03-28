@@ -9,11 +9,12 @@ import {
 } from '@pipeline/types';
 import { ContextManager } from '../context/contextManager';
 import { StepFactory } from './stepFactory';
-import { error, forceRun, running, step } from '@pipeline/utilities';
+import { forceRun, running, step, error as _error } from '@pipeline/utilities';
 import { rerenderTemplate } from '../utilities/template';
 import { exceptionMapper } from '../utilities';
 import { ActionResult } from './actions';
 import { shouldRunExpression } from './script';
+import { debug, error, info } from '@pipeline/core';
 
 type OutputMappings = {
   // ${{ steps.step1.outputs.test }}
@@ -38,10 +39,10 @@ export class StepRunner {
       acc[key] = (compositeStep?.outputs || {})[key].value;
       return acc;
     }, {} as OutputMappings);
-    console.debug('[Creating new StepRunner]',
-      JSON.stringify(step, undefined, 2),
-      JSON.stringify(compositeStep, undefined, 2),
-      JSON.stringify(outputs, undefined, 2)
+    debug(`[Creating new StepRunner]\n
+      ${JSON.stringify(step, undefined, 2)}\n
+      ${JSON.stringify(compositeStep, undefined, 2)}\n
+      ${JSON.stringify(outputs, undefined, 2)}`
     );
 
     return new StepRunner({
@@ -85,7 +86,7 @@ export class StepRunner {
       while (this.steps.length > 0) {
         const mappedStep = StepFactory.from(this.getCurrentStep(), this.nextIndex());
 
-        console.log(step(`[${mappedStep.id}][${this.managerName}]: ${mappedStep.name}`) + ` - ${this.stateSuffix(mappedStep)}`);
+        info(step(`[${mappedStep.id}][${this.managerName}]: ${mappedStep.name}`) + ` - ${this.stateSuffix(mappedStep)}`);
 
         if (!this.isAnyStepConclusionFailure() || this.shouldRunFromScript(mappedStep)) {
           const result: ActionResult = await mappedStep.run(this, this.contextManager);
@@ -97,24 +98,22 @@ export class StepRunner {
           this.contextManager.setResult(mappedStep.id, { outcome: 'skipped', conclusion: 'skipped', name: mappedStep.name } as StepResult);
         }
 
-        console.debug(
-          '[Step finished]', mappedStep.name,
-          JSON.stringify(this.outputs, undefined, 2),
-          JSON.stringify(this.contextManager.contextSnapshot.steps, undefined, 2)
+        debug(
+          `[Step finished] ${mappedStep.name}\nJSON.stringify(this.outputs, undefined, 2)\nJSON.stringify(this.contextManager.contextSnapshot.steps, undefined, 2)`,
         );
       }
 
       const outputs = rerenderTemplate<JobOutput>(this.outputs ?? {}, this.contextManager.contextSnapshot);
-      console.debug('[Runner finished]', this.managerName,
-        JSON.stringify(this.outputs, undefined, 2),
-        JSON.stringify(this.contextManager.contextSnapshot.steps, undefined, 2)
-      );
+      debug(`[Runner finished] ${this.managerName}\n
+        ${JSON.stringify(this.outputs, undefined, 2)}\n
+        ${JSON.stringify(this.contextManager.contextSnapshot.steps, undefined, 2)}
+      `);
       return this.isAnyStepConclusionFailure() ? { result: 'failure' } : {
         result: 'success',
         outputs: outputs
       };
     } catch (e: any) {
-      console.error(error(exceptionMapper(e)));
+      error(exceptionMapper(e));
       return {
         result: 'failure'
       };
@@ -127,7 +126,7 @@ export class StepRunner {
 
     }
     if (this.isAnyStepConclusionFailure()) {
-      return error('Force run'.toUpperCase());
+      return _error('Force run'.toUpperCase());
     }
 
     return running('Running'.toUpperCase());

@@ -5,6 +5,7 @@ import { StepRunner } from '../steps/stepRunner';
 import { renderTemplate } from '../utilities/template';
 import { toContainer } from "../utilities/testcontainers";
 import { StartedTestContainer } from 'testcontainers';
+import { debug, info } from '@pipeline/core';
 
 export interface SingleJobResult {
   result: FinalStatus,
@@ -21,14 +22,14 @@ export class JobRunner {
   }
 
   mapJobToManger(job: JobDefinition | RemoteJobDefinition): JobManager {
-    console.debug(JSON.stringify(job));
+    debug(JSON.stringify(job));
     return (job as any).steps !== undefined
       ? new LocalJobManager(job as JobDefinition, this.contextManager)
       : new RemoteJobManager(job as RemoteJobDefinition);
   }
 
   async run(): Promise<SingleJobResult> {
-    console.log(subtitle(`Running job ${this.contextManager.contextSnapshot.internal.job}`));
+    info(subtitle(`Running job ${this.contextManager.contextSnapshot.internal.job}`));
     return await this.jobManager.run();
   }
 }
@@ -61,7 +62,7 @@ class LocalJobManager implements JobManager {
     const startedContainers: StartedTestContainer[] = []
     try {
       for (const container of services) {
-        console.log(`Starting service ${container.name}`)
+        info(`Starting service ${container.name}`)
         const startedContainer: StartedTestContainer = await container.container.start();
         const logs = await startedContainer.logs()
         logs

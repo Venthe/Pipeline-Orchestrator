@@ -7,6 +7,7 @@ import {shell, shellMany} from '@pipeline/process';
 import { title } from '@pipeline/utilities';
 import { renderTemplate } from 'utilities/template';
 import {checkoutCommands} from "@pipeline/core";
+import { info } from '@pipeline/core';
 
 export class WorkflowOrchestrator {
   private readonly contextManager: ContextManager;
@@ -30,9 +31,9 @@ export class WorkflowOrchestrator {
     this.workflow = WorkflowOrchestrator.loadWorkflow(this.contextManager.contextSnapshot);
     this.contextManager.appendEnvironmentVariables(this.workflow.env);
 
-    console.log(title(`Initializing workflow`));
-    console.log(` Workflow name: ${this.workflow.name}`);
-    console.log(` Workflow run name: ${this.workflowRunName}`);
+    info(title(`Initializing workflow`));
+    info(` Workflow name: ${this.workflow.name}`);
+    info(` Workflow run name: ${this.workflowRunName}`);
 
     this.jobRunner = this.prepareJobRunner(this.contextManager.contextSnapshot.internal.job, this.contextManager);
   }

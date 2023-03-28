@@ -1,4 +1,4 @@
-const {mkdtempSync, rmSync, writeFileSync, readdirSync, copyFileSync, cpSync, readFileSync, mkdirSync} = require("fs");
+const {mkdtempSync, rmSync, writeFileSync, cpSync, readFileSync, mkdirSync} = require("fs");
 const {join} = require("path");
 const {tmpdir} = require("os");
 const {randomString} = require("../utilities");
@@ -741,14 +741,14 @@ function executeRunner() {
             '--tty',
             `--volume "${process.env.HOME}/.kube/config:/root/.kube_test/config:ro"`,
             `--volume "${process.env.HOME}/.ssh/:/root/.ssh_test:ro"`,
-            `--volume "${process.cwd()}/../dist/index.js:/runner/index.js"`,
-            `--volume "${process.cwd()}/../dist/sourcemap-register.js:/runner/sourcemap-register.js"`,
-            `--volume "${process.cwd()}/../dist/index.js.map:/runner/index.js.map"`,
+            `--volume "${process.cwd()}/../application/dist/index.js:/runner/index.js"`,
+            `--volume "${process.cwd()}/../application/dist/sourcemap-register.js:/runner/sourcemap-register.js"`,
+            `--volume "${process.cwd()}/../application/dist/index.js.map:/runner/index.js.map"`,
             `--volume '${context.eventPath}:/runner/metadata/event.yaml:ro'`,
             `--volume '${context.environmentPath}:/runner/metadata/env:ro'`,
             `--volume '${context.secretsPath}:/runner/metadata/secrets:ro'`,
             `--volume '${context.resultPath}:/runner/result.json'`,
-            `--volume "${process.cwd()}/test.sh:/test.sh"`,
+            `--volume "${process.cwd()}/../application/test/test.sh:/test.sh"`,
             '--volume "/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro"',
             '--volume "/usr/local/share/ca-certificates/k8s/ca.crt:/certs/ca.crt:ro"',
             '--privileged',

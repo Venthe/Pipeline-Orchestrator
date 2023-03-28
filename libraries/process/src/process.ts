@@ -91,6 +91,7 @@ export const shell: (command: string | undefined, options?: Options) => Promise<
       output ? a => _output?.push(a) : undefined,
       callbacks?.stdout
     ], rest.mask));
+    // TODO: Remove core dependency on process, then rewrite console.error to error
     childProcess.stderr.on('data', chunkCallback(StreamType.STDERR, [
       silent ? undefined : unwrapChunkData(chnk => console.error(`${stderr(chnk)}`)),
       output ? a => _output?.push(a) : undefined,

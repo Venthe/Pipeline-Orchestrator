@@ -5,8 +5,9 @@ import { shell, ShellOutput } from '@pipeline/process';
 import { getId as gid, Step } from './step';
 import { renderTemplate } from '../utilities/template';
 import { exceptionMapper, loadEnvironmentFile } from '../utilities';
-import { error, throwThis } from '@pipeline/utilities';
+import { throwThis } from '@pipeline/utilities';
 import { ActionResult } from './actions';
+import { debug, error } from '@pipeline/core';
 
 export class ShellStep implements Step<ShellStepDefinition> {
   constructor(private readonly step: ShellStepDefinition,  private readonly index: number) {
@@ -30,11 +31,11 @@ export class ShellStep implements Step<ShellStepDefinition> {
         throw new Error("Shell commands must not be empty")
       }
       const result: ShellOutput = await shell(renderTemplate(this.step.run, contextManager.contextSnapshot), { ...shellOption, ...workingDirectoryOption });
-      console.debug(result);
+      debug(JSON.stringify(result));
 
       // TODO: Add to composite step/job outputs
       const outputs = loadEnvironmentFile<{ [outputId: string]: string }>(tempFile);
-      console.debug(outputs);
+      debug(JSON.stringify(outputs));
       await shell(`rm -rf ${tempFile}`, { silent: true });
       process.env['ACTION_OUTPUT'] = undefined;
 
@@ -43,7 +44,7 @@ export class ShellStep implements Step<ShellStepDefinition> {
         outcome: result.code === 0 ? 'success' : 'failure'
       };
     } catch (err) {
-      console.error(error(exceptionMapper(err)));
+      error(exceptionMapper(err));
       return { outcome: 'failure' };
     }
   }

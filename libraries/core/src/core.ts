@@ -1,5 +1,7 @@
 import process from 'process';
 import { ActionStepDefinition, ContextSnapshot } from '@pipeline/types';
+import { EOL } from 'os';
+import { error as _error } from '@pipeline/utilities';
 
 export type Core = {
   context: ContextSnapshot;
@@ -59,9 +61,15 @@ export type AddToPathMessage = Message<MessageType.ADD_TO_PATH, string>
 
 const message = <T extends Message<MessageType, any>>(message: T): string => (JSON.stringify(message));
 
-(() => {
-    if (process.env.PIPELINE_DEBUG !== '1') {
-        console.debug = () => {
-        };
-    }
-})();
+export const isDebug = () => process.env.PIPELINE_DEBUG === '1'
+/** Writes to STDOUT */
+export const info = (message: string) => { process.stdout.write(`${message}${EOL}`) }
+/** Writes to STDERR */
+export const debug = (message: string) => {
+  if (isDebug()) {
+    process.stderr.write(`${message}${EOL}`)
+  }
+}
+export const error = (message: string) => { 
+  process.stderr.write(`${_error(message)}${EOL}`)
+}

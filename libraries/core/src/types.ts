@@ -30,13 +30,9 @@ export namespace Core {
     export type setCommandEcho = (enabled: boolean) => void
     export type setFailed = (message: string | Error) => void
 
-    export type isDebug = () => boolean
     export type startGroup = (name: string) => void
     export type endGroup = (name: string) => void
-    /** Writes to STDERR */
     export type debug = (message: string) => void
-    /** Writes to STDOUT */
-    export type info = (message: string) => void
     /** Adds error issue to CR */
     export type error = (message: string | Error, properties: AnnotationProperties) => void
     /** Adds warning issue to CR */
