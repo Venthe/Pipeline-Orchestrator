@@ -1,11 +1,13 @@
 {
-  "name": "@actions/types",
+  "name": "@pipeline/types",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.d.ts",
   "scripts": {
     "tsc": "tsc",
-    "build": "(mkdir -p dist || true) && rm -rf dist/* && tsc --project tsconfig.json"
+    "clean": "(mkdir -p dist || true) && rm -rf dist/*",
+    "build": "npm run --quiet clean && tsc --project tsconfig.json",
+    "build:watch": "npm run --quiet build -- --watch"
   },
   "author": "",
   "license": "MIT",
