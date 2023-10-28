@@ -1,0 +1,70 @@
+version: "3.9"
+services:
+  zookeeper:
+    restart: unless-stopped
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    restart: unless-stopped
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - ${KAFKA_PORT_MQ}:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-ui:
+    restart: unless-stopped
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    ports:
+      - "${KAFKA_UI_PORT_HTTP}:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+
+  mongo:
+    restart: unless-stopped
+    image: mongo
+    ports:
+      - ${MONGODB_PORT_DB}:27017
+
+  mongo-express:
+    restart: unless-stopped
+    image: mongo-express
+    ports:
+      - ${MONGODB_EXPRESS_PORT_HTTP}:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+
+  openldap:
+    image: osixia/openldap:1.5.0
+    ports:
+      - ${OPENLDAP_PORT_LDAP}:389
+      - ${OPENLDAP_PORT_LDAPS}:636
+    volumes:
+      - ./dependencies/ldap/bootstrap.ldif:/ldif/01-bootstrap.ldif:ro
+    environment:
+      LDAP_DOMAIN: example.org
+      LDAP_BASE_DN: dc=example,dc=org
+      LDAP_ADMIN_PASSWORD: secret
+      LDAP_TLS: false
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: false
+      LDAP_SEED_INTERNAL_LDIF_PATH: /ldif
+
+  phpldapadmin:
+    image: osixia/phpldapadmin:0.9.0
+    ports:
+      - ${PHPLDAPADMIN_PORT_HTTP}:80
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: openldap
+      PHPLDAPADMIN_HTTPS: false
