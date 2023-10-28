@@ -1,0 +1,4 @@
+name: 'Action B: node script'
+description: 'Checkout a Git repository at a particular version'
+runs:
+  main: index.js
