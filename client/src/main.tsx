@@ -6,20 +6,21 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { ApplicationContext } from './common/applicationContext';
-import { Root } from './layout';
+import { RootLayout } from './RootLayout';
 import './index.css'
 import { Home } from './home/page';
-import * as projects from './projects/routing';
+// import * as projects from './projects/routing';
+import * as catalog from './catalog/routing';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <RootLayout />,
     children: [
       { path: "/", element: <Home /> },
-      projects.routing
+      catalog.routes
     ]
-  },
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

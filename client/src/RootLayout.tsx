@@ -5,13 +5,13 @@ import "./layout.css"
 import { Notifications } from "./common/notifications";
 import { Modals } from "./common/modals";
 
-export const Root = () => (
+export const RootLayout = () => (
     <ApplicationContext>
         <div id="application-root">
         <header>
             <Navigation></Navigation>
         </header>
-        <main>
+        <main style={{padding: "0 1rem"}}>
             <Outlet />
         </main>
         <Notifications />
