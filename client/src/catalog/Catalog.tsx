@@ -21,6 +21,7 @@ import {
     TableCellLayout,
     TableColumnDefinition,
     createTableColumn,
+    Link as FLink
 } from "@fluentui/react-components";
 import {
     bundleIcon,
@@ -90,13 +91,13 @@ const ComponentGrid = (props: { items: Component[] }) => {
             columnId: "system",
             renderHeaderCell: () => "System",
             //compare: (a, b) => a.lastUpdated.timestamp - b.lastUpdated.timestamp,
-            renderCell: (item) => (<TableCellLayout><a href="#">{item.system}</a></TableCellLayout>),
+            renderCell: (item) => (<TableCellLayout><FLink href="#">{item.system}</FLink></TableCellLayout>),
         }),
         createTableColumn<Component>({
             columnId: "owner",
             renderHeaderCell: () => "Owner",
             //compare: (a, b) => a.lastUpdated.timestamp - b.lastUpdated.timestamp,
-            renderCell: (item) => (<TableCellLayout><a href="#">{item.owner}</a></TableCellLayout>),
+            renderCell: (item) => (<TableCellLayout><FLink href="#">{item.owner}</FLink></TableCellLayout>),
         }),
         createTableColumn<Component>({
             columnId: "type",

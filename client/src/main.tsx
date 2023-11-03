@@ -10,7 +10,7 @@ import { RootLayout } from './RootLayout';
 import './index.css'
 import { Home } from './home/page';
 // import * as projects from './projects/routing';
-import * as catalog from './catalog/routing';
+import * as catalog from './catalog/routes';
 
 const router = createBrowserRouter([
   {
