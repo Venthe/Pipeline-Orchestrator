@@ -35,8 +35,7 @@ export const buildDependencyTree = (jobs: { [key: string]: { needs?: string[] } 
     Object.keys(jobs).map(key => ({ key, value: jobs[key] }))
         .filter(entry => !!entry.value.needs)
         .flatMap(entry =>
-            (entry.value.needs ?? [])
-                .map(needs => ([entry.key, needs] as [string, string]))
+            entry.value.needs?.map(needs => ([entry.key, needs] as [string, string])) ?? []
         )
         .forEach(edge => graph.mergeDirectedEdge(...edge));
 
