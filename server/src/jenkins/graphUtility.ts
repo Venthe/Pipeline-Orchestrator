@@ -14,7 +14,7 @@ export const topologicalGenerations = (graph: Graph): string[][] => {
     // Next we construct all remaining groups. The group k+1 consists of al vertices without incoming arcs if we were
     // to remove all vertices in the previous group k from the graph.
     let result = true
-    while(result) {
+    while (result) {
         groups.push([...group]);
         const nextGroup: string[] = []
         for (const task of group) {
@@ -31,14 +31,17 @@ export const topologicalGenerations = (graph: Graph): string[][] => {
 }
 
 
-export const buildDependencyTree = (jobs: {[key: string]: {needs?: string[]}}): string[][] => {
+export const buildDependencyTree = (jobs: { [key: string]: { needs?: string[] } }): string[][] => {
     const graph = new DirectedGraph();
     Object.keys(jobs).forEach(node => graph.addNode(node))
 
-    Object.keys(jobs).map(key => ({key, value: jobs[key]}))
-      .filter(entry => !!entry.value.needs)
-      .flatMap(entry => (entry.value.needs ?? []).map(needs => ([entry.key, needs] as [string, string])))
-      .forEach(edge => graph.mergeDirectedEdge(...edge));
+    Object.keys(jobs).map(key => ({ key, value: jobs[key] }))
+        .filter(entry => !!entry.value.needs)
+        .flatMap(entry =>
+            (entry.value.needs ?? [])
+              .map(needs => ([entry.key, needs] as [string, string]))
+        )
+        .forEach(edge => graph.mergeDirectedEdge(...edge));
 
     return topologicalGenerations(graph)
 }
