@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  wiremock:
+    restart: unless-stopped
+    image: wiremock/wiremock:3.2.0
+    ports:
+      - "8010:80"
+    volumes:
+      - "./dependencies/wiremock/__files:/home/wiremock/__files"
+      - "./dependencies/wiremock/mappings:/home/wiremock/mappings"
+    environment:
+      WIREMOCK_OPTIONS: "--port 80 --max-request-journal=1000"

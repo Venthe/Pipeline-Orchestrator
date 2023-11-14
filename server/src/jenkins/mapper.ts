@@ -1,0 +1,1 @@
+// export const parseYaml = (data: string): object => {}

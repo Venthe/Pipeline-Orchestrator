@@ -1,0 +1,53 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPattern": "/api/users/([0-9]+)/details"
+      },
+      "response": {
+        "status": 200,
+        "body": "Mocked response for user $1 details"
+      }
+    }
+,    
+    {
+      "request": {
+        "urlPattern": "/test/([a-zA-Z-/]*)",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{{$1}}$1$var"
+      }
+    },
+    {
+      "uuid": "cc4513cb-65f3-471d-98e7-d2d558646aef",
+      "name": "Gitiles->Project->Text",
+      "request": {
+        "urlPathTemplate": "/plugins/gitiles/{project}}/+/{ref}/{file}",
+        "method": "GET",
+        "headers": {
+          "Accept": {
+            "contains": "text/plain"
+          }
+        },
+        "queryParameters": {
+          "format": {
+            "equalTo": "TEXT"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "{{request.path.file}}",
+        "headers": {
+          "Content-Type": "text/plain"
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    }
+  ]
+}
