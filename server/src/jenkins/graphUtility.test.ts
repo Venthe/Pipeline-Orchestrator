@@ -44,19 +44,11 @@ describe("Dependency tree", () => {
             },
             result: [["a"], ["d"], ["b"], ["c"]]
         }
-    ])("build dependency tree", () => {
-        // given
-        const jobs = {
-            d: { needs: ["a", "b"] },
-            b: { needs: ["a"] },
-            c: { needs: ["a"] },
-            a: {}
-        }
-
+    ].map(a=>({...a, name: JSON.stringify(a.result)})))("build dependency tree $name", ({jobs, result: expected}) => {
         // when
-        const result = buildDependencyTree(jobs)
+        const result = buildDependencyTree(jobs as any)
 
         // then
-        expect(result).toEqual([["a"], ["b", "c"], ["d"]])
+        expect(result).toEqual(expected)
     })
 })

@@ -6,7 +6,6 @@ export const topologicalGenerations = (graph: Graph): string[][] => {
     //The first group contains all vertices without incoming arcs
     let group: string[] = []
 
-    graph.outboundEdges()
     Array.from(graph.nodes()).filter(node => graph.outDegree(node) == 0).forEach(node => group.push(node))
     // Next we construct all remaining groups. The group k+1 consists of al vertices without incoming arcs if we were
     // to remove all vertices in the previous group k from the graph.
