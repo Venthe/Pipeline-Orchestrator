@@ -23,6 +23,8 @@ class Context {
     }
 
     generateTree(...projects: string[]) {
+        if (!this.workspaceProjects) throw new Error("context not being initialized")
+
         this.tree = this.parseDependencies(this.workspaceProjects, projects)
         return this.tree
     }
@@ -49,9 +51,11 @@ class Context {
 
     private parseDependencies(deps: { name?: string, directory: string, dependencies: string[] }[], projects?: string[]) {
         return buildDependencyTree(deps.reduce((acc, val) => {
-            acc[val.name] = { needs: val.dependencies }
+            if (val.name) {
+                acc[val.name] = { needs: val.dependencies }
+            }
             return acc
-        }, {}), projects)
+        }, {} as any), projects)
     }
 
     private async loadWorkspaceProjects() {
@@ -72,8 +76,9 @@ class Context {
             // parallel
             for (const col of row) {
                 const project = this.workspaceProjects?.filter(wp => wp.name === col)[0]
+                if(!project) throw new Error("This should not happen")
                 console.log(`${project.directory} - ${col}:${task}`)
-                await this.execTask(task, {cwd: project?.directory ?? ""})
+                await this.execTask(task, { cwd: project?.directory ?? "" })
             }
 
             console.groupEnd()
@@ -82,21 +87,22 @@ class Context {
 
     async execTask(task: string, opts?: SpawnOptionsWithoutStdio) {
         return new Promise((resolve, reject) => {
-            const cmd = spawn(`npm`, ['run', task, "--silent"], opts);
+            const cmd = spawn(`npm`, ['run', task], opts);
 
             cmd.stdout.on('data', (data) => {
                 console.log(data.toString());
             });
-    
+
             cmd.stderr.on('data', (data) => {
                 console.error(data.toString());
             });
-    
+
             cmd.on('exit', (code) => {
-                if(+code === 0) {
-                    resolve(+code)
+                const c = +(code ?? 0)
+                if (c === 0) {
+                    resolve(c)
                 } else {
-                    reject(+code)
+                    reject(c)
                 }
             });
         })
