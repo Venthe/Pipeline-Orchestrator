@@ -1,5 +1,6 @@
 {
   "name": "root",
+  "//dependencies": "TODO: Graphology and graphologhy-dag should be a transitive dependency when my utils for graphs are removed",
   "dependencies": {
     "graphology": "^0.25.4",
     "graphology-dag": "^0.3.0"
