@@ -1,0 +1,22 @@
+{
+  "name": "root",
+  "dependencies": {
+    "graphology": "^0.25.4",
+    "graphology-dag": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/grunt": "^0.4.31",
+    "glob": "^10.3.10",
+    "grunt": "^1.6.1",
+    "pkg-types": "^1.0.3",
+    "ts-node": "^10.9.1",
+    "yaml": "^2.3.4"
+  },
+  "workspaces": [
+    "applications/runner",
+    "applications/server",
+    "applications/actions/*",
+    "libraries/common/*",
+    "libraries/runner/*"
+  ]
+}

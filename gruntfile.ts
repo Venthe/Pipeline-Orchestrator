@@ -117,6 +117,6 @@ grunt.registerTask("default", 'A sample task that logs stuff.', async function (
     const context = new Context("./package.json")
     await context.init()
 
-    context.generateTree("@pipeline/types") // "@pipeline/core"
+    context.generateTree() // "@pipeline/core"
     await context.execute("build")
 })
