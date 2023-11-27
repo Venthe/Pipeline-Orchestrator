@@ -6,8 +6,8 @@
   "scripts": {
     "tsc": "tsc",
     "clean": "(mkdir -p dist || true) && rm -rf dist/*",
-    "build": "tsc --project tsconfig.json",
-    "build:watch": "npm run --silent build -- --watch --preserveWatchOutput"
+    "build": "tsc --build --force",
+    "build:watch": "npm run build -- --watch --preserveWatchOutput"
   },
   "author": "",
   "license": "MIT",

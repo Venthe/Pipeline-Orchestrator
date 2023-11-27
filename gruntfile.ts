@@ -106,7 +106,7 @@ class Context {
 
         for (const i in this.tree) {
             const row = this.tree[i]
-            console.log(`${+i + 1} - ${row}`)
+            console.log(`${row}`)
             console.group()
             // parallel
             for (const col of row) {
@@ -124,9 +124,9 @@ class Context {
                     }
                 }
 
-                await Promise.all(Object.entries(taskConfig.pre ?? {}).map(el => runConditionally(async () => this.execTask(el[0], {...opts, prefix: `${project.directory} - ${col}:${el[0]}`}), el[1].async)))
+                await Promise.all(Object.entries(taskConfig?.pre ?? {}).map(el => runConditionally(async () => this.execTask(el[0], {...opts, prefix: `${project.directory} - ${col}:${el[0]}`}), el[1].async)))
 
-                await runConditionally(async () => this.execTask(target, opts), taskConfig.async)
+                await runConditionally(async () => this.execTask(target, opts), taskConfig?.async)
             }
 
             console.groupEnd()
@@ -134,15 +134,15 @@ class Context {
     }
 
     async execTask(task: string, opts?: SpawnOptionsWithoutStdio & { prefix?: string, colorizer?: (data: string) => string }) {
-        console.debug(`Executing target ${task}`, opts?.prefix)
+        const c = opts?.colorizer ?? ((a: string) => a)
+        // TODO: Remove this set :)
+        //  Too many newlines...
+        const withPrefix = (data: string) => c([...new Set(data.split("\n").map(a => a.trimEnd()).filter(a => a.length > 0).map(d => opts?.prefix ? `[${opts?.prefix}] ${d}` : d))].join("\n"))
+
+        console.debug(withPrefix(`Executing target ${task}`))
 
         return new Promise((resolve, reject) => {
             const cmd = spawn(`npm run --silent ${task}`, [], { ...(opts ?? {}), shell: true });
-
-            const c = opts?.colorizer ?? ((a: string) => a)
-            // TODO: Remove this set :)
-            //  Too many newlines...
-            const withPrefix = (data: string) => c([...new Set(data.split("\n").map(d => opts?.prefix ? `[${opts?.prefix}] ${d}` : d))].join("\n"))
 
             cmd.stdout.on('data', (data) => {
                 console.log(withPrefix(data.toString()));
@@ -181,7 +181,7 @@ grunt.registerTask("run-many", 'A sample task that logs stuff.', async function 
 
     context.generateTree(...options)
 
-    await context.execute(target).catch(e => console.error(e))
+    await context.execute(target).catch(e => console.error("Execution error", e))
 
     const taskConfig: undefined | Target = targets[target]
     if (taskConfig?.async) {
