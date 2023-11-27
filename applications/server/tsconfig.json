@@ -1,14 +1,11 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "moduleResolution": "Node16",
+    "rootDir": "./src",
+    "moduleResolution": "NodeNext",
     "target": "ES2022",
-    "module": "Node16",
-    "outDir": "./dist",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false
+    "module": "NodeNext",
+    "outDir": "./dist"
   },
   "include": [
     "src/**/*.ts"
