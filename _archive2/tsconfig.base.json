@@ -13,7 +13,7 @@
         "declarationMap": true,
         "outDir": "dist",
         "paths": {
-            "@pipeline/types": ["libraries/common/types"],
+            "@pipeline/types": ["node_modules/@pipeline/types/dist"],
             "@pipeline/utilities": ["libraries/runner/utilities"],
             "@pipeline/core": ["libraries/runner/core"]
         }

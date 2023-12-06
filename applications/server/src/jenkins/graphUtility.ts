@@ -35,22 +35,20 @@ type Jobs = {
 
 type Roots = string[]
 
-export const buildDependencyTree = (jobs: Jobs, roots?: Roots): string[][] => {
-    const graph = new DirectedGraph();
+export const provideVerticesAndEdges = (jobs: Jobs, roots?: Roots): {nodes: string[], edges: [string, string][]} => {
+    const nodes: string[] = [];
+    const edges: [string, string][] = []
 
     if (!roots || roots.length === 0) {
-        Object.keys(jobs).forEach(node => graph.addNode(node))
+        Object.keys(jobs).forEach(node => nodes.push(node))
 
         Object.keys(jobs).map(key => ({ key, value: jobs[key] }))
             .filter(entry => !!entry.value.needs)
             .flatMap(entry =>
                 entry.value.needs?.map(needs => ([entry.key, needs] as [string, string])) ?? []
             )
-            .forEach(edge => graph.mergeDirectedEdge(...edge));
+            .forEach(edge => edges.push(edge));
     } else {
-        const nodes: string[] = []
-        const edges: [string, string][] = []
-
         const toVerticies = (_roots: Roots) => Object.entries(jobs)
             .filter(en => _roots.includes(en[0]))
             .reduce((acc, val) => {
@@ -67,11 +65,17 @@ export const buildDependencyTree = (jobs: Jobs, roots?: Roots): string[][] => {
         }
 
         travel(toVerticies(roots))
-
-        new Set(nodes).forEach(node => graph.addNode(node))
-        // TODO: Will fail on edge existing?
-        edges.forEach(edge => graph.mergeDirectedEdge(...edge))
     }
+
+    return {edges: [...new Set(edges)], nodes}
+}
+
+export const buildDependencyTree = (jobs: Jobs, roots?: Roots): string[][] => {
+    const graph = new DirectedGraph();
+    const data = provideVerticesAndEdges(jobs, roots)
+
+    data.nodes.forEach(node => graph.addNode(node))
+    data.edges.forEach(edge => graph.mergeDirectedEdge(...edge))
 
     return topologicalGenerations(graph)
 }

@@ -3,8 +3,12 @@
   "//dependencies": "TODO: Graphology and graphologhy-dag should be a transitive dependency when my utils for graphs are removed",
   "dependencies": {
     "chalk": "^4.1.2",
+    "chokidar": "^3.5.3",
+    "dedent": "^1.5.1",
+    "get-tsconfig": "^4.7.2",
     "graphology": "^0.25.4",
-    "graphology-dag": "^0.3.0"
+    "graphology-dag": "^0.3.0",
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@types/grunt": "^0.4.31",
