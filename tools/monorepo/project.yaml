@@ -1,0 +1,6 @@
+metadata:
+  stereotype: Tool
+configuration:
+  watch:
+    outDir: dist
+    rootDir: src

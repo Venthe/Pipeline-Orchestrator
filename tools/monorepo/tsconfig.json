@@ -5,6 +5,7 @@
         "outDir": "bin",
         "forceConsistentCasingInFileNames": true,
         "declaration": true,
+        "skipLibCheck": true,
         "noImplicitAny": false
     },
     "include": [

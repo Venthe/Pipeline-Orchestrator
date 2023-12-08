@@ -5,6 +5,10 @@ import { ColorManager } from './cli'
 import { buildDependencyTree, provideVerticesAndEdges } from '@venthe/dependency-graph'
 import { resolve } from 'path'
 import { getTsconfig } from 'get-tsconfig'
+import fs from 'fs'
+import * as _path from 'path'
+import { getFile } from './utilities/filesystem'
+import * as YAML from 'yaml'
 
 export class Context {
     root: PackageJson | undefined
@@ -70,11 +74,16 @@ export class Context {
     private static async loadWorkspaceProjects(root: PackageJson) {
         const workspaces = (root.workspaces ?? []);
         const globbedPaths = (await Promise.all(workspaces.map(path => glob(path)))).flatMap(a => a);
-        const loadedDataForDirectories = await Promise.all(globbedPaths.map(async path => ({
-            directory: path,
-            tsconfig: (getTsconfig(resolve(path))?.config) as TSConfig,
-            package: await readPackageJSON(resolve(path))
-        })))
+        const loadedDataForDirectories = await Promise.all(globbedPaths.map(async path => {
+            const _project = getFile({directory: resolve(path), filename:"project", extensions: ["yaml", "yml", "json"]})
+            const project = (_project ? YAML.parse(_project.toString()) : undefined)
+
+            return ({
+                directory: path,
+                project,
+                package: await readPackageJSON(resolve(path))
+            })
+        }))
 
         return loadedDataForDirectories
     }

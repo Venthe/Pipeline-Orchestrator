@@ -4,7 +4,6 @@
         "rootDir": "src",
         "outDir": "dist",
         "forceConsistentCasingInFileNames": true,
-        "emitDeclarationOnly": true,
         "declaration": true
     },
     "include": [
