@@ -1,0 +1,14 @@
+{
+    "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
+    "name": "root",
+    "private": true,
+    "license": "MIT",
+    "//": "applications/client",
+    "workspaces": [
+        "libraries/common/*",
+        "libraries/runner/*",
+        "applications/runner",
+        "applications/server",
+        "applications/actions/*"
+    ]
+}

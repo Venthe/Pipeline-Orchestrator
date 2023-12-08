@@ -14,10 +14,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "@pipeline/process": "*"
   },
   "devDependencies": {
-    "@pipeline/process": "*",
     "@pipeline/types": "*",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.11.19",

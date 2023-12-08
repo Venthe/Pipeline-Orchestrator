@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+        "composite": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "lib": ["es2022"],
+        "skipLibCheck": true,
+        "moduleResolution": "node16",
+        "module": "node16",
+        "target": "es2022",
+        "strict": true,
+        "esModuleInterop": true,
+        "baseUrl": ".",
+        "paths": {
+            "@pipeline/types": ["node_modules/@pipeline/types"],
+            "@pipeline/process": ["node_modules/@pipeline/process"]
+        }
+    }
+}
