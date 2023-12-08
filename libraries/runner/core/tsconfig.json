@@ -1,9 +1,10 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "types": [
-      "node"
-    ]
+    "noImplicitAny": false,
+    "types": ["node"],
+    "rootDir": "src",
+    "outDir": "dist",
   },
   "exclude": [
     "./jest.config.ts",

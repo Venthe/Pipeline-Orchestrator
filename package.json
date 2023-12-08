@@ -4,11 +4,15 @@
     "private": true,
     "license": "MIT",
     "//": "applications/client",
+    "scripts": {
+        "mrp": "npm --silent -w tools/monorepo run build && node ./node_modules/@venthe/monorepo/bin/main.js"
+    },
     "workspaces": [
         "libraries/common/*",
         "libraries/runner/*",
         "applications/runner",
         "applications/server",
-        "applications/actions/*"
+        "applications/actions/*",
+        "tools/*"
     ]
 }

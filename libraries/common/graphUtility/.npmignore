@@ -1,0 +1,3 @@
+jest.config.*
+tsconfig.json
+src/

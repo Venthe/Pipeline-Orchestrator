@@ -1,10 +1,13 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
     "compilerOptions": {
+        "incremental": true,
         "composite": true,
         "declarationMap": true,
         "sourceMap": true,
-        "lib": ["es2022"],
+        "lib": [
+            "es2022"
+        ],
         "skipLibCheck": true,
         "moduleResolution": "node16",
         "module": "node16",
@@ -13,8 +16,19 @@
         "esModuleInterop": true,
         "baseUrl": ".",
         "paths": {
-            "@pipeline/types": ["node_modules/@pipeline/types"],
-            "@pipeline/process": ["node_modules/@pipeline/process"]
+            "@pipeline/types": [
+                "node_modules/@pipeline/types/dist"
+            ],
+            "@pipeline/process": [
+                "node_modules/@pipeline/process/dist"
+            ],
+            "@venthe/dependency-graph": [
+                "node_modules/@venthe/dependency-graph/dist"
+            ]
         }
+    },
+    "watchOptions": {
+        "watchFile": "dynamicPriorityPolling",
+        "watchDirectory": "dynamicPriorityPolling"
     }
 }

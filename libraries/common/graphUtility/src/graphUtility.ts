@@ -54,7 +54,7 @@ export const provideVerticesAndEdges = (jobs: Jobs, roots?: Roots): {nodes: stri
             .reduce((acc, val) => {
                 acc[val[0]] = val[1].needs ?? []
                 return acc
-            }, {})
+            }, {} as any)
 
         const travel: (v: { [key: string]: string[] }) => void = (v) => {
             Object.entries(v).forEach(([name, deps]) => {
