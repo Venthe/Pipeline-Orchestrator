@@ -1,7 +1,7 @@
 import { TSConfig, type PackageJson, readPackageJSON, readTSConfig, resolvePackageJSON } from 'pkg-types'
 import { glob } from 'glob'
 import { SpawnOptionsWithoutStdio, spawn } from 'child_process'
-import { ColorManager } from './cli'
+import { ColorManager } from './utilities/cli'
 import { buildDependencyTree, provideVerticesAndEdges } from '@venthe/dependency-graph'
 import { resolve } from 'path'
 import { getTsconfig } from 'get-tsconfig'

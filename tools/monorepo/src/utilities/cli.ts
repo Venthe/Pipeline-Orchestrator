@@ -1,5 +1,12 @@
 import chalk from 'chalk';
 
+export const Colors = {
+    Red: chalk.red,
+    Yellow: chalk.yellow,
+    Green: chalk.green,
+    BlueBright: chalk.blueBright
+}
+
 export class ColorManager {
     colors = [chalk.red, chalk.yellow, chalk.green, chalk.blueBright]
     currentColor = 0
