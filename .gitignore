@@ -33,11 +33,6 @@ out/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
-.vscode/
-/gradle/
 /gen/
-/gradlew
-/gradlew.bat
 
 .values.yaml
