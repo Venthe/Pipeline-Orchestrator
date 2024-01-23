@@ -4,9 +4,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.events.HandledEvent;
 import eu.venthe.pipeline.orchestrator.events.TriggerEvent;
 import eu.venthe.pipeline.orchestrator.events.contexts.TypeContext;
-import eu.venthe.pipeline.orchestrator.events.impl.PushEvent;
-import eu.venthe.pipeline.orchestrator.events.impl.WorkflowDispatchEvent;
-import eu.venthe.pipeline.orchestrator.events.impl.pull_request.PullRequestFactory;
 import eu.venthe.pipeline.orchestrator.utilities.YamlUtility;
 import eu.venthe.pipeline.orchestrator.workflows.Workflow;
 import org.assertj.core.api.Assertions;
@@ -18,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.time.OffsetDateTime;
 import java.util.function.Consumer;
 
+import static eu.venthe.pipeline.orchestrator.utilities.EventUtility.eventMapper;
 import static eu.venthe.pipeline.orchestrator.utilities.YamlUtility.parseYaml;
 
 class OnContextTest {
@@ -659,22 +657,12 @@ class OnContextTest {
     }
 
     @NotNull
-    private static HandledEvent eventMapper(TriggerEvent event) {
-        return switch (event.getType()) {
-            case WORKFLOW_DISPATCH -> event.specify(WorkflowDispatchEvent::new);
-            case PUSH -> event.specify(PushEvent::new);
-            case PULL_REQUEST -> new PullRequestFactory().create(event);
-            default -> throw new UnsupportedOperationException("Unhandled event: " + event.getType().getValue());
-        };
-    }
-
-    @NotNull
     private static Workflow getWorkflow(String value) {
         if (value == null) {
-            return new Workflow(null, null, null);
+            return new Workflow(null, null);
         }
         ObjectNode workflow = value.isBlank() ? YamlUtility.getNodeFactory().objectNode() : (ObjectNode) parseYaml(value);
-        return new Workflow(workflow, new Workflow.WorkflowRef("Test-Repository", "main", ".pipeline/workflows/test.yaml"), "null");
+        return new Workflow(workflow, new Workflow.WorkflowRef("Test-Repository", "main", ".pipeline/workflows/test.yaml", "sha"));
     }
 
     @NotNull

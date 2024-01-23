@@ -38,6 +38,7 @@ class GraphUtilityTest {
         Assertions.assertThat(result).isEqualTo(of(of("a"), of("b", "c"), of("d")));
     }
 
+    @Test
     void test2() {
         // given
         var jobs = parseYaml("""
@@ -52,6 +53,7 @@ class GraphUtilityTest {
         Assertions.assertThat(result).isEqualTo(of(of("a")));
     }
 
+    @Test
     void test3() {
         // given
         var jobs = parseYaml("""
@@ -72,6 +74,7 @@ class GraphUtilityTest {
         Assertions.assertThat(result).isEqualTo(of(of("a"), of("b", "c", "d")));
     }
 
+    @Test
     void test4() {
         // given
         var jobs = parseYaml("""
@@ -96,6 +99,7 @@ class GraphUtilityTest {
         Assertions.assertThat(result).isEqualTo(of(of("a"), of("d"), of("b", "c")));
     }
 
+    @Test
     void test5() {
         // given
         var jobs = parseYaml("""
@@ -116,6 +120,36 @@ class GraphUtilityTest {
 
         // then
         Assertions.assertThat(result).isEqualTo(of(of("a"), of("d"), of("b"), of("c")));
+    }
+
+    @Test
+    void test6() {
+        // given
+        var jobs = parseYaml("""
+        a: {}
+        b:
+          needs:
+            - a
+        c:
+          needs:
+            - b
+        d:
+          needs:
+            - a
+        e:
+          needs:
+            - a
+        f:
+          needs:
+            - a
+            - d
+        """);
+
+        // when
+        var result = buildDependencyTree(jobs);
+
+        // then
+        Assertions.assertThat(result).isEqualTo(of(of("a"), of("b", "d", "e"), of("c", "f")));
     }
 
     @SneakyThrows

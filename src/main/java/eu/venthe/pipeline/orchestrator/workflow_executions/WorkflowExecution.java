@@ -9,6 +9,7 @@ import eu.venthe.pipeline.orchestrator.workflows.Workflow;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -120,5 +121,35 @@ public class WorkflowExecution {
                 .collect(MoreCollectors.toOptional())
                 .orElseThrow()
                 .setStatus(jobExecutionStatus);
+    }
+
+    public NewJobsDto getNewJobs() {
+        NewJobsDto newJobsDto = new NewJobsDto();
+
+        List<List<String>> jobOrder = workflow.getJobs().getTree();
+
+        jobOrder.forEach(jobSet -> {
+            jobStates.add(jobSet.stream().collect(toMap(UnaryOperator.identity(), jobId -> JobState.initialize(jobId, workflow.getJobs().getJob(jobId)))));
+        });
+        newJobsDto.addJob();
+        return newJobsDto;
+    }
+
+    @Getter
+    public class NewJobsDto {
+        Set<JobDto> jobs = new HashSet<>();
+
+        public void addJob() {
+
+        }
+
+        @Getter
+        @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+        @RequiredArgsConstructor
+        @ToString
+        public class JobDto {
+            @EqualsAndHashCode.Include
+            private final String id;
+        }
     }
 }

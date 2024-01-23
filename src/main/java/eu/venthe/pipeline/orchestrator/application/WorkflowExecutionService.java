@@ -49,7 +49,7 @@ public class WorkflowExecutionService {
             objectNode.set("runAttempt", objectMapper.getNodeFactory().numberNode(1));
             objectNode.set("workflow", objectMapper.getNodeFactory().textNode(workflow.getName()));
             objectNode.set("workflowRef", objectMapper.getNodeFactory().textNode(workflow.getRef().toRef()));
-            objectNode.set("workflowSha", objectMapper.getNodeFactory().textNode(workflow.getSha()));
+            objectNode.set("workflowSha", objectMapper.getNodeFactory().textNode(workflow.getRef().getSha()));
 
             objectNode.set("projectName", objectMapper.getNodeFactory().textNode("Example-Project"));
             objectNode.set("ref", objectMapper.getNodeFactory().textNode("refs/heads/main"));

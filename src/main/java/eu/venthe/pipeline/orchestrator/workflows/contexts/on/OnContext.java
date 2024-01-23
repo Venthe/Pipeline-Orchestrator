@@ -20,8 +20,12 @@ import static java.util.Optional.ofNullable;
 public class OnContext {
     private final JsonNode root;
 
-    public static Optional<OnContext> create(ObjectNode root) {
-        return ofNullable(root.get("on")).map(OnContext::new);
+    public static Optional<OnContext> create(JsonNode on) {
+        return ofNullable(on).map(OnContext::new);
+    }
+
+    public static OnContext ensure(JsonNode on) {
+        return create(on).orElseThrow(() -> new IllegalArgumentException("On must exist"));
     }
 
     public Boolean on(HandledEvent event) {

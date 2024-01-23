@@ -39,7 +39,7 @@ public class WorkflowDispatchEventHandler implements TypedEventHandler {
                 .map(data -> new String(data, StandardCharsets.UTF_8))
                 .map(this::parseYaml)
                 .map(ObjectNode.class::cast)
-                .map(root -> new Workflow(root, null, null))
+                .map(root -> new Workflow(root, null))
                 .orElseThrow();
 
         log.trace("Workflow loaded {}", workflow);

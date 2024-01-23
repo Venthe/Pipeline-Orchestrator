@@ -1,11 +1,11 @@
 package eu.venthe.pipeline.orchestrator.workflows;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.events.HandledEvent;
 import eu.venthe.pipeline.orchestrator.workflows.contexts.*;
 import eu.venthe.pipeline.orchestrator.workflows.contexts.on.OnContext;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,23 +17,19 @@ import java.util.Optional;
 public class Workflow {
 
     private final ObjectNode root;
-    private final String sha;
     private final WorkflowRef ref;
     private final OnContext onContext;
     private JobsContext jobsContext;
 
-    public Workflow(ObjectNode root, WorkflowRef workflowRef, String sha) {
+    public Workflow(ObjectNode root, WorkflowRef workflowRef) {
         if (root == null) throw new IllegalArgumentException("Workflow should not be null");
-        if (sha == null) throw new IllegalArgumentException("Sha should not be null");
         if (workflowRef == null) throw new IllegalArgumentException("WorkflowRef should not be null");
 
         this.root = root;
         this.ref = workflowRef;
-        this.sha = sha;
 
-        onContext = OnContext.create(root)
-                .orElseThrow(() -> new RuntimeException("There is no \"on\" property, this workflow will never run"));
-        jobsContext = JobsContext.create(root).orElseThrow();
+        onContext = OnContext.ensure(root.get("on"));
+        jobsContext = JobsContext.ensure(root.get("jobs"));
     }
 
     /**
@@ -78,9 +74,14 @@ public class Workflow {
     @RequiredArgsConstructor
     @Getter
     public static class WorkflowRef {
+        @NonNull
         private final String repositoryName;
+        @NonNull
         private final String ref;
+        @NonNull
         private final String filePath;
+        @NonNull
+        private final String sha;
 
         public String toRef() {
             return MessageFormat.format("{0}@{1}:{2}", repositoryName, ref, filePath);

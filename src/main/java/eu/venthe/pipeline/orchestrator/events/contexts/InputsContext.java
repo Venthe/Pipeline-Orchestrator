@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static com.google.common.collect.MoreCollectors.toOptional;
 import static java.util.Arrays.stream;
@@ -23,9 +24,17 @@ import static java.util.Arrays.stream;
  * Inputs to the workflow. Each key represents the name of the input while it's value represents the value of that input.
  */
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class InputsContext {
     private final ObjectNode root;
+
+    private InputsContext(ObjectNode root) {
+        this.root = Optional.ofNullable(root)
+                .filter(JsonNode::isObject)
+                .filter(e -> StreamSupport.stream(e.spliterator(), false)
+                        .allMatch(a -> a == null || a.isNull() || a.isBoolean() || a.isNumber() || a.isTextual())
+                )
+                .orElseThrow();
+    }
 
     public static Optional<InputsContext> create(JsonNode root) {
         return ContextUtilities.get(InputsContext::new, root);

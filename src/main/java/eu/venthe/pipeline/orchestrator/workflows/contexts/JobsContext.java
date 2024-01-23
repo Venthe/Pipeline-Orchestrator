@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.workflows.contexts;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.utilities.GraphUtility;
@@ -13,8 +14,12 @@ import java.util.stream.Collectors;
 public class JobsContext {
     private final ObjectNode root;
 
-    public static Optional<JobsContext> create(ObjectNode root) {
-        return ContextUtilities.get(JobsContext::new, root.get("jobs"));
+    public static Optional<JobsContext> create(JsonNode root) {
+        return ContextUtilities.get(JobsContext::new, root);
+    }
+
+    public static JobsContext ensure(JsonNode root) {
+        return create(root).orElseThrow(() -> new IllegalArgumentException("Jobs must exist"));
     }
 
     public List<List<String>> getTree() {
