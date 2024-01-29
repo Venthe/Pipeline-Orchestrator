@@ -1,6 +1,7 @@
 package eu.venthe.pipeline.orchestrator.events.impl;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.events.contexts.common.InputsContext;
 import eu.venthe.pipeline.orchestrator.events.AbstractHandledEvent;
 import eu.venthe.pipeline.orchestrator.events.contexts.*;
 import eu.venthe.pipeline.orchestrator.events.contexts.common.RefContext;

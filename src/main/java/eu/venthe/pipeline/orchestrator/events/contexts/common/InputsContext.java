@@ -1,21 +1,18 @@
-package eu.venthe.pipeline.orchestrator.events.contexts;
+package eu.venthe.pipeline.orchestrator.events.contexts.common;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.common_contexts.JsonInputs;
 import eu.venthe.pipeline.orchestrator.utilities.ContextUtilities;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import static com.google.common.collect.MoreCollectors.toOptional;
 import static java.util.Arrays.stream;
@@ -27,13 +24,12 @@ import static java.util.Arrays.stream;
 public final class InputsContext {
     private final ObjectNode root;
 
+    private final JsonInputs jsonInputs;
+
     private InputsContext(ObjectNode root) {
-        this.root = Optional.ofNullable(root)
-                .filter(JsonNode::isObject)
-                .filter(e -> StreamSupport.stream(e.spliterator(), false)
-                        .allMatch(a -> a == null || a.isNull() || a.isBoolean() || a.isNumber() || a.isTextual())
-                )
-                .orElseThrow();
+        this.root = root;
+
+        jsonInputs = new JsonInputs(this.root);
     }
 
     public static Optional<InputsContext> create(JsonNode root) {
@@ -45,7 +41,7 @@ public final class InputsContext {
     }
 
     public Set<ValueType> getValueTypes() {
-        return root.properties().stream()
+        return jsonInputs.getValues().entrySet().stream()
                 .map(e -> {
                     String key = e.getKey();
                     JsonNode node = e.getValue();
@@ -82,7 +78,6 @@ public final class InputsContext {
 
         @Getter
         @RequiredArgsConstructor
-
         public enum Type {
             BOOLEAN("boolean"),
             STRING("string"),

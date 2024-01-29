@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.workflows.contexts.on;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.events.contexts.InputsContext;
+import eu.venthe.pipeline.orchestrator.events.contexts.common.InputsContext;
 import eu.venthe.pipeline.orchestrator.utilities.ContextUtilities;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
