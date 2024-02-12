@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+
+  # https://wiremock:org/docs/standalone/docker
+  wiremock:
+    image: docker.io/wiremock/wiremock:3.3.1
+    container_name: wiremock
+    ports:
+      - ":8443"
+      - "${WIREMOCK_PORT_HTTP}:8080"
+    volumes:
+      - ./wiremock/__files:/home/wiremock/__files
+      - ./wiremock/mappings:/home/wiremock/mappings
+    command:
+      - --global-response-templating
+      # - --disable-gzip
+      - --verbose
