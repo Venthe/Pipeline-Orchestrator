@@ -1,7 +1,8 @@
-package eu.venthe.pipeline.orchestrator.plugins.plugin.gerrit.utils;
+package eu.venthe.pipeline.orchestrator.plugins.gerrit.utils;
 
-import eu.venthe.pipeline.orchestrator.plugins.plugin.gerrit.config.GerritBindingConfiguration;
+import eu.venthe.pipeline.orchestrator.plugins.gerrit.config.GerritBindingConfiguration;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
@@ -9,17 +10,29 @@ import java.util.Base64;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.List.of;
+import static java.util.UUID.randomUUID;
 
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class GerritHeaders {
-    private final GerritBindingConfiguration configuration;
 
-    public HttpHeaders prepareHeaders(String traceId) {
+    public HttpEntity<?> prepareHeaders(GerritBindingConfiguration configuration) {
+        return prepareHeaders(configuration, getTraceId());
+    }
+
+    private HttpEntity<?> prepareHeaders(GerritBindingConfiguration configuration, String traceId) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.put("X-Gerrit-Trace", of(traceId));
         httpHeaders.put("Authorization", of(getBasicAuth(configuration.getUsername() + ":" + configuration.getPassword())));
-        return httpHeaders;
+        return entityFromHeaders(httpHeaders);
+    }
+
+    private static String getTraceId() {
+        return randomUUID().toString();
+    }
+
+    private static HttpEntity<?> entityFromHeaders(HttpHeaders httpHeaders1) {
+        return new HttpEntity<>(httpHeaders1);
     }
 
     public static String getBasicAuth(String value) {

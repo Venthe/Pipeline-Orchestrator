@@ -1,6 +1,6 @@
 server:
   shutdown: graceful
-  port: 8080
+  port: 8081
 spring:
   main:
     banner-mode: off
@@ -11,25 +11,24 @@ logging:
     org:
       springframework:
         web: TRACE
-
----
-
 #versionControlSystem: gerrit
 #jobExecutor: docker
 plugins:
   jobExecutor:
-    docker_1:
-      pluginId: docker
+    type: docker
+    properties:
       connectionType: local
   versionControlSystem:
     gerrit_1:
-      pluginId: gerrit
-      url: https://gerrit.home.arpa
-      username: admin
-      password: secret
+      type: gerrit
+      properties:
+        url: https://gerrit.home.arpa
+        username: admin
+        password: secret
   projectProvider:
     gerrit_1:
-      pluginId: gerrit
-      url: https://gerrit.home.arpa
-      username: admin
-      password: secret
+      type: gerrit
+      properties:
+        url: https://gerrit.home.arpa
+        username: admin
+        password: secret

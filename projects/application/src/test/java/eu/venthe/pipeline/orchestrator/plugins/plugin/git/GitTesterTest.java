@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.plugins.plugin.git;
 
 import lombok.SneakyThrows;
@@ -11,4 +12,4 @@ class GitTesterTest {
     void name() {
         GitTester.cloneRemoteRepository("https://gerrit.home.arpa/a/actions");
     }
-}
+}*/

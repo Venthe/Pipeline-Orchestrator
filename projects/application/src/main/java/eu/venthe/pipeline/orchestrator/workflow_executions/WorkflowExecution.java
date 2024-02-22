@@ -1,10 +1,8 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.MoreCollectors;
 import eu.venthe.pipeline.orchestrator.events.HandledEvent;
-import eu.venthe.pipeline.orchestrator.infrastructure.JobExecutor;
+import eu.venthe.pipeline.orchestrator.plugins.JobExecutor;
 import eu.venthe.pipeline.orchestrator.workflows.Workflow;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

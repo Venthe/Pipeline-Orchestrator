@@ -17,6 +17,9 @@ val versionsJackson = "2.14.2";
 
 dependencies {
     implementation(project(":plugin-api"))
+    implementation(project(":plugin-docker"))
+    implementation(project(":plugin-gerrit"))
+    implementation(project(":utilities"))
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -48,16 +51,12 @@ dependencies {
     // testImplementation("org.testcontainers:mongodb:$versionsTestcontainers")
     // testImplementation("org.testcontainers:mockserver:$versionsTestcontainers")
 
-    // Executors: Docker
-    implementation("com.github.docker-java:docker-java:3.3.4")
-    implementation("com.github.docker-java:docker-java-transport-zerodep:3.3.4")
     // https://mvnrepository.com/artifact/org.apache.commons/commons-text
-    implementation("org.apache.commons:commons-text:1.11.0")
+    implementation("org.apache.commons:commons-text:1.11.0")// https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation("commons-io:commons-io:2.15.1")
 
     implementation("com.google.guava:guava:33.0.0-jre")
     implementation("org.jgrapht:jgrapht-core:1.5.2")
-
-    implementation("org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r")
 
     // MongoDB
     // implementation("org.springframework.boot:spring-boot-starter-data-mongodb")

@@ -25,10 +25,15 @@ tasks.withType<Test> {
 }
 
 
-val versionsTestcontainers = "1.17.6";
-val versionsJackson = "2.14.2";
+val versionsTestcontainers = "1.17.6"
 
 dependencies {
+    constraints {
+        implementation("org.springframework:spring-context:6.1.3")
+        implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+        implementation("org.springframework:spring-web:6.1.3")
+    }
+
     testImplementation("org.testcontainers:junit-jupiter:$versionsTestcontainers")
 }
 

@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.infrastructure;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.application.WorkflowExecutionService;
+import eu.venthe.pipeline.orchestrator.plugins.JobExecutor;
 import eu.venthe.pipeline.orchestrator.workflow_executions.JobExecutionStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

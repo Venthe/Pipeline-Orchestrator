@@ -4,5 +4,3 @@ dependencyResolutionManagement {
         create("libs", { from(files("../gradle/libs.versions.toml")) })
     }
 }
-
-rootProject.name = "test-gradle-build-logic"

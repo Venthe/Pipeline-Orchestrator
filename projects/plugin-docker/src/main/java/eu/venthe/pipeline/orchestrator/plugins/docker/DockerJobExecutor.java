@@ -1,19 +1,16 @@
-package eu.venthe.pipeline.orchestrator.infrastructure.docker;
+package eu.venthe.pipeline.orchestrator.plugins.docker;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerCmd;
 import com.github.dockerjava.api.command.CreateContainerResponse;
-import eu.venthe.pipeline.orchestrator.infrastructure.JobExecutor;
+import eu.venthe.pipeline.orchestrator.plugins.JobExecutor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-@ConditionalOnBean(DockerClient.class)
 public class DockerJobExecutor implements JobExecutor {
     private final DockerClient dockerClient;
 
@@ -34,7 +31,7 @@ public class DockerJobExecutor implements JobExecutor {
                             "PIPELINE_JOB_NAME=" + jobId
                     )
                     .withTty(true)
-                    .withName("action_runner-"+ UUID.randomUUID())
+                    .withName("action_runner-" + UUID.randomUUID())
                     .exec();
             dockerClient.startContainerCmd(exec.getId()).exec();
         }

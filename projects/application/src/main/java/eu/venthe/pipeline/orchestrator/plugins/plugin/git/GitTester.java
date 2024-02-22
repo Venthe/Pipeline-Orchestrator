@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.plugins.plugin.git;
 
 import lombok.extern.slf4j.Slf4j;
@@ -97,3 +98,4 @@ public class GitTester {
         }
     }
 }
+*/

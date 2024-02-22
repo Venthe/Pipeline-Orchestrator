@@ -18,5 +18,5 @@ pluginManagement {
 
 rootProject.name = "orchestrator"
 
-includeNestedProject("application", "plugin-api", "plugin-docker", "plugin-gerrit")
+includeNestedProject("application", "plugin-api", "plugin-docker", "plugin-gerrit", "utilities")
 

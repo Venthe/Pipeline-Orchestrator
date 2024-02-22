@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import eu.venthe.pipeline.orchestrator.events.TriggerEvent;
 import eu.venthe.pipeline.orchestrator.events.impl.WorkflowDispatchEvent;
-import eu.venthe.pipeline.orchestrator.infrastructure.JobExecutor;
+import eu.venthe.pipeline.orchestrator.plugins.JobExecutor;
 import eu.venthe.pipeline.orchestrator.plugins.VersionControlSystem;
 import eu.venthe.pipeline.orchestrator.event_handlers.TypedEventHandler;
 import eu.venthe.pipeline.orchestrator.events.model.EventType;

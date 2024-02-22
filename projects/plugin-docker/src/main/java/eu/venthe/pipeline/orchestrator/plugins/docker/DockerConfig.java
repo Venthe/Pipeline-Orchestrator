@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.configuration;
+package eu.venthe.pipeline.orchestrator.plugins.docker;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
@@ -6,14 +6,12 @@ import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.transport.DockerHttpClient;
 import com.github.dockerjava.zerodep.ZerodepDockerHttpClient;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
 
 @Configuration
-//@ConditionalOnProperty(value = "jobExecutor", havingValue = "docker", matchIfMissing = false)
 public class DockerConfig {
 
     @Bean
