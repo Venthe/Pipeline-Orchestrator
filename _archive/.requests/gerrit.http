@@ -2,8 +2,9 @@
 
 ### List Projects
 
-GET {{gerritUrl}}/a/projects/?d
-Authorization: Basic {{username}} {{password}}
+GET https://gerrit.home.arpa/a/config/server/info
+X-Gerrit-Trace: 9a1a0008-d727-4da2-a017-8a760eaadd18
+Authorization: Basic YWRtaW46c2VjcmV0
 
 ### Get Project
 

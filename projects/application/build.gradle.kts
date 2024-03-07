@@ -15,12 +15,11 @@ version = "0.0.1-SNAPSHOT"
 val versionsTestcontainers = "1.17.6";
 val versionsJackson = "2.14.2";
 
-dependencies {
-    implementation(project(":plugin-api"))
-    implementation(project(":plugin-docker"))
-    implementation(project(":plugin-gerrit"))
-    implementation(project(":utilities"))
+val dependencyVersions = mapOf(
+        "dockerJava" to "3.3.4"
+)
 
+dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
     // implementation("org.jetbrains:annotations:23.0.0")
@@ -57,6 +56,16 @@ dependencies {
 
     implementation("com.google.guava:guava:33.0.0-jre")
     implementation("org.jgrapht:jgrapht-core:1.5.2")
+
+    implementation("org.togglz:togglz-spring-boot-starter:3.1.2")
+
+    implementation("org.springframework:spring-context")
+    implementation("com.fasterxml.jackson.core:jackson-databind")
+    implementation("org.springframework:spring-web")
+
+    implementation("org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r")
+    implementation("com.github.docker-java:docker-java:${dependencyVersions["dockerJava"]}")
+    implementation("com.github.docker-java:docker-java-transport-zerodep:${dependencyVersions["dockerJava"]}")
 
     // MongoDB
     // implementation("org.springframework.boot:spring-boot-starter-data-mongodb")

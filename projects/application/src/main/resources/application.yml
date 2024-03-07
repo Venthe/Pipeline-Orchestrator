@@ -8,9 +8,14 @@ spring:
     check-template-location: false
 logging:
   level:
-    org:
-      springframework:
-        web: TRACE
+    "org.apache.http": DEBUG
+    "org.springframework.web": TRACE
+    "org.springframework.web.client": TRACE
+    "org.springframework.web.client.RestTemplate": TRACE
+togglz:
+  features:
+    PROJECTS_SOURCE_CONFIGURATION_FACTORY_WIP:
+      enabled: true
 #versionControlSystem: gerrit
 #jobExecutor: docker
 plugins:
