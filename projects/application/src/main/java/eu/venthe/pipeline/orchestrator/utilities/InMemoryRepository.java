@@ -8,7 +8,7 @@ import java.util.Optional;
 import static java.util.Collections.unmodifiableCollection;
 import static java.util.Optional.ofNullable;
 
-public class InMemoryRepository<ID, OBJECT> {
+public class InMemoryRepository<OBJECT, ID> {
     private final Map<ID, OBJECT> repository = new HashMap<>();
 
     public Optional<OBJECT> getById(ID id) {

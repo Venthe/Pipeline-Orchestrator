@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import eu.venthe.pipeline.orchestrator._archive2.events.HandledEvent;
+import eu.venthe.pipeline.orchestrator._archive2.events.model.EventType;
 import eu.venthe.pipeline.orchestrator._archive2.workflow_executions.WorkflowExecution;
 import eu.venthe.pipeline.orchestrator._archive2.workflow_executions.WorkflowExecution.NewJobsDto;
 import eu.venthe.pipeline.orchestrator._archive2.workflows.Workflow;
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.mock;
 
 class WorkflowExecutionTest {
+    private static final EventType WORKFLOW_DISPATCH = null;
     private static final ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
     public static final Workflow.WorkflowRef REF = new Workflow.WorkflowRef("Example", "refs/heads/main", ".pipeline/workflows/test.yml", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
 

@@ -2,6 +2,7 @@ package eu.venthe.pipeline.orchestrator._archive2.smoke;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import eu.venthe.pipeline.orchestrator.AbstractIntegrationTest;
 import eu.venthe.pipeline.orchestrator._archive2.application.WorkflowTriggerService;
 import eu.venthe.pipeline.orchestrator._archive2.events.TriggerEvent;
@@ -25,6 +26,7 @@ class WorkflowDispatchTest extends AbstractIntegrationTest {
 //    TestVersionControlSystem testVersionControlSystem;
     @Autowired
     WorkflowExecutionRepository workflowExecutionRepository;
+    YAMLMapper yamlMapper = null;
 
     @Test
     void _1() throws JsonProcessingException {

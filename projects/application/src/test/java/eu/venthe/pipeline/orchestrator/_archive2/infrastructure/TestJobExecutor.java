@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator._archive2.infrastructure;
 
 import eu.venthe.pipeline.orchestrator._archive2.application.WorkflowExecutionService;
-import eu.venthe.pipeline.orchestrator.plugins.JobExecutor;
+import eu.venthe.pipeline.orchestrator._archive2.plugins.api.JobExecutor;
 import eu.venthe.pipeline.orchestrator._archive2.workflow_executions.JobExecutionStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

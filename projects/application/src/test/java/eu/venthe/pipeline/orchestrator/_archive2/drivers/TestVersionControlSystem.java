@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator._archive2.drivers;
 
-import eu.venthe.pipeline.orchestrator.plugins.VersionControlSystem;
+import eu.venthe.pipeline.orchestrator._archive2.plugins.api.VersionControlSystem;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;

@@ -8,6 +8,8 @@ import eu.venthe.pipeline.orchestrator._archive2.events.TriggerEvent;
 import eu.venthe.pipeline.orchestrator._archive2.events.impl.WorkflowDispatchEvent;
 import eu.venthe.pipeline.orchestrator._archive2.events.model.EventType;
 import eu.venthe.pipeline.orchestrator._archive2.infrastructure.WorkflowExecutionRepository;
+import eu.venthe.pipeline.orchestrator._archive2.plugins.api.JobExecutor;
+import eu.venthe.pipeline.orchestrator._archive2.plugins.api.VersionControlSystem;
 import eu.venthe.pipeline.orchestrator._archive2.workflow_executions.WorkflowExecution;
 import eu.venthe.pipeline.orchestrator._archive2.workflows.Workflow;
 import lombok.RequiredArgsConstructor;
