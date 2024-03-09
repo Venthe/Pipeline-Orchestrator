@@ -57,7 +57,8 @@ dependencies {
     implementation("com.google.guava:guava:33.0.0-jre")
     implementation("org.jgrapht:jgrapht-core:1.5.2")
 
-    implementation("org.togglz:togglz-spring-boot-starter:3.1.2")
+    implementation("org.togglz:togglz-spring-boot-starter:4.4.0")
+
 
     implementation("org.springframework:spring-context")
     implementation("com.fasterxml.jackson.core:jackson-databind")
@@ -65,7 +66,10 @@ dependencies {
 
     implementation("org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r")
     implementation("com.github.docker-java:docker-java:${dependencyVersions["dockerJava"]}")
-    implementation("com.github.docker-java:docker-java-transport-zerodep:${dependencyVersions["dockerJava"]}")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+    // https://mvnrepository.com/artifact/com.github.docker-java/docker-java-transport-zerodep
+    implementation("com.github.docker-java:docker-java-transport-zerodep:3.3.6")
+
 
     // MongoDB
     // implementation("org.springframework.boot:spring-boot-starter-data-mongodb")

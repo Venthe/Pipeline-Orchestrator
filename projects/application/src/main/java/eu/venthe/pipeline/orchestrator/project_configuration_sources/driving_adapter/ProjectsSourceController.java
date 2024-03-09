@@ -1,7 +1,7 @@
-package eu.venthe.pipeline.orchestrator.projects_source.driving_adapter;
+package eu.venthe.pipeline.orchestrator.project_configuration_sources.driving_adapter;
 
-import eu.venthe.pipeline.orchestrator.projects_source.core.application.ProjectsSourceConfigurationService;
-import eu.venthe.pipeline.orchestrator.projects_source.core.domain.ProjectSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.application.ProjectsSourceConfigurationService;
+import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain.ProjectSourceConfigurationId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

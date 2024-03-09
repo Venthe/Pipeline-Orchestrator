@@ -1,8 +1,9 @@
-package eu.venthe.pipeline.orchestrator.projects_source.core.application;
+package eu.venthe.pipeline.orchestrator.project_configuration_sources.core.application;
 
-import eu.venthe.pipeline.orchestrator.projects_source.core.domain.ProjectSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.projects_source.core.domain.ProjectSourceConfigurationFactory;
-import eu.venthe.pipeline.orchestrator.projects_source.core.domain.ProjectSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain.ProjectSourceConfiguration;
+import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain.ProjectSourceConfigurationFactory;
+import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain.ProjectSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain.ProjectSourceVisitor;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,11 +54,15 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
 
     @Override
     public Set<ProjectSourceConfigurationDto> listConfigurations() {
-        throw new UnsupportedOperationException();
+        return repository.findAll().stream().map(a -> a.visitor(visitor)).collect(Collectors.toSet());
     }
 
     @Override
     public Optional<ProjectSourceConfigurationDto> getConfiguration(ProjectSourceConfigurationId projectSourceConfigurationId) {
         throw new UnsupportedOperationException();
     }
+
+    private ProjectSourceVisitor<ProjectSourceConfigurationDto> visitor = () -> {
+        throw new UnsupportedOperationException();
+    };
 }

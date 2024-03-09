@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects_source.core.domain;
+package eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain;
 
 import lombok.Getter;
 import org.togglz.core.Feature;

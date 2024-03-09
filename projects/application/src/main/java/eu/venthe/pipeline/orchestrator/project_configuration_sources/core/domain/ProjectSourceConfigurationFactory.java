@@ -1,7 +1,7 @@
-package eu.venthe.pipeline.orchestrator.projects_source.core.domain;
+package eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain;
 
-import eu.venthe.pipeline.orchestrator.projects_source.core.application.ProjectSourceConfigurationDto;
-import eu.venthe.pipeline.orchestrator.projects_source.core.domain.events.ProjectSourceConfigurationAddedEvent;
+import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.application.ProjectSourceConfigurationDto;
+import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain.events.ProjectSourceConfigurationAddedEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;

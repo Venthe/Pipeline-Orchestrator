@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects_source.core.domain;
+package eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain;
 
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import lombok.EqualsAndHashCode;
@@ -21,5 +21,9 @@ public class ProjectSourceConfiguration {
 
     public Collection<DomainEvent> delete() {
         throw new UnsupportedOperationException();
+    }
+
+    public <T> T visitor(ProjectSourceVisitor<T> visitor) {
+        return visitor.visit();
     }
 }
