@@ -2,10 +2,14 @@ package eu.venthe.pipeline.orchestrator.config;
 
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.Envelope;
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.MessageBroker;
+import eu.venthe.pipeline.orchestrator.infrastructure.repository.InMemoryRepository;
 import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.application.ProjectsSourceRepository;
 import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain.ProjectSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain.ProjectSourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.infrastructure.repository.InMemoryRepository;
+import eu.venthe.pipeline.orchestrator.projects.core.Project;
+import eu.venthe.pipeline.orchestrator.projects.core.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.core.ProjectRepository;
+import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import org.springframework.context.annotation.Bean;
@@ -19,29 +23,12 @@ import java.util.stream.Collectors;
 public class RepositoryConfiguration {
     @Bean
     ProjectsSourceRepository projectsSourceRepository() {
-        return new ProjectsSourceRepository() {
-            private final InMemoryRepository<ProjectSourceConfiguration, ProjectSourceConfigurationId> repository = new InMemoryRepository<>();
+        return new ProjectsSourceRepositoryImpl();
+    }
 
-            @Override
-            public void save(ProjectSourceConfiguration configuration) {
-                repository.save(configuration.getId(), configuration);
-            }
-
-            @Override
-            public Optional<ProjectSourceConfiguration> find(ProjectSourceConfigurationId projectSourceConfigurationId) {
-                return repository.getById(projectSourceConfigurationId);
-            }
-
-            @Override
-            public void delete(ProjectSourceConfigurationId projectSourceConfigurationId) {
-                repository.delete(projectSourceConfigurationId);
-            }
-
-            @Override
-            public Collection<ProjectSourceConfiguration> findAll() {
-                return repository.getAll();
-            }
-        };
+    @Bean
+    ProjectRepository projectRepository() {
+        return new ProjectRepositoryImpl();
     }
 
     @Bean
@@ -57,5 +44,32 @@ public class RepositoryConfiguration {
                 broker.publish(new Envelope<>(event));
             }
         };
+    }
+
+    private static class ProjectsSourceRepositoryImpl extends DomainRepositoryImpl<ProjectSourceConfiguration, ProjectSourceConfigurationId> implements ProjectsSourceRepository {
+    }
+
+    private static class ProjectRepositoryImpl extends DomainRepositoryImpl<Project, ProjectId> implements ProjectRepository {
+    }
+
+    private static class DomainRepositoryImpl<AGGREGATE extends Aggregate<AGGREGATE_ID>, AGGREGATE_ID> implements eu.venthe.pipeline.orchestrator.shared_kernel.DomainRepository<AGGREGATE, AGGREGATE_ID> {
+
+        private final InMemoryRepository<AGGREGATE, AGGREGATE_ID> repository = new InMemoryRepository<>();
+
+        public void save(AGGREGATE configuration) {
+            repository.save(configuration.getId(), configuration);
+        }
+
+        public Optional<AGGREGATE> find(AGGREGATE_ID projectSourceConfigurationId) {
+            return repository.getById(projectSourceConfigurationId);
+        }
+
+        public void delete(AGGREGATE_ID projectSourceConfigurationId) {
+            repository.delete(projectSourceConfigurationId);
+        }
+
+        public Collection<AGGREGATE> findAll() {
+            return repository.getAll();
+        }
     }
 }

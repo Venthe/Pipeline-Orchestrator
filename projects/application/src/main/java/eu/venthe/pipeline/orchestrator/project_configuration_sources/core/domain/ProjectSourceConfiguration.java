@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain;
 
+import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.util.Collection;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @RequiredArgsConstructor
-public class ProjectSourceConfiguration {
+public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfigurationId> {
     @Getter
     private final ProjectSourceConfigurationId id;
 

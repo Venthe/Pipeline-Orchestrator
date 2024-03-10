@@ -16,7 +16,7 @@ public class ProjectConfigurationSourceEventListener {
     public ProjectConfigurationSourceEventListener(MessageListenerRegistry listener, ProjectsSourceConfigurationService projectsSourceConfigurationService) {
         this.projectsSourceConfigurationService = projectsSourceConfigurationService;
 
-        listener.observe((envelope -> projectSourceAdded((ProjectSourceConfigurationAddedEvent) envelope.getData())));
+        listener.observe(ProjectSourceConfigurationAddedEvent.class, (envelope -> projectSourceAdded(envelope.getData())));
     }
 
     public void projectSourceAdded(ProjectSourceConfigurationAddedEvent event) {

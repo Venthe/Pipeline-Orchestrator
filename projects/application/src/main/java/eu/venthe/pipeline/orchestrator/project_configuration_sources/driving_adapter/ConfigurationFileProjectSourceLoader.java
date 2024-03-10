@@ -13,6 +13,8 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+// FIXME: Remove
+//  We need to have a listener before we send the event out
 @DependsOn("projectConfigurationSourceEventListener")
 public class ConfigurationFileProjectSourceLoader {
     private final ProjectsSourceConfigurationService projectsSourceConfigurationService;

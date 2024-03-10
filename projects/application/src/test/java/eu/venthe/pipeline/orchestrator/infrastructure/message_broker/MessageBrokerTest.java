@@ -44,7 +44,7 @@ class MessageBrokerTest {
 
     private void registerListener(String id, BiConsumer<String, Envelope<?>> listener) {
         results.put(id, false);
-        messageListener.observe(message -> {
+        messageListener.observe(Object.class, message -> {
             listener.accept(id, message);
             results.put(id, true);
         });

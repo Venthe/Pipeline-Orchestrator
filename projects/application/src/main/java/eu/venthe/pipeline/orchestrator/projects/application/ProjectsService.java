@@ -4,4 +4,6 @@ import java.util.Collection;
 
 public interface ProjectsService {
     Collection<ProjectDto> listProjects();
+
+    void addProject(NewProjectDto newProjectDto);
 }
