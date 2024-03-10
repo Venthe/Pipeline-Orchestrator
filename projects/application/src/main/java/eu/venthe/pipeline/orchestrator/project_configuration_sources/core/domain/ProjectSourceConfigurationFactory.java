@@ -18,7 +18,8 @@ public class ProjectSourceConfigurationFactory {
 
     public Pair<ProjectSourceConfiguration, Collection<DomainEvent>> create(ProjectSourceConfigurationDto configurationDto) {
         if (featureManager.isActive(ProjectsSourceFeatureFlags.PROJECTS_SOURCE_CONFIGURATION_FACTORY_WIP.getFeature())) {
-            return Pair.of(null, Set.of(new ProjectSourceConfigurationAddedEvent()));
+            ProjectSourceConfigurationId id = new ProjectSourceConfigurationId(configurationDto.getName());
+            return Pair.of(new ProjectSourceConfiguration(id), Set.of(new ProjectSourceConfigurationAddedEvent(id.value())));
         }
 
         throw new UnsupportedOperationException();

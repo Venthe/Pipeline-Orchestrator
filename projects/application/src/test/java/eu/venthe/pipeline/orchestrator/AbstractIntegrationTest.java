@@ -13,9 +13,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@ExtendWith({MockitoExtension.class, SpringExtension.class})
+@ExtendWith({MockitoExtension.class})
 @Testcontainers
-@EnableAutoConfiguration
 public abstract class AbstractIntegrationTest {
     @Autowired
     protected ObjectMapper mapper;

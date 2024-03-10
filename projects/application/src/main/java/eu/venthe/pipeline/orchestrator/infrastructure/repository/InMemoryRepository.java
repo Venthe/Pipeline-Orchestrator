@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.utilities;
+package eu.venthe.pipeline.orchestrator.infrastructure.repository;
 
 import java.util.Collection;
 import java.util.HashMap;
