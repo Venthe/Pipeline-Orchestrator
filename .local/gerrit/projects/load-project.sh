@@ -4,8 +4,8 @@ set -o errexit
 
 GERRIT_URL="localhost:15480"
 GERRIT_PROTOCOL="http"
-GERRIT_USERNAME="jjuly"
-GERRIT_PASSWORD="OAecUbpB1emXS1YFYVy2+eS3x62VfTxJHWOGTo13Og"
+GERRIT_USERNAME="admin"
+GERRIT_PASSWORD="vcVjeRAPTjKVi9FGbXaFl+kCPZGt49vp19+dSVK4hA"
 
 function gerrit_allow_force_update() {
   echo "Resetting permissions for All-Projects"
@@ -16,7 +16,7 @@ function gerrit_allow_force_update() {
 
   git clone "${GERRIT_PROTOCOL}://${GERRIT_USERNAME}:${GERRIT_PASSWORD}@${GERRIT_URL}/a/All-Projects" .
   git config user.name "Admin"
-  git config user.email "admin@example.com"
+  git config user.email "administrator@example.org"
   git fetch origin "refs/meta/config:refs/remotes/origin/meta/config"
   git checkout "meta/config"
 
@@ -69,6 +69,6 @@ function upload_key() {
     -d @${HOME}/.ssh/id_rsa.pub
 }
 
-gerrit_allow_force_update
+#gerrit_allow_force_update
 load_project ${@}
-upload_key
+#upload_key

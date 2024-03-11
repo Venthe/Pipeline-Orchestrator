@@ -11,22 +11,27 @@ services:
     ports:
       - "${GERRIT_WEB_PORT}:8080"
       - ":29418"
-    volumes:
+    #volumes:
       # - gerrit-etc:/var/gerrit/etc
       # - gerrit-git:/var/gerrit/git
       # - gerrit-db:/var/gerrit/db
       # - gerrit-index:/var/gerrit/index
       # - gerrit-cache:/var/gerrit/cache
-      - ./gerrit/secure.config:/var/gerrit/etc/secure.config.initial:ro
-      - ./gerrit/gerrit.config:/var/gerrit/etc/gerrit.config.initial:ro
-    entrypoint: "bash -c"
-    command:
-      - >-
-        cp /var/gerrit/etc/secure.config.initial /var/gerrit/etc/secure.config &&
-        cp /var/gerrit/etc/gerrit.config.initial /var/gerrit/etc/gerrit.config &&
-        /entrypoint.sh init &&
-        /entrypoint.sh
-
+      # - ./gerrit/secure.config:/var/gerrit/etc/secure.config.initial:ro
+      # - ./gerrit/gerrit.config:/var/gerrit/etc/gerrit.config.initial:ro
+    # entrypoint: "bash -c"
+    # command:
+    #   - >-
+    #     cp /var/gerrit/etc/secure.config.initial /var/gerrit/etc/secure.config &&
+    #     cp /var/gerrit/etc/gerrit.config.initial /var/gerrit/etc/gerrit.config &&
+    #     /entrypoint.sh init &&
+    #     /entrypoint.sh
+  # proxy:
+  #   image: docker.io/library/nginx:1.25.4
+  #   ports:
+  #     - "${GERRIT_WEB_PORT}:80"
+  #   volumes:
+  #     - "./gerrit/nginx.proxy.conf:/etc/nginx/conf.d/default.conf"
 volumes:
   gerrit-etc: ~
   gerrit-git: ~

@@ -1,7 +1,9 @@
 openapi: 3.0.4
+security:
+  - basicAuth: [ ]
 info:
   title: "Gerrit"
-  version: v3.7.0-520-g6045f9f5a7
+  version: v3.9.1-699-g5cce1703c7
   description: |-
     Provides a portal into the major events occurring on the server, outputting activity data in real-time to the client. Events are filtered by the caller`s access permissions, ensuring the caller only receives events for changes they can view on the web, or in the project repository.
 
@@ -9,88 +11,308 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  # termsOfService:
   contact:
     email: jacek.lipiec.bc@gmail.com
-# externalDocs:
-#   description:
-#   url:
 servers:
-  - url: http://localhost/
-  - url: https://localhost/
+  - url: http://localhost:15480/
+  - url: https://gerrit.home.arpa/
 tags:
+  - name: changes
+  - name: projects
   - name: gerrit
     description: Gerrit Code review
     externalDocs:
       description: Find out more
       url: https://www.gerritcodereview.com/about.html
 paths:
-#  /a/projects/?d:
-#    get: {}
-#  /a/projects/{project-name}:
-#    get: {}
-#  /a/projects/{project-name}/branches:
-#    get: {}
-#  /a/projects/{project-name}/branches/{branch-id}:
-#    get: {}
-#  /a/projects/{project-name}/tags:
-#    get:
-#      parameters:
-#        - in: query
-#          description: num
-#          name: n
-#          required: false
-#          schema:
-#            type: integer
-#        - in: query
-#          description: match
-#          name: m
-#          required: false
-#          schema:
-#            type: integer
-#        - in: query
-#          name: v
-#          description: regexp
-#          required: false
-#          schema:
-#            type: integer
-#  /a/projects/{project-name}/commits/{commit-id}:
-#    get: {}
-#  /a/projects/{project-name}/commits/{commit-id}/files/:
-#    get: {}
-#  /a/changes/:
-#    get:
-#      parameters:
-#        - in: query
-#          name: o
-#          $ref: '#/components/parameters/query/changeOptionalElements'
+  /a/projects/:
+    get:
+      tags:
+        - projects
+      summary: Query Changes
+      description: >
+        Lists the projects accessible by the caller. This is the same as using the ls-projects command over SSH, and accepts the same options as query parameters.
+
+        As result a map is returned that maps the project names to ProjectInfo entries. The entries in the map are sorted by project name.
+      operationId: "listProjects"
+      security:
+        - basicAuth: [ ]
+      parameters:
+        - in: query
+          description: >
+            Branch for which the command will display the sha of each project. The command may have multiple --show-branch parameters, in this case sha will be shown for each of the branches. If the user does not have READ access to some branch or the branch does not exist then stub (40 - symbols) is shown. If the user does not have access to any branch in the project then the whole project is not shown.
+          name: show-branch
+          schema:
+            type: string
+        - in: query
+          description: Match project regex
+          name: r
+          schema:
+            type: string
+        - in: query
+          description: Display all projects that are accessible by the calling user account. Besides the projects that the calling user account has been granted 'READ' access to, this includes all projects that are owned by the calling user account (even if for these projects the 'READ' access right is not assigned to the calling user account).
+          name: all
+          schema:
+            type: boolean
+        - in: query
+          description: |-
+            Display only projects on which access rights for this group are directly assigned. Projects which only inherit access rights for this group are not listed.
+
+            With this option you can find out on which projects a group is used.
+          name: has-acl-for
+          schema:
+            type: boolean
+        - in: query
+          description: |-
+            What output format to display the results in.
+
+            text
+                Simple text based format.
+            
+            json
+                Map of JSON objects describing each project.
+            
+            json_compact
+                Minimized JSON output.
+          name: format
+          schema:
+            type: string
+            enum:
+              - text
+              - json
+              - json_compact
+        - in: query
+          description: Display only projects of the specified type. If not specified, defaults to all. Supported types
+          name: type
+          schema:
+            type: string
+            example: all
+            enum:
+              - code
+              - permissions
+              - all
+        - in: query
+          description: Number of projects to skip
+          name: start
+          schema:
+            type: integer
+            minimum: 0
+        - in: query
+          description: Cap the number of results to the first N matches.
+          name: limit
+          schema:
+            type: integer
+            minimum: 0
+        - in: query
+          description: Match project substring
+          name: match
+          schema:
+            type: string
+        - in: query
+          description: Limit the results to those projects that start with the specified prefix.
+          name: prefix
+          schema:
+            type: string
+        - in: query
+          name: tree
+          schema:
+            type: string
+          description: >
+            Displays project inheritance in a tree-like format. This option does not work together with the show-branch option.
+        - in: query
+          name: description
+          description: |-
+            Allows listing of projects together with their respective description.
+            
+            For text format output, all non-printable characters (ASCII value 31 or less) are escaped according to the conventions used in languages like C, Python, and Perl, employing standard sequences like \n and \t, and \xNN for all others. In shell scripts, the printf command can be used to unescape the output.
+          schema:
+            type: boolean
+        - in: query
+          name: state
+          description: |-
+            Filter by project state. [ACTIVE | READ_ONLY | HIDDEN]
+  
+            Note
+            If the calling user does not meet any of the following criteria:
+              
+              The state of the parent project is either "ACTIVE" or "READ ONLY", and the calling user has READ permission to at least one ref.
+              
+              The state of the parent project is "HIDDEN" and the calling user has READ permission for 'refs/meta/config'.
+  
+            Then the 'parent' field will be labeled as '?-N', where N represents the nesting level within the project’s tree structure. In the provided example, 'All-Projects' corresponds to level 1, 'parent-project' to level 2, and 'child-project' to level 3.
+  
+            The output format to display the results should be json or json_compact.
+          schema:
+            type: string
+            enum:
+              - ACTIVE
+              - READ_ONLY
+              - HIDDEN
+        - $ref: "#/components/parameters/compactOutput"
+        - $ref: "#/components/parameters/gerritTrace"
+      responses:
+        "200":
+          description: ""
+          content:
+            "application/json":
+              schema:
+                type: string
+                format: xssi-protected-json
+        "400":
+          $ref: '#/components/responses/400'
+        "403":
+          $ref: '#/components/responses/403'
+        "404":
+          $ref: '#/components/responses/404'
+        "405":
+          $ref: '#/components/responses/405'
+        "409":
+          $ref: '#/components/responses/409'
+        "412":
+          $ref: '#/components/responses/412'
+        "422":
+          $ref: '#/components/responses/422'
+        "429":
+          $ref: '#/components/responses/429'
+  /a/changes/:
+    get:
+      tags:
+        - changes
+      summary: Query Changes
+      description: >
+        Queries changes visible to the caller. The query string must be provided by the q parameter. The n parameter can be used to limit the returned results. The no-limit parameter can be used remove the default limit on queries and return all results (does not apply to anonymous requests). This might not be supported by all index backends.
+  
+        As result a list of ChangeInfo entries is returned. The change output is sorted by the last update time, most recently updated to oldest updated.
+      operationId: "queryChanges"
+      security:
+        - basicAuth: [ ]
+      parameters:
+        - name: q
+          in: query
+          example: 'is:visible'
+          required: true
+          description: "Query string"
+          schema:
+            type: string
+            format: QueryString
+            description: https://gerrit-review.googlesource.com/Documentation/user-search.html#_search_operators
+        - name: 'no-limit'
+          in: query
+          description: "Return all results"
+          schema:
+            type: boolean
+        - name: n
+          in: query
+          description: "Limit returned results"
+          schema:
+            type: integer
+            minimum: 0
+        - $ref: "#/components/parameters/gerritTrace"
+        - $ref: '#/components/parameters/changeOptionalElements'
+      responses:
+        "200":
+          description: ""
+          content:
+            "application/json":
+              schema:
+                type: string
+                format: xssi-protected-json
+        "400":
+          $ref: '#/components/responses/400'
+        "403":
+          $ref: '#/components/responses/403'
+        "404":
+          $ref: '#/components/responses/404'
+        "405":
+          $ref: '#/components/responses/405'
+        "409":
+          $ref: '#/components/responses/409'
+        "412":
+          $ref: '#/components/responses/412'
+        "422":
+          $ref: '#/components/responses/422'
+        "429":
+          $ref: '#/components/responses/429'
   /a/changes/{change-id}:
     get:
+      tags:
+        - changes
+      operationId: getChange
+      summary: Retrieves a change.
+      description: Additional fields can be obtained by adding o parameters, each option requires more database lookups and slows down the query response time to the client so they are generally disabled by default. Fields are described in Query Changes.
+      security:
+        - basicAuth: [ ]
       responses:
-        $ref: '#/components/responses'
+        "200":
+          content:
+            "application/json":
+              schema:
+                type: string
+                format: xssi-protected-json
+              example: |-
+                )]}'
+                  {
+                    "id": "myProject~master~I8473b95934b5732ac55d26311a706c9c2bde9940",
+                    "project": "myProject",
+                    "branch": "master",
+                    "attention_set": {
+                      "1000096": {
+                        "account": {
+                          "_account_id": 1000096,
+                          "name": "John Doe",
+                          "email": "john.doe@example.com"
+                        },
+                        "last_update": "2013-02-21 11:16:36.775000000",
+                        "reason": "reviewer or cc replied"
+                      }
+                    },
+                    "change_id": "I8473b95934b5732ac55d26311a706c9c2bde9940",
+                    "subject": "Implementing Feature X",
+                    "status": "NEW",
+                    "created": "2013-02-01 09:59:32.126000000",
+                    "updated": "2013-02-21 11:16:36.775000000",
+                    "mergeable": true,
+                    "insertions": 34,
+                    "deletions": 101,
+                    "_number": 3965,
+                    "owner": {
+                      "name": "John Doe"
+                    }
+                  }
+          description: ""
+          headers:
+            Content-Encoding:
+              description: The encoding of the response body.
+              schema:
+                type: string
+                enum:
+                  - gzip
+                  - deflate
+        "400":
+          $ref: '#/components/responses/400'
+        "403":
+          $ref: '#/components/responses/403'
+        "404":
+          $ref: '#/components/responses/404'
+        "405":
+          $ref: '#/components/responses/405'
+        "409":
+          $ref: '#/components/responses/409'
+        "412":
+          $ref: '#/components/responses/412'
+        "422":
+          $ref: '#/components/responses/422'
+        "429":
+          $ref: '#/components/responses/429'
       parameters:
-        - in: header
-          name: X-Gerrit-Trace
-          description: >
-            For each REST endpoint tracing can be enabled by setting the trace=<trace-id> request parameter. It is recommended to use the ID of the issue that is being investigated as trace ID.
-            It is also possible to omit the trace ID and get a unique trace ID generated.
-            Alternatively request tracing can also be enabled by setting the X-Gerrit-Trace header:
-        - in: query
-          name: o
-          $ref: '#/components/parameters/query/changeOptionalElements'
-#  /a/changes/{change-id}/detail:
-#    get:
-#      parameters:
-#        - in: query
-#          name: o
-#          $ref: '#/components/schemas/parameters/query/changeOptionalElements'
-  /a/changes/{change-id}/revisions/{revision-id}/commit:
-    get: {}
-  /a/changes/{change-id}/revisions/{revision-id}/files:
-    get: {}
-#  /a/changes/{change-id}/revisions/{revision-id}/robotcomments:
-#    get: {}
+        - $ref: "#/components/parameters/compactOutput"
+        - $ref: "#/components/parameters/gerritTrace"
+        - $ref: '#/components/parameters/changeOptionalElements'
 components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
   responses:
     "400":
       description: >
@@ -123,13 +345,33 @@ components:
     "429":
       description: >
         “429 Too Many Requests” is returned if the request exhausted any set quota limits. Depending on the exhausted quota, the request may be retried with exponential backoff.
-
   parameters:
-    query:
-      changeOptionalElements:
-        required: false
+    compactOutput:
+      in: query
+      name: pp
+      required: false
+      description: "Compact output"
+      schema:
+        type: integer
+    gerritTrace:
+      in: header
+      name: X-Gerrit-Trace
+      schema:
+        type: string
+      description: >
+        For each REST endpoint tracing can be enabled by setting the trace=<trace-id> request parameter. It is recommended to use the ID of the issue that is being investigated as trace ID.
+        It is also possible to omit the trace ID and get a unique trace ID generated.
+        Alternatively request tracing can also be enabled by setting the X-Gerrit-Trace header:
+    changeOptionalElements:
+      name: o
+      description: >
+        Additional fields can be obtained by adding o parameters, each option requires more database lookups and slows down the query response time to the client so they are generally disabled by default. Optional fields are:
+      in: query
+      style: form
+      explode: true
+      required: false
+      schema:
         type: array
-        collectionFormat: multi
         items:
           type: string
           enum:
@@ -180,7 +422,95 @@ components:
             # include references to external tracking systems as TrackingIdInfo.
             - TRACKING_IDS
   schemas:
-    # {account-id}
+    WebLinkInfo:
+      description: |-
+        The WebLinkInfo entity describes a link to an external site. Depending on the context and the provided data the UI may decide to show the link as a text link, a linkified icon, or both.
+
+        If the tooltip is not provided, then the UI may fall back to showing something like "Open in External Tool".
+
+        Weblinks will always be opened in a new tab.
+      required:
+        - name
+        - url
+      properties:
+        image_url:
+          type: string
+          description: URL to the icon of the link.
+        url:
+          type: string
+          description: The link URL.
+        name:
+          type: string
+          description: The text to be linkified.
+        tooltip:
+          type: string
+          description: |-
+            Tooltip to show when hovering over the link. Using "Open in $NAME_OF_EXTERNAL_TOOL" is a good option here.
+    LabelTypeInfo:
+      type: object
+      description: The LabelTypeInfo entity contains metadata about the labels that a project has.
+      required:
+        - values
+        - default_value
+      properties:
+        values:
+          description: Map of the available values to their description.
+          additionalProperties: true
+          type: object
+        default_value:
+          type: string
+          description: The default value of this label.
+    ProjectInfo:
+      type: object
+      description: The ProjectInfo entity contains information about a project.
+      required:
+        - id
+      properties:
+        id:
+          description: The URL encoded project name.
+          type: string
+          format: URL encoded project name
+        name:
+          type: string
+          description: >
+            The name of the project
+        parent:
+          type: string
+          description: |-
+            The name of the parent project.
+            ?-<n> if the parent project is not visible (<n> is a number which is increased for each non-visible project).
+        description:
+          type: string
+          description: |-
+            The description of the project
+        state:
+          type: string
+          enum:
+            - ACTIVE
+            - READ_ONLY
+            - HIDDEN
+        branches:
+          type: object
+          description: Map of branch names to HEAD revisions.
+          example:
+            main: da39a3ee5e6b4b0d3255bfef95601890afd80709
+          additionalProperties:
+            type: string
+        labels:
+          description: Map of label names to LabelTypeInfo entries. This field is filled for Create Project and Get Project calls.
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LabelTypeInfo'
+        web_links:
+          description: Links to the project in external sites as a list of WebLinkInfo entries.
+          type: array
+          items:
+            $ref: '#/components/schemas/WebLinkInfo'
+        _more_projects:
+          description: |-
+            Whether the query would deliver more results if not limited.
+            Only set on the last project that is returned.
+          type: boolean
     AccountId:
       type: string
       description: >
@@ -205,12 +535,14 @@ components:
 
         Note: Except as noted above, callers should not rely on the particular priorities of any of the identifiers in the account resolution algorithm. Any other formats may be subject to future deprecation. If callers require specific searching semantics, they should use the Query Account endpoint to resolve a string to one or more accounts, then access the API using the account ID.
 
+    # TODO: Finish writing
     ChangeInfo:
       description: |-
         Sent when the assignee of a change has been modified.
       type: object
       required:
         - id
+        - triplet_id
         - project
         - branch
         - change_id
@@ -225,11 +557,18 @@ components:
         - submit_records
       properties:
         id:
+          type: string
           description: >
             The ID of the change in the format "'<project>~<branch>~<Change-Id>'", where 'project', 'branch' and 'Change-Id' are URL encoded. For 'branch' the refs/heads/ prefix is omitted.
+        triplet_id:
+          type: string
+          description: >
+            The ID of the change in the format "'<project>~<branch>~<Change-Id>'", where 'project' and 'branch' are URL encoded. For 'branch' the refs/heads/ prefix is omitted.
         project:
+          type: string
           description: The name of the project.
         branch:
+          type: string
           description: >
             The name of the target branch.
             The refs/heads/ prefix is omitted.

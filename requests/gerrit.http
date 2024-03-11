@@ -2,9 +2,9 @@
 
 ### List Projects
 
-GET https://gerrit.home.arpa/a/config/server/info
+GET {{gerritUrl}}/a/config/server/info
 X-Gerrit-Trace: 9a1a0008-d727-4da2-a017-8a760eaadd18
-Authorization: Basic YWRtaW46c2VjcmV0
+Authorization: Basic {{username}} {{password}}
 
 ### Get Project
 
@@ -28,7 +28,7 @@ Authorization: Basic {{username}} {{password}}
 
 ### Get file from branch
 
-GET http://localhost:1555/a/projects/Example-Project/branches/refs%2Fheads%2Fmain/files/.pipeline%2Fworkflows%2Fexample.yaml/content
+GET {{gerritUrl}}/a/projects/Example-Project/branches/refs%2Fheads%2Fmain/files/.pipeline%2Fworkflows%2Fexample.yaml/content
 Authorization: Basic {{username}} {{password}}
 
 ### List Tags

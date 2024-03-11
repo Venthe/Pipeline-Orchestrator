@@ -9,6 +9,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +24,10 @@ public class ConfigurationFileProjectSourceLoader {
     @PostConstruct
     void loadFromConfiguration() {
         log.info("Loading project configuration from file. {}", configuration);
-        configuration.getProjectSources().forEach((name, value) -> {
+        Optional.ofNullable(configuration.getProjectSources()).ifPresent(el -> el.forEach((name, value) -> {
             String sourcePluginId = value.getSourcePluginId();
             Map<String, String> properties = value.getProperties();
             projectsSourceConfigurationService.addProjectSourceConfiguration(new ProjectSourceConfigurationDto(name, sourcePluginId, properties));
-        });
+        }));
     }
 }
