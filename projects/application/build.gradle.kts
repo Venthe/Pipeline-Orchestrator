@@ -71,8 +71,6 @@ dependencies {
     // implementation("javax.validation:validation-api:2.0.1.Final")
     // implementation("org.jetbrains:annotations:23.0.0")
     implementation("org.openapitools:jackson-databind-nullable:0.2.6")
-    implementation("net.bytebuddy:byte-buddy:1.14.12")
-    implementation("net.bytebuddy:byte-buddy-agent:1.14.12")
     // implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     // implementation("org.springframework.kafka:spring-kafka")
     // testImplementation("org.springframework.kafka:spring-kafka-test")
@@ -101,7 +99,7 @@ val gerritApi by tasks.register(
     apiPackage.set("${_group}.gerrit.api")
     invokerPackage.set("${_group}.gerrit.invoker")
     modelPackage.set("${_group}.gerrit.model")
-    //templateDir.set("$projectDir/src/main/resources/template/")
+    templateDir.set("$projectDir/src/main/resources/template/")
 
     generatorName.set("java")
     inputSpec.set("$rootDir/schemas/gerrit.openapi.yaml")

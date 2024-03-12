@@ -156,8 +156,9 @@ paths:
           content:
             "application/json":
               schema:
-                type: string
-                format: xssi-protected-json
+                type: object
+                additionalProperties:
+                  $ref: "#/components/schemas/ProjectInfo"
         "400":
           $ref: '#/components/responses/400'
         "403":
