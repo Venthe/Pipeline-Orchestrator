@@ -27,14 +27,27 @@ tasks.withType<Test> {
 
 val versionsTestcontainers = "1.17.6"
 
+enum class DependencyVersion(val version: String) {
+    SPRING_FRAMEWORK("6.1.4"),
+    TEST_CONTAINERS("1.17.6"),
+    JACKSON("2.16.2"),
+}
+
 dependencies {
     constraints {
-        implementation("org.springframework:spring-context:6.1.3")
-        implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
-        implementation("org.springframework:spring-web:6.1.3")
+        implementation("org.springframework:spring-context:${DependencyVersion.SPRING_FRAMEWORK.version}")
+        implementation("com.fasterxml.jackson.core:jackson-databind:${DependencyVersion.JACKSON.version}")
+        implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${DependencyVersion.JACKSON.version}")
+        implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${DependencyVersion.JACKSON.version}")
+        implementation("org.springframework:spring-web:${DependencyVersion.SPRING_FRAMEWORK.version}")
+        testImplementation("org.testcontainers:junit-jupiter:${DependencyVersion.TEST_CONTAINERS.version}")
+        testImplementation("org.testcontainers:testcontainers:${DependencyVersion.TEST_CONTAINERS.version}")
+        testImplementation("org.testcontainers:kafka:${DependencyVersion.TEST_CONTAINERS.version}")
+        testImplementation("org.testcontainers:mockserver:${DependencyVersion.TEST_CONTAINERS.version}")
+        testImplementation("org.testcontainers:mongodb:${DependencyVersion.TEST_CONTAINERS.version}")
+        // TODO: Synchronize with application?
+        implementation("org.springframework.boot:spring-boot-autoconfigure:3.2.3")
     }
-
-    testImplementation("org.testcontainers:junit-jupiter:$versionsTestcontainers")
 }
 
 allprojects {

@@ -6,29 +6,23 @@ plugins {
 group = "eu.venthe.pipeline"
 version = "0.0.1-SNAPSHOT"
 
-enum class versions(val version: String) {
-    AWAITILITY("4.2.0"),
-    BSON_4_JACKSON("2.13.1"),
-    COMMONS_CODEC("1.15"),
-    COMMONS_IO("2.15.1"),
-    COMMONS_TEXT("1.11.0"),
-    DOCKER_JAVA("3.3.4"),
-    DOCKER_JAVA_TRANSPORT_ZERODEP("3.3.6"),
-    GUAVA("33.0.0-jre"),
-    HIBERNATE_VALIDATOR("8.0.1.Final"),
-    JACKSON("2.14.2"),
-    JGIT("6.8.0.202311291450-r"),
-    JGRAPHT_CORE("1.5.2"),
-    JUNIT_PLATFORM_LAUNCHER("1.9.1"),
-    MOCKSERVER_CLIENT_JAVA("5.15.0"),
-    TEST_CONTAINERS("1.17.6"),
-    TOGGLZ_SPRING_BOOT_STARTER("4.4.0"),
+enum class DependencyVersion(val version: String) {
+    SWAGGER("2.2.20"),
+    JACKSON_DATABIND_NULLABLE("0.2.6"),
+    JAKARTA_ANNOTATION_API("3.0.0-M1")
 }
 
 dependencies {
-    implementation("io.swagger.core.v3:swagger-annotations:2.2.20")
-    implementation("io.swagger.core.v3:swagger-models:2.2.20")
-    implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+    implementation("io.swagger.core.v3:swagger-annotations:${DependencyVersion.SWAGGER.version}")
+    implementation("io.swagger.core.v3:swagger-models:${DependencyVersion.SWAGGER.version}")
+    implementation("org.openapitools:jackson-databind-nullable:${DependencyVersion.JACKSON_DATABIND_NULLABLE.version}")
+    implementation("jakarta.annotation:jakarta.annotation-api:${DependencyVersion.JAKARTA_ANNOTATION_API.version}")
+    implementation("org.springframework:spring-web")
+    implementation("org.springframework:spring-context")
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    implementation("org.slf4j:slf4j-api:2.0.12")
+    testImplementation("org.slf4j:slf4j-simple:2.0.12")
 }
 
 tasks.register("cleanGeneratedGerritClient") {
@@ -51,7 +45,7 @@ val gerritApi by tasks.register(
     apiPackage.set("${_group}.gerrit.api")
     invokerPackage.set("${_group}.gerrit.invoker")
     modelPackage.set("${_group}.gerrit.model")
-    templateDir.set("$projectDir/src/main/resources/template/")
+    templateDir.set("$projectDir/src/main/resources/template/gerrit/")
 
     generatorName.set("java")
     inputSpec.set("$rootDir/schemas/gerrit.openapi.yaml")

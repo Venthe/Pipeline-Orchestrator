@@ -1,6 +1,5 @@
 package eu.venthe.pipeline.orchestrator;
 
-import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.application.ProjectSourceConfigurationDto;
 import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.application.ProjectsSourceConfigurationService;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsService;
@@ -10,11 +9,9 @@ import org.assertj.core.api.Assertions;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.Collection;
-import java.util.Collections;
 
 @TestPropertySource(properties = {
         "togglz.features.PROJECTS_SOURCE_CONFIGURATION_FACTORY_WIP.enabled=true",

@@ -1,6 +1,10 @@
 package eu.venthe.pipeline.orchestrator.gerrit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eu.venthe.pipeline.gerrit.api.ChangesApi;
+import eu.venthe.pipeline.gerrit.api.ProjectsApi;
+import eu.venthe.pipeline.gerrit.invoker.ApiClient;
+import eu.venthe.pipeline.gerrit.model.ProjectInfo;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 @Slf4j
-public class BasicApiTest {
+class BasicApiTest {
     ChangesApi changesApi;
     ProjectsApi projectsApi;
 
@@ -22,8 +26,8 @@ public class BasicApiTest {
         apiClient.setPassword("secret");
         apiClient.setUsername("admin");
         apiClient.setBasePath("http://localhost:15480");
-        changesApi = ChangesApi(apiClient);
-        ProjectsApi = ProjectsApi(apiClient);
+        changesApi = new ChangesApi(apiClient);
+        projectsApi = new ProjectsApi(apiClient);
     }
 
     @Test
