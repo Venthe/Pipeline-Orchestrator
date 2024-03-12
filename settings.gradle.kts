@@ -18,4 +18,4 @@ pluginManagement {
 
 rootProject.name = "orchestrator"
 
-includeNestedProject("application")
+includeNestedProject("application", "gerrit-integration")

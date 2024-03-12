@@ -32,6 +32,7 @@ enum class versions(val version: String) {
 }
 
 dependencies {
+    ann
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
