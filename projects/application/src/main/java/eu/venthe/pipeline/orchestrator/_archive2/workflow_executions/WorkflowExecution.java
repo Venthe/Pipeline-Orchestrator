@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator._archive2.workflow_executions;
 
-import eu.venthe.pipeline.orchestrator._archive2.plugins.api.JobExecutor;
+import eu.venthe.pipeline.orchestrator.plugins.JobExecutor;
 import com.google.common.collect.MoreCollectors;
 import eu.venthe.pipeline.orchestrator._archive2.events.HandledEvent;
 import eu.venthe.pipeline.orchestrator._archive2.workflows.Workflow;

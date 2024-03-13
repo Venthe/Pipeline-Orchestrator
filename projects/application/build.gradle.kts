@@ -17,8 +17,6 @@ enum class DependencyVersion(val version: String) {
     COMMONS_CODEC("1.15"),
     COMMONS_IO("2.15.1"),
     COMMONS_TEXT("1.11.0"),
-    DOCKER_JAVA("3.3.4"),
-    DOCKER_JAVA_TRANSPORT_ZERODEP("3.3.6"),
     GUAVA("33.0.0-jre"),
     HIBERNATE_VALIDATOR("8.0.1.Final"),
     JGIT("6.8.0.202311291450-r"),
@@ -29,7 +27,9 @@ enum class DependencyVersion(val version: String) {
 }
 
 dependencies {
-    implementation(project(":gerrit-integration"))
+    implementation(project(":gerrit-project-source"))
+    implementation(project(":docker-job-executor"))
+    implementation(project(":plugin-api"))
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
@@ -37,8 +37,6 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-    implementation("com.github.docker-java:docker-java-transport-zerodep:${DependencyVersion.DOCKER_JAVA_TRANSPORT_ZERODEP.version}")
-    implementation("com.github.docker-java:docker-java:${DependencyVersion.DOCKER_JAVA.version}")
     implementation("com.google.guava:guava:${DependencyVersion.GUAVA.version}")
     implementation("commons-codec:commons-codec:${DependencyVersion.COMMONS_CODEC.version}")
     implementation("commons-io:commons-io:${DependencyVersion.COMMONS_IO.version}")

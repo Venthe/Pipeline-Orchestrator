@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
 @SpringBootApplication
-@EnableAutoConfiguration
 public class Application {
 
     public static void main(String[] args) {

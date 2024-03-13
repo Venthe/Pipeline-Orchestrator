@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator;
 
-import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.application.ProjectsSourceConfigurationService;
+import eu.venthe.pipeline.orchestrator.projects.application.ProjectsSourceConfigurationService;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsService;
 import eu.venthe.pipeline.orchestrator.utilities.TestProject;

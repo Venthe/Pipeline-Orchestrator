@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.application;
 
-import eu.venthe.pipeline.orchestrator.project_configuration_sources.core.domain.ProjectsSourceFeatureFlags;
-import eu.venthe.pipeline.orchestrator.projects.core.ProjectRepository;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectsSourceFeatureFlags;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.togglz.core.manager.FeatureManager;

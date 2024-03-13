@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator._archive2.projects.api;
 
-import eu.venthe.pipeline.orchestrator._archive2.plugins.api.Project;
-import eu.venthe.pipeline.orchestrator._archive2.plugins.api.ProjectProvider;
+import eu.venthe.pipeline.orchestrator.plugins.Project;
+import eu.venthe.pipeline.orchestrator.plugins.ProjectProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
