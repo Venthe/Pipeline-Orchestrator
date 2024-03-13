@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator._archive2.projects.api;
 
-import eu.venthe.pipeline.orchestrator.plugins.projects.Project;
+import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectDto;
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +17,8 @@ public class ProjectController {
     private final ProjectProvider projectProvider;
 
     @GetMapping("")
-    ResponseEntity<Collection<Project>> getProjects() {
-        Collection<Project> projects = projectProvider.getProjects();
+    ResponseEntity<Collection<ProjectDto>> getProjects() {
+        Collection<ProjectDto> projects = projectProvider.getProjects();
         return ResponseEntity.ok(projects);
     }
 }

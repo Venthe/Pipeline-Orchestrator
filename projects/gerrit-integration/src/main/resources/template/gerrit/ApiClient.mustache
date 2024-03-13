@@ -123,6 +123,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
 
     public ApiClient() {
         this.restTemplate = buildRestTemplate();
+        this.objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
         init();
     }
 
@@ -135,7 +136,14 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
    {{#generateClientAsBean}}
     @Autowired
     {{/generateClientAsBean}}
+    public ApiClient(com.fasterxml.jackson.databind.ObjectMapper objectMapper, RestTemplate restTemplate) {
+        this.objectMapper = objectMapper;
+        this.restTemplate = buildRestTemplate();
+        init();
+    }
+
     public ApiClient(RestTemplate restTemplate) {
+        this.objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
         this.restTemplate = restTemplate;
         init();
     }

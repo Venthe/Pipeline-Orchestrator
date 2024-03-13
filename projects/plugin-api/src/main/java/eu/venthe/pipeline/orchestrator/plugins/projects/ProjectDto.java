@@ -1,10 +1,12 @@
 package eu.venthe.pipeline.orchestrator.plugins.projects;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Value;
 
 @Data
-public class Project {
+@AllArgsConstructor
+public class ProjectDto {
     private Status status;
     private Id id;
 

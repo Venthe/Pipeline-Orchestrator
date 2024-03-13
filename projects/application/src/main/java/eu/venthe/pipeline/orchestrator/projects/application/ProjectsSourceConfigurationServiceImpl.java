@@ -12,9 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -67,7 +65,8 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
         throw new UnsupportedOperationException();
     }
 
-    private ProjectSourceVisitor<ProjectSourceConfigurationDto> visitor = () -> {
-        throw new UnsupportedOperationException();
+    private ProjectSourceVisitor<ProjectSourceConfigurationDto> visitor = (ProjectSourceConfigurationId id, String sourceType, HashSet<String> es) -> {
+        //fixme:
+        return new ProjectSourceConfigurationDto(id, sourceType, new HashMap<>());
     };
 }
