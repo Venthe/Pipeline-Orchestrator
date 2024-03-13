@@ -65,8 +65,8 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
         throw new UnsupportedOperationException();
     }
 
-    private ProjectSourceVisitor<ProjectSourceConfigurationDto> visitor = (ProjectSourceConfigurationId id, String sourceType, HashSet<String> es) -> {
+    private ProjectSourceVisitor<ProjectSourceConfigurationDto> visitor = (String id, String sourceType, HashSet<String> es) -> {
         //fixme:
-        return new ProjectSourceConfigurationDto(id, sourceType, new HashMap<>());
+        throw new UnsupportedOperationException();
     };
 }

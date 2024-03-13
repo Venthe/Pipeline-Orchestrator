@@ -41,6 +41,6 @@ public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfig
 
     public <T> T visitor(ProjectSourceVisitor<T> visitor) {
         // FIXME:
-        return visitor.visit(id, sourceType, new HashSet<>());
+        return visitor.visit(id.value(), sourceType, new HashSet<>());
     }
 }
