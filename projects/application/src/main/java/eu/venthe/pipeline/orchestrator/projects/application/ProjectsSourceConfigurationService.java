@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.application;
 
+import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectSourceConfigurationDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectSourceConfigurationId;
 
 import java.util.Optional;

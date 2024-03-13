@@ -15,6 +15,8 @@ import java.util.Collection;
 public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfigurationId> {
     @Getter
     private final ProjectSourceConfigurationId id;
+    @Getter
+    private final String sourceType;
 
     public Collection<DomainEvent> synchronize() {
         throw new UnsupportedOperationException();

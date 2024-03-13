@@ -1,5 +1,4 @@
-gerrit:
-  enabled: true
-  password: secret
-  username: admin
-  basePath: http://localhost:15480
+#togglz:
+#  features:
+#    PROJECTS_SOURCE_CONFIGURATION_FACTORY_WIP: true
+#    PROJECTS_SERVICE_WIP: true

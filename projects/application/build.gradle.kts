@@ -30,7 +30,6 @@ dependencies {
     implementation(project(":gerrit-project-source"))
     implementation(project(":docker-job-executor"))
     implementation(project(":plugin-api"))
-    implementation(project(":gerrit-integration"))
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")

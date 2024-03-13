@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(prefix = "gerrit", name = "enabled", matchIfMissing = true, havingValue = "true")
+@ConditionalOnProperty(prefix = "gerrit", name = "autoconfiguration", matchIfMissing = false, havingValue = "true")
 public class GerritAutoConfiguration {
     @SneakyThrows
     @Bean

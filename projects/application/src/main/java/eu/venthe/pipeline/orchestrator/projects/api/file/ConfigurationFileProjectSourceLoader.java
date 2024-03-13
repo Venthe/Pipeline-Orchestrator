@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects.api.file;
 
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectSourceConfigurationDto;
@@ -31,3 +32,4 @@ public class ConfigurationFileProjectSourceLoader {
         }));
     }
 }
+*/
