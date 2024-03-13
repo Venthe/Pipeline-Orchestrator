@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.plugins.gerrit.config;
 
-import eu.venthe.pipeline.orchestrator.plugins.ConfigurationProvider;
+import eu.venthe.pipeline.orchestrator.plugins.projects.ConfigurationProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

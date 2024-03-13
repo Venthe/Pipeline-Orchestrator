@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.plugins;
+package eu.venthe.pipeline.orchestrator.plugins.projects;
 
 import java.util.Map;
 import java.util.Optional;

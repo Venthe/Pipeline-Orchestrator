@@ -49,6 +49,7 @@ dependencies {
         // TODO: Synchronize with application?
         implementation("org.springframework.boot:spring-boot-autoconfigure:3.2.3")
         implementation("org.slf4j:slf4j-api:${DependencyVersion.SLF4J.version}")
+        // FIXME: Swap for logback
         testImplementation("org.slf4j:slf4j-simple:${DependencyVersion.SLF4J.version}")
     }
     implementation("org.slf4j:slf4j-api")

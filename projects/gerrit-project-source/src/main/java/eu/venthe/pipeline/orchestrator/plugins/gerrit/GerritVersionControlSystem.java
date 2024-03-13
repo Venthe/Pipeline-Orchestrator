@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.plugins.gerrit;
 
 import eu.venthe.pipeline.orchestrator.plugins.gerrit.utils.GerritHeaders;
-import eu.venthe.pipeline.orchestrator.plugins.VersionControlSystem;
+import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystem;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

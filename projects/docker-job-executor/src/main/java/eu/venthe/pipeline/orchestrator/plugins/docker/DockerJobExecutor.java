@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.plugins.docker;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerCmd;
 import com.github.dockerjava.api.command.CreateContainerResponse;
-import eu.venthe.pipeline.orchestrator.plugins.JobExecutor;
+import eu.venthe.pipeline.orchestrator.plugins.job_executors.JobExecutor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
