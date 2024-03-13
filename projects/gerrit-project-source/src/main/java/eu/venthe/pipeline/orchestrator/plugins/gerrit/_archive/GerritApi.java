@@ -1,4 +1,5 @@
-package eu.venthe.pipeline.orchestrator.plugins.gerrit;
+/*
+package eu.venthe.pipeline.orchestrator.plugins.gerrit._archive;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.plugins.gerrit.config.GerritBindingConfiguration;
@@ -116,3 +117,4 @@ public class GerritApi {
         return "%s/a/%s".formatted(configuration.getUrl(), path);
     }
 }
+*/

@@ -1,4 +1,5 @@
-package eu.venthe.pipeline.orchestrator.plugins.gerrit.config;
+/*
+package eu.venthe.pipeline.orchestrator.plugins.gerrit._archive.config;
 
 import lombok.Getter;
 
@@ -30,3 +31,4 @@ public class GerritBindingConfiguration {
     }
 
 }
+*/

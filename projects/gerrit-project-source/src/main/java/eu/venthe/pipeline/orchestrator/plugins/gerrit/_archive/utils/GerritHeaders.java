@@ -1,4 +1,5 @@
-package eu.venthe.pipeline.orchestrator.plugins.gerrit.utils;
+/*
+package eu.venthe.pipeline.orchestrator.plugins.gerrit._archive.utils;
 
 import eu.venthe.pipeline.orchestrator.plugins.gerrit.config.GerritBindingConfiguration;
 import lombok.RequiredArgsConstructor;
@@ -44,3 +45,4 @@ public class GerritHeaders {
                 .encodeToString(value.getBytes(UTF_8));
     }
 }
+*/

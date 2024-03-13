@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator._archive2.configuration;
 
 import eu.venthe.pipeline.orchestrator.plugins.projects.ConfigurationProvider;
@@ -52,3 +53,4 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
         };
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.plugins.gerrit.config;
 
 import eu.venthe.pipeline.orchestrator.plugins.projects.ConfigurationProvider;
@@ -24,3 +25,4 @@ public class GerritConfigurationProvider {
         return projectProviders;
     }
 }
+*/

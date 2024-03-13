@@ -1,4 +1,5 @@
-package eu.venthe.pipeline.orchestrator.plugins.gerrit.utils;
+/*
+package eu.venthe.pipeline.orchestrator.plugins.gerrit._archive.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -32,3 +33,4 @@ public class GerritResponseMapper {
         return body.replaceAll("\\)]}'\\n", "");
     }
 }
+*/
