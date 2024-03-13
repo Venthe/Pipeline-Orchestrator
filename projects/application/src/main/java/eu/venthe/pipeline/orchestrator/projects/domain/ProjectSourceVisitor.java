@@ -1,7 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.domain;
 
-import java.util.HashSet;
-
+@FunctionalInterface
 public interface ProjectSourceVisitor<T> {
-    T visit(String id, String sourceType, HashSet<String> es);
+    T visit(String id, String sourceType);
 }

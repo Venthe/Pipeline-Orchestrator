@@ -49,7 +49,7 @@ public class RepositoryConfiguration {
     private static class ProjectsSourceRepositoryImpl extends DomainRepositoryImpl<ProjectSourceConfiguration, ProjectSourceConfigurationId> implements ProjectsSourceRepository {
     }
 
-    private static class ProjectRepositoryImpl extends DomainRepositoryImpl<Project, ProjectId> implements ProjectRepository {
+    private static class ProjectRepositoryImpl extends DomainRepositoryImpl<Project, Project.Id> implements ProjectRepository {
     }
 
     private static class DomainRepositoryImpl<AGGREGATE extends Aggregate<AGGREGATE_ID>, AGGREGATE_ID> implements eu.venthe.pipeline.orchestrator.shared_kernel.DomainRepository<AGGREGATE, AGGREGATE_ID> {

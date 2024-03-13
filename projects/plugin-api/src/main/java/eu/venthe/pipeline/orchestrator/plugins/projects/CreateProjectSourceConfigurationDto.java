@@ -7,7 +7,7 @@ import java.util.Map;
 
 @Value
 @SuperBuilder
-public class ProjectSourceConfigurationDto {
+public class CreateProjectSourceConfigurationDto {
     String id;
     String sourceType;
     Map<String, String> properties;

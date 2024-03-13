@@ -1,7 +1,8 @@
 package eu.venthe.pipeline.orchestrator;
 
+import eu.venthe.pipeline.orchestrator.plugins.projects.CreateProjectSourceConfigurationDto;
+import eu.venthe.pipeline.orchestrator.plugins.projects.ReadProjectSourceConfigurationDto;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectDto;
-import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectSourceConfigurationDto;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsService;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsSourceConfigurationService;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectSourceConfigurationId;
@@ -23,7 +24,7 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void name() {
-        ProjectSourceConfigurationDto configurationDto = ProjectSourceConfigurationDto.builder()
+        CreateProjectSourceConfigurationDto configurationDto = CreateProjectSourceConfigurationDto.builder()
                 .sourceType("gerrit")
                 .id("gerrit_1")
                 .properties(Map.of(
@@ -34,8 +35,11 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
                 .build();
         ProjectSourceConfigurationId id = projectsSourceConfigurationService.addProjectSourceConfiguration(configurationDto);
 
-        Set<ProjectSourceConfigurationDto> projectConfigurations = projectsSourceConfigurationService.listConfigurations();
-        Assertions.assertThat(projectConfigurations).singleElement().isEqualTo(configurationDto);
+        Set<ReadProjectSourceConfigurationDto> projectConfigurations = projectsSourceConfigurationService.listConfigurations();
+        Awaitility.await().untilAsserted(() -> {
+            Assertions.assertThat(projectConfigurations).singleElement().isEqualTo(new ReadProjectSourceConfigurationDto(configurationDto.getId(), configurationDto.getSourceType()));
+        });
+
 
         projectsSourceConfigurationService.synchronizeProjects(id);
 

@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain;
 
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectPlugin;
-import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectSourceConfigurationDto;
+import eu.venthe.pipeline.orchestrator.plugins.projects.CreateProjectSourceConfigurationDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.ProjectSourceConfigurationAddedEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import static com.google.common.collect.MoreCollectors.onlyElement;
 public class ProjectSourceConfigurationFactory {
     private final Set<ProjectPlugin> plugins;
 
-    public Pair<ProjectSourceConfiguration, Collection<DomainEvent>> create(ProjectSourceConfigurationDto configurationDto) {
+    public Pair<ProjectSourceConfiguration, Collection<DomainEvent>> create(CreateProjectSourceConfigurationDto configurationDto) {
         ProjectPlugin plugin = getPlugin(configurationDto.getSourceType());
 
         ProjectSourceConfiguration projectSourceConfiguration = new ProjectSourceConfiguration(

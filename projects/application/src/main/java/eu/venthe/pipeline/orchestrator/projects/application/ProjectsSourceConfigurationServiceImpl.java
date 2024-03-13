@@ -1,6 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.application;
 
-import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectSourceConfigurationDto;
+import eu.venthe.pipeline.orchestrator.plugins.projects.CreateProjectSourceConfigurationDto;
+import eu.venthe.pipeline.orchestrator.plugins.projects.ReadProjectSourceConfigurationDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectSourceConfigurationFactory;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectSourceConfigurationId;
@@ -12,7 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -24,7 +27,7 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
     private final ProjectSourceConfigurationFactory factory;
 
     @Override
-    public ProjectSourceConfigurationId addProjectSourceConfiguration(ProjectSourceConfigurationDto configurationDto) {
+    public ProjectSourceConfigurationId addProjectSourceConfiguration(CreateProjectSourceConfigurationDto configurationDto) {
         Pair<ProjectSourceConfiguration, Collection<DomainEvent>> result = factory.create(configurationDto);
 
         ProjectSourceConfiguration configuration = result.getLeft();
@@ -56,17 +59,16 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
     }
 
     @Override
-    public Set<ProjectSourceConfigurationDto> listConfigurations() {
-        return repository.findAll().stream().map(a -> a.visitor(visitor)).collect(Collectors.toSet());
+    public Set<ReadProjectSourceConfigurationDto> listConfigurations() {
+        return repository.findAll().stream()
+                .map(projectSourceConfiguration -> projectSourceConfiguration.visitor(ReadProjectSourceConfigurationDto::new))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public Optional<ProjectSourceConfigurationDto> getConfiguration(ProjectSourceConfigurationId projectSourceConfigurationId) {
-        throw new UnsupportedOperationException();
+    public Optional<ReadProjectSourceConfigurationDto> getConfiguration(ProjectSourceConfigurationId projectSourceConfigurationId) {
+        return repository.find(projectSourceConfigurationId)
+                .map(projectSourceConfiguration -> projectSourceConfiguration.visitor(ReadProjectSourceConfigurationDto::new));
     }
 
-    private ProjectSourceVisitor<ProjectSourceConfigurationDto> visitor = (String id, String sourceType, HashSet<String> es) -> {
-        //fixme:
-        throw new UnsupportedOperationException();
-    };
 }
