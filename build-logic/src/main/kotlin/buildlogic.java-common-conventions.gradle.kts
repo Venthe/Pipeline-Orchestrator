@@ -30,6 +30,7 @@ val versionsTestcontainers = "1.17.6"
 enum class DependencyVersion(val version: String) {
     SPRING_FRAMEWORK("6.1.4"),
     TEST_CONTAINERS("1.17.6"),
+    SLF4J("2.0.12"),
     JACKSON("2.16.2"),
 }
 
@@ -47,7 +48,10 @@ dependencies {
         testImplementation("org.testcontainers:mongodb:${DependencyVersion.TEST_CONTAINERS.version}")
         // TODO: Synchronize with application?
         implementation("org.springframework.boot:spring-boot-autoconfigure:3.2.3")
+        implementation("org.slf4j:slf4j-api:${DependencyVersion.SLF4J.version}")
+        testImplementation("org.slf4j:slf4j-simple:${DependencyVersion.SLF4J.version}")
     }
+    implementation("org.slf4j:slf4j-api")
 }
 
 allprojects {

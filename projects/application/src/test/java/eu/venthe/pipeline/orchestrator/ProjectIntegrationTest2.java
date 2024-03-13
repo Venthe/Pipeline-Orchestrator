@@ -10,10 +10,6 @@ import org.springframework.test.context.TestPropertySource;
 @TestPropertySource(properties = {
         "togglz.features.PROJECTS_SOURCE_CONFIGURATION_FACTORY_WIP.enabled=true",
         "togglz.features.PROJECTS_SERVICE_WIP.enabled=true",
-        "gerrit.enabled=true",
-        "gerrit.password=secret",
-        "gerrit.username=admin",
-        "gerrit.basePath=http://localhost:15480",
 })
 class ProjectIntegrationTest2 extends AbstractIntegrationTest {
     @Autowired

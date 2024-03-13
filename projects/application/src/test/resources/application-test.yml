@@ -1,4 +1,5 @@
 gerrit:
-  url: http://localhost:1555
-  username: admin
+  enabled: true
   password: secret
+  username: admin
+  basePath: http://localhost:15480

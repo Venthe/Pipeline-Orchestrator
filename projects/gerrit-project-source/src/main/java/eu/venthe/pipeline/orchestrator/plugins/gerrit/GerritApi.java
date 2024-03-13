@@ -41,7 +41,7 @@ public class GerritApi {
     }
 
     private ResponseEntity<String> call(URI url, HttpEntity<?> entity) {
-        return restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        return restTemplate.exchange(url, GET, entity, String.class);
     }
 
     @SneakyThrows

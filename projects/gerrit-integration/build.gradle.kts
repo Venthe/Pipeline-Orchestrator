@@ -21,8 +21,7 @@ dependencies {
     implementation("org.springframework:spring-context")
     implementation("org.springframework.boot:spring-boot-autoconfigure")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
-    implementation("org.slf4j:slf4j-api:2.0.12")
-    testImplementation("org.slf4j:slf4j-simple:2.0.12")
+    testImplementation("org.slf4j:slf4j-simple")
 }
 
 tasks.register("cleanGeneratedGerritClient") {
@@ -30,7 +29,7 @@ tasks.register("cleanGeneratedGerritClient") {
     group = "openapi"
 
     delete(
-            "${layout.buildDirectory.get()}/generated/openapi/gerrit"
+            "${layout.buildDirectory.get()}/generated/openapi"
     )
 }
 
@@ -41,7 +40,7 @@ val gerritApi by tasks.register(
 ) {
     description = ""
     group = "openapi"
-    outputDir.set("${layout.buildDirectory.get()}/generated/openapi/gerrit")
+    outputDir.set("${layout.buildDirectory.get()}/generated/openapi")
     apiPackage.set("${_group}.gerrit.api")
     invokerPackage.set("${_group}.gerrit.invoker")
     modelPackage.set("${_group}.gerrit.model")
@@ -67,5 +66,5 @@ openApiValidate {
 }
 
 java.sourceSets["main"].java {
-    srcDir("${layout.buildDirectory.get()}/generated/openapi/gerrit/src/main/java")
+    srcDir("${layout.buildDirectory.get()}/generated/openapi/src/main/java")
 }
