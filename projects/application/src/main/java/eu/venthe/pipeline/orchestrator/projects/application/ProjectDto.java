@@ -1,10 +1,10 @@
 package eu.venthe.pipeline.orchestrator.projects.application;
 
+import lombok.Builder;
 import lombok.Value;
-import lombok.experimental.SuperBuilder;
 
 @Value
-@SuperBuilder
+@Builder
 public class ProjectDto {
     String name;
     String sourceId;

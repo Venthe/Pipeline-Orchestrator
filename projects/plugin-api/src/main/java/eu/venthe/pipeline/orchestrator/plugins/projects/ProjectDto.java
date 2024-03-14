@@ -14,7 +14,6 @@ public class ProjectDto {
 
     @Value
     public static class Id {
-        String systemId;
-        String id1;
+        String id;
     }
 }

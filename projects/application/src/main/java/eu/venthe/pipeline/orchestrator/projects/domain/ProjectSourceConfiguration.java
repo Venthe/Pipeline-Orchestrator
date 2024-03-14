@@ -32,8 +32,8 @@ public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfig
 
     public Collection<DomainEvent> synchronize() {
         Set<Pair<ProjectDiscoveredEvent, Project>> collect = projectProvider.getProjects().stream()
-                .map(p -> new Project(new Project.Id(p.getId().getId1(), p.getId().getSystemId())))
-                .map(project -> Pair.of(new ProjectDiscoveredEvent(), project))
+                .map(p -> new Project(new Project.Id(id.value(), p.getId().getId())))
+                .map(project -> Pair.of(new ProjectDiscoveredEvent(project.getId().id(), project.getId().systemId()), project))
                 .collect(Collectors.toSet());
 
         collect.stream()

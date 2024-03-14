@@ -46,7 +46,8 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
         Awaitility.await().untilAsserted(() -> {
             Collection<ProjectDto> projects = projectsService.listProjects();
             Assertions.assertThat(projects).hasSize(2).containsExactlyInAnyOrder(
-                    ProjectDto.builder().sourceId("gerrit_1").name("All-Projects").build()
+                    ProjectDto.builder().sourceId("gerrit_1").name("All-Projects").build(),
+                    ProjectDto.builder().sourceId("gerrit_1").name("All-Users").build()
             );
         });
     }

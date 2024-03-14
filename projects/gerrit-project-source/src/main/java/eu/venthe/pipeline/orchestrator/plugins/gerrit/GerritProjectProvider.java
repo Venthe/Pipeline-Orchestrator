@@ -26,7 +26,7 @@ public class GerritProjectProvider implements ProjectProvider {
     @Override
     public Collection<ProjectDto> getProjects() {
         return getListProjects().keySet().stream()
-                .map(projectInfo -> new ProjectDto(ProjectDto.Status.ACTIVE, new ProjectDto.Id("gerrit", projectInfo)))
+                .map(projectInfo -> new ProjectDto(ProjectDto.Status.ACTIVE, new ProjectDto.Id(projectInfo)))
                 .collect(Collectors.toSet());
     }
 

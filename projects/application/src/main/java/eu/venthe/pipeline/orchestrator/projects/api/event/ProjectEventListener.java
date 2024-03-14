@@ -20,7 +20,7 @@ public class ProjectEventListener {
 
     public void projectAdded(ProjectDiscoveredEvent event) {
         log.info("Received ProjectSourceConfigurationAddedEvent. {}", event);
-        projectsService.addProject(new NewProjectDto());
+        projectsService.addProject(new NewProjectDto(new NewProjectDto.Id(event.getProjectName(), event.getSystemId())));
     }
 
 }

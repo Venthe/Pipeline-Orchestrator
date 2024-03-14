@@ -6,7 +6,6 @@ import org.togglz.core.util.NamedFeature;
 
 @Getter
 public enum ProjectsSourceFeatureFlags {
-    PROJECTS_SOURCE_CONFIGURATION_FACTORY_WIP("PROJECTS_SOURCE_CONFIGURATION_FACTORY_WIP"),
     PROJECTS_SERVICE_WIP("PROJECTS_SERVICE_WIP");
 
     private final Feature feature;
