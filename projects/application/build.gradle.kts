@@ -15,7 +15,6 @@ enum class DependencyVersion(val version: String) {
     BSON_4_JACKSON("2.13.1"),
     COMMONS_CODEC("1.15"),
     COMMONS_IO("2.15.1"),
-    COMMONS_TEXT("1.11.0"),
     GUAVA("33.0.0-jre"),
     HIBERNATE_VALIDATOR("8.0.1.Final"),
     JGIT("6.8.0.202311291450-r"),
@@ -38,7 +37,6 @@ dependencies {
     implementation("commons-codec:commons-codec:${DependencyVersion.COMMONS_CODEC.version}")
     implementation("commons-io:commons-io:${DependencyVersion.COMMONS_IO.version}")
     implementation("de.undercouch:bson4jackson:${DependencyVersion.BSON_4_JACKSON.version}")
-    implementation("org.apache.commons:commons-text:${DependencyVersion.COMMONS_TEXT.version}")
     implementation("org.eclipse.jgit:org.eclipse.jgit:${DependencyVersion.JGIT.version}")
     implementation("org.hibernate.validator:hibernate-validator:${DependencyVersion.HIBERNATE_VALIDATOR.version}")
     implementation("org.jgrapht:jgrapht-core:${DependencyVersion.JGRAPHT_CORE.version}")

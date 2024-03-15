@@ -1,9 +1,9 @@
-package eu.venthe.pipeline.orchestrator.projects.application;
+package eu.venthe.pipeline.orchestrator.projects.api;
 
 import java.util.Collection;
 
 public interface ProjectsService {
-    Collection<ProjectDto> listProjects();
+    Collection<AddProjectDto> listProjects();
 
     void addProject(CreateProjectSpecification newProjectDto);
 }

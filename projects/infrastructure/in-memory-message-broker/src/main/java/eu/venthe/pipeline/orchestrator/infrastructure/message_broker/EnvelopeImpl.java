@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @RequiredArgsConstructor
 @Getter
-public class Envelope<T> {
+public class EnvelopeImpl<T> implements Envelope<T> {
     private final ZonedDateTime time = ZonedDateTime.now();
     @EqualsAndHashCode.Include
     private final T data;

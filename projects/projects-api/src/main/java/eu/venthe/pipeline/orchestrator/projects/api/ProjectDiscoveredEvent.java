@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.events;
+package eu.venthe.pipeline.orchestrator.projects.api;
 
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import lombok.Value;

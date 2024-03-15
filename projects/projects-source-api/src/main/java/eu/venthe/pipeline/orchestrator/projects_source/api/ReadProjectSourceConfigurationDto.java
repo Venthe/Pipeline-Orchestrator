@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.plugins.projects;
+package eu.venthe.pipeline.orchestrator.projects_source.api;
 
 import lombok.Value;
 import lombok.experimental.SuperBuilder;

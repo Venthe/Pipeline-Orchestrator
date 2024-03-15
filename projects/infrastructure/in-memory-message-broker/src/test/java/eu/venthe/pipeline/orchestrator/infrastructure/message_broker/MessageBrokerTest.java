@@ -30,7 +30,7 @@ class MessageBrokerTest {
         registerListener("3", (id, envelope) -> log.info("Observer {}: {}", id, envelope));
         log.info("{}", results);
 
-        messageBroker.publish(new Envelope<>("Example data"));
+        messageBroker.publish(new EnvelopeImpl<>("Example data"));
 
         Awaitility.await().untilAsserted(() -> {
                     log.info("{}", results);

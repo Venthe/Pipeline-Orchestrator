@@ -12,7 +12,7 @@ import java.util.Collection;
 public class MessageBroker {
     private final MessageListener messageListener;
 
-    public void publish(Envelope<?> envelope) {
+    public void publish(EnvelopeImpl<?> envelope) {
         log.info("Publishing a message to broker. {}", envelope);
         messageListener.exchange(envelope);
     }

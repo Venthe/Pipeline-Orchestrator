@@ -1,10 +1,11 @@
 package eu.venthe.pipeline.orchestrator.projects_source.application;
 
-import eu.venthe.pipeline.orchestrator.plugins.projects.ReadProjectSourceConfigurationDto;
-import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsSourceRepository;
+import eu.venthe.pipeline.orchestrator.projects_source.api.ReadProjectSourceConfigurationDto;
+import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationService;
 import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfigurationFactory;
 import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectsSourceRepository;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
     private final ProjectSourceConfigurationFactory factory;
 
     @Override
-    public ProjectSourceConfigurationId addProjectSourceConfiguration(String id, String sourceType, Map<String, String> properties) {
+    public String addProjectSourceConfiguration(String id, String sourceType, Map<String, String> properties) {
         Pair<ProjectSourceConfiguration, Collection<DomainEvent>> result = factory.createConfiguration(id, sourceType, properties);
 
         ProjectSourceConfiguration configuration = result.getLeft();
@@ -35,12 +36,12 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
         bus.publish(result.getRight());
 
         log.info("Project source configuration added. {}, {}, {}", id, sourceType, properties);
-        return configuration.getId();
+        return configuration.getId().getValue();
     }
 
     @Override
-    public void synchronizeProjects(ProjectSourceConfigurationId projectSourceConfigurationId) {
-        ProjectSourceConfiguration configuration = repository.find(projectSourceConfigurationId)
+    public void synchronizeProjects(String projectSourceConfigurationId) {
+        ProjectSourceConfiguration configuration = repository.find(ProjectSourceConfigurationId.of(projectSourceConfigurationId))
                 .orElseThrow(ProjectSourceConfigurationNotFoundException::new);
 
         Collection<DomainEvent> result = configuration.synchronize();
@@ -49,12 +50,12 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
     }
 
     @Override
-    public void removeProjectSourceConfiguration(ProjectSourceConfigurationId projectSourceConfigurationId) {
-        ProjectSourceConfiguration configuration = repository.find(projectSourceConfigurationId)
+    public void removeProjectSourceConfiguration(String projectSourceConfigurationId) {
+        ProjectSourceConfiguration configuration = repository.find(ProjectSourceConfigurationId.of(projectSourceConfigurationId))
                 .orElseThrow(ProjectSourceConfigurationNotFoundException::new);
 
         Collection<DomainEvent> result = configuration.delete();
-        repository.delete(projectSourceConfigurationId);
+        repository.delete(ProjectSourceConfigurationId.of(projectSourceConfigurationId));
         bus.publish(result);
     }
 
@@ -66,8 +67,8 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
     }
 
     @Override
-    public Optional<ReadProjectSourceConfigurationDto> getConfiguration(ProjectSourceConfigurationId projectSourceConfigurationId) {
-        return repository.find(projectSourceConfigurationId)
+    public Optional<ReadProjectSourceConfigurationDto> getConfiguration(String projectSourceConfigurationId) {
+        return repository.find(ProjectSourceConfigurationId.of(projectSourceConfigurationId))
                 .map(projectSourceConfiguration -> projectSourceConfiguration.visitor(ReadProjectSourceConfigurationDto::new));
     }
 

@@ -1,8 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects_source.api;
 
 import eu.venthe.pipeline.orchestrator.plugins.projects.CreateProjectSourceConfigurationDto;
-import eu.venthe.pipeline.orchestrator.projects_source.application.ProjectsSourceConfigurationService;
-import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfigurationId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +17,12 @@ public class ProjectsSourceController {
     }
 
     @GetMapping("/{projectSourceConfigurationId}")
-    public ResponseEntity<?> getConfiguration(@PathVariable ProjectSourceConfigurationId projectSourceConfigurationId) {
+    public ResponseEntity<?> getConfiguration(@PathVariable String projectSourceConfigurationId) {
         return ResponseEntity.ok(projectsSourceConfigurationService.getConfiguration(projectSourceConfigurationId));
     }
 
     @PostMapping("/{projectSourceConfigurationId}/synchronize")
-    public ResponseEntity<?> synchronizeProjects(@PathVariable ProjectSourceConfigurationId projectSourceConfigurationId) {
+    public ResponseEntity<?> synchronizeProjects(@PathVariable String projectSourceConfigurationId) {
         projectsSourceConfigurationService.synchronizeProjects(projectSourceConfigurationId);
 
         return ResponseEntity.ok().build();

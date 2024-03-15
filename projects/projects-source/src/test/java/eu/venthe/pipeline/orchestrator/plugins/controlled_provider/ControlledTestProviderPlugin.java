@@ -4,7 +4,6 @@ import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectPlugin;
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectProvider;
 import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystem;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.test.context.TestComponent;
 
 import java.util.Map;
 import java.util.UUID;

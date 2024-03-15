@@ -2,8 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects_source.domain;
 
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectProvider;
 import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystem;
-import eu.venthe.pipeline.orchestrator.projects.projects.domain.Project;
-import eu.venthe.pipeline.orchestrator.projects.projects.domain.events.ProjectDiscoveredEvent;
+import eu.venthe.pipeline.orchestrator.projects.api.ProjectDiscoveredEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import lombok.*;
@@ -23,7 +22,7 @@ public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfig
     private final VersionControlSystem versionControlSystem;
 
     @Getter(value = AccessLevel.NONE)
-    private final Map<Project.Id, Project> knownProjects = new HashMap<>();
+    private final Map<String, KnownProject> knownProjects = new HashMap<>();
 
     public Collection<DomainEvent> synchronize() {
         log.info("Synchronizing projects in {}", id.getValue());
@@ -31,15 +30,15 @@ public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfig
         Set<DomainEvent> domainEvents = new HashSet<>();
 
         projectProvider.getProjects().stream()
-                .map(p -> new Project(Project.Id.of(id.getValue(), p.getId())))
+                .map(projectDto -> new KnownProject(projectDto.getId(), id.getValue()))
                 .forEach(project -> {
                     if (knownProjects.get(project.getId()) != null) {
-                        log.info("Project {} is already registered", project.getId().getId());
+                        log.info("Project {} is already registered", project.getId());
                         return;
                     }
 
-                    log.info("Registering project {}", project.getId().getId());
-                    domainEvents.add(new ProjectDiscoveredEvent(project.getId().getId(), project.getId().getSystemId()));
+                    log.info("Registering project {}", project.getId());
+                    domainEvents.add(new ProjectDiscoveredEvent(project.getId(), id.getValue()));
                     knownProjects.put(project.getId(), project);
                 });
 
@@ -55,7 +54,7 @@ public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfig
         return visitor.visit(id.getValue(), sourceType);
     }
 
-    public Set<Project> getKnownProjects() {
+    public Set<KnownProject> getKnownProjects() {
         return new HashSet<>(knownProjects.values());
     }
 }

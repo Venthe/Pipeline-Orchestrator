@@ -1,11 +1,26 @@
 package eu.venthe.pipeline.orchestrator.projects_source.domain;
 
+import eu.venthe.pipeline.orchestrator.plugins.controlled_provider.ControlledTestProjectProvider;
+import eu.venthe.pipeline.orchestrator.plugins.controlled_provider.ControlledTestProviderPlugin;
+import eu.venthe.pipeline.orchestrator.plugins.controlled_provider.ControlledTestVersionControlSystem;
+import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.api.ProjectDiscoveredEvent;
+import eu.venthe.pipeline.orchestrator.projects_source.domain.events.ProjectSourceConfigurationAddedEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
+import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
+import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static eu.venthe.pipeline.orchestrator.plugins.controlled_provider.ControlledTestProviderPlugin.SOURCE_TYPE;
+import static eu.venthe.pipeline.orchestrator.plugins.controlled_provider.ControlledTestProviderPlugin.generateId;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SoftAssertionsExtension.class)
 class ProjectSourceConfigurationTest {
@@ -58,7 +73,7 @@ class ProjectSourceConfigurationTest {
         );
         assertThat(configuration.getKnownProjects())
                 .containsExactlyInAnyOrder(
-                        new Project(Project.Id.of(configurationId, "Simple-Dispatch"))
+                        new KnownProject(configurationId, "Simple-Dispatch")
                 );
     }
 
@@ -76,8 +91,8 @@ class ProjectSourceConfigurationTest {
 
         assertThat(configuration.getKnownProjects())
                 .containsExactlyInAnyOrder(
-                        new Project(Project.Id.of(configurationId, "Simple-Dispatch")),
-                        new Project(Project.Id.of(configurationId, "Test-Project"))
+                        new KnownProject(configurationId, "Simple-Dispatch"),
+                        new KnownProject(configurationId, "Test-Project")
                 );
     }
 }

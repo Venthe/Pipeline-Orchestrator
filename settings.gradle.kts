@@ -21,6 +21,7 @@ rootProject.name = "orchestrator"
 
 includeNestedProject(
         "application",
+        "infrastructure/message-broker-api",
         "infrastructure/in-memory-message-broker",
         "infrastructure/in-memory-repository",
         "job-executor",
@@ -28,7 +29,9 @@ includeNestedProject(
         "plugins/gerrit-source-plugin",
         "plugins/plugin-api",
         "projects",
+        "projects-api",
         "projects-source",
+        "projects-source-api",
         "security",
         "shared-kernel",
         "task-scheduler",
