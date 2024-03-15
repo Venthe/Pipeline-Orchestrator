@@ -73,7 +73,7 @@ class ProjectSourceConfigurationTest {
         );
         assertThat(configuration.getKnownProjects())
                 .containsExactlyInAnyOrder(
-                        new KnownProject(configurationId, "Simple-Dispatch")
+                        new KnownProject("Simple-Dispatch", configurationId)
                 );
     }
 
@@ -91,8 +91,8 @@ class ProjectSourceConfigurationTest {
 
         assertThat(configuration.getKnownProjects())
                 .containsExactlyInAnyOrder(
-                        new KnownProject(configurationId, "Simple-Dispatch"),
-                        new KnownProject(configurationId, "Test-Project")
+                        new KnownProject("Simple-Dispatch", configurationId),
+                        new KnownProject("Test-Project", configurationId)
                 );
     }
 }
