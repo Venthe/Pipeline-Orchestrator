@@ -6,18 +6,6 @@ plugins {
     `java-library`
 }
 
-enum class DependencyVersion(val version: String) {
-    JUNIT_PLATFORM_LAUNCHER("1.9.1"),
-}
-
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.2"))
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
-        because("Only needed to run tests in a version of IntelliJ IDEA that bundles older versions")
-    }
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
+    testImplementation("org.slf4j:slf4j-simple")
 }

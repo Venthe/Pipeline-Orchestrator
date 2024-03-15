@@ -20,12 +20,7 @@ dependencies {
     implementation("jakarta.annotation:jakarta.annotation-api:${DependencyVersion.JAKARTA_ANNOTATION_API.version}")
     implementation("org.openapitools:jackson-databind-nullable:${DependencyVersion.JACKSON_DATABIND_NULLABLE.version}")
     implementation("org.springframework.boot:spring-boot-autoconfigure")
-    implementation("org.springframework.boot:spring-boot-autoconfigure")
-    implementation("org.springframework:spring-context")
-    implementation("org.springframework:spring-context")
     implementation("org.springframework:spring-web")
-    implementation("org.springframework:spring-web")
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.slf4j:slf4j-simple")
 }
 

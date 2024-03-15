@@ -12,7 +12,6 @@ group = "eu.venthe.pipeline"
 version = "0.0.1-SNAPSHOT"
 
 enum class DependencyVersion(val version: String) {
-    AWAITILITY("4.2.0"),
     BSON_4_JACKSON("2.13.1"),
     COMMONS_CODEC("1.15"),
     COMMONS_IO("2.15.1"),
@@ -45,13 +44,11 @@ dependencies {
     implementation("org.jgrapht:jgrapht-core:${DependencyVersion.JGRAPHT_CORE.version}")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework:spring-context")
     implementation("org.springframework:spring-web")
     implementation("org.togglz:togglz-spring-boot-starter:${DependencyVersion.TOGGLZ_SPRING_BOOT_STARTER.version}")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-    testImplementation("org.awaitility:awaitility:${DependencyVersion.AWAITILITY.version}")
     testImplementation("org.mock-server:mockserver-client-java:${DependencyVersion.MOCKSERVER_CLIENT_JAVA.version}")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.testcontainers:testcontainers")

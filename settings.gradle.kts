@@ -21,12 +21,14 @@ rootProject.name = "orchestrator"
 
 includeNestedProject(
         "application",
-        "plugins/plugin-api",
+        "infrastructure/in-memory-message-broker",
+        "infrastructure/in-memory-repository",
+        "job-executor",
         "plugins/docker-job-executor-plugin",
         "plugins/gerrit-source-plugin",
+        "plugins/plugin-api",
         "projects",
         "projects-source",
-        "job-executor",
         "security",
         "shared-kernel",
         "task-scheduler",
