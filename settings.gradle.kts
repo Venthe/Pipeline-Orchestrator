@@ -1,7 +1,8 @@
 fun includeNestedProject(vararg projectNames: String, prefix: String = "projects") {
     projectNames.forEach {
-        include(it)
-        project(":${it}").projectDir = file("${prefix}/${it}")
+        val sanitizedName = it.replace("/", ":")
+        include(sanitizedName)
+        project(":$sanitizedName").projectDir = file("${prefix}/${it}")
     }
 }
 
@@ -18,4 +19,16 @@ pluginManagement {
 
 rootProject.name = "orchestrator"
 
-includeNestedProject("application", "gerrit-integration", "gerrit-project-source", "docker-job-executor", "plugin-api")
+includeNestedProject(
+        "application",
+        "plugins/plugin-api",
+        "plugins/docker-job-executor-plugin",
+        "plugins/gerrit-source-plugin",
+        "projects",
+        "projects-source",
+        "job-executor",
+        "security",
+        "shared-kernel",
+        "task-scheduler",
+        "utilities",
+)

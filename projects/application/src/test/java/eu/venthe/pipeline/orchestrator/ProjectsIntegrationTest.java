@@ -1,19 +1,19 @@
 package eu.venthe.pipeline.orchestrator;
 
-import eu.venthe.pipeline.orchestrator.plugins.projects.CreateProjectSourceConfigurationDto;
 import eu.venthe.pipeline.orchestrator.plugins.projects.ReadProjectSourceConfigurationDto;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsService;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsSourceConfigurationService;
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectSourceConfigurationId;
-import org.assertj.core.api.Assertions;
-import org.awaitility.Awaitility;
+import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsService;
+import eu.venthe.pipeline.orchestrator.projects.configuration.application.ProjectsSourceConfigurationService;
+import eu.venthe.pipeline.orchestrator.projects.configuration.domain.ProjectSourceConfigurationId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 class ProjectsIntegrationTest extends AbstractIntegrationTest {
     @Autowired
@@ -24,30 +24,28 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void name() {
-        CreateProjectSourceConfigurationDto configurationDto = CreateProjectSourceConfigurationDto.builder()
-                .sourceType("gerrit")
-                .id("gerrit_1")
-                .properties(Map.of(
-                        "username", "admin",
-                        "password", "secret",
-                        "basePath", "http://localhost:15480"
-                ))
-                .build();
-        ProjectSourceConfigurationId id = projectsSourceConfigurationService.addProjectSourceConfiguration(configurationDto);
+        Map<String, String> properties = Map.of(
+                "username", "admin",
+                "password", "secret",
+                "basePath", "http://localhost:15480"
+        );
+        String id = "gerrit_1";
+        String sourceType = "gerrit";
+        ProjectSourceConfigurationId projectId = projectsSourceConfigurationService.addProjectSourceConfiguration(id, sourceType, properties);
 
         Set<ReadProjectSourceConfigurationDto> projectConfigurations = projectsSourceConfigurationService.listConfigurations();
-        Awaitility.await().untilAsserted(() -> {
-            Assertions.assertThat(projectConfigurations).singleElement().isEqualTo(new ReadProjectSourceConfigurationDto(configurationDto.getId(), configurationDto.getSourceType()));
+        await().untilAsserted(() -> {
+            assertThat(projectConfigurations).singleElement()
+                    .isEqualTo(new ReadProjectSourceConfigurationDto(id, sourceType));
         });
 
+        projectsSourceConfigurationService.synchronizeProjects(projectId);
 
-        projectsSourceConfigurationService.synchronizeProjects(id);
-
-        Awaitility.await().untilAsserted(() -> {
+        await().untilAsserted(() -> {
             Collection<ProjectDto> projects = projectsService.listProjects();
-            Assertions.assertThat(projects).hasSize(2).containsExactlyInAnyOrder(
-                    ProjectDto.builder().sourceId("gerrit_1").name("All-Projects").build(),
-                    ProjectDto.builder().sourceId("gerrit_1").name("All-Users").build()
+            assertThat(projects).hasSize(2).containsExactlyInAnyOrder(
+                    ProjectDto.builder().sourceId(id).name("All-Projects").build(),
+                    ProjectDto.builder().sourceId(id).name("All-Users").build()
             );
         });
     }
