@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.plugins.gerrit;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectPlugin;
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectProvider;
-import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystem;
+import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -29,7 +29,7 @@ public class GerritProjectPlugin implements ProjectPlugin {
     }
 
     @Override
-    public VersionControlSystem getVersionControlSystem(Map<String, String> properties) {
+    public VersionControlSystemProvider getVersionControlSystem(Map<String, String> properties) {
         return new GerritVersionControlSystem();
     }
 }

@@ -37,7 +37,6 @@ dependencies {
     implementation("commons-codec:commons-codec:${DependencyVersion.COMMONS_CODEC.version}")
     implementation("commons-io:commons-io:${DependencyVersion.COMMONS_IO.version}")
     implementation("de.undercouch:bson4jackson:${DependencyVersion.BSON_4_JACKSON.version}")
-    implementation("org.eclipse.jgit:org.eclipse.jgit:${DependencyVersion.JGIT.version}")
     implementation("org.hibernate.validator:hibernate-validator:${DependencyVersion.HIBERNATE_VALIDATOR.version}")
     implementation("org.jgrapht:jgrapht-core:${DependencyVersion.JGRAPHT_CORE.version}")
     implementation("org.springframework.boot:spring-boot-starter-actuator")

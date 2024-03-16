@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects_source.domain;
 
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectPlugin;
-import eu.venthe.pipeline.orchestrator.projects_source.domain.events.ProjectSourceConfigurationAddedEvent;
+import eu.venthe.pipeline.orchestrator.projects_source.api.events.ProjectSourceConfigurationAddedEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

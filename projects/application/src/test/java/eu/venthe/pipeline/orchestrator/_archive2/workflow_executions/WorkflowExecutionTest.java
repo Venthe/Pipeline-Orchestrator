@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import eu.venthe.pipeline.orchestrator._archive2.events.HandledEvent;
 import eu.venthe.pipeline.orchestrator._archive2.events.model.EventType;
-import eu.venthe.pipeline.orchestrator._archive2.workflow_executions.WorkflowExecution;
 import eu.venthe.pipeline.orchestrator._archive2.workflow_executions.WorkflowExecution.NewJobsDto;
 import eu.venthe.pipeline.orchestrator._archive2.workflows.Workflow;
 import lombok.SneakyThrows;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.mock;
 

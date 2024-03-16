@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.plugins.controlled_provider;
 
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectPlugin;
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectProvider;
-import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystem;
+import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
@@ -26,7 +26,7 @@ public class ControlledTestProviderPlugin implements ProjectPlugin {
     }
 
     @Override
-    public VersionControlSystem getVersionControlSystem(Map<String, String> properties) {
+    public VersionControlSystemProvider getVersionControlSystem(Map<String, String> properties) {
         return versionControlSystem;
     }
 

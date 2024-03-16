@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.projects_source.domain;
 
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectProvider;
-import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystem;
-import eu.venthe.pipeline.orchestrator.projects.api.ProjectDiscoveredEvent;
+import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
+import eu.venthe.pipeline.orchestrator.projects_source.api.events.ProjectDiscoveredEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import lombok.*;
@@ -19,7 +19,7 @@ public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfig
     private final ProjectSourceConfigurationId id;
     private final String sourceType;
     private final ProjectProvider projectProvider;
-    private final VersionControlSystem versionControlSystem;
+    private final VersionControlSystemProvider versionControlSystem;
 
     @Getter(value = AccessLevel.NONE)
     private final Map<String, KnownProject> knownProjects = new HashMap<>();

@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator._archive2.drivers;
 
-import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystem;
+import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -9,7 +9,7 @@ import java.util.*;
 
 @Component
 @ConditionalOnProperty(value = "versionControlSystem", havingValue = "test", matchIfMissing = false)
-public class TestVersionControlSystem implements VersionControlSystem {
+public class TestVersionControlSystem implements VersionControlSystemProvider {
 
     private final Map<FileRef, String> files = new HashMap<>();
 
@@ -18,7 +18,7 @@ public class TestVersionControlSystem implements VersionControlSystem {
     }
 
     @Override
-    public Optional<byte[]> getFile(String repositoryId, String projectName, String ref, String path) {
+    public Optional<byte[]> getFile(String projectName, String ref, String path) {
         return Optional.ofNullable(files.get(new FileRef(repositoryId, projectName, ref, path)))
                 .map(String::getBytes);
     }

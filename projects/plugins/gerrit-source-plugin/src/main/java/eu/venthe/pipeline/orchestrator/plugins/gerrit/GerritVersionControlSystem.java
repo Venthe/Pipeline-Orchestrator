@@ -1,12 +1,12 @@
 package eu.venthe.pipeline.orchestrator.plugins.gerrit;
 
-import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystem;
+import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
 
 import java.util.Optional;
 
-public class GerritVersionControlSystem implements VersionControlSystem {
+public class GerritVersionControlSystem implements VersionControlSystemProvider {
     @Override
-    public Optional<byte[]> getFile(String repositoryId, String projectName, String ref, String workflow) {
+    public Optional<byte[]> getFile(String projectName, String ref, String path) {
         throw new UnsupportedOperationException();
     }
 }
