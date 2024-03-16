@@ -1,11 +1,7 @@
-package eu.venthe.pipeline.orchestrator._archive2.infrastructure;
+package eu.venthe.pipeline.orchestrator.job_executor;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.application.WorkflowExecutionService;
-import eu.venthe.pipeline.orchestrator.plugins.job_executors.JobExecutor;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.JobExecutionStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutorService;
@@ -16,7 +12,6 @@ import static java.lang.Thread.sleep;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "jobExecutor", havingValue = "test", matchIfMissing = false)
 public class TestJobExecutor implements JobExecutor {
     private final WorkflowExecutionService workflowExecutionService;
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
