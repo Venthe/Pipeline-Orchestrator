@@ -118,11 +118,9 @@ properties:
     items:
       $ref: team.yaml#
   head:
-    $ref: empty-object.yaml#
-    # TODO: Properties of head
+    $ref: ref-info.yaml#
   base:
-    $ref: empty-object.yaml#
-    # TODO: Properties of base
+    $ref: ref-info.yaml#
   _links:
     type: object
     required:

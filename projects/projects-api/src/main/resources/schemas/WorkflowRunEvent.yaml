@@ -1,6 +1,10 @@
-$id: WorkflowRunRequested
+$id: WorkflowRun
 $schema: https://json-schema.org/draft/2020-12/schema
-title: WorkflowRunRequested
+title: WorkflowRunCompleted
+description: |
+  This event occurs when there is activity relating to a run of a GitHub Actions workflow. For more information, see "About workflows." For information about the APIs to manage workflow runs, see the GraphQL documentation or "Workflow runs" in the REST API documentation.
+
+  For activity relating to a job in a workflow run, use the workflow_job event.
 required:
   - action
   - repository
@@ -11,7 +15,7 @@ additionalProperties: false
 properties:
   action:
     type: string
-    default: requested
+    enum: [in_progress, completed, requested]
   enterprise:
     $ref: components/enterprise.yaml#
   installation:

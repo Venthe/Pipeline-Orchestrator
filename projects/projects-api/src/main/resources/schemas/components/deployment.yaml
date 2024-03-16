@@ -1,0 +1,130 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+required:
+  - url
+  - id
+  - node_id
+  - sha
+  - ref
+  - task
+  - payload
+  - environment
+  - description
+  - creator
+  - created_at
+  - updated_at
+  - statuses_url
+  - repository_url
+properties:
+  url:
+    type: string
+  id:
+    type: integer
+    description: Unique identifier of the deployment
+  node_id:
+    type: string
+  sha:
+    type: string
+  ref:
+    type: string
+    description: The ref to deploy. This can be a branch, tag, or sha.
+  task:
+    type: string
+    description: Parameter to specify a task to execute
+  payload object or:
+    type: string
+  original_environment:
+    type: string
+  environment:
+    type: string
+    description: Name for the target deployment environment.
+  description:
+    type: [string, null]
+  creator:
+    $ref: github-user.yaml#
+  created_at:
+    type: string
+  updated_at:
+    type: string
+  statuses_url:
+    type: string
+  repository_url:
+    type: string
+  transient_environment:
+    type: boolean
+    description: "Specifies if the given environment is will no longer exist at some point in the future. Default: false."
+    default: false
+  production_environment:
+    type: boolean
+    description: "Specifies if the given environment is one that end-users directly interact with. Default: false."
+    default: false
+  performed_via_github_app:
+    type: object
+    description: GitHub apps are a new way to extend GitHub. They can be installed directly on organizations and user accounts and granted access to specific repositories. They come with granular permissions and built-in webhooks. GitHub apps are first class actors within GitHub.
+    additionalProperties: false
+    required:
+      - id
+      - node_id
+      - owner
+      - name
+      - description
+      - external_url
+      - html_url
+      - created_at
+      - updated_at
+      - permissions
+      - events
+    properties:
+      id:
+        type: integer
+        description: Unique identifier of the GitHub app
+      slug:
+        type: string
+        description: The slug name of the GitHub app
+      node_id:
+        type: string
+      owner:
+        $ref: github-user.yaml#
+        description: Properties of owner
+      name:
+        type: string
+        description: The name of the GitHub app
+      description:
+        type: [string, null]
+      external_url:
+        type: string
+      html_url:
+        type: string
+      created_at:
+        type: string
+      updated_at:
+        type: string
+      permissions:
+        description: The set of permissions for the GitHub app
+        additionalProperties: false
+        properties:
+          issues:
+            type: string
+          checks:
+            type: string
+          metadata:
+            type: string
+          contents:
+            type: string
+          deployments:
+            type: string
+      events array of:
+        type: strings
+        description: The list of events for the GitHub app
+      installations_count:
+        type: integer
+        description: The number of installations associated with the GitHub app
+      client_id:
+        type: string
+      client_secret:
+        type: string
+      webhook_secret:
+        type: [string, null]
+      pem:
+        type: string
+additionalProperties: false
