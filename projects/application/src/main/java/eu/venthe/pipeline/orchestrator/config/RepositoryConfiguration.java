@@ -1,13 +1,14 @@
 package eu.venthe.pipeline.orchestrator.config;
 
-import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.Envelope;
+import eu.venthe.pipeline.orchestrator.infrastructure.in_memory_repository.InMemoryRepository;
+import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.EnvelopeImpl;
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.MessageBroker;
-import eu.venthe.pipeline.orchestrator.infrastructure.repository.InMemoryRepository;
-import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsSourceRepository;
-import eu.venthe.pipeline.orchestrator.projects.configuration.domain.ProjectSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.projects.configuration.domain.ProjectSourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.projects.projects.domain.Project;
-import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectRepository;
+import eu.venthe.pipeline.orchestrator.projects.domain.Project;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectRepository;
+import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfiguration;
+import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectsSourceRepository;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
@@ -35,12 +36,12 @@ public class RepositoryConfiguration {
         return new DomainMessageBroker() {
             @Override
             public void publish(Collection<DomainEvent> events) {
-                broker.publishAll(events.stream().map(Envelope::new).collect(Collectors.toSet()));
+                broker.publishAll(events.stream().map(EnvelopeImpl::new).collect(Collectors.toSet()));
             }
 
             @Override
             public void publish(DomainEvent event) {
-                broker.publish(new Envelope<>(event));
+                broker.publish(new EnvelopeImpl<>(event));
             }
         };
     }
@@ -48,7 +49,7 @@ public class RepositoryConfiguration {
     private static class ProjectsSourceRepositoryImpl extends DomainRepositoryImpl<ProjectSourceConfiguration, ProjectSourceConfigurationId> implements ProjectsSourceRepository {
     }
 
-    private static class ProjectRepositoryImpl extends DomainRepositoryImpl<Project, Project.Id> implements ProjectRepository {
+    private static class ProjectRepositoryImpl extends DomainRepositoryImpl<Project, ProjectId> implements ProjectRepository {
     }
 
     private static class DomainRepositoryImpl<AGGREGATE extends Aggregate<AGGREGATE_ID>, AGGREGATE_ID> implements eu.venthe.pipeline.orchestrator.shared_kernel.DomainRepository<AGGREGATE, AGGREGATE_ID> {

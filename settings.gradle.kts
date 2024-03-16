@@ -27,6 +27,7 @@ includeNestedProject(
         "infrastructure/message-broker-api",
         "job-executor",
         "plugins/docker-job-executor-plugin",
+        "plugins/jenkins-job-executor-plugin",
         "plugins/gerrit-source-plugin",
         "plugins/plugin-api",
         "projects",

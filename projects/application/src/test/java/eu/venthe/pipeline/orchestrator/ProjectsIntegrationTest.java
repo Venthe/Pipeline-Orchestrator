@@ -1,10 +1,9 @@
 package eu.venthe.pipeline.orchestrator;
 
-import eu.venthe.pipeline.orchestrator.plugins.projects.ReadProjectSourceConfigurationDto;
-import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsService;
-import eu.venthe.pipeline.orchestrator.projects.configuration.application.ProjectsSourceConfigurationService;
-import eu.venthe.pipeline.orchestrator.projects.configuration.domain.ProjectSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects.api.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.api.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationService;
+import eu.venthe.pipeline.orchestrator.projects_source.api.ReadProjectSourceConfigurationDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,7 +19,7 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
     ProjectsSourceConfigurationService projectsSourceConfigurationService;
 
     @Autowired
-    ProjectsService projectsService;
+    ProjectsQueryService projectsService;
 
     @Test
     void name() {
@@ -31,7 +30,7 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
         );
         String id = "gerrit_1";
         String sourceType = "gerrit";
-        ProjectSourceConfigurationId projectId = projectsSourceConfigurationService.addProjectSourceConfiguration(id, sourceType, properties);
+        String projectId = projectsSourceConfigurationService.addProjectSourceConfiguration(id, sourceType, properties);
 
         Set<ReadProjectSourceConfigurationDto> projectConfigurations = projectsSourceConfigurationService.listConfigurations();
         await().untilAsserted(() -> {
@@ -44,8 +43,8 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
         await().untilAsserted(() -> {
             Collection<ProjectDto> projects = projectsService.listProjects();
             assertThat(projects).hasSize(2).containsExactlyInAnyOrder(
-                    ProjectDto.builder().sourceId(id).name("All-Projects").build(),
-                    ProjectDto.builder().sourceId(id).name("All-Users").build()
+                    new ProjectDto("All-Projects", id),
+                    new ProjectDto("All-Users", id)
             );
         });
     }

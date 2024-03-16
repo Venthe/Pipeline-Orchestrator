@@ -17,7 +17,6 @@ enum class DependencyVersion(val version: String) {
     COMMONS_IO("2.15.1"),
     GUAVA("33.0.0-jre"),
     HIBERNATE_VALIDATOR("8.0.1.Final"),
-    JGIT("6.8.0.202311291450-r"),
     JGRAPHT_CORE("1.5.2"),
     JUNIT_PLATFORM_LAUNCHER("1.9.1"),
     MOCKSERVER_CLIENT_JAVA("5.15.0"),
@@ -26,6 +25,15 @@ enum class DependencyVersion(val version: String) {
 
 dependencies {
     implementation(project(":plugins:plugin-api"))
+    implementation(project(":projects-api"))
+    implementation(project(":projects"))
+    implementation(project(":projects-source-api"))
+    implementation(project(":projects-source"))
+    implementation(project(":shared-kernel"))
+    implementation(project(":infrastructure:in-memory-repository"))
+    implementation(project(":infrastructure:in-memory-message-broker"))
+    implementation(project(":infrastructure:message-broker-api"))
+    implementation(project(":shared-kernel"))
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
