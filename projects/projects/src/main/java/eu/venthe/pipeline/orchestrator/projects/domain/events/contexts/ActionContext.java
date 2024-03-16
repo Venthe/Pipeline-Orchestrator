@@ -1,14 +1,14 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.venthe.pipeline.orchestrator._archive2.utilities.ContextUtilities;
+import com.google.common.collect.MoreCollectors;
+import eu.venthe.pipeline.orchestrator.projects.domain.utilities.ContextUtilities;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.util.Optional;
 
-import static com.google.common.collect.MoreCollectors.toOptional;
 import static java.util.Arrays.stream;
 
 @UtilityClass

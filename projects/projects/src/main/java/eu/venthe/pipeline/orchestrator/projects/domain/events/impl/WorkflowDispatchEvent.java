@@ -8,7 +8,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.common.Re
 import eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.AbstractHandledEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.definitions.Repository;
-import eu.venthe.pipeline.orchestrator._archive2.workflows.contexts.on.OnInputs;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnInputs;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;

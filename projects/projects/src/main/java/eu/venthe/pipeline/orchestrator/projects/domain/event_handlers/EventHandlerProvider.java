@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.event_handlers;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.handlers.DefaultEventHandler;
-import eu.venthe.pipeline.orchestrator._archive2.events.TriggerEvent;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.TriggerEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

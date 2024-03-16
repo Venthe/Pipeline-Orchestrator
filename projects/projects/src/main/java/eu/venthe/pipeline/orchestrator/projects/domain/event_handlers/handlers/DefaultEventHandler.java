@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.handlers;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.EventHandler;
-import eu.venthe.pipeline.orchestrator._archive2.events.TriggerEvent;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.TriggerEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;

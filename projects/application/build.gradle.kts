@@ -15,7 +15,6 @@ enum class DependencyVersion(val version: String) {
     BSON_4_JACKSON("2.13.1"),
     COMMONS_CODEC("1.15"),
     COMMONS_IO("2.15.1"),
-    GUAVA("33.0.0-jre"),
     HIBERNATE_VALIDATOR("8.0.1.Final"),
     JUNIT_PLATFORM_LAUNCHER("1.9.1"),
     MOCKSERVER_CLIENT_JAVA("5.15.0"),
@@ -39,7 +38,7 @@ dependencies {
 
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-    implementation("com.google.guava:guava:${DependencyVersion.GUAVA.version}")
+    implementation("com.google.guava:guava")
     implementation("commons-codec:commons-codec:${DependencyVersion.COMMONS_CODEC.version}")
     implementation("commons-io:commons-io:${DependencyVersion.COMMONS_IO.version}")
     implementation("de.undercouch:bson4jackson:${DependencyVersion.BSON_4_JACKSON.version}")

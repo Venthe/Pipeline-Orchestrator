@@ -6,7 +6,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.common.Co
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.common.DateTimeContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.definitions.Commit;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.definitions.Committer;
-import eu.venthe.pipeline.orchestrator._archive2.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.projects.domain.utilities.ContextUtilities;
 import lombok.Getter;
 
 import java.time.OffsetDateTime;

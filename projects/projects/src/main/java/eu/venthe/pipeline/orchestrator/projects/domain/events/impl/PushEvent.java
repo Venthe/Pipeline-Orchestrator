@@ -1,20 +1,19 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events.impl;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.collect.Streams;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.AbstractHandledEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.CommitContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.CommitsContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.CommitterContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.RepositoryContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.common.CommitShaContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.common.RefContext;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.AbstractHandledEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.definitions.Commit;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.definitions.Committer;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.definitions.Repository;
-import eu.venthe.pipeline.orchestrator._archive2.workflows.contexts.on.OnBranches;
-import eu.venthe.pipeline.orchestrator._archive2.workflows.contexts.on.OnPaths;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnBranches;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnPaths;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -22,6 +21,7 @@ import lombok.ToString;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 // TODO: Describe properties for push
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
@@ -85,10 +85,12 @@ public class PushEvent extends AbstractHandledEvent {
     public Boolean matches(OnPaths onPaths) {
         return onPaths.match(
                 commits.stream()
-                        .flatMap(e -> Streams.concat(
+                        .flatMap(e -> Stream.concat(
                                 e.getAdded().stream(),
-                                e.getModified().stream(),
-                                e.getRemoved().stream()
+                                Stream.concat(
+                                        e.getModified().stream(),
+                                        e.getRemoved().stream()
+                                )
                         ))
                         .collect(Collectors.toSet())
         );

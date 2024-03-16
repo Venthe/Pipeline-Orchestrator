@@ -1,10 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.api;
 
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.MessageListenerRegistry;
-import eu.venthe.pipeline.orchestrator.projects.api.events.ProjectDiscoveredEvent;
-import eu.venthe.pipeline.orchestrator.projects.application.CreateProjectSpecification;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.ProjectDiscoveredEvent;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsService;
+import eu.venthe.pipeline.orchestrator.projects_source.api.events.ProjectDiscoveredEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

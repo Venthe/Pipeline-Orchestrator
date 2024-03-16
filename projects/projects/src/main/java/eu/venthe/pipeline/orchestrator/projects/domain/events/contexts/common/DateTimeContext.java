@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.common;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.venthe.pipeline.orchestrator._archive2.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.projects.domain.utilities.ContextUtilities;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;

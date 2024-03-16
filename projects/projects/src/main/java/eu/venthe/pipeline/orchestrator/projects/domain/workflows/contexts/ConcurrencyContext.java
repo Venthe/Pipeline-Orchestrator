@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator._archive2.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.projects.domain.utilities.ContextUtilities;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;

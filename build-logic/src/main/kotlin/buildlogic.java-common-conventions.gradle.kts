@@ -33,6 +33,7 @@ public enum class DependencyVersion(val version: String) {
     COMMONS_TEXT("1.11.0"),
     JACKSON("2.16.2"),
     JUNIT("5.10.2"),
+    GUAVA("33.0.0-jre"),
     JUNIT_PLATFORM_LAUNCHER("1.9.1"),
     SLF4J("2.0.12"),
     SPRING_BOOT("3.2.3"),
@@ -61,9 +62,9 @@ dependencies {
         testImplementation("org.awaitility:awaitility:${DependencyVersion.AWAITILITY.version}")
         testImplementation("org.junit.jupiter:junit-jupiter-api:${DependencyVersion.JUNIT.version}")
         testImplementation("org.junit.jupiter:junit-jupiter-params:${DependencyVersion.JUNIT.version}")
+        implementation("com.google.guava:guava:${DependencyVersion.GUAVA.version}")
         // FIXME: Swap for logback
         testImplementation("org.slf4j:slf4j-simple:${DependencyVersion.SLF4J.version}")
-        testImplementation(platform("org.junit:junit-bom:${DependencyVersion.JUNIT.version}"))
     }
 
     implementation("org.slf4j:slf4j-api")
@@ -73,7 +74,7 @@ dependencies {
     testImplementation("org.awaitility:awaitility")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testImplementation(platform("org.junit:junit-bom"))
+    testImplementation(platform("org.junit:junit-bom:${DependencyVersion.JUNIT.version}"))
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
         because("Only needed to run tests in a version of IntelliJ IDEA that bundles older versions")
