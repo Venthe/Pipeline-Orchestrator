@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.JobExecutionStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.WorkflowExecution;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.StepJobContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.EnvironmentContext;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.StepJobContext;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.contexts.OutputsContext;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.contexts.StepsContext;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -54,8 +56,8 @@ public class WorkflowExecutionService {
             StepJobContext stepJobContext = workflow.getJobs().getJob(jobId).specify(StepJobContext::create);
 
             ObjectNode env = objectMapper.createObjectNode();
-            workflow.getEnv().map(EnvironmentContext::getProperties).ifPresent(e-> e.forEach(updateObjectNode(env)));
-            stepJobContext.getEnv().map(EnvironmentContext::getProperties).ifPresent(e-> e.forEach(updateObjectNode(env)));
+            workflow.getEnv().map(EnvironmentContext::getProperties).ifPresent(e -> e.forEach(updateObjectNode(env)));
+            stepJobContext.getEnv().map(EnvironmentContext::getProperties).ifPresent(e -> e.forEach(updateObjectNode(env)));
 
             objectNode.set("env", env);
             ObjectNode outputs = objectMapper.createObjectNode();

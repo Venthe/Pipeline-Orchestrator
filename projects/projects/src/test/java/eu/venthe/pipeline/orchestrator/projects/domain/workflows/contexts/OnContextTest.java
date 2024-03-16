@@ -1,22 +1,19 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator._archive2.events.HandledEvent;
-import eu.venthe.pipeline.orchestrator._archive2.events.TriggerEvent;
-import eu.venthe.pipeline.orchestrator._archive2.events.contexts.TypeContext;
-import eu.venthe.pipeline.orchestrator._archive2.utilities.YamlUtility;
-import eu.venthe.pipeline.orchestrator._archive2.workflows.Workflow;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.TriggerEvent;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.TypeContext;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.HandledEvent;
+import eu.venthe.pipeline.orchestrator.projects.utilities.EventUtility;
+import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ThrowableAssert;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.OffsetDateTime;
 import java.util.function.Consumer;
-
-import static eu.venthe.pipeline.orchestrator._archive2.utilities.EventUtility.eventMapper;
-import static eu.venthe.pipeline.orchestrator._archive2.utilities.YamlUtility.parseYaml;
 
 class OnContextTest {
 
@@ -656,7 +653,6 @@ class OnContextTest {
         }
     }
 
-    @NotNull
     private static Workflow getWorkflow(String value) {
         if (value == null) {
             return new Workflow(null, null);
@@ -665,15 +661,13 @@ class OnContextTest {
         return new Workflow(workflow, new Workflow.WorkflowRef("Test-Repository", "main", ".pipeline/workflows/test.yaml", "sha"));
     }
 
-    @NotNull
     private static HandledEvent getEvent(String value) {
         return getEvent(value, (c) -> {});
     }
 
-    @NotNull
     private static HandledEvent getEvent(String value, Consumer<ObjectNode> mutator) {
         ObjectNode event = (ObjectNode) YamlUtility.parseYaml(value);
-        eu.venthe.pipeline.orchestrator._archive2.events.model.EventType eventType = TypeContext.ensure(event);
+        eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType eventType = TypeContext.ensure(event);
 
         ObjectNode repository = YamlUtility.createObjectNode();
         repository.set("provider", YamlUtility.getNodeFactory().textNode("test"));
@@ -688,14 +682,14 @@ class OnContextTest {
         repository.set("cloneUrl", YamlUtility.getNodeFactory().textNode("ssh://https://example.com/Test-Repository"));
         repository.set("defaultBranch", YamlUtility.getNodeFactory().textNode("main"));
 
-        if (eventType.equals(eu.venthe.pipeline.orchestrator._archive2.events.model.EventType.WORKFLOW_DISPATCH)) {
+        if (eventType.equals(eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType.WORKFLOW_DISPATCH)) {
             event.set("repository", repository);
             event.set("workflow", YamlUtility.getNodeFactory().textNode(".pipeline/workflows/test.yaml"));
 
             event.set("ref", YamlUtility.getNodeFactory().textNode("main"));
         }
 
-        if (eventType.equals(eu.venthe.pipeline.orchestrator._archive2.events.model.EventType.PUSH)) {
+        if (eventType.equals(eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType.PUSH)) {
             event.set("before", YamlUtility.getNodeFactory().textNode("123"));
             event.set("after", YamlUtility.getNodeFactory().textNode("321"));
             event.set("repository", repository);

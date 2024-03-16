@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface WorkflowExecutionRepository {
     void save(WorkflowExecution workflowExecution);
 
-    Optional<Object> get(String workflowExecutionId);
+    Optional<WorkflowExecution> get(String workflowExecutionId);
 }

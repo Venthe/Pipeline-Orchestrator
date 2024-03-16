@@ -1,6 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.google.common.collect.MoreCollectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.event_handlers;
 
+import com.google.common.collect.MoreCollectors;
 import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.handlers.DefaultEventHandler;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.TriggerEvent;
 import lombok.RequiredArgsConstructor;

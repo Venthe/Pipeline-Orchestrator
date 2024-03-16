@@ -2,6 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.MoreCollectors;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.HandledEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class OnContext {
     }
 
     public static OnContext ensure(JsonNode on) {
-        return create(on).orElseThrow(() -> new IllegalArgumentException("On must exist"));
+        return create(on).orElseThrow(() -> new IllegalArgumentException("There is no \"on\" property, this workflow will never run"));
     }
 
     public Boolean on(HandledEvent event) {

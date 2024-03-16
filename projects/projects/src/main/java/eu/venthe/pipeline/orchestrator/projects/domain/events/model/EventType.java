@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events.model;
 
+import com.google.common.collect.MoreCollectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

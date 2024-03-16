@@ -2,6 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;

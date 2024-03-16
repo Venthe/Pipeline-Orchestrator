@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator._archive2.projects;
 
 import eu.venthe.pipeline.orchestrator.AbstractIntegrationTest;
-import eu.venthe.pipeline.orchestrator._archive2.application.WorkflowTriggerService;
-import eu.venthe.pipeline.orchestrator._archive2.event_handlers.EventHandlerProvider;
-import eu.venthe.pipeline.orchestrator._archive2.event_handlers.handlers.WorkflowDispatchEventHandler;
+import eu.venthe.pipeline.orchestrator.projects.domain.application.WorkflowTriggerService;
+import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.EventHandlerProvider;
+import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.handlers.WorkflowDispatchEventHandler;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
