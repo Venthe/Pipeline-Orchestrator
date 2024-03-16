@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects_source.application;
 
 import eu.venthe.pipeline.orchestrator.projects_source.api.ReadProjectSourceConfigurationDto;
-import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationService;
+import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationCommandService;
 import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfigurationFactory;
 import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfigurationId;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceConfigurationService {
+public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceConfigurationCommandService {
     private final ProjectsSourceRepository repository;
     private final DomainMessageBroker bus;
     private final ProjectSourceConfigurationFactory factory;

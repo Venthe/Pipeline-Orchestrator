@@ -13,4 +13,5 @@ dependencies {
     implementation(project(":infrastructure:message-broker-api"))
     implementation("org.springframework:spring-web")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
+    testImplementation(project(":plugins:plugin-api-test"))
 }

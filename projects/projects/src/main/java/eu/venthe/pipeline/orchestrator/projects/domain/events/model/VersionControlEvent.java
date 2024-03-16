@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.UUID;
 
-public interface Event {
+public interface VersionControlEvent {
     EventType getType();
 
     UUID getId();

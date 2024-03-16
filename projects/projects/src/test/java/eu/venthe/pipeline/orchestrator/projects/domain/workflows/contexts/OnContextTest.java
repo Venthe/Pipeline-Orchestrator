@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator._archive2.contexts;
+package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator._archive2.events.HandledEvent;
@@ -661,7 +661,7 @@ class OnContextTest {
         if (value == null) {
             return new Workflow(null, null);
         }
-        ObjectNode workflow = value.isBlank() ? YamlUtility.getNodeFactory().objectNode() : (ObjectNode) parseYaml(value);
+        ObjectNode workflow = value.isBlank() ? YamlUtility.getNodeFactory().objectNode() : (ObjectNode) YamlUtility.parseYaml(value);
         return new Workflow(workflow, new Workflow.WorkflowRef("Test-Repository", "main", ".pipeline/workflows/test.yaml", "sha"));
     }
 
@@ -672,7 +672,7 @@ class OnContextTest {
 
     @NotNull
     private static HandledEvent getEvent(String value, Consumer<ObjectNode> mutator) {
-        ObjectNode event = (ObjectNode) parseYaml(value);
+        ObjectNode event = (ObjectNode) YamlUtility.parseYaml(value);
         eu.venthe.pipeline.orchestrator._archive2.events.model.EventType eventType = TypeContext.ensure(event);
 
         ObjectNode repository = YamlUtility.createObjectNode();
@@ -717,6 +717,6 @@ class OnContextTest {
 
         mutator.accept(event);
 
-        return eventMapper(new TriggerEvent(event));
+        return EventUtility.eventMapper(new TriggerEvent(event));
     }
 }

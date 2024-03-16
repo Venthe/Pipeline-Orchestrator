@@ -17,7 +17,6 @@ enum class DependencyVersion(val version: String) {
     COMMONS_IO("2.15.1"),
     GUAVA("33.0.0-jre"),
     HIBERNATE_VALIDATOR("8.0.1.Final"),
-    JGRAPHT_CORE("1.5.2"),
     JUNIT_PLATFORM_LAUNCHER("1.9.1"),
     MOCKSERVER_CLIENT_JAVA("5.15.0"),
     TOGGLZ_SPRING_BOOT_STARTER("4.4.0"),
@@ -39,14 +38,12 @@ dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
     implementation("com.fasterxml.jackson.core:jackson-databind")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("com.google.guava:guava:${DependencyVersion.GUAVA.version}")
     implementation("commons-codec:commons-codec:${DependencyVersion.COMMONS_CODEC.version}")
     implementation("commons-io:commons-io:${DependencyVersion.COMMONS_IO.version}")
     implementation("de.undercouch:bson4jackson:${DependencyVersion.BSON_4_JACKSON.version}")
     implementation("org.hibernate.validator:hibernate-validator:${DependencyVersion.HIBERNATE_VALIDATOR.version}")
-    implementation("org.jgrapht:jgrapht-core:${DependencyVersion.JGRAPHT_CORE.version}")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework:spring-web")

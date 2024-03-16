@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class ProjectConfigurationSourceEventListener {
-    private final ProjectsSourceConfigurationService projectsSourceConfigurationService;
+    private final ProjectsSourceConfigurationCommandService projectsSourceConfigurationService;
 
-    public ProjectConfigurationSourceEventListener(MessageListenerRegistry listener, ProjectsSourceConfigurationService projectsSourceConfigurationService) {
+    public ProjectConfigurationSourceEventListener(MessageListenerRegistry listener, ProjectsSourceConfigurationCommandService projectsSourceConfigurationService) {
         this.projectsSourceConfigurationService = projectsSourceConfigurationService;
 
         listener.observe(ProjectSourceConfigurationAddedEvent.class, (envelope -> projectSourceAdded(envelope.getData())));

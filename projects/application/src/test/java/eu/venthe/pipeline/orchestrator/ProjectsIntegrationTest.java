@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator;
 
 import eu.venthe.pipeline.orchestrator.projects.api.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.api.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationService;
+import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationCommandService;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ReadProjectSourceConfigurationDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import static org.awaitility.Awaitility.await;
 
 class ProjectsIntegrationTest extends AbstractIntegrationTest {
     @Autowired
-    ProjectsSourceConfigurationService projectsSourceConfigurationService;
+    ProjectsSourceConfigurationCommandService projectsSourceConfigurationService;
 
     @Autowired
     ProjectsQueryService projectsService;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.ActorContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.EventIdContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.TypeContext;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.model.Event;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.model.VersionControlEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.function.Function;
 
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class TriggerEvent implements Event {
+public class TriggerEvent implements VersionControlEvent {
     @ToString.Include
     protected final ObjectNode root;
 

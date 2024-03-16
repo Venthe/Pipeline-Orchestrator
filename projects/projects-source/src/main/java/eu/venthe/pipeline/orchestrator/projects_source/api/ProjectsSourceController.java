@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/projects-source-configurations")
 public class ProjectsSourceController {
-    private final ProjectsSourceConfigurationService projectsSourceConfigurationService;
+    private final ProjectsSourceConfigurationCommandService projectsSourceConfigurationService;
 
     @GetMapping("/list")
     public ResponseEntity<?> listConfigurations() {

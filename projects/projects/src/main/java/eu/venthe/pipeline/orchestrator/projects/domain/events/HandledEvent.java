@@ -1,12 +1,12 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.ActorContext;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.model.Event;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.model.VersionControlEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType;
 
 import java.util.UUID;
 
-public interface HandledEvent extends Event {
+public interface HandledEvent extends VersionControlEvent {
     EventType getType();
 
     UUID getId();
