@@ -667,7 +667,7 @@ class OnContextTest {
 
     private static HandledEvent getEvent(String value, Consumer<ObjectNode> mutator) {
         ObjectNode event = (ObjectNode) YamlUtility.parseYaml(value);
-        eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType eventType = TypeContext.ensure(event);
+        eu.venthe.pipeline.orchestrator.projects.api.version_control.common.EventType eventType = TypeContext.ensure(event);
 
         ObjectNode repository = YamlUtility.createObjectNode();
         repository.set("provider", YamlUtility.getNodeFactory().textNode("test"));
@@ -682,14 +682,14 @@ class OnContextTest {
         repository.set("cloneUrl", YamlUtility.getNodeFactory().textNode("ssh://https://example.com/Test-Repository"));
         repository.set("defaultBranch", YamlUtility.getNodeFactory().textNode("main"));
 
-        if (eventType.equals(eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType.WORKFLOW_DISPATCH)) {
+        if (eventType.equals(eu.venthe.pipeline.orchestrator.projects.api.version_control.common.EventType.WORKFLOW_DISPATCH)) {
             event.set("repository", repository);
             event.set("workflow", YamlUtility.getNodeFactory().textNode(".pipeline/workflows/test.yaml"));
 
             event.set("ref", YamlUtility.getNodeFactory().textNode("main"));
         }
 
-        if (eventType.equals(eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType.PUSH)) {
+        if (eventType.equals(eu.venthe.pipeline.orchestrator.projects.api.version_control.common.EventType.PUSH)) {
             event.set("before", YamlUtility.getNodeFactory().textNode("123"));
             event.set("after", YamlUtility.getNodeFactory().textNode("321"));
             event.set("repository", repository);

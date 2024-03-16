@@ -6,8 +6,8 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import eu.venthe.pipeline.orchestrator.projects.application.WorkflowExecutionRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.TypedEventHandler;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.TriggerEvent;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.impl.WorkflowDispatchEvent;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.impl.WorkflowDispatchHandledEvent;
+import eu.venthe.pipeline.orchestrator.projects.api.version_control.common.EventType;
 import eu.venthe.pipeline.orchestrator.plugins.job_executors.JobExecutor;
 import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.WorkflowExecution;
@@ -31,7 +31,7 @@ public class WorkflowDispatchEventHandler implements TypedEventHandler {
 
     @Override
     public Optional<String> handle(TriggerEvent event) {
-        WorkflowDispatchEvent workflowDispatchEvent = event.specify(WorkflowDispatchEvent::new);
+        WorkflowDispatchHandledEvent workflowDispatchEvent = event.specify(WorkflowDispatchHandledEvent::new);
 
         log.info("Event triggers single workflow on path {}", workflowDispatchEvent.getWorkflow());
 
@@ -54,7 +54,7 @@ public class WorkflowDispatchEventHandler implements TypedEventHandler {
         return workflowExecution.map(WorkflowExecution::getId);
     }
 
-    private Optional<byte[]> loadWorkflow(WorkflowDispatchEvent workflowDispatchEvent) {
+    private Optional<byte[]> loadWorkflow(WorkflowDispatchHandledEvent workflowDispatchEvent) {
         return versionControlSystem.getFile(
                 workflowDispatchEvent.getRepository().getName(),
                 workflowDispatchEvent.getRef(),

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.HandledEvent;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.model.EventType;
+import eu.venthe.pipeline.orchestrator.projects.api.version_control.common.EventType;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.WorkflowExecution.NewJobsDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
 import lombok.SneakyThrows;

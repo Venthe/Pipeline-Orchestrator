@@ -1,0 +1,150 @@
+$id: Repository
+$schema: https://json-schema.org/draft/2020-12/schema
+title: Repository
+type: object
+required:
+  - archive_url
+  - assignees_url
+  - blobs_url
+  - branches_url
+  - collaborators_url
+  - comments_url
+  - commits_url
+  - compare_url
+  - contents_url
+  - contributors_url
+  - deployments_url
+  - description
+  - downloads_url
+  - events_url
+  - fork
+  - forks_url
+  - full_name
+  - git_commits_url
+  - git_refs_url
+  - git_tags_url
+  - hooks_url
+  - html_url
+  - id
+  - issue_comment_url
+  - issue_events_url
+  - issues_url
+  - keys_url
+  - labels_url
+  - languages_url
+  - merges_url
+  - milestones_url
+  - name
+  - node_id
+  - notifications_url
+  - owner
+  - private
+  - pulls_url
+  - releases_url
+  - stargazers_url
+  - statuses_url
+  - subscribers_url
+  - subscription_url
+  - tags_url
+  - teams_url
+  - trees_url
+  - url
+description: |
+  The repository on GitHub where the event occurred. Webhook payloads contain the repository property when the event occurs from activity in a repository.
+properties:
+  archive_url:
+    type: string
+  assignees_url:
+    type: string
+  blobs_url:
+    type: string
+  branches_url:
+    type: string
+  collaborators_url:
+    type: string
+  comments_url:
+    type: string
+  commits_url:
+    type: string
+  compare_url:
+    type: string
+  contents_url:
+    type: string
+  contributors_url:
+    type: string
+  deployments_url:
+    type: string
+  description:
+    type: [string, null]
+  downloads_url:
+    type: string
+  events_url:
+    type: string
+  fork:
+    type: boolean
+  forks_url:
+    type: string
+  full_name:
+    type: string
+  git_commits_url:
+    type: string
+  git_refs_url:
+    type: string
+  git_tags_url:
+    type: string
+  hooks_url:
+    type: string
+  html_url:
+    type: string
+  id:
+    type: integer
+    description: Unique identifier of the repository
+  issue_comment_url:
+    type: string
+  issue_events_url:
+    type: string
+  issues_url:
+    type: string
+  keys_url:
+    type: string
+  labels_url:
+    type: string
+  languages_url:
+    type: string
+  merges_url:
+    type: string
+  milestones_url:
+    type: string
+  name:
+    type: string
+    description: The name of the repository.
+  node_id:
+    type: string
+  notifications_url:
+    type: string
+  owner:
+    $ref: actor.yaml#
+  private:
+    type: boolean
+    description: Whether the repository is private or public.
+  pulls_url:
+    type: string
+  releases_url:
+    type: string
+  stargazers_url:
+    type: string
+  statuses_url:
+    type: string
+  subscribers_url:
+    type: string
+  subscription_url:
+    type: string
+  tags_url:
+    type: string
+  teams_url:
+    type: string
+  trees_url:
+    type: string
+  url:
+    type: string
+additionalProperties: false

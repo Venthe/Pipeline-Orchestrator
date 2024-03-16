@@ -1,0 +1,9 @@
+# TODO: Sender
+$id: Sender
+$schema: https://json-schema.org/draft/2020-12/schema
+title: Sender
+type: object
+description: |
+  The GitHub user that triggered the event. This property is included in every webhook payload.
+properties: {}
+additionalProperties: false

@@ -1,0 +1,126 @@
+# TODO: Workflow run
+$id: Workflow run
+$schema: https://json-schema.org/draft/2020-12/schema
+title: Workflow run
+type: object
+required:
+  - actor
+  - artifacts_url
+  - cancel_url
+  - check_suite_id
+  - check_suite_node_id
+  - check_suite_url
+  - conclusion
+  - created_at
+  - event
+  - head_branch
+  - rerun_url
+  - run_attempt
+  - run_number
+  - run_started_at
+  - status
+  - updated_at
+  - url
+  - workflow_id
+  - workflow_url
+  - head_commit
+  - head_repository
+  - head_sha
+  - html_url
+  - id
+  - jobs_url
+  - logs_url
+  - name
+  - node_id
+  - path
+  - previous_attempt_url
+  - pull_requests
+  - repository
+properties:
+  actor:
+    $ref: actor.yaml#
+  artifacts_url:
+    type: string
+  cancel_url:
+    type: string
+  check_suite_id:
+    type: integer
+  check_suite_node_id:
+    type: string
+  check_suite_url:
+    type: string
+  conclusion:
+    type: [string, null]
+    enum: [success, failure, neutral, cancelled, timed_out, action_required, stale, skipped, null]
+  created_at:
+    type: string
+  event:
+    type: string
+  head_branch:
+    type: [string, null]
+  triggering_actor:
+    $ref: actor.yaml#
+  rerun_url:
+    type: string
+  run_attempt:
+    type: integer
+  run_number:
+    type: integer
+  run_started_at:
+    type: string
+  status:
+    type: string
+    enum: [requested, in_progress, completed, queued, pending]
+  updated_at:
+    type: string
+  url:
+    type: string
+  workflow_id:
+    type: integer
+  workflow_url:
+    type: string
+  head_commit:
+    type: [object, null]
+    $ref: commit.yaml#
+  head_repository:
+    $ref: repository.yaml#
+  head_sha:
+    type: string
+  html_url:
+    type: string
+  id:
+    type: integer
+  jobs_url:
+    type: string
+  logs_url:
+    type: string
+  name:
+    type: [string, null]
+  node_id:
+    type: string
+  path:
+    type: string
+  previous_attempt_url:
+    type: [string, null]
+  pull_requests:
+    type: array
+    items:
+      $ref: pull-request.yaml#
+  referenced_workflows:
+    type: [array, null]
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - path
+        - sha
+      properties:
+        path:
+          type: string
+        ref:
+          type: string
+        sha:
+          type: string
+  repository:
+    $ref: repository.yaml#
+additionalProperties: false

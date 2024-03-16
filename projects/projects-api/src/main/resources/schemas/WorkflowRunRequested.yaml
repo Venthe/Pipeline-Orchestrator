@@ -1,0 +1,28 @@
+$id: WorkflowRunRequested
+$schema: https://json-schema.org/draft/2020-12/schema
+title: WorkflowRunRequested
+required:
+  - action
+  - repository
+  - sender
+  - workflow
+  - workflow_run
+additionalProperties: false
+properties:
+  action:
+    type: string
+    default: requested
+  enterprise:
+    $ref: components/enterprise.yaml#
+  installation:
+    $ref: components/installation.yaml#
+  organization:
+    $ref: components/organization.yaml#
+  repository:
+    $ref: components/repository.yaml#
+  sender:
+    $ref: components/sender.yaml#
+  workflow:
+    $ref: components/workflow.yaml#
+  workflow_run:
+    $ref: components/workflow-run.yaml#
