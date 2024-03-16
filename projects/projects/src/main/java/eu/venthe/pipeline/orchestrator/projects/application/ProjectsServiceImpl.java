@@ -1,5 +1,9 @@
 package eu.venthe.pipeline.orchestrator.projects.application;
 
+import eu.venthe.pipeline.orchestrator.projects.api.CreateProjectSpecification;
+import eu.venthe.pipeline.orchestrator.projects.api.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.api.ProjectsCommandService;
+import eu.venthe.pipeline.orchestrator.projects.api.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectFactory;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProjectsServiceImpl implements ProjectsService {
+public class ProjectsServiceImpl implements ProjectsQueryService, ProjectsCommandService {
     private final ProjectFactory projectFactory;
     private final ProjectRepository projectRepository;
 
@@ -24,6 +28,6 @@ public class ProjectsServiceImpl implements ProjectsService {
     @Override
     public void addProject(CreateProjectSpecification newProjectDto) {
         projectFactory.createProject();
-        projectRepository.save();
+        projectRepository.save(null);
     }
 }

@@ -17,6 +17,7 @@ public class EnvironmentContext {
     }
 
     public Map<String, String> getProperties() {
-        return root.properties().stream().collect(Collectors.toMap(Map.Entry::getKey, e->e.getValue().asText()));
+        return root.properties().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().asText()));
     }
 }

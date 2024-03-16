@@ -2,14 +2,11 @@ package eu.venthe.pipeline.orchestrator.projects.application;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator._archive2.infrastructure.WorkflowExecutionRepository;
-import eu.venthe.pipeline.orchestrator._archive2.workflow_executions.JobExecutionStatus;
-import eu.venthe.pipeline.orchestrator._archive2.workflow_executions.WorkflowExecution;
-import eu.venthe.pipeline.orchestrator._archive2.workflows.Workflow;
-import eu.venthe.pipeline.orchestrator._archive2.workflows.contexts.EnvironmentContext;
-import eu.venthe.pipeline.orchestrator._archive2.workflows.contexts.jobs.StepJobContext;
-import eu.venthe.pipeline.orchestrator._archive2.workflows.contexts.jobs.contexts.OutputsContext;
-import eu.venthe.pipeline.orchestrator._archive2.workflows.contexts.jobs.contexts.StepsContext;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.JobExecutionStatus;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.WorkflowExecution;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.StepJobContext;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.EnvironmentContext;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +19,7 @@ import java.util.function.BiConsumer;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Deprecated
 public class WorkflowExecutionService {
     private final WorkflowExecutionRepository workflowExecutionRepository;
     private final ObjectMapper objectMapper;

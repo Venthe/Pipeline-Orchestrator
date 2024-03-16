@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,6 @@ import java.util.stream.StreamSupport;
 import static java.util.List.of;
 
 class GraphUtilityTest {
-    public static final ObjectMapper YAML_MAPPER = new ObjectMapper(new YAMLFactory());
-
     @Test
     void test1() {
         // given
@@ -155,7 +154,7 @@ class GraphUtilityTest {
 
     @SneakyThrows
     public static Set<GraphUtility.JobRequirements> parseYaml(String value) {
-        ObjectNode nodes = (ObjectNode) YAML_MAPPER.readTree(value);
+        ObjectNode nodes = (ObjectNode) YamlUtility.parseYaml(value);
 
         return nodes.properties().stream()
                 .map(e2 -> Map.entry(

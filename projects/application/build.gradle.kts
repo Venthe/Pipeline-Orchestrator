@@ -11,16 +11,6 @@ plugins {
 group = "eu.venthe.pipeline"
 version = "0.0.1-SNAPSHOT"
 
-enum class DependencyVersion(val version: String) {
-    BSON_4_JACKSON("2.13.1"),
-    COMMONS_CODEC("1.15"),
-    COMMONS_IO("2.15.1"),
-    HIBERNATE_VALIDATOR("8.0.1.Final"),
-    JUNIT_PLATFORM_LAUNCHER("1.9.1"),
-    MOCKSERVER_CLIENT_JAVA("5.15.0"),
-    TOGGLZ_SPRING_BOOT_STARTER("4.4.0"),
-}
-
 dependencies {
     implementation(project(":plugins:plugin-api"))
     implementation(project(":projects-api"))
@@ -39,18 +29,17 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("com.google.guava:guava")
-    implementation("commons-codec:commons-codec:${DependencyVersion.COMMONS_CODEC.version}")
-    implementation("commons-io:commons-io:${DependencyVersion.COMMONS_IO.version}")
-    implementation("de.undercouch:bson4jackson:${DependencyVersion.BSON_4_JACKSON.version}")
-    implementation("org.hibernate.validator:hibernate-validator:${DependencyVersion.HIBERNATE_VALIDATOR.version}")
+    implementation("commons-codec:commons-codec")
+    implementation("de.undercouch:bson4jackson")
+    implementation("org.hibernate.validator:hibernate-validator")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework:spring-web")
-    implementation("org.togglz:togglz-spring-boot-starter:${DependencyVersion.TOGGLZ_SPRING_BOOT_STARTER.version}")
+    implementation("org.togglz:togglz-spring-boot-starter")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-    testImplementation("org.mock-server:mockserver-client-java:${DependencyVersion.MOCKSERVER_CLIENT_JAVA.version}")
+    testImplementation("org.mock-server:mockserver-client-java")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.testcontainers:testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
