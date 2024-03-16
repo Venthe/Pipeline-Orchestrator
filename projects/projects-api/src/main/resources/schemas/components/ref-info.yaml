@@ -1,0 +1,21 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+required:
+  - label
+  - ref
+  - repo
+  - sha
+  - user
+properties:
+  label:
+    type: string
+  ref:
+    type: string
+  repo:
+    type: [object, null]
+    $ref: repository.yaml#
+  sha:
+    type: string
+  user:
+    $ref: github-user.yaml#
+additionalProperties: false

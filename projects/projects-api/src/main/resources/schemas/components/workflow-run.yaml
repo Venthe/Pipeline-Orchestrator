@@ -38,7 +38,7 @@ required:
   - repository
 properties:
   actor:
-    $ref: actor.yaml#
+    $ref: github-user.yaml#
   artifacts_url:
     type: string
   cancel_url:
@@ -59,7 +59,7 @@ properties:
   head_branch:
     type: [string, null]
   triggering_actor:
-    $ref: actor.yaml#
+    $ref: github-user.yaml#
   rerun_url:
     type: string
   run_attempt:

@@ -1,0 +1,9 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+required:
+  - href
+additionalProperties: false
+type: object
+description: Hypermedia Link
+properties:
+  href:
+    type: string

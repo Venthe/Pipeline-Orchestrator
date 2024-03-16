@@ -82,21 +82,15 @@ properties:
     type: string
     description: The title of the pull request.
   user:
-    description: A GitHub user.
-    # TODO: Properties of user
-    $ref: empty-object.yaml#
+    $ref: github-user.yaml#
   body:
     type: [string, null]
   labels:
     type: array
     items:
-      # TODO: Properties of labels
-      $ref: empty-object.yaml#
+      $ref: label.yaml#
   milestone:
-    type: object
-    description: A collection of related issues and pull requests.
-    # TODO: Properties of milestone
-    $ref: empty-object.yaml#
+    $ref: milestone.yaml#
   active_lock_reason:
     type: [string, null]
   created_at:
@@ -110,25 +104,19 @@ properties:
   merge_commit_sha:
     type: [string, null]
   assignee:
-    type: object
-    description: A GitHub user.
-    # TODO: Properties of assignee
-    $ref: empty-object.yaml#
+    $ref: github-user.yaml#
   assignees:
     type: [array, null]
     items:
-      # TODO: Properties of assignees
-      $ref: empty-object.yaml#
+      $ref: github-user.yaml#
   requested_reviewers:
     type: [array, null]
     items:
-      # TODO: Properties of requested_reviewers
-      $ref: empty-object.yaml#
+      $ref: github-user.yaml#
   requested_teams:
     type: [array, null]
     items:
-      # TODO: Properties of requested_teams
-      $ref: empty-object.yaml#
+      $ref: team.yaml#
   head:
     $ref: empty-object.yaml#
     # TODO: Properties of head
@@ -136,8 +124,34 @@ properties:
     $ref: empty-object.yaml#
     # TODO: Properties of base
   _links:
-    $ref: empty-object.yaml#
-    # TODO: Properties of _links
+    type: object
+    required:
+      - comments
+      - commits
+      - statuses
+      - html
+      - issue
+      - review_comments
+      - review_comment
+      - self
+    properties:
+      comments:
+        $ref: link.yaml#
+      commits:
+        $ref: link.yaml#
+      statuses:
+        $ref: link.yaml#
+      html:
+        $ref: link.yaml#
+      issue:
+        $ref: link.yaml#
+      review_comments:
+        $ref: link.yaml#
+      review_comment:
+        $ref: link.yaml#
+      self:
+        $ref: link.yaml#
+    additionalProperties: false
   author_association:
     type: string
     description: How the author is associated with the repository.
@@ -145,8 +159,25 @@ properties:
   auto_merge:
     type: [object, null]
     description: The status of auto merging a pull request.
-    $ref: empty-object.yaml#
-    # TODO: Properties of auto_merge
+    additionalProperties: false
+    required:
+      - merge_method
+      - commit_title
+      - commit_message
+      - enabled_by
+    properties:
+      enabled_by:
+        $ref: github-user.yaml#
+      merge_method:
+        type: string
+        description: The merge method to use.
+        enum: [merge, squash, rebase]
+      commit_title:
+        type: string
+        description: Title for the merge commit message.
+      commit_message:
+        type: string
+        description: Commit message for the merge commit.
   draft:
     type: boolean
     description: Indicates whether or not the pull request is a draft.
@@ -159,10 +190,7 @@ properties:
   mergeable_state:
     type: string
   merged_by:
-    type: object
-    description: A GitHub user.
-    $ref: empty-object.yaml#
-    # TODO: Properties of merged_by
+    $ref: github-user.yaml#
   comments:
     type: integer
   review_comments:

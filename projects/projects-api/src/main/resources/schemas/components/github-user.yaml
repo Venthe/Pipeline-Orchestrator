@@ -1,5 +1,6 @@
 type: [object, null]
 $schema: https://json-schema.org/draft/2020-12/schema
+description: A GitHub user.
 required:
   - id
   - login

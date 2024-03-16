@@ -1,0 +1,27 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+required:
+  - id
+  - node_id
+  - url
+  - name
+  - description
+  - color
+  - default
+properties:
+  id:
+    type: integer
+  node_id:
+    type: string
+  url:
+    type: string
+  name:
+    type: string
+  description:
+    type: [string, null]
+  color:
+    type: string
+  default:
+    type: boolean
+additionalProperties: false
+

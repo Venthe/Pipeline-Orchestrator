@@ -123,7 +123,7 @@ properties:
   notifications_url:
     type: string
   owner:
-    $ref: actor.yaml#
+    $ref: github-user.yaml#
   private:
     type: boolean
     description: Whether the repository is private or public.

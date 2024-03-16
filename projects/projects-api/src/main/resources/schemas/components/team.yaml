@@ -1,0 +1,49 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+required:
+  - id
+  - node_id
+  - url
+  - members_url
+  - name
+  - description
+  - permission
+  - html_url
+  - repositories_url
+  - slug
+properties:
+  id:
+    type: integer
+    description: Unique identifier of the team
+  node_id:
+    type: string
+  url:
+    type: string
+    description: URL for the team
+  members_url:
+    type: string
+  name:
+    type: string
+    description: Name of the team
+  description:
+    type: [string, null]
+    description: Description of the team
+  permission:
+    type: string
+    description: Permission that the team will have for its repositories
+  privacy:
+    type: string
+    description: The level of privacy this team should have
+  notification_setting:
+    type: string
+    description: The notification setting the team has set
+  html_url:
+    type: string
+  repositories_url:
+    type: string
+  slug:
+    type: string
+  ldap_dn:
+    type: string
+    description: Distinguished Name (DN) that team maps to within LDAP environment
+additionalProperties: false

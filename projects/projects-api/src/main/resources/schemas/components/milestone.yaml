@@ -1,0 +1,60 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+description: A collection of related issues and pull requests.
+required:
+  - url
+  - html_url
+  - labels_url
+  - id
+  - node_id
+  - number
+  - state
+  - title
+  - description
+  - creator
+  - open_issues
+  - closed_issues
+  - created_at
+  - updated_at
+  - closed_at
+  - due_on
+properties:
+  url:
+    type: string
+  html_url:
+    type: string
+  labels_url:
+    type: string
+  id:
+    type: integer
+  node_id:
+    type: string
+  number:
+    type: integer
+    description: The number of the milestone.
+  state:
+    type: string
+    description: The state of the milestone.
+    default: open
+    enum: [open, closed]
+  title:
+    type: string
+    description: The title of the milestone.
+  description:
+    type: [string, null]
+  creator:
+    $ref: github-user.yaml#
+    description: Properties of creator
+  open_issues:
+    type: integer
+  closed_issues:
+    type: integer
+  created_at:
+    type: string
+  updated_at:
+    type: string
+  closed_at:
+    type: [string, null]
+  due_on:
+    type: [string, null]
+additionalProperties: false
