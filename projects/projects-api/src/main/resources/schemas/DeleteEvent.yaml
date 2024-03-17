@@ -1,15 +1,12 @@
-$id: Create
+$id: Delete
 $schema: https://json-schema.org/draft/2020-12/schema
 type: object
 description: |
-  This event occurs when a Git branch or tag is created.
+  This event occurs when a Git branch or tag is deleted. To subscribe to all pushes to a repository, including branch and tag deletions, use the push webhook event.
   
   To subscribe to this event, a GitHub App must have at least read-level access for the "Contents" repository permission.
 
-  Notes:
-  
-    This event will not occur when more than three tags are created at once.
-    Payloads are capped at 25 MB. If an event generates a larger payload, GitHub will not deliver a payload for that webhook event. This may happen, for example, if many branches or tags are pushed at once. We suggest monitoring your payload size to ensure delivery.
+Note: This event will not occur when more than three tags are deleted at once.
 required:
   - sender
   - repository

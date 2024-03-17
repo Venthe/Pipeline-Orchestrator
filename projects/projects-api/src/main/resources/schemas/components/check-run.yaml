@@ -1,0 +1,48 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+required:
+  - completed_at
+  - conclusion
+  - details_url
+  - external_id
+  - head_sha
+  - html_url
+  - id
+  - name
+  - node_id
+  - started_at
+  - status
+  - url
+properties:
+  completed_at:
+    type: [ string, null ]
+  conclusion:
+    type: [ string, null ]
+    description: The result of the completed check run. This value will be null until the check run has completed.
+    enum: [ success, failure, neutral, cancelled, timed_out, action_required, stale, skipped, null ]
+  details_url:
+    type: string
+  external_id:
+    type: string
+  head_sha:
+    type: string
+    description: The SHA of the commit that is being checked.
+  html_url:
+    type: string
+  id:
+    type: integer
+    description: The id of the check.
+  name:
+    type: string
+    description: The name of the check run.
+  node_id:
+    type: string
+  started_at:
+    type: string
+  status:
+    type: string
+    description: The current status of the check run. Can be queued, in_progress, or completed.
+    enum: [ queued, in_progress, completed, waiting, pending ]
+  url:
+    type: string
+additionalProperties: false

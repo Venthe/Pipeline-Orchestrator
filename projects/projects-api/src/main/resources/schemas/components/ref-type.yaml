@@ -1,0 +1,4 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: string
+description: The type of Git ref object created in the repository.
+enum: [ tag, branch ]

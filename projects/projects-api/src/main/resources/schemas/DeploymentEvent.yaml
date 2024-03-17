@@ -1,0 +1,41 @@
+$id: Deployment
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+description: |
+  This event occurs when there is activity relating to deployments. For more information, see "About deployments." For information about the APIs to manage deployments, see the GraphQL API documentation or "Deployments" in the REST API documentation.
+  
+  For activity relating to deployment status, use the deployment_status event.
+  
+  To subscribe to this event, a GitHub App must have at least read-level access for the "Deployments" repository permission.
+required:
+  - sender
+  - repository
+  - deployment
+  - workflow
+  - workflow_run
+  - action
+properties:
+  enterprise:
+    $ref: components/enterprise.yaml#
+  installation:
+    $ref: components/installation.yaml#
+  organization:
+    $ref: components/organization.yaml#
+  repository:
+    $ref: components/repository.yaml#
+  sender:
+    description: |
+      The GitHub user that triggered the event. This property is included in every webhook payload.
+    $ref: components/github-user.yaml#
+  action:
+    type: string
+    default: created
+  deployment:
+    $ref: components/deployment.yaml#
+  workflow:
+    type: [ object, null ]
+    $ref: components/workflow.yaml#
+  workflow_run:
+    type: [ object, null ]
+    $ref: components/workflow-run.yaml#
+additionalProperties: false

@@ -1,0 +1,53 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+required:
+  - created_at
+  - creator
+  - deployment_url
+  - description
+  - environment
+  - id
+  - node_id
+  - repository_url
+  - state
+  - target_url
+  - updated_at
+  - url
+properties:
+  created_at:
+    type: string
+  creator:
+    type: object or null
+    $ref: github-user.yaml#
+  deployment_url:
+    type: string
+  description:
+    type: string
+    description: The optional human-readable description added to the status.
+  environment:
+    type: string
+  environment_url:
+    type: string
+  id:
+    type: integer
+  log_url:
+    type: string
+  node_id:
+    type: string
+  performed_via_github_app:
+    type: object or null
+    $ref: performed-via-github-app.yaml#
+  repository_url:
+    type: string
+  state:
+    type: string
+    description: The new state. Can be pending, success, failure, or error.
+    enum: [ pending, success, failure,error ]
+  target_url:
+    type: string
+    description: The optional link added to the status.
+  updated_at:
+    type: string
+  url:
+    type: string
+additionalProperties: false
