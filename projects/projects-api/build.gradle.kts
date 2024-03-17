@@ -1,4 +1,5 @@
 import dev.castocolina.gradle.plugin.YamlToJson
+import java.io.FileWriter
 
 plugins {
     id("buildlogic.java-library-conventions")
@@ -22,8 +23,7 @@ jsonSchema2Pojo {
 
     targetPackage = "eu.venthe.pipeline.orchestrator.projects.api"
     useOptionalForGetters = true
-    generateBuilders = true
-    includeDynamicBuilders = true
+    includeJsonTypeInfoAnnotation = true
 }
 
 tasks.generateJsonSchema2Pojo {
@@ -47,6 +47,61 @@ open class YamlToJson2: YamlToJson() {
         }
     }
 }
+
+tasks.register("applyCommonInterfaceForEvents") {
+    group = "build"
+    description = ""
+
+    doFirst {
+        val files = fileTree(file("${layout.buildDirectory.get()}/generated/jsonschema/src"))
+                .filter { it.name.endsWith(".java", true) }
+                .filter { it.name.matches(".*Event.*".toRegex()) }
+                .filter { !it.name.startsWith("Abstract", true) }
+        files.files.forEach {
+            println("Adjusting common ancestor in file ${it.name}")
+            val content = it.readText()
+            val modifiedContent = content.replace("^(public class) ([\\w]*) (\\{)$".toRegex(RegexOption.MULTILINE), "\$1 \$2 extends AbstractEvent \$3")
+                    .replace("(.*property = \")@class(\".*)".toRegex(RegexOption.MULTILINE), "\$1type\$2")
+            it.writeText(modifiedContent)
+        }
+    }
+
+    doLast {
+        val file = File("${layout.buildDirectory.get()}/generated/jsonschema/src/eu/venthe/pipeline/orchestrator/projects/api/Event.java")
+        val writer = FileWriter(file)
+        writer.write("""
+            package eu.venthe.pipeline.orchestrator.projects.api;
+
+            import java.util.UUID;
+
+            public interface Event {
+                String getType();
+
+                UUID getId();
+                
+                default Integer getVersion() {
+                  return 1;
+                }
+            }
+        """.trimIndent())
+        writer.close()
+
+        val files = fileTree(file("${layout.buildDirectory.get()}/generated/jsonschema/src"))
+                .filter { it.name.endsWith(".java", true) }
+                .filter { it.name.matches(".*Event.*".toRegex()) }
+                .filter { it.name.startsWith("Abstract", true) }
+        files.files.forEach {
+            println("Adjusting common interface in file ${it.name}")
+            val content = it.readText()
+            val modifiedContent = content.replace("^(public) (class [\\w]*) (\\{)$".toRegex(RegexOption.MULTILINE), "\$1 abstract \$2 implements Event \$3")
+            it.writeText(modifiedContent)
+        }
+    }
+
+    dependsOn("generateJsonSchema2Pojo")
+}
+
+tasks["build"].dependsOn("applyCommonInterfaceForEvents")
 
 tasks.register<YamlToJson2>("prepareJsonschema") {
     group = "build"

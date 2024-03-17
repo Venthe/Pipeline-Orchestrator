@@ -1,9 +1,7 @@
 # TODO: Enterprise
+$ref: empty-object.yaml#
 $id: Enterprise
 $schema: https://json-schema.org/draft/2020-12/schema
 title: Enterprise
-type: object
 description: |
   An enterprise on GitHub. Webhook payloads contain the enterprise property when the webhook is configured on an enterprise account or an organization that's part of an enterprise account. For more information, see "About enterprise accounts."
-properties: { }
-additionalProperties: false

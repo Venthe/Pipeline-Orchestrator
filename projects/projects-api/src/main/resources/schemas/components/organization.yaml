@@ -2,8 +2,6 @@
 $id: Organization
 $schema: https://json-schema.org/draft/2020-12/schema
 title: Organization
-type: object
 description: |
   A GitHub organization. Webhook payloads contain the organization property when the webhook is configured for an organization, or when the event occurs from activity in a repository owned by an organization.
-properties: { }
-additionalProperties: false
+$ref: empty-object.yaml#

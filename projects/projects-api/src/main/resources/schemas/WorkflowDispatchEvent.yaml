@@ -28,8 +28,7 @@ properties:
     $ref: components/github-user.yaml#
   inputs:
     type: [ object, null ]
-    additionalProperties:
-      type: string
+    $ref: components/inputs.yaml#
   ref:
     type: string
   workflow:

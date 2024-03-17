@@ -44,15 +44,7 @@ properties:
   reviewers:
     type: array
     items:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-          default: User
-        reviewer:
-          type: [ object, null ]
-          $ref: components/github-user.yaml#
+      $ref: components/reviewers.yaml#
   workflow_run:
     type: [ object, null ]
     $ref: components/workflow-run.yaml#
