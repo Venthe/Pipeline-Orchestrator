@@ -27,7 +27,7 @@ properties:
       The GitHub user that triggered the event. This property is included in every webhook payload.
     $ref: components/github-user.yaml#
   inputs:
-    type: [object, null]
+    type: [ object, null ]
     additionalProperties:
       type: string
   ref:

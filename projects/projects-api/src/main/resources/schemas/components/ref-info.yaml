@@ -12,7 +12,7 @@ properties:
   ref:
     type: string
   repo:
-    type: [object, null]
+    type: [ object, null ]
     $ref: repository.yaml#
   sha:
     type: string

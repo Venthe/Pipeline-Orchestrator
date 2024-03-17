@@ -1,4 +1,4 @@
-$id: PullRequest
+$id: PullRequestReviewComment
 $schema: https://json-schema.org/draft/2020-12/schema
 type: object
 description: |
@@ -28,7 +28,7 @@ properties:
     $ref: components/github-user.yaml#
   action:
     type: string
-    enum: [created, deleted, edited]
+    enum: [ created, deleted, edited ]
   pull_request:
     $ref: components/pull-request.yaml#
   comment:

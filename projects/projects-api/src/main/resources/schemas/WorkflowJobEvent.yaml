@@ -9,7 +9,7 @@ required:
 properties:
   action:
     type: string
-    enum: [completed, in_progress, queued, waiting]
+    enum: [ completed, in_progress, queued, waiting ]
   enterprise:
     $ref: components/enterprise.yaml#
   installation:

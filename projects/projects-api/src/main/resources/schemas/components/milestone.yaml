@@ -36,12 +36,12 @@ properties:
     type: string
     description: The state of the milestone.
     default: open
-    enum: [open, closed]
+    enum: [ open, closed ]
   title:
     type: string
     description: The title of the milestone.
   description:
-    type: [string, null]
+    type: [ string, null ]
   creator:
     $ref: github-user.yaml#
     description: Properties of creator
@@ -54,7 +54,7 @@ properties:
   updated_at:
     type: string
   closed_at:
-    type: [string, null]
+    type: [ string, null ]
   due_on:
-    type: [string, null]
+    type: [ string, null ]
 additionalProperties: false

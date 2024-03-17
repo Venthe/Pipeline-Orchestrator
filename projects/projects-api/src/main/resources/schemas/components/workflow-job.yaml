@@ -28,10 +28,10 @@ properties:
   check_run_url:
     type: string
   completed_at:
-    type: [string, null]
+    type: [ string, null ]
   conclusion:
-    type: [string, null]
-    enum: [success, failure, null, cancelled, neutral]
+    type: [ string, null ]
+    enum: [ success, failure, null, cancelled, neutral ]
   created_at:
     type: string
     description: The time that the job created.
@@ -57,28 +57,28 @@ properties:
   run_url:
     type: string
   runner_group_id:
-    type: [integer, null]
+    type: [ integer, null ]
     description: The ID of the runner group that is running this job. This will be null as long as workflow_job[status] is queued.
   runner_group_name:
-    type: [string, null]
+    type: [ string, null ]
     description: The name of the runner group that is running this job. This will be null as long as workflow_job[status] is queued.
   runner_id:
-    type: [integer, null]
+    type: [ integer, null ]
     description: The ID of the runner that is running this job. This will be null as long as workflow_job[status] is queued.
   runner_name:
-    type: [string, null]
+    type: [ string, null ]
     description: The name of the runner that is running this job. This will be null as long as workflow_job[status] is queued.
   started_at:
     type: string
   status:
     type: string
     description: The current status of the job. Can be queued, in_progress, or completed.
-    enum: [queued, in_progress, completed]
+    enum: [ queued, in_progress, completed ]
   head_branch:
-    type: [string, null]
+    type: [ string, null ]
     description: The name of the current branch.
   workflow_name:
-    type: [string, null]
+    type: [ string, null ]
     description: The name of the workflow.
   steps:
     type: array

@@ -75,7 +75,7 @@ properties:
   deployments_url:
     type: string
   description:
-    type: [string, null]
+    type: [ string, null ]
   downloads_url:
     type: string
   events_url:

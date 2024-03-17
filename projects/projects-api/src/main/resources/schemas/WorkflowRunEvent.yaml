@@ -15,7 +15,7 @@ additionalProperties: false
 properties:
   action:
     type: string
-    enum: [in_progress, completed, requested]
+    enum: [ in_progress, completed, requested ]
   enterprise:
     $ref: components/enterprise.yaml#
   installation:

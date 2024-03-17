@@ -1,0 +1,50 @@
+$id: Create
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+description: |
+  This event occurs when a Git branch or tag is created.
+  
+  To subscribe to this event, a GitHub App must have at least read-level access for the "Contents" repository permission.
+
+  Notes:
+  
+    This event will not occur when more than three tags are created at once.
+    Payloads are capped at 25 MB. If an event generates a larger payload, GitHub will not deliver a payload for that webhook event. This may happen, for example, if many branches or tags are pushed at once. We suggest monitoring your payload size to ensure delivery.
+required:
+  - sender
+  - repository
+  - description
+  - master_branch
+  - pusher_type
+  - ref
+  - ref_type
+properties:
+  enterprise:
+    $ref: components/enterprise.yaml#
+  installation:
+    $ref: components/installation.yaml#
+  organization:
+    $ref: components/organization.yaml#
+  repository:
+    $ref: components/repository.yaml#
+  sender:
+    description: |
+      The GitHub user that triggered the event. This property is included in every webhook payload.
+    $ref: components/github-user.yaml#
+  description:
+    type: [ string,null ]
+    description: The repository's current description.
+  master_branch:
+    type: string
+    description: The name of the repository's default branch (usually main).
+  pusher_type:
+    type: string
+    description: The pusher type for the event. Can be either user or a deploy key.
+  ref:
+    type: string
+    description: The git ref resource.
+  ref_type:
+    type: string
+    description: The type of Git ref object created in the repository.
+Can be one of: tag, branch
+additionalProperties: false

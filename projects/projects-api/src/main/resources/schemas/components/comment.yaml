@@ -58,7 +58,7 @@ properties:
     type: integer
     description: The comment ID to reply to.
   line:
-    type: [integer, null]
+    type: [ integer, null ]
     description: The line of the blob to which the comment applies. The last line of the range for a multi-line comment
   node_id:
     type: string
@@ -67,22 +67,22 @@ properties:
     type: string
     description: The SHA of the original commit to which the comment applies.
   original_line:
-    type: [integer, null]
+    type: [ integer, null ]
     description: The line of the blob to which the comment applies. The last line of the range for a multi-line comment
   original_position:
     type: integer
     description: The index of the original line in the diff to which the comment applies.
   original_start_line:
-    type: [integer, null]
+    type: [ integer, null ]
     description: The first line of the range for a multi-line comment.
   path:
     type: string
     description: The relative path of the file to which the comment applies.
   position:
-    type: [integer, null]
+    type: [ integer, null ]
     description: The line index in the diff to which the comment applies.
   pull_request_review_id:
-    type: [integer, null]
+    type: [ integer, null ]
     description: The ID of the pull request review to which the comment belongs.
   pull_request_url:
     type: string
@@ -92,26 +92,26 @@ properties:
   side:
     type: string
     description: The side of the first line of the range for a multi-line comment.
-    enum: [LEFT, RIGHT]
+    enum: [ LEFT, RIGHT ]
   start_line:
-    type: [integer, null]
+    type: [ integer, null ]
     description: The first line of the range for a multi-line comment.
   start_side:
-    type: [string, null]
+    type: [ string, null ]
     description: The side of the first line of the range for a multi-line comment.
     default: RIGHT
-    enum: [LEFT, RIGHT, null]
+    enum: [ LEFT, RIGHT, null ]
   subject_type:
     type: string
     description: The level at which the comment is targeted, can be a diff line or a file.
-    enum: [line, file]
+    enum: [ line, file ]
   updated_at:
     type: string
   url:
     type: string
     description: URL for the pull request review comment
   user:
-    type: [object, null]
+    type: [ object, null ]
     $ref: github-user.yaml#
 description: The comment itself.
 additionalProperties: false

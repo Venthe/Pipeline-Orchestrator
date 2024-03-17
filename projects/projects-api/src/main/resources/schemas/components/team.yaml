@@ -26,7 +26,7 @@ properties:
     type: string
     description: Name of the team
   description:
-    type: [string, null]
+    type: [ string, null ]
     description: Description of the team
   permission:
     type: string

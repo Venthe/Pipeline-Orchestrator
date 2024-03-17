@@ -75,7 +75,7 @@ properties:
   state:
     type: string
     description: State of this Pull Request. Either open or closed.
-    enum: [open, closed]
+    enum: [ open, closed ]
   locked:
     type: boolean
   title:
@@ -84,7 +84,7 @@ properties:
   user:
     $ref: github-user.yaml#
   body:
-    type: [string, null]
+    type: [ string, null ]
   labels:
     type: array
     items:
@@ -92,29 +92,29 @@ properties:
   milestone:
     $ref: milestone.yaml#
   active_lock_reason:
-    type: [string, null]
+    type: [ string, null ]
   created_at:
     type: string
   updated_at:
     type: string
   closed_at:
-    type: [string, null]
+    type: [ string, null ]
   merged_at:
-    type: [string, null]
+    type: [ string, null ]
   merge_commit_sha:
-    type: [string, null]
+    type: [ string, null ]
   assignee:
     $ref: github-user.yaml#
   assignees:
-    type: [array, null]
+    type: [ array, null ]
     items:
       $ref: github-user.yaml#
   requested_reviewers:
-    type: [array, null]
+    type: [ array, null ]
     items:
       $ref: github-user.yaml#
   requested_teams:
-    type: [array, null]
+    type: [ array, null ]
     items:
       $ref: team.yaml#
   head:
@@ -153,7 +153,7 @@ properties:
   author_association:
     $ref: author-association.yaml#
   auto_merge:
-    type: [object, null]
+    type: [ object, null ]
     description: The status of auto merging a pull request.
     additionalProperties: false
     required:
@@ -167,7 +167,7 @@ properties:
       merge_method:
         type: string
         description: The merge method to use.
-        enum: [merge, squash, rebase]
+        enum: [ merge, squash, rebase ]
       commit_title:
         type: string
         description: Title for the merge commit message.
@@ -180,9 +180,9 @@ properties:
   merged:
     type: boolean
   mergeable:
-    type: [boolean, null]
+    type: [ boolean, null ]
   rebaseable:
-    type: [boolean, null]
+    type: [ boolean, null ]
   mergeable_state:
     type: string
   merged_by:

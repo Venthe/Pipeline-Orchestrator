@@ -49,14 +49,14 @@ properties:
   check_suite_url:
     type: string
   conclusion:
-    type: [string, null]
-    enum: [success, failure, neutral, cancelled, timed_out, action_required, stale, skipped, null]
+    type: [ string, null ]
+    enum: [ success, failure, neutral, cancelled, timed_out, action_required, stale, skipped, null ]
   created_at:
     type: string
   event:
     type: string
   head_branch:
-    type: [string, null]
+    type: [ string, null ]
   triggering_actor:
     $ref: github-user.yaml#
   rerun_url:
@@ -69,7 +69,7 @@ properties:
     type: string
   status:
     type: string
-    enum: [requested, in_progress, completed, queued, pending]
+    enum: [ requested, in_progress, completed, queued, pending ]
   updated_at:
     type: string
   url:
@@ -79,7 +79,7 @@ properties:
   workflow_url:
     type: string
   head_commit:
-    type: [object, null]
+    type: [ object, null ]
     $ref: commit.yaml#
   head_repository:
     $ref: repository.yaml#
@@ -94,19 +94,19 @@ properties:
   logs_url:
     type: string
   name:
-    type: [string, null]
+    type: [ string, null ]
   node_id:
     type: string
   path:
     type: string
   previous_attempt_url:
-    type: [string, null]
+    type: [ string, null ]
   pull_requests:
     type: array
     items:
       $ref: pull-request.yaml#
   referenced_workflows:
-    type: [array, null]
+    type: [ array, null ]
     items:
       type: object
       additionalProperties: false

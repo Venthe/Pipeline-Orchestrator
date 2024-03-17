@@ -34,7 +34,7 @@ properties:
     type: string
     description: The SHA of the most recent commit on ref after the push.
   base_ref:
-    type: [string, null]
+    type: [ string, null ]
   before:
     type: string
     description: The SHA of the most recent commit on ref before the push.
@@ -56,7 +56,7 @@ properties:
     type: boolean
     description: Whether this push was a force push of the ref.
   head_commit:
-    types: [object, null]
+    types: [ object, null ]
     $ref: components/commit-details.yaml#
   pusher:
     $ref: components/git-actor.yaml#

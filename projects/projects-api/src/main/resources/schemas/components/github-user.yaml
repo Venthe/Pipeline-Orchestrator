@@ -1,4 +1,4 @@
-type: [object, null]
+type: [ object, null ]
 $schema: https://json-schema.org/draft/2020-12/schema
 description: A GitHub user.
 required:
@@ -10,7 +10,7 @@ properties:
   deleted:
     type: boolean
   email:
-    type: [string, null]
+    type: [ string, null ]
   events_url:
     type: string
   followers_url:
@@ -47,5 +47,5 @@ properties:
     type: string
   type:
     type: string
-    enum: [Bot, User, Organization]
+    enum: [ Bot, User, Organization ]
 additionalProperties: false

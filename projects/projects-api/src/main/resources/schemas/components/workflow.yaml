@@ -1,7 +1,7 @@
 $id: Workflow
 $schema: https://json-schema.org/draft/2020-12/schema
 title: Workflow
-type: [object, null]
+type: [ object, null ]
 required:
   - badge_url
   - created_at

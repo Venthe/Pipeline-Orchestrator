@@ -8,7 +8,7 @@ properties:
   date:
     type: string
   email:
-    type: [string, null]
+    type: [ string, null ]
   name:
     type: string
     description: The git author's name.
