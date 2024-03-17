@@ -51,7 +51,7 @@ properties:
           type: string
           default: User
         reviewer:
-          type: [object, null]
+          type: [ object, null ]
           $ref: components/github-user.yaml#
   workflow_run:
     type: [ object, null ]
