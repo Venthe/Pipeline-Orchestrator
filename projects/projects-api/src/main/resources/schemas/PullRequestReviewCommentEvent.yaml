@@ -1,0 +1,36 @@
+$id: PullRequest
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+description: |
+  This event occurs when there is activity relating to a pull request review comment. A pull request review comment is a comment on a pull request's diff. For more information, see "Commenting on a pull request." For information about the APIs to manage pull request review comments, see the GraphQL API documentation or "Pull request review comments" in the REST API documentation.
+  
+  For activity related to pull request reviews, pull request comments, or pull request review threads, use the pull_request_review, issue_comment, or pull_request_review_thread events instead.
+  
+  To subscribe to this event, a GitHub App must have at least read-level access for the "Pull requests" repository permission.
+required:
+  - sender
+  - repository
+  - action
+  - pull_request
+  - comment
+properties:
+  enterprise:
+    $ref: components/enterprise.yaml#
+  installation:
+    $ref: components/installation.yaml#
+  organization:
+    $ref: components/organization.yaml#
+  repository:
+    $ref: components/repository.yaml#
+  sender:
+    description: |
+      The GitHub user that triggered the event. This property is included in every webhook payload.
+    $ref: components/github-user.yaml#
+  action:
+    type: string
+    enum: [created, deleted, edited]
+  pull_request:
+    $ref: components/pull-request.yaml#
+  comment:
+    $ref: components/comment.yaml#
+additionalProperties: false

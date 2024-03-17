@@ -1,0 +1,37 @@
+$id: PullRequest
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+description: |
+  This event occurs when there is activity on a pull request. For more information, see "About pull requests." For information about the APIs to manage pull requests, see the GraphQL API documentation or "Pulls" in the REST API documentation.
+  
+  For activity related to pull request reviews, pull request review comments, pull request comments, or pull request review threads, use the pull_request_review, pull_request_review_comment, issue_comment, or pull_request_review_thread events instead.
+  
+  To subscribe to this event, a GitHub App must have at least read-level access for the "Pull requests" repository permission.
+required:
+  - sender
+  - repository
+  - action
+  - number
+  - pull_request
+properties:
+  enterprise:
+    $ref: components/enterprise.yaml#
+  installation:
+    $ref: components/installation.yaml#
+  organization:
+    $ref: components/organization.yaml#
+  repository:
+    $ref: components/repository.yaml#
+  sender:
+    description: |
+      The GitHub user that triggered the event. This property is included in every webhook payload.
+    $ref: components/github-user.yaml#
+  action:
+    type: string
+    enum: [assigned, auto_merge_disabled, auto_merge_enabled, closed, converted_to_draft, demilestoned, dequeued, edited, enqueued, labeled, locked, milestoned, opened, ready_for_review, reopened, review_request_removed, review_requested, synchronize, unassigned, unlabeled, unlocked]
+  number:
+    type: integer
+    description: The pull request number.
+  pull_request:
+    $ref: components/pull-request.yaml#
+additionalProperties: false

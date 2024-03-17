@@ -1,0 +1,47 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+required:
+  - _links
+  - author_association
+  - body
+  - commit_id
+  - html_url
+  - id
+  - node_id
+  - pull_request_url
+  - state
+  - submitted_at
+  - user
+properties:
+  _links:
+    type:
+      html:
+        $ref: link.yaml#
+      pull_request:
+        $ref: link.yaml#
+  author_association:
+    $ref: author-association.yaml#
+  body:
+    type: [ string, null ]
+    description: The text of the review.
+  commit_id:
+    type: string
+    description: A commit SHA for the review.
+  html_url:
+    type: string
+  id:
+    type: integer
+    description: Unique identifier of the review
+  node_id:
+    type: string
+  pull_request_url:
+    type: string
+  state:
+    type: string
+    enum: [ dismissed, approved, changes_requested ]
+  submitted_at:
+    type: string
+  user:
+    $ref: github-user.yaml#
+additionalProperties: false
+description: The review that was affected.

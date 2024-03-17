@@ -1,0 +1,35 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+required:
+  - "plus_1"
+  - "minus_1"
+  - confused
+  - eyes
+  - heart
+  - hooray
+  - laugh
+  - rocket
+  - total_count
+  - url
+properties:
+  "plus_1":
+    type: integer
+  "minus_1":
+    type: integer
+  confused:
+    type: integer
+  eyes:
+    type: integer
+  heart:
+    type: integer
+  hooray:
+    type: integer
+  laugh:
+    type: integer
+  rocket:
+    type: integer
+  total_count:
+    type: integer
+  url:
+    type: string
+additionalProperties: false
