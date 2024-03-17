@@ -1,0 +1,37 @@
+$id: WorkflowDispatch
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+description: |
+  This event occurs when a GitHub Actions workflow is manually triggered. For more information, see "Manually running a workflow."
+
+  For activity relating to workflow runs, use the workflow_run event.
+
+  To subscribe to this event, a GitHub App must have at least read-level access for the "Contents" repository permission.
+required:
+  - sender
+  - repository
+  - inputs
+  - ref
+  - workflow
+properties:
+  enterprise:
+    $ref: components/enterprise.yaml#
+  installation:
+    $ref: components/installation.yaml#
+  organization:
+    $ref: components/organization.yaml#
+  repository:
+    $ref: components/repository.yaml#
+  sender:
+    description: |
+      The GitHub user that triggered the event. This property is included in every webhook payload.
+    $ref: components/github-user.yaml#
+  inputs:
+    type: [object, null]
+    additionalProperties:
+      type: string
+  ref:
+    type: string
+  workflow:
+    type: string
+additionalProperties: false

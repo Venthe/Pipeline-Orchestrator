@@ -1,0 +1,70 @@
+$id: Push
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+description: |
+  This event occurs when there is a push to a repository branch. This includes when a commit is pushed, when a commit tag is pushed, when a branch is deleted, when a tag is deleted, or when a repository is created from a template. To subscribe to only branch and tag deletions, use the delete webhook event.
+  
+  To subscribe to this event, a GitHub App must have at least read-level access for the "Contents" repository permission.
+
+  Note: An event will not be created when more than three tags are pushed at once.
+required:
+  - sender
+  - repository
+  - after
+  - base_ref
+  - before
+  - commits
+  - compare
+  - created
+  - deleted
+  - forced
+  - head_commit
+  - pusher
+  - ref
+properties:
+  enterprise:
+    $ref: components/enterprise.yaml#
+  installation:
+    $ref: components/installation.yaml#
+  organization:
+    $ref: components/organization.yaml#
+  repository:
+    $ref: components/repository.yaml#
+  after:
+    type: string
+    description: The SHA of the most recent commit on ref after the push.
+  base_ref:
+    type: [string, null]
+  before:
+    type: string
+    description: The SHA of the most recent commit on ref before the push.
+  commits:
+    type: array
+    items:
+      $ref: components/commit-details.yaml#
+    description: An array of commit objects describing the pushed commits. (Pushed commits are all commits that are included in the compare between the before commit and the after commit.) The array includes a maximum of 2048 commits. If necessary, you can use the Commits API to fetch additional commits.
+  compare:
+    type: string
+    description: URL that shows the changes in this ref update, from the before commit to the after commit. For a newly created ref that is directly based on the default branch, this is the comparison between the head of the default branch and the after commit. Otherwise, this shows all commits until the after commit.
+  created:
+    type: boolean
+    description: Whether this push created the ref.
+  deleted:
+    type: boolean
+    description: Whether this push deleted the ref.
+  forced:
+    type: boolean
+    description: Whether this push was a force push of the ref.
+  head_commit:
+    types: [object, null]
+    $ref: components/commit-details.yaml#
+  pusher:
+    $ref: components/git-actor.yaml#
+  ref:
+    type: string
+    description: "The full git ref that was pushed. Example: refs/heads/main or refs/tags/v3.14.1."
+  sender:
+    description: |
+      The GitHub user that triggered the event. This property is included in every webhook payload.
+    $ref: components/github-user.yaml#
+additionalProperties: false

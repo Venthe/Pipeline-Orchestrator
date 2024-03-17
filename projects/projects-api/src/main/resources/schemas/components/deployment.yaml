@@ -113,8 +113,10 @@ properties:
             type: string
           deployments:
             type: string
-      events array of:
-        type: strings
+      events:
+        type: array
+        items:
+          type: string
         description: The list of events for the GitHub app
       installations_count:
         type: integer

@@ -25,7 +25,9 @@ properties:
   repository:
     $ref: components/repository.yaml#
   sender:
-    $ref: components/sender.yaml#
+    description: |
+      The GitHub user that triggered the event. This property is included in every webhook payload.
+    $ref: components/github-user.yaml#
   workflow:
     $ref: components/workflow.yaml#
   workflow_run:

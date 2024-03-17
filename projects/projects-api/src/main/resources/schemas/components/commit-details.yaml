@@ -16,10 +16,8 @@ properties:
       type: string
     description: An array of files added in the commit.
   author:
-    type: object
     $ref: git-actor.yaml#
   committer:
-    type: object
     $ref: git-actor.yaml#
   distinct:
     type: boolean

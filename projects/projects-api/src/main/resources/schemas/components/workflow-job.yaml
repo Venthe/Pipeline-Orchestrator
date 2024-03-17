@@ -44,7 +44,7 @@ properties:
   labels:
     type: array
     items:
-      type: strings
+      type: string
     description: Custom labels for the job. Specified by the "runs-on" attribute in the workflow YAML.
   name:
     type: string
