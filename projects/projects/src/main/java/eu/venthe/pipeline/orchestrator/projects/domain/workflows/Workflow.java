@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -33,9 +34,11 @@ public class Workflow {
         jobsContext = JobsContext.ensure(root.get("jobs"));
     }
 
-    /**
+    */
+/**
      * The name of the workflow. If you omit name, System displays the workflow file path relative to the root of the repository.
-     */
+     *//*
+
     public String getName() {
         return NameContext.name(root).orElse(ref .getFilePath());
     }
@@ -89,3 +92,4 @@ public class Workflow {
         }
     }
 }
+*/

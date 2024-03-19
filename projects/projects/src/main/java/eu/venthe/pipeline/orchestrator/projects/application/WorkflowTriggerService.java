@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects.application;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.EventHandlerProvider;
@@ -21,3 +22,4 @@ public class WorkflowTriggerService {
         return eventHandlerProvider.handle(event);
     }
 }
+*/

@@ -101,7 +101,7 @@ tasks.register("applyCommonInterfaceForEvents") {
     dependsOn("generateJsonSchema2Pojo")
 }
 
-tasks["build"].dependsOn("applyCommonInterfaceForEvents")
+tasks["compileJava"].dependsOn("applyCommonInterfaceForEvents")
 
 tasks.register<YamlToJson2>("prepareJsonschema") {
     group = "build"

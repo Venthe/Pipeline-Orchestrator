@@ -4,5 +4,5 @@ import lombok.Value;
 
 @Value
 public class CreateProjectSpecification {
-    ProjectId id;
+    String id;
 }

@@ -1,74 +1,65 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.handlers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import eu.venthe.pipeline.orchestrator.projects.application.WorkflowExecutionRepository;
-import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.TypedEventHandler;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.TriggerEvent;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.impl.WorkflowDispatchHandledEvent;
-import eu.venthe.pipeline.orchestrator.projects.api.version_control.common.EventType;
-import eu.venthe.pipeline.orchestrator.plugins.job_executors.JobExecutor;
-import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.WorkflowExecution;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
+import eu.venthe.pipeline.orchestrator.projects.api.Event;
+import eu.venthe.pipeline.orchestrator.projects.api.WorkflowDispatchEvent;
+import eu.venthe.pipeline.orchestrator.projects.api.components.Workflow;
+import eu.venthe.pipeline.orchestrator.projects.domain.Project;
+import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.EventHandler;
+import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
+import java.util.Collection;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class WorkflowDispatchEventHandler implements TypedEventHandler {
-    private final VersionControlSystemProvider versionControlSystem;
-    private final JobExecutor jobExecutor;
-    private final WorkflowExecutionRepository workflowExecutionRepository;
-    private final YAMLMapper yamlMapper;
+public class WorkflowDispatchEventHandler implements EventHandler {
+    //private final VersionControlSystemProvider versionControlSystem;
+    //private final JobExecutor jobExecutor;
+    //private final WorkflowExecutionRepository workflowExecutionRepository;
+    //private final YAMLMapper yamlMapper;
 
     @Override
-    public Optional<String> handle(TriggerEvent event) {
-        WorkflowDispatchHandledEvent workflowDispatchEvent = event.specify(WorkflowDispatchHandledEvent::new);
+    public Collection<DomainEvent> handle(Project project, Event _event) {
+        WorkflowDispatchEvent event = (WorkflowDispatchEvent) _event;
 
-        log.info("Event triggers single workflow on path {}", workflowDispatchEvent.getWorkflow());
+        log.info("Event triggers single workflow on path {}", event.getWorkflow());
 
-        Workflow workflow = loadWorkflow(workflowDispatchEvent)
-                .map(data -> new String(data, StandardCharsets.UTF_8))
-                .map(this::parseYaml)
-                .map(ObjectNode.class::cast)
-                .map(root -> new Workflow(root, null))
+        Workflow workflow = project.getWorkflow(event.getRef(), event.getWorkflow())
                 .orElseThrow();
 
         log.trace("Workflow loaded {}", workflow);
+//
+//        Optional<WorkflowExecution> workflowExecution = WorkflowExecution.from(workflow, workflowDispatchEvent);
+//        workflowExecution.ifPresentOrElse(we -> {
+//            we.start(jobExecutor);
+//
+//            workflowExecutionRepository.save(we);
+//        }, () -> log.debug("No workflow execution is created"));
+//
+//        return workflowExecution.map(WorkflowExecution::getId);
 
-        Optional<WorkflowExecution> workflowExecution = WorkflowExecution.from(workflow, workflowDispatchEvent);
-        workflowExecution.ifPresentOrElse(we -> {
-            we.start(jobExecutor);
+        throw new UnsupportedOperationException();
+    }
+//
+//    private Optional<byte[]> loadWorkflow(WorkflowDispatchHandledEvent workflowDispatchEvent) {
+//        return versionControlSystem.getFile(
+//                workflowDispatchEvent.getRepository().getName(),
+//                workflowDispatchEvent.getRef(),
+//                workflowDispatchEvent.getWorkflow()
+//        );
+//    }
+//
+//    @SneakyThrows
+//    private JsonNode parseYaml(String data) {
+//        return yamlMapper.readTree(data);
+//    }
 
-            workflowExecutionRepository.save(we);
-        }, () -> log.debug("No workflow execution is created"));
-
-        return workflowExecution.map(WorkflowExecution::getId);
+    public boolean canHandle(Event event) {
+        return event instanceof WorkflowDispatchEvent;
     }
 
-    private Optional<byte[]> loadWorkflow(WorkflowDispatchHandledEvent workflowDispatchEvent) {
-        return versionControlSystem.getFile(
-                workflowDispatchEvent.getRepository().getName(),
-                workflowDispatchEvent.getRef(),
-                workflowDispatchEvent.getWorkflow()
-        );
-    }
-
-    @SneakyThrows
-    private JsonNode parseYaml(String data) {
-        return yamlMapper.readTree(data);
-    }
-
-    @Override
-    public EventType discriminator() {
-        return EventType.WORKFLOW_DISPATCH;
-    }
 }

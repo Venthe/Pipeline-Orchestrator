@@ -8,23 +8,23 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default void update(ProjectId projectId) {
+    default void update(String projectId) {
         throw new UnsupportedOperationException();
     }
 
-    default void archive(ProjectId projectId) {
+    default void archive(String projectId) {
         throw new UnsupportedOperationException();
     }
 
-    default void makePublic(ProjectId projectId) {
+    default void makePublic(String projectId) {
         throw new UnsupportedOperationException();
     }
 
-    default void executeManualWorkflow(ProjectId projectId, String workflowName) {
+    default void executeManualWorkflow(String projectId, String workflowName) {
         throw new UnsupportedOperationException();
     }
 
-    default void handleEvent(ProjectId projectId, ObjectNode event) {
+    default void handleEvent(String projectId, Event event) {
         throw new UnsupportedOperationException();
     }
 }

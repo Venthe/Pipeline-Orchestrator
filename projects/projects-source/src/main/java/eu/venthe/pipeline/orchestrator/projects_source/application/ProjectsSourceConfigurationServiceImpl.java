@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceConfigurationCommandService, ProjectsSourceConfigurationQueryService {
     private final ProjectsSourceRepository repository;
-    private final DomainMessageBroker bus;
+    private final DomainMessageBroker messageBroker;
     private final ProjectSourceConfigurationFactory factory;
 
     @Override
@@ -34,7 +34,7 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
 
         ProjectSourceConfiguration configuration = result.getLeft();
         repository.save(configuration);
-        bus.publish(result.getRight());
+        messageBroker.publish(result.getRight());
 
         log.info("Project source configuration added. {}, {}, {}", id, sourceType, properties);
         return configuration.getId().getValue();
@@ -46,7 +46,7 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
                 .orElseThrow(ProjectSourceConfigurationNotFoundException::new);
 
         Collection<DomainEvent> result = configuration.synchronize();
-        bus.publish(result);
+        messageBroker.publish(result);
         log.info("Projects synchronized for {}", projectSourceConfigurationId);
     }
 
@@ -57,7 +57,7 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
 
         Collection<DomainEvent> result = configuration.delete();
         repository.delete(ProjectSourceConfigurationId.of(projectSourceConfigurationId));
-        bus.publish(result);
+        messageBroker.publish(result);
     }
 
     @Override

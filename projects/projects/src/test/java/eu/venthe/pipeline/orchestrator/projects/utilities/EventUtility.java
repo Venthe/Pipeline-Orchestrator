@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects.utilities;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -23,3 +24,4 @@ public class EventUtility {
         return eventMapper(new TriggerEvent(root));
     }
 }
+*/

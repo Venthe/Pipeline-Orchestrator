@@ -1,36 +1,37 @@
 package eu.venthe.pipeline.orchestrator.projects.domain;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.projects.api.Event;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 
+import java.util.Collection;
 import java.util.Set;
 
 public interface ProjectCommands {
-    default Set<DomainEvent> handleEvent(ObjectNode event) {
+    default Collection<DomainEvent> handleEvent(Event event) {
         throw new UnsupportedOperationException();
     }
 
-    default Set<DomainEvent> registerManualWorkflow(String path) {
+    default Collection<DomainEvent> registerManualWorkflow(String path) {
         throw new UnsupportedOperationException();
     }
 
-    default Set<DomainEvent> unregisterManualWorkflow(String path) {
+    default Collection<DomainEvent> unregisterManualWorkflow(String path) {
         throw new UnsupportedOperationException();
     }
 
-    default Set<DomainEvent> refreshProject() {
+    default Collection<DomainEvent> refreshProject() {
         throw new UnsupportedOperationException();
     }
 
-    default Set<DomainEvent> registerTrackedRef(String ref) {
+    default Collection<DomainEvent> registerTrackedRef(String ref) {
         throw new UnsupportedOperationException();
     }
 
-    default Set<DomainEvent> unregisterTrackedRef(String ref) {
+    default Collection<DomainEvent> unregisterTrackedRef(String ref) {
         throw new UnsupportedOperationException();
     }
 
-    default Set<DomainEvent> executeManualWorkflow(String path) {
+    default Collection<DomainEvent> executeManualWorkflow(String path) {
         throw new UnsupportedOperationException();
     }
 }
