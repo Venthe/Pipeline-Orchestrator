@@ -4,11 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import eu.venthe.pipeline.orchestrator.projects.api.Event;
 import eu.venthe.pipeline.orchestrator.projects.api.PullRequestEvent;
 import eu.venthe.pipeline.orchestrator.projects.api.PushEvent;
 import eu.venthe.pipeline.orchestrator.projects.api.WorkflowDispatchEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.PullRequestEventWrapper;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.PushEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.WorkflowDispatchEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
 import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
@@ -19,6 +22,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.UUID;
 
 class OnContextTest {
@@ -68,7 +72,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: pull_request
                     action: opened
-                    """, PullRequestEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on: pull_request
                     jobs: {}
@@ -87,7 +91,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: pull_request
                     action: opened
-                    """, PullRequestEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on: workflow_dispatch
                     jobs: {}
@@ -106,7 +110,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: pull_request
                     action: opened
-                    """, PullRequestEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on: [pull_request]
                     jobs: {}
@@ -125,8 +129,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: workflow_dispatch
                     inputs: {}
-                    ref: main
-                    """, WorkflowDispatchEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       workflow_dispatch: {}
@@ -149,8 +152,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: push
                     ref: main
-                    commits: []
-                    """, PushEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       push:
@@ -172,8 +174,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: push
                     ref: main
-                    commits: []
-                    """, PushEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       push:
@@ -195,8 +196,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: push
                     ref: main
-                    commits: []
-                    """, PushEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       push:
@@ -218,8 +218,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: push
                     ref: main
-                    commits: []
-                    """, PushEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       push:
@@ -241,8 +240,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: push
                     ref: main
-                    commits: []
-                    """, PushEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       push:
@@ -265,8 +263,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: push
                     ref: refs/heads/main
-                    commits: []
-                    """, PushEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       push:
@@ -288,8 +285,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: push
                     ref: main
-                    commits: []
-                    """, PushEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       push:
@@ -317,17 +313,15 @@ class OnContextTest {
                     ref: main
                     commits:
                       - message: Abc
-                        sha: "123"
                         timestamp: 2011-12-03T10:15:30+01:00
+                        added:
+                          - test.yaml
+                        tree_id: "123"
                         author:
                           name: Test User
                         committer:
                           name: Test User
-                        added:
-                          - test.yaml
-                        modified: []
-                        removed: []
-                    """, PushEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       push:
@@ -351,17 +345,15 @@ class OnContextTest {
                     ref: main
                     commits:
                       - message: Abc
-                        sha: "123"
                         timestamp: 2011-12-03T10:15:30+01:00
+                        added:
+                          - test.yaml
+                        tree_id: "123"
                         author:
                           name: Test User
                         committer:
                           name: Test User
-                        added:
-                          - test.yaml
-                        modified: []
-                        removed: []
-                    """, PushEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       push:
@@ -383,15 +375,17 @@ class OnContextTest {
             var input = getEvent("""
                     type: push
                     ref: main
-                    commits: []
-                    additionalProperties:
-                      files:
-                        "a.yaml":
-                          status: A
-                          lines_deleted: -5
-                          size_delta: 5
-                          size: 5
-                    """, PushEvent.class);
+                    commits:
+                      - message: Abc
+                        timestamp: 2011-12-03T10:15:30+01:00
+                        added:
+                          - a.yaml
+                        tree_id: "123"
+                        author:
+                          name: Test User
+                        committer:
+                          name: Test User
+                    """);
             var workflow = getWorkflow("""
                     on:
                       push:
@@ -417,8 +411,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: workflow_dispatch
                     inputs: {}
-                    ref: main
-                    """, WorkflowDispatchEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       workflow_dispatch:
@@ -444,7 +437,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: workflow_dispatch
                     inputs: {}
-                    """, WorkflowDispatchEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       workflow_dispatch:
@@ -471,7 +464,7 @@ class OnContextTest {
                     type: workflow_dispatch
                     inputs:
                       username: Test
-                    """, WorkflowDispatchEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       workflow_dispatch:
@@ -498,7 +491,7 @@ class OnContextTest {
                     type: workflow_dispatch
                     inputs:
                       username: 1
-                    """, WorkflowDispatchEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       workflow_dispatch:
@@ -525,7 +518,7 @@ class OnContextTest {
                     type: workflow_dispatch
                     inputs:
                       username: true
-                    """, WorkflowDispatchEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       workflow_dispatch:
@@ -552,7 +545,7 @@ class OnContextTest {
                     type: workflow_dispatch
                     inputs:
                       username: Xyz
-                    """, WorkflowDispatchEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       workflow_dispatch:
@@ -581,7 +574,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: pull_request
                     action: opened
-                    """, PullRequestEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       pull_request:
@@ -602,7 +595,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: pull_request
                     action: closed
-                    """, PullRequestEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       pull_request:
@@ -623,7 +616,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: pull_request
                     action: opened
-                    """, PullRequestEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       pull_request:
@@ -644,7 +637,7 @@ class OnContextTest {
             var input = getEvent("""
                     type: pull_request
                     action: closed
-                    """, PullRequestEvent.class);
+                    """);
             var workflow = getWorkflow("""
                     on:
                       pull_request:
@@ -669,17 +662,35 @@ class OnContextTest {
     }
 
     @SneakyThrows
-    private <T extends Event> EventWrapper<?> getEvent(String value, Class<T> clazz) {
+    private <T extends Event> EventWrapper<?> getEvent(String value) {
         ObjectNode eventTree = (ObjectNode) objectMapper.readTree(value);
         eventTree.set("id", objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
 
         return switch (eventTree.get("type").asText().toLowerCase(Locale.ROOT)) {
-            case "workflow_dispatch" -> mapWorkflowDispatch(eventTree, clazz);
+            case "workflow_dispatch" -> mapWorkflowDispatch(eventTree);
+            case "push" -> mapPush(eventTree);
+            case "pull_request" -> mapPullRequest(eventTree);
             default -> throw new UnsupportedOperationException();
         };
     }
 
-    private <T extends Event> WorkflowDispatchEventWrapper mapWorkflowDispatch(JsonNode eventTree, Class<T> clazz) throws JsonProcessingException {
-        return new WorkflowDispatchEventWrapper((WorkflowDispatchEvent) objectMapper.treeToValue(eventTree, clazz));
+    private PushEventWrapper mapPush(ObjectNode eventTree) throws JsonProcessingException {
+        return new PushEventWrapper(objectMapper.treeToValue(eventTree, PushEvent.class));
+    }
+
+    private WorkflowDispatchEventWrapper mapWorkflowDispatch(ObjectNode eventTree) throws JsonProcessingException {
+        TextNode ref = Optional.ofNullable((TextNode) eventTree.get("ref")).filter(JsonNode::isTextual).orElse(objectMapper.getNodeFactory().textNode("main"));
+        eventTree.set("ref", ref);
+        return new WorkflowDispatchEventWrapper(objectMapper.treeToValue(eventTree, WorkflowDispatchEvent.class));
+    }
+
+    private PullRequestEventWrapper mapPullRequest(ObjectNode eventTree) throws JsonProcessingException {
+        ObjectNode pullRequest = Optional.ofNullable((ObjectNode) eventTree.get("pull_request")).orElse(objectMapper.createObjectNode());
+        ObjectNode base = Optional.ofNullable((ObjectNode) pullRequest.get("base")).orElse(objectMapper.createObjectNode());
+        TextNode ref = Optional.ofNullable((TextNode) base.get("ref")).filter(JsonNode::isTextual).orElse(objectMapper.getNodeFactory().textNode("main"));
+        base.set("ref", ref);
+        pullRequest.set("base", base);
+        eventTree.set("pull_request", pullRequest);
+        return new PullRequestEventWrapper(objectMapper.treeToValue(eventTree, PullRequestEvent.class));
     }
 }
