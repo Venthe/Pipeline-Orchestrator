@@ -2,15 +2,17 @@ package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.common.InputsContext;
+import com.google.common.collect.Sets;
 import eu.venthe.pipeline.orchestrator.projects.domain.utilities.ContextUtilities;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,11 +24,11 @@ public class OnInputs {
     }
 
     public List<InputDefinition> requiredInputs() {
-        if(!root.isObject()) throw new UnsupportedOperationException();
+        if (!root.isObject()) throw new UnsupportedOperationException();
 
         return root.properties().stream()
-                .filter(e ->e.getValue().isObject())
-                .map(e-> new InputDefinition(
+                .filter(e -> e.getValue().isObject())
+                .map(e -> new InputDefinition(
                         e.getKey(),
                         Optional.ofNullable(e.getValue().get("required"))
                                 .map(JsonNode::asBoolean)
@@ -37,11 +39,13 @@ public class OnInputs {
                 .toList();
     }
 
-    public boolean match(InputsContext context) {
+    public boolean match(Map<String, String> context) {
         // TODO: Handle type of the input
-        Set<InputsContext.ValueType> inputs = context.getValueTypes();
-        boolean result = requiredInputs().stream()
-                .allMatch(inputDefinition -> inputs.stream().anyMatch(input -> input.getType().getValue().equalsIgnoreCase(inputDefinition.getType()) && input.getHasValue()));
+        Set<String> requiredInputs = requiredInputs().stream().map(InputDefinition::getKey).collect(Collectors.toSet());
+        Set<String> inputs = context.keySet();
+
+        boolean result = Sets.difference(requiredInputs, inputs).stream().toList().isEmpty();
+
         log.info("matching inputs - {}", result);
         return result;
     }

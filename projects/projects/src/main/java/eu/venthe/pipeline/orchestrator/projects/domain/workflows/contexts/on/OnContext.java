@@ -1,10 +1,10 @@
-/*
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.MoreCollectors;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.HandledEvent;
+import eu.venthe.pipeline.orchestrator.projects.api.Event;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +27,7 @@ public class OnContext {
         return create(on).orElseThrow(() -> new IllegalArgumentException("There is no \"on\" property, this workflow will never run"));
     }
 
-    public Boolean on(HandledEvent event) {
+    public <T extends Event> Boolean on(EventWrapper<T> event) {
         if (event == null) throw new IllegalArgumentException("Input should not be null");
 
         if (!root.isTextual() && root.isEmpty()) {
@@ -54,7 +54,7 @@ public class OnContext {
             }
 
             Optional<JsonNode> node = root.properties().stream()
-                    .filter(e -> EventType.of(e.getKey()).map(w -> event.getType().equals(w)).orElse(false))
+                    .filter(e -> Optional.ofNullable(e.getKey()).map(w -> event.getType().equalsIgnoreCase(w)).orElse(false))
                     .map(Map.Entry::getValue)
                     .collect(MoreCollectors.toOptional());
 
@@ -95,10 +95,7 @@ public class OnContext {
         throw new UnsupportedOperationException();
     }
 
-    private Boolean singleEvent(String node, EventType type) {
-        return EventType.of(node)
-                .map(type::equals)
-                .orElse(false);
+    private Boolean singleEvent(String node, String type) {
+        return node.equalsIgnoreCase(type);
     }
 }
-*/

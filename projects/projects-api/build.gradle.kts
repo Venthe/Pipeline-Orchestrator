@@ -61,7 +61,6 @@ tasks.register("applyCommonInterfaceForEvents") {
             println("Adjusting common ancestor in file ${it.name}")
             val content = it.readText()
             val modifiedContent = content.replace("^(public class) ([\\w]*) (\\{)$".toRegex(RegexOption.MULTILINE), "\$1 \$2 extends AbstractEvent \$3")
-                    .replace("(.*property = \")@class(\".*)".toRegex(RegexOption.MULTILINE), "\$1type\$2")
             it.writeText(modifiedContent)
         }
     }

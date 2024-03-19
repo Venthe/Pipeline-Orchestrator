@@ -34,7 +34,7 @@ public class Project implements Aggregate<ProjectId>, ProjectCommands {
         return eventHandlerProvider.handle(this, event);
     }
 
-    public Optional<Workflow> getWorkflow(String ref, String workflow) {
+    public Optional<eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow> getWorkflow(String ref, String workflow) {
         return versionControlSystemProvider.getFile(id.getId(), ref, resolveFromOrchestratorDirectory(workflow), workflowFactory::fromBytes);
     }
 }

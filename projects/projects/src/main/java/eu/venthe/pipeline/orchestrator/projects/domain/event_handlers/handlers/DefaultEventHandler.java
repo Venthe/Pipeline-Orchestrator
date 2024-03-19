@@ -9,9 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Collection;
 
 @Slf4j
-public class DefaultEventHandler implements EventHandler {
-
-    public Collection<DomainEvent> handle(Project project, Event event) {
+public class DefaultEventHandler extends AbstractEventHandler<Event> {
+    @Override
+    protected Collection<DomainEvent> _handle(Project project, Event event) {
         log.warn("Using default event handler for event {}", event);
         throw new UnsupportedOperationException("This event is not handled " + event);
     }

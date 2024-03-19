@@ -1,7 +1,9 @@
-/*
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.projects.api.Event;
+import eu.venthe.pipeline.orchestrator.projects.api.WorkflowDispatchEvent;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.HandledEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.*;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnContext;
@@ -34,10 +36,9 @@ public class Workflow {
         jobsContext = JobsContext.ensure(root.get("jobs"));
     }
 
-    */
-/**
+     /*
      * The name of the workflow. If you omit name, System displays the workflow file path relative to the root of the repository.
-     *//*
+    */
 
     public String getName() {
         return NameContext.name(root).orElse(ref .getFilePath());
@@ -67,7 +68,7 @@ public class Workflow {
         return jobsContext;
     }
 
-    public Boolean on(HandledEvent event) {
+    public <T extends Event> Boolean on(EventWrapper<T> event) {
 
         Boolean result = getOnContext().on(event);
         log.info("[id:{}][type:{}] Event match: {}", event.getId(), event.getType(), result);
@@ -92,4 +93,3 @@ public class Workflow {
         }
     }
 }
-*/
