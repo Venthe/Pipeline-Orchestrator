@@ -28,7 +28,7 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
         if (!workflow.on(new WorkflowDispatchEventWrapper(event))) {
             return Collections.emptyList();
         }
-//
+
 //        Optional<WorkflowExecution> workflowExecution = WorkflowExecution.from(workflow, workflowDispatchEvent);
 //        workflowExecution.ifPresentOrElse(we -> {
 //            we.start(jobExecutor);
