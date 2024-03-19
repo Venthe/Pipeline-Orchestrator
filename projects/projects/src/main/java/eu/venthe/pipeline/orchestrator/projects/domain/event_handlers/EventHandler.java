@@ -2,7 +2,6 @@ package eu.venthe.pipeline.orchestrator.projects.domain.event_handlers;
 
 import eu.venthe.pipeline.orchestrator.projects.api.Event;
 import eu.venthe.pipeline.orchestrator.projects.domain.Project;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 
 import java.util.Collection;

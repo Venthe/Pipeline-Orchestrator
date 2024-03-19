@@ -26,11 +26,6 @@ public class ContextUtilities {
                 .map(JsonNode::asText);
     }
 
-    public static <T extends Collection<String>> T ensureStringCollection(JsonNode node, Collector<String, ?, T> collector) {
-        return createStringCollection(node, collector)
-                .orElseThrow();
-    }
-
     public static <T extends Collection<String>> Optional<T> createStringCollection(JsonNode node, Collector<String, ?, T> collector) {
         return Optional.ofNullable(node)
                 .filter(Predicate.not(JsonNode::isNull))
@@ -44,18 +39,4 @@ public class ContextUtilities {
                 );
     }
 
-    public static <U, T extends Collection<U>> T ensureObjectCollection(JsonNode node, Function<ObjectNode, U> mapper, Collector<U, ?, T> collector) {
-        return Optional.ofNullable(node)
-                .filter(Predicate.not(JsonNode::isNull))
-                .filter(JsonNode::isArray)
-                .map(e -> StreamSupport.stream(e.spliterator(), false)
-                        .filter(Predicate.not(JsonNode::isNull))
-                        .filter(JsonNode::isObject)
-                        .filter(Predicate.not(JsonNode::isEmpty))
-                        .map(ObjectNode.class::cast)
-                        .map(mapper)
-                        .collect(collector)
-                )
-                .orElseThrow();
-    }
 }

@@ -2,7 +2,6 @@ package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
 import eu.venthe.pipeline.orchestrator.projects.api.Event;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.*;
-import lombok.RequiredArgsConstructor;
 
 public interface EventWrapper<T extends Event> {
     T getEvent();

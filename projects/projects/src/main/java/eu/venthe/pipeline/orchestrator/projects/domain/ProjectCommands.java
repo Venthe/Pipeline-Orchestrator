@@ -4,7 +4,6 @@ import eu.venthe.pipeline.orchestrator.projects.api.Event;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 
 import java.util.Collection;
-import java.util.Set;
 
 public interface ProjectCommands {
     default Collection<DomainEvent> handleEvent(Event event) {

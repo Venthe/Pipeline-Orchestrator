@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +29,7 @@ public class ProjectsServiceImpl implements ProjectsQueryService, ProjectsComman
     }
 
     @Override
+    // FIXME: change project ID to repository from event
     public void handleEvent(String projectId, Event event) {
         Project project = projectRepository.find(ProjectId.from(projectId)).orElseThrow();
 

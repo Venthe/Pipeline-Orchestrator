@@ -5,7 +5,6 @@ import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnB
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnPaths;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

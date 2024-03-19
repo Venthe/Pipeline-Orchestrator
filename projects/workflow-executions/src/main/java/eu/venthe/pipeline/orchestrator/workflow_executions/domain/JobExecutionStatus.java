@@ -1,11 +1,10 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions;
+package eu.venthe.pipeline.orchestrator.workflow_executions.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.common.collect.MoreCollectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import static com.google.common.collect.MoreCollectors.toOptional;
 import static java.util.Arrays.stream;
 
 @Getter

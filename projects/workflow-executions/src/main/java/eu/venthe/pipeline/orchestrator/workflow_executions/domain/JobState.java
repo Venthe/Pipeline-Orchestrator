@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions;
+package eu.venthe.pipeline.orchestrator.workflow_executions.domain;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.BaseJobContext;
 import lombok.EqualsAndHashCode;

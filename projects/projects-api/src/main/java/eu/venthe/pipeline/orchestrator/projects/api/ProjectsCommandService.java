@@ -1,7 +1,5 @@
 package eu.venthe.pipeline.orchestrator.projects.api;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 public interface ProjectsCommandService {
 
     default void add(CreateProjectSpecification newProjectDto) {

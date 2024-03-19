@@ -2,8 +2,6 @@ package eu.venthe.pipeline.orchestrator.projects.domain;
 
 import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
 import eu.venthe.pipeline.orchestrator.projects.api.Event;
-import eu.venthe.pipeline.orchestrator.projects.api.WorkflowDispatchEvent;
-import eu.venthe.pipeline.orchestrator.projects.api.components.Workflow;
 import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
@@ -13,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import static eu.venthe.pipeline.orchestrator.projects.domain.utilities.PipelineUtilities.resolveFromOrchestratorDirectory;
 
