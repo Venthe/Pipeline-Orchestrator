@@ -1,22 +1,28 @@
-/*
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.TriggerEvent;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.TypeContext;
+import eu.venthe.pipeline.orchestrator.projects.api.Event;
+import eu.venthe.pipeline.orchestrator.projects.api.PullRequestEvent;
+import eu.venthe.pipeline.orchestrator.projects.api.PushEvent;
+import eu.venthe.pipeline.orchestrator.projects.api.WorkflowDispatchEvent;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
+import eu.venthe.pipeline.orchestrator.projects.domain.events.WorkflowDispatchEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.HandledEvent;
-import eu.venthe.pipeline.orchestrator.projects.utilities.EventUtility;
 import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
+import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.time.OffsetDateTime;
-import java.util.function.Consumer;
+import java.util.Locale;
+import java.util.UUID;
 
 class OnContextTest {
+    private final ObjectMapper objectMapper = YamlUtility.OBJECT_MAPPER;
 
     @Test
     void notNull1() {
@@ -60,13 +66,13 @@ class OnContextTest {
         void singleEvent() {
             // given
             var input = getEvent("""
-                type: pull_request
-                action: opened
-                """);
+                    type: pull_request
+                    action: opened
+                    """, PullRequestEvent.class);
             var workflow = getWorkflow("""
-                on: pull_request
-                jobs: {}
-                """);
+                    on: pull_request
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -79,13 +85,13 @@ class OnContextTest {
         void doesNotMatch() {
             // given
             var input = getEvent("""
-                type: pull_request
-                action: opened
-                """);
+                    type: pull_request
+                    action: opened
+                    """, PullRequestEvent.class);
             var workflow = getWorkflow("""
-                on: workflow_dispatch
-                jobs: {}
-                """);
+                    on: workflow_dispatch
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -98,13 +104,13 @@ class OnContextTest {
         void multipleEvents() {
             // given
             var input = getEvent("""
-                type: pull_request
-                action: opened
-                """);
+                    type: pull_request
+                    action: opened
+                    """, PullRequestEvent.class);
             var workflow = getWorkflow("""
-                on: [pull_request]
-                jobs: {}
-                """);
+                    on: [pull_request]
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -117,15 +123,15 @@ class OnContextTest {
         void emptyType() {
             // given
             var input = getEvent("""
-                type: workflow_dispatch
-                inputs: {}
-                ref: main
-                """);
+                    type: workflow_dispatch
+                    inputs: {}
+                    ref: main
+                    """, WorkflowDispatchEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  workflow_dispatch: {}
-                jobs: {}
-                """);
+                    on:
+                      workflow_dispatch: {}
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -141,17 +147,17 @@ class OnContextTest {
         void simpleMatch() {
             // given
             var input = getEvent("""
-                type: push
-                ref: main
-                commits: []
-                """);
+                    type: push
+                    ref: main
+                    commits: []
+                    """, PushEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  push:
-                    branches:
-                      - main
-                jobs: {}
-                """);
+                    on:
+                      push:
+                        branches:
+                          - main
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -164,17 +170,17 @@ class OnContextTest {
         void simpleDoesNotMatch() {
             // given
             var input = getEvent("""
-                type: push
-                ref: main
-                commits: []
-                """);
+                    type: push
+                    ref: main
+                    commits: []
+                    """, PushEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  push:
-                    branchesIgnore:
-                      - main
-                jobs: {}
-                """);
+                    on:
+                      push:
+                        branchesIgnore:
+                          - main
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -187,17 +193,17 @@ class OnContextTest {
         void wildcardMatch() {
             // given
             var input = getEvent("""
-                type: push
-                ref: main
-                commits: []
-                """);
+                    type: push
+                    ref: main
+                    commits: []
+                    """, PushEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  push:
-                    branches:
-                      - ma*
-                jobs: {}
-                """);
+                    on:
+                      push:
+                        branches:
+                          - ma*
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -210,17 +216,17 @@ class OnContextTest {
         void branchDoesNotMatch() {
             // given
             var input = getEvent("""
-                type: push
-                ref: main
-                commits: []
-                """);
+                    type: push
+                    ref: main
+                    commits: []
+                    """, PushEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  push:
-                    branches:
-                      - lorem
-                jobs: {}
-                """);
+                    on:
+                      push:
+                        branches:
+                          - lorem
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -233,18 +239,18 @@ class OnContextTest {
         void branchIsOneOf() {
             // given
             var input = getEvent("""
-                type: push
-                ref: main
-                commits: []
-                """);
+                    type: push
+                    ref: main
+                    commits: []
+                    """, PushEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  push:
-                    branches:
-                      - lorem
-                      - main
-                jobs: {}
-                """);
+                    on:
+                      push:
+                        branches:
+                          - lorem
+                          - main
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -257,17 +263,17 @@ class OnContextTest {
         void branchIsOneOfWithWildcard_1() {
             // given
             var input = getEvent("""
-                type: push
-                ref: refs/heads/main
-                commits: []
-                """);
+                    type: push
+                    ref: refs/heads/main
+                    commits: []
+                    """, PushEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  push:
-                    branches:
-                      - '**main'
-                jobs: {}
-                """);
+                    on:
+                      push:
+                        branches:
+                          - '**main'
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -280,17 +286,17 @@ class OnContextTest {
         void activityTypbranchIsOneOfWithWildcard_2() {
             // given
             var input = getEvent("""
-                type: push
-                ref: main
-                commits: []
-                """);
+                    type: push
+                    ref: main
+                    commits: []
+                    """, PushEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  push:
-                    branches:
-                      - '**main'
-                jobs: {}
-                """);
+                    on:
+                      push:
+                        branches:
+                          - '**main'
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -307,28 +313,28 @@ class OnContextTest {
         void activityType_push5() {
             // given
             var input = getEvent("""
-                type: push
-                ref: main
-                commits:
-                  - message: Abc
-                    sha: "123"
-                    timestamp: 2011-12-03T10:15:30+01:00
-                    author:
-                      name: Test User
-                    committer:
-                      name: Test User
-                    added:
-                      - test.yaml
-                    modified: []
-                    removed: []
-                """);
+                    type: push
+                    ref: main
+                    commits:
+                      - message: Abc
+                        sha: "123"
+                        timestamp: 2011-12-03T10:15:30+01:00
+                        author:
+                          name: Test User
+                        committer:
+                          name: Test User
+                        added:
+                          - test.yaml
+                        modified: []
+                        removed: []
+                    """, PushEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  push:
-                    paths:
-                      - '**.yaml'
-                jobs: {}
-                """);
+                    on:
+                      push:
+                        paths:
+                          - '**.yaml'
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -341,28 +347,28 @@ class OnContextTest {
         void activityType_push5_2() {
             // given
             var input = getEvent("""
-                type: push
-                ref: main
-                commits:
-                  - message: Abc
-                    sha: "123"
-                    timestamp: 2011-12-03T10:15:30+01:00
-                    author:
-                      name: Test User
-                    committer:
-                      name: Test User
-                    added:
-                      - test.yaml
-                    modified: []
-                    removed: []
-                """);
+                    type: push
+                    ref: main
+                    commits:
+                      - message: Abc
+                        sha: "123"
+                        timestamp: 2011-12-03T10:15:30+01:00
+                        author:
+                          name: Test User
+                        committer:
+                          name: Test User
+                        added:
+                          - test.yaml
+                        modified: []
+                        removed: []
+                    """, PushEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  push:
-                    pathsIgnore:
-                      - '**.yaml'
-                jobs: {}
-                """);
+                    on:
+                      push:
+                        pathsIgnore:
+                          - '**.yaml'
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -375,24 +381,24 @@ class OnContextTest {
         void activityType_push6() {
             // given
             var input = getEvent("""
-                type: push
-                ref: main
-                commits: []
-                additionalProperties:
-                  files:
-                    "a.yaml":
-                      status: A
-                      lines_deleted: -5
-                      size_delta: 5
-                      size: 5
-                """);
+                    type: push
+                    ref: main
+                    commits: []
+                    additionalProperties:
+                      files:
+                        "a.yaml":
+                          status: A
+                          lines_deleted: -5
+                          size_delta: 5
+                          size: 5
+                    """, PushEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  push:
-                    paths:
-                      - '**.other'
-                jobs: {}
-                """);
+                    on:
+                      push:
+                        paths:
+                          - '**.other'
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -409,21 +415,21 @@ class OnContextTest {
         void noInputNoneRequired() {
             // given
             var input = getEvent("""
-                type: workflow_dispatch
-                inputs: {}
-                ref: main
-                """);
+                    type: workflow_dispatch
+                    inputs: {}
+                    ref: main
+                    """, WorkflowDispatchEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  workflow_dispatch:
-                    inputs:
-                      username:
-                        description: 'A username passed from the caller workflow'
-                        default: 'john-doe'
-                        required: false
-                        type: string
-                jobs: {}
-                """);
+                    on:
+                      workflow_dispatch:
+                        inputs:
+                          username:
+                            description: 'A username passed from the caller workflow'
+                            default: 'john-doe'
+                            required: false
+                            type: string
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -436,20 +442,20 @@ class OnContextTest {
         void noInputAllRequired() {
             // given
             var input = getEvent("""
-                type: workflow_dispatch
-                inputs: {}
-                """);
+                    type: workflow_dispatch
+                    inputs: {}
+                    """, WorkflowDispatchEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  workflow_dispatch:
-                    inputs:
-                      username:
-                        description: 'A username passed from the caller workflow'
-                        default: 'john-doe'
-                        required: true
-                        type: string
-                jobs: {}
-                """);
+                    on:
+                      workflow_dispatch:
+                        inputs:
+                          username:
+                            description: 'A username passed from the caller workflow'
+                            default: 'john-doe'
+                            required: true
+                            type: string
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -462,21 +468,21 @@ class OnContextTest {
         void hasInputMatchingType_1() {
             // given
             var input = getEvent("""
-                type: workflow_dispatch
-                inputs:
-                  username: Test
-                """);
-            var workflow = getWorkflow("""
-                on:
-                  workflow_dispatch:
+                    type: workflow_dispatch
                     inputs:
-                      username:
-                        description: 'A username passed from the caller workflow'
-                        default: 'john-doe'
-                        required: true
-                        type: string
-                jobs: {}
-                """);
+                      username: Test
+                    """, WorkflowDispatchEvent.class);
+            var workflow = getWorkflow("""
+                    on:
+                      workflow_dispatch:
+                        inputs:
+                          username:
+                            description: 'A username passed from the caller workflow'
+                            default: 'john-doe'
+                            required: true
+                            type: string
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -489,21 +495,21 @@ class OnContextTest {
         void hasInputMatchingType_2() {
             // given
             var input = getEvent("""
-                type: workflow_dispatch
-                inputs:
-                  username: 1
-                """);
-            var workflow = getWorkflow("""
-                on:
-                  workflow_dispatch:
+                    type: workflow_dispatch
                     inputs:
-                      username:
-                        description: 'A username passed from the caller workflow'
-                        default: 2
-                        required: true
-                        type: number
-                jobs: {}
-                """);
+                      username: 1
+                    """, WorkflowDispatchEvent.class);
+            var workflow = getWorkflow("""
+                    on:
+                      workflow_dispatch:
+                        inputs:
+                          username:
+                            description: 'A username passed from the caller workflow'
+                            default: 2
+                            required: true
+                            type: number
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -516,21 +522,21 @@ class OnContextTest {
         void hasInputMatchingType_3() {
             // given
             var input = getEvent("""
-                type: workflow_dispatch
-                inputs:
-                  username: true
-                """);
-            var workflow = getWorkflow("""
-                on:
-                  workflow_dispatch:
+                    type: workflow_dispatch
                     inputs:
-                      username:
-                        description: 'A username passed from the caller workflow'
-                        default: false
-                        required: true
-                        type: boolean
-                jobs: {}
-                """);
+                      username: true
+                    """, WorkflowDispatchEvent.class);
+            var workflow = getWorkflow("""
+                    on:
+                      workflow_dispatch:
+                        inputs:
+                          username:
+                            description: 'A username passed from the caller workflow'
+                            default: false
+                            required: true
+                            type: boolean
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -543,21 +549,21 @@ class OnContextTest {
         void hasInputNotMatchingType() {
             // given
             var input = getEvent("""
-                type: workflow_dispatch
-                inputs:
-                  username: Xyz
-                """);
-            var workflow = getWorkflow("""
-                on:
-                  workflow_dispatch:
+                    type: workflow_dispatch
                     inputs:
-                      username:
-                        description: 'A username passed from the caller workflow'
-                        default: false
-                        required: true
-                        type: boolean
-                jobs: {}
-                """);
+                      username: Xyz
+                    """, WorkflowDispatchEvent.class);
+            var workflow = getWorkflow("""
+                    on:
+                      workflow_dispatch:
+                        inputs:
+                          username:
+                            description: 'A username passed from the caller workflow'
+                            default: false
+                            required: true
+                            type: boolean
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -573,15 +579,15 @@ class OnContextTest {
         void singleMatch() {
             // given
             var input = getEvent("""
-                type: pull_request
-                action: opened
-                """);
+                    type: pull_request
+                    action: opened
+                    """, PullRequestEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  pull_request:
-                    types: opened
-                jobs: {}
-                """);
+                    on:
+                      pull_request:
+                        types: opened
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -594,15 +600,15 @@ class OnContextTest {
         void singleDoesNotMatch() {
             // given
             var input = getEvent("""
-                type: pull_request
-                action: closed
-                """);
+                    type: pull_request
+                    action: closed
+                    """, PullRequestEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  pull_request:
-                    types: opened
-                jobs: {}
-                """);
+                    on:
+                      pull_request:
+                        types: opened
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -615,15 +621,15 @@ class OnContextTest {
         void arrayMatch() {
             // given
             var input = getEvent("""
-                type: pull_request
-                action: opened
-                """);
+                    type: pull_request
+                    action: opened
+                    """, PullRequestEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  pull_request:
-                    types: [opened]
-                jobs: {}
-                """);
+                    on:
+                      pull_request:
+                        types: [opened]
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -636,15 +642,15 @@ class OnContextTest {
         void arrayDoesNotMatch() {
             // given
             var input = getEvent("""
-                type: pull_request
-                action: closed
-                """);
+                    type: pull_request
+                    action: closed
+                    """, PullRequestEvent.class);
             var workflow = getWorkflow("""
-                on:
-                  pull_request:
-                    types: [opened]
-                jobs: {}
-                """);
+                    on:
+                      pull_request:
+                        types: [opened]
+                    jobs: {}
+                    """);
 
             // when
             boolean result = workflow.on(input);
@@ -662,57 +668,18 @@ class OnContextTest {
         return new Workflow(workflow, new Workflow.WorkflowRef("Test-Repository", "main", ".pipeline/workflows/test.yaml", "sha"));
     }
 
-    private static HandledEvent getEvent(String value) {
-        return getEvent(value, (c) -> {});
+    @SneakyThrows
+    private <T extends Event> EventWrapper<?> getEvent(String value, Class<T> clazz) {
+        ObjectNode eventTree = (ObjectNode) objectMapper.readTree(value);
+        eventTree.set("id", objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
+
+        return switch (eventTree.get("type").asText().toLowerCase(Locale.ROOT)) {
+            case "workflow_dispatch" -> mapWorkflowDispatch(eventTree, clazz);
+            default -> throw new UnsupportedOperationException();
+        };
     }
 
-    private static HandledEvent getEvent(String value, Consumer<ObjectNode> mutator) {
-        ObjectNode event = (ObjectNode) YamlUtility.parseYaml(value);
-        eu.venthe.pipeline.orchestrator.projects.api.version_control.common.EventType eventType = TypeContext.ensure(event);
-
-        ObjectNode repository = YamlUtility.createObjectNode();
-        repository.set("provider", YamlUtility.getNodeFactory().textNode("test"));
-        repository.set("name", YamlUtility.getNodeFactory().textNode("Test-Repository"));
-        repository.set("htmlUrl", YamlUtility.getNodeFactory().textNode("https://example.com/Test-Repository"));
-        repository.set("getBlobsUrl", YamlUtility.getNodeFactory().textNode("https://example.com/Test-Repository/blobs/{path}"));
-        repository.set("getBlobsUrl", YamlUtility.getNodeFactory().textNode("https://example.com/Test-Repository/blobs/{path}"));
-        repository.set("createdAt", YamlUtility.getNodeFactory().textNode(OffsetDateTime.now().toString()));
-        repository.set("updatedAt", YamlUtility.getNodeFactory().textNode(OffsetDateTime.now().toString()));
-        repository.set("gitUrl", YamlUtility.getNodeFactory().textNode("git://https://example.com/Test-Repository"));
-        repository.set("sshUrl", YamlUtility.getNodeFactory().textNode("ssh://https://example.com/Test-Repository"));
-        repository.set("cloneUrl", YamlUtility.getNodeFactory().textNode("ssh://https://example.com/Test-Repository"));
-        repository.set("defaultBranch", YamlUtility.getNodeFactory().textNode("main"));
-
-        if (eventType.equals(eu.venthe.pipeline.orchestrator.projects.api.version_control.common.EventType.WORKFLOW_DISPATCH)) {
-            event.set("repository", repository);
-            event.set("workflow", YamlUtility.getNodeFactory().textNode(".pipeline/workflows/test.yaml"));
-
-            event.set("ref", YamlUtility.getNodeFactory().textNode("main"));
-        }
-
-        if (eventType.equals(eu.venthe.pipeline.orchestrator.projects.api.version_control.common.EventType.PUSH)) {
-            event.set("before", YamlUtility.getNodeFactory().textNode("123"));
-            event.set("after", YamlUtility.getNodeFactory().textNode("321"));
-            event.set("repository", repository);
-
-            ObjectNode pusher = YamlUtility.createObjectNode();
-            pusher.set("name", YamlUtility.getNodeFactory().textNode("Test user"));
-            event.set("pusher", pusher);
-
-            ObjectNode sender = YamlUtility.createObjectNode();
-            sender.set("name", YamlUtility.getNodeFactory().textNode("Test user"));
-            event.set("sender", sender);
-        }
-
-        ObjectNode actor = YamlUtility.createObjectNode();
-        actor.set("login", YamlUtility.getNodeFactory().textNode("TestUser"));
-        event.set("actor", actor);
-
-        event.set("id", YamlUtility.getNodeFactory().textNode("a5b41ec4-c088-420a-93ae-8b0868b6e1b8"));
-
-        mutator.accept(event);
-
-        return EventUtility.eventMapper(new TriggerEvent(event));
+    private <T extends Event> WorkflowDispatchEventWrapper mapWorkflowDispatch(JsonNode eventTree, Class<T> clazz) throws JsonProcessingException {
+        return new WorkflowDispatchEventWrapper((WorkflowDispatchEvent) objectMapper.treeToValue(eventTree, clazz));
     }
 }
-*/

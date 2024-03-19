@@ -2,12 +2,9 @@ package eu.venthe.pipeline.orchestrator.projects.domain.workflows;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.projects.api.Event;
-import eu.venthe.pipeline.orchestrator.projects.api.WorkflowDispatchEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.HandledEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.*;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnContext;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.*;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

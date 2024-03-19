@@ -12,14 +12,4 @@ public class WorkflowDispatchEventWrapper extends AbstractEventWrapper<WorkflowD
     public Boolean matches(OnInputs onInputs) {
         return onInputs.match(getEvent().getInputs().getAdditionalProperties());
     }
-
-    @Override
-    public String getId() {
-        return getEvent().getId().toString();
-    }
-
-    @Override
-    public String getType() {
-        return getEvent().getType();
-    }
 }

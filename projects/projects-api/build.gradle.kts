@@ -23,7 +23,6 @@ jsonSchema2Pojo {
 
     targetPackage = "eu.venthe.pipeline.orchestrator.projects.api"
     useOptionalForGetters = true
-    includeJsonTypeInfoAnnotation = true
 }
 
 tasks.generateJsonSchema2Pojo {

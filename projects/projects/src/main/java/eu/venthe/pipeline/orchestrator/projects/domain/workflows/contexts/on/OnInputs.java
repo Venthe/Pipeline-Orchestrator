@@ -8,10 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -41,13 +42,49 @@ public class OnInputs {
 
     public boolean match(Map<String, String> context) {
         // TODO: Handle type of the input
-        Set<String> requiredInputs = requiredInputs().stream().map(InputDefinition::getKey).collect(Collectors.toSet());
-        Set<String> inputs = context.keySet();
+        Map<String, String> requiredInputs = requiredInputs().stream()
+                .collect(Collectors.toMap(
+                        InputDefinition::getKey,
+                        InputDefinition::getType
+                ));
+        Map<String, String> inputs = context.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        e -> mapInputToType(e.getValue())
+                ));
 
-        boolean result = Sets.difference(requiredInputs, inputs).stream().toList().isEmpty();
+        boolean matchesRequired = Sets.difference(
+                new HashSet<>(requiredInputs.keySet()),
+                new HashSet<>(inputs.keySet())
+        ).isEmpty();
 
-        log.info("matching inputs - {}", result);
-        return result;
+        boolean matchesTypes = requiredInputs.entrySet().stream()
+                .allMatch(e -> Optional.ofNullable(inputs.get(e.getKey())).map(v -> v.equalsIgnoreCase(e.getValue())).orElse(false));
+
+        log.info("matching input required - {}, matching input types - {}", matchesRequired, matchesTypes);
+        return matchesRequired && matchesTypes;
+    }
+
+    private static String mapInputToType(String input) {
+        // Define regular expressions for boolean, number, and string
+        String booleanRegex = "(?i)true|false";
+        String numberRegex = "-?\\d+(\\.\\d+)?";
+        String stringRegex = "^[a-zA-Z]+$";
+
+        // Check for boolean
+        if (Pattern.matches(booleanRegex, input)) {
+            return "boolean";
+        }
+        // Check for number
+        else if (Pattern.matches(numberRegex, input)) {
+            return "number";
+        }
+        // Check for string
+        else if (Pattern.matches(stringRegex, input)) {
+            return "string";
+        } else {
+            return "unknown";
+        }
     }
 
     @Value
