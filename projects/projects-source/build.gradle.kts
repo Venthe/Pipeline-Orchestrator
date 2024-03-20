@@ -8,7 +8,7 @@ version = "0.0.1-SNAPSHOT"
 dependencies {
     implementation(project(":plugins:plugin-api"))
     implementation(project(":shared-kernel"))
-    implementation(project(":projects-api"))
+    implementation(project(":projects:projects-api"))
     implementation(project(":projects-source-api"))
     implementation(project(":infrastructure:message-broker-api"))
     implementation("org.springframework:spring-web")

@@ -13,8 +13,8 @@ version = "0.0.1-SNAPSHOT"
 
 dependencies {
     implementation(project(":plugins:plugin-api"))
-    implementation(project(":projects-api"))
-    implementation(project(":projects"))
+    implementation(project(":projects:projects-api"))
+    implementation(project(":projects:projects"))
     implementation(project(":projects-source-api"))
     implementation(project(":projects-source"))
     implementation(project(":shared-kernel"))
