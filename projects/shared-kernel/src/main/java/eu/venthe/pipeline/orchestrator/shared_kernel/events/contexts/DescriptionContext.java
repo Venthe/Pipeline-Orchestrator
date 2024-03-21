@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.Optional;
 
-// components/enterprise.yaml#
-public class EnterpriseContext {
-    public static Optional<EnterpriseContext> create(JsonNode root) {
+/**
+ * description: The repository's current description.
+ */
+public class DescriptionContext {
+    public static Optional<String> create(JsonNode description) {
         throw new UnsupportedOperationException();
     }
 }

@@ -8,24 +8,10 @@ description: |
   
   To subscribe to this event, a GitHub App must have at least read-level access for the "Pull requests" repository permission.
 required:
-  - sender
-  - repository
   - action
   - number
   - pull_request
 properties:
-  enterprise:
-    $ref: components/enterprise.yaml#
-  installation:
-    $ref: components/installation.yaml#
-  organization:
-    $ref: components/organization.yaml#
-  repository:
-    $ref: components/repository.yaml#
-  sender:
-    description: |
-      The GitHub user that triggered the event. This property is included in every webhook payload.
-    $ref: components/github-user.yaml#
   action:
     type: string
     enum: [ assigned, auto_merge_disabled, auto_merge_enabled, closed, converted_to_draft, demilestoned, dequeued, edited, enqueued, labeled, locked, milestoned, opened, ready_for_review, reopened, review_request_removed, review_requested, synchronize, unassigned, unlabeled, unlocked ]

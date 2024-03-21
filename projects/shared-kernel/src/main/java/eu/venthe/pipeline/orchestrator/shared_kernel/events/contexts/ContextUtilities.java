@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collector;
 import java.util.stream.StreamSupport;
 
@@ -51,12 +52,16 @@ public class ContextUtilities {
     }
 
     public static Function<JsonNode, String> toText() {
+        return fromText(UnaryOperator.identity());
+    }
+
+    public static <T> Function<JsonNode, T> fromText(Function<String, T> mapper) {
         return node -> {
             if (!node.isTextual()) {
                 throw new IllegalArgumentException();
             }
 
-            return node.asText();
+            return mapper.apply(node.asText());
         };
     }
 }

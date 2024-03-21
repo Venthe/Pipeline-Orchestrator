@@ -3,25 +3,11 @@ $schema: https://json-schema.org/draft/2020-12/schema
 type: object
 required:
   - action
-  - repository
-  - sender
   - workflow_job
 properties:
   action:
     type: string
     enum: [ completed, in_progress, queued, waiting ]
-  enterprise:
-    $ref: components/enterprise.yaml#
-  installation:
-    $ref: components/installation.yaml#
-  organization:
-    $ref: components/organization.yaml#
-  repository:
-    $ref: components/repository.yaml#
-  sender:
-    description: |
-      The GitHub user that triggered the event. This property is included in every webhook payload.
-    $ref: components/github-user.yaml#
   workflow_job:
     $ref: components/workflow-job.yaml#
   deployment:

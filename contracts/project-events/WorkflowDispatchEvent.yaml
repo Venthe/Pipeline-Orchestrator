@@ -8,24 +8,10 @@ description: |
 
   To subscribe to this event, a GitHub App must have at least read-level access for the "Contents" repository permission.
 required:
-  - sender
-  - repository
   - inputs
   - ref
   - workflow
 properties:
-  enterprise:
-    $ref: components/enterprise.yaml#
-  installation:
-    $ref: components/installation.yaml#
-  organization:
-    $ref: components/organization.yaml#
-  repository:
-    $ref: components/repository.yaml#
-  sender:
-    description: |
-      The GitHub user that triggered the event. This property is included in every webhook payload.
-    $ref: components/github-user.yaml#
   inputs:
     type: [ object, null ]
     $ref: components/inputs.yaml#

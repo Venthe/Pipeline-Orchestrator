@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.impl;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.ActionContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.EventType;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.AbstractProjectEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnTypes;
 import lombok.EqualsAndHashCode;

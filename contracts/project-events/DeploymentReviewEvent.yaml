@@ -7,45 +7,9 @@ description: |
   For activity relating to deployment creation or deployment status, use the deployment or deployment_status event.
   
   To subscribe to this event, a GitHub App must have at least read-level access for the "Deployments" repository permission.
-required:
-  - sender
-  - repository
-  - action
-  - since
-  - workflow_run
 properties:
-  enterprise:
-    $ref: components/enterprise.yaml#
-  installation:
-    $ref: components/installation.yaml#
-  organization:
-    $ref: components/organization.yaml#
-  repository:
-    $ref: components/repository.yaml#
-  sender:
-    description: |
-      The GitHub user that triggered the event. This property is included in every webhook payload.
-    $ref: components/github-user.yaml#
-  action:
-    type: string
-    default: approved
-  approver:
-    $ref: components/github-user.yaml#
-  comment:
-    type: string
-  since:
-    type: string
-  workflow_job_run:
-    $ref: components/run.yaml#
-  workflow_job_runs:
-    type: array
-    items:
-      $ref: components/run.yaml#
   reviewers:
     type: array
     items:
       $ref: components/reviewers.yaml#
-  workflow_run:
-    type: [ object, null ]
-    $ref: components/workflow-run.yaml#
 additionalProperties: false

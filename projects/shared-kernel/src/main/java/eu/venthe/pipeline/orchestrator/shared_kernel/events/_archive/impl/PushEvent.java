@@ -11,7 +11,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.co
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.definitions.Commit;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.definitions.Committer;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.definitions.Repository;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.EventType;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnBranches;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnPaths;
 import lombok.EqualsAndHashCode;

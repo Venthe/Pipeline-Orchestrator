@@ -5,7 +5,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.Repositor
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.WorkflowContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.common.InputsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.common.RefContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.EventType;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.AbstractProjectEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.definitions.Repository;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnInputs;
