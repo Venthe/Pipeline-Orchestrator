@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.projects.domain.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.ContextUtilities;
 import lombok.Getter;
 
 import java.util.Optional;

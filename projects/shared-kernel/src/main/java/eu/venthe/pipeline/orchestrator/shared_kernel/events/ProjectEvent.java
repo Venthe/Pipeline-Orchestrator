@@ -1,18 +1,20 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.events.EventType;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.events.ProjectEventMarker;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.UUID;
+import java.util.function.Function;
 
-public interface ProjectEvent<T extends ProjectEventMarker> {
-    T getEvent();
+public interface ProjectEvent {
+    ObjectNode getEvent();
 
     default int getVersion() {
         return 1;
     }
 
-    EventType getEventType();
+    EventType getType();
 
-    UUID
+    UUID getId();
+
+    <T extends ProjectEvent> T specify(Function<ObjectNode, T> creator);
 }
