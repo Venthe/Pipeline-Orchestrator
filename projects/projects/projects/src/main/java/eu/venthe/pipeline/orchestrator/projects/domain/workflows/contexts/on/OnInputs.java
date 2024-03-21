@@ -34,7 +34,7 @@ public class OnInputs {
                         Optional.ofNullable(e.getValue().get("required"))
                                 .map(JsonNode::asBoolean)
                                 .orElse(false),
-                        ContextUtilities.toTextual(e.getValue().get("type")).orElseThrow()
+                        ContextUtilities.toText(e.getValue().get("type")).orElseThrow()
                 ))
                 .filter(InputDefinition::getRequired)
                 .toList();

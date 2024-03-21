@@ -21,13 +21,6 @@ public class ContextUtilities {
                 .map(node -> creator.apply((ObjectNode) node));
     }
 
-    public static Optional<String> toTextual(JsonNode root) {
-        return Optional.ofNullable(root)
-                .filter(Predicate.not(JsonNode::isNull))
-                .filter(JsonNode::isTextual)
-                .map(JsonNode::asText);
-    }
-
     public static <T extends Collection<String>> Optional<T> createStringCollection(JsonNode node, Collector<String, ?, T> collector) {
         return Optional.ofNullable(node)
                 .filter(Predicate.not(JsonNode::isNull))
@@ -63,5 +56,9 @@ public class ContextUtilities {
 
             return mapper.apply(node.asText());
         };
+    }
+
+    public static Optional<String> toText(JsonNode root) {
+        return create(root, toText());
     }
 }
