@@ -1,19 +1,19 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.impl;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.AbstractProjectEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.CommitContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.CommitsContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.CommitterContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.RepositoryContext;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnBranches;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnPaths;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.AbstractProjectEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.common.CommitShaContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.common.RefContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.definitions.Commit;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.definitions.Committer;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.definitions.Repository;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnBranches;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnPaths;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;

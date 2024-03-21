@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.impl.pull_request;
 
+import eu.venthe.pipeline.orchestrator.projects.domain.events.TriggerEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.contexts.ActionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.impl.AbstractPullRequestEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.TriggerEvent;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("unchecked")

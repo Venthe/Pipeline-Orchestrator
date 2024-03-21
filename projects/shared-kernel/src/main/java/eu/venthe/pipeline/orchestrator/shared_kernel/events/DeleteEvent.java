@@ -1,9 +1,12 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.ProjectDescriptionContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.ProjectHeadBranchContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.ProjectPusherTypeContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.ProjectRefTypeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.GitReferenceNameContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.git.Reference;
 import lombok.Getter;
 import lombok.ToString;

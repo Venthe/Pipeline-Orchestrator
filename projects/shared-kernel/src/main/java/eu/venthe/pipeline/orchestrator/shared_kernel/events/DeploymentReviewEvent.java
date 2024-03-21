@@ -1,17 +1,15 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.DeploymentReviewAction;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
-
-import static java.util.Arrays.stream;
 
 /**
  * This event occurs when there is activity relating to deployment reviews. For more information, see "About deployments." For information about the APIs to manage deployments, see the GraphQL API documentation or "Deployments" in the REST API documentation.

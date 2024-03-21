@@ -1,9 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.AbstractProjectEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.WorkflowContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.WorkflowJobContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.WorkflowRunContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.Getter;
@@ -11,6 +9,11 @@ import lombok.ToString;
 
 import java.time.ZonedDateTime;
 
+/**
+ * This event occurs when there is activity relating to a run of a GitHub Actions workflow. For more information, see "About workflows." For information about the APIs to manage workflow runs, see the GraphQL documentation or "Workflow runs" in the REST API documentation.
+ * <p>
+ * For activity relating to a job in a workflow run, use the workflow_job event.
+ */
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")

@@ -2,9 +2,9 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.*;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.GitCommitHashContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.GitReferenceNameContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.git.CommitHash;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.git.Reference;

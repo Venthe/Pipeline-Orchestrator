@@ -1,9 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.definitions;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.util.UriTemplate;
 
-import java.net.URI;
 import java.util.Optional;
 
 public interface User {
