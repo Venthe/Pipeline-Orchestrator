@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.common.DateTimeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts.definitions.Committer;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
 import lombok.Getter;
 
 import java.time.OffsetDateTime;

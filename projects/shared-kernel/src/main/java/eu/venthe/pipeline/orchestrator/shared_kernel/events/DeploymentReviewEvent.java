@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,14 +31,14 @@ public class DeploymentReviewEvent extends AbstractProjectEvent {
     private final List<WorkflowJobRunContext> workflowJobRuns;
     private final List<ReviewersContext> reviewers;
 
-    protected DeploymentReviewEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected DeploymentReviewEvent(ObjectNode root, OffsetDateTime timestamp) {
         super(root, EventType.DEPLOYMENT_REVIEW, timestamp);
 
         action = DeploymentReviewActionContext.ensure(root.get("action"));
         since = DeploymentReviewSinceContext.ensure(root.get("since"));
         workflowRun = WorkflowRunContext.create(root.get("workflow_run"));
         approver = GithubUserContext.create(root.get("approver"));
-        comment = CommentContext.create(root.get("comment"));
+        comment = DeploymentReviewCommentContext.create(root.get("comment"));
         workflowJobRun = WorkflowJobRunContext.create(root.get("workflow_job_run"));
         workflowJobRuns = WorkflowJobRunContext.list(root.get("workflow_job_runs"));
         reviewers = ReviewersContext.list(root.get("reviewers"));

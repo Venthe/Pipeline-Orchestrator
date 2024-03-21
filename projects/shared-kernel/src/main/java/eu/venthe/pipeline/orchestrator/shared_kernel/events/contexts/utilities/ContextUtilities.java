@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts;
+package eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;

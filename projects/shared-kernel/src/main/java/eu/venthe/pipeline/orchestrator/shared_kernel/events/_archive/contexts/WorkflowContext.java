@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events._archive.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 

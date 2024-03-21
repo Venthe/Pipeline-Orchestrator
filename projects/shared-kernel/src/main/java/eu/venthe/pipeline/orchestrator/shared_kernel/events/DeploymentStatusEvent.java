@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 /**
@@ -27,7 +27,7 @@ public class DeploymentStatusEvent extends AbstractProjectEvent {
     private final Optional<WorkflowContext> workflow;
     private final Optional<WorkflowRunContext> workflowRun;
 
-    protected DeploymentStatusEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected DeploymentStatusEvent(ObjectNode root, OffsetDateTime timestamp) {
         super(root, EventType.DEPLOYMENT_STATUS, timestamp);
 
         action = DeploymentStatusActionContext.ensure(root.get("action"));

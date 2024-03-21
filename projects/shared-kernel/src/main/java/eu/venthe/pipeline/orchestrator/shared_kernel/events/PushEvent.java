@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.net.URL;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +60,7 @@ public class PushEvent extends AbstractProjectEvent {
      */
     private final Reference.Name ref;
 
-    protected PushEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected PushEvent(ObjectNode root, OffsetDateTime timestamp) {
         super(root, EventType.PUSH, timestamp);
 
         after = GitCommitHashContext.ensure(root.get("after"));

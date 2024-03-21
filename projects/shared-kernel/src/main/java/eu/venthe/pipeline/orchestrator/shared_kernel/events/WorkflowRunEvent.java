@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 /**
  * This event occurs when there is activity relating to a run of a GitHub Actions workflow. For more information, see "About workflows." For information about the APIs to manage workflow runs, see the GraphQL documentation or "Workflow runs" in the REST API documentation.
@@ -21,7 +21,7 @@ public class WorkflowRunEvent extends AbstractProjectEvent {
     private final WorkflowContext workflow;
     private final WorkflowRunContext workflowRun;
 
-    protected WorkflowRunEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected WorkflowRunEvent(ObjectNode root, OffsetDateTime timestamp) {
         super(root, EventType.WORKFLOW_RUN, timestamp);
 
         workflow = WorkflowContext.ensure(root.get("workflow"));

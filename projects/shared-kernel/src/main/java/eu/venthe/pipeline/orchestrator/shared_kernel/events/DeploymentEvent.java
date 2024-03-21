@@ -10,7 +10,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 /**
@@ -29,7 +29,7 @@ public class DeploymentEvent extends AbstractProjectEvent {
     private final Optional<WorkflowContext> workflow;
     private final Optional<WorkflowRunContext> workflowRun;
 
-    protected DeploymentEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected DeploymentEvent(ObjectNode root, OffsetDateTime timestamp) {
         super(root, EventType.DEPLOYMENT, timestamp);
 
         action = DeploymentActionContext.ensure(root.get("action"));

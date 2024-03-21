@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.text.MessageFormat;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
@@ -27,7 +27,7 @@ public class AbstractProjectEvent implements ProjectEvent {
     private final UUID id;
 
     private final EventType type;
-    private final ZonedDateTime timestamp;
+    private final OffsetDateTime timestamp;
     private final Optional<EnterpriseContext> enterprise;
     private final Optional<InstallationContext> installation;
     private final Optional<OrganizationContext> organization;
@@ -37,7 +37,7 @@ public class AbstractProjectEvent implements ProjectEvent {
      */
     private final GithubUserContext sender;
 
-    protected AbstractProjectEvent(ObjectNode root, EventType type, ZonedDateTime timestamp) {
+    protected AbstractProjectEvent(ObjectNode root, EventType type, OffsetDateTime timestamp) {
         this.root = root;
         this.timestamp = timestamp;
 

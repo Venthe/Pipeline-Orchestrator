@@ -9,7 +9,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.PullRequestRev
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 /**
  * This event occurs when there is activity relating to a pull request review. A pull request review is a group of pull request review comments in addition to a body comment and a state. For more information, see "About pull request reviews." For information about the APIs to manage pull request reviews, see the GraphQL API documentation or "Pull request reviews" in the REST API documentation.
@@ -26,7 +26,7 @@ public class PullRequestReviewEvent extends AbstractProjectEvent {
     private final PullRequestContext pullRequest;
     private final PullRequestReviewContext review;
 
-    protected PullRequestReviewEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected PullRequestReviewEvent(ObjectNode root, OffsetDateTime timestamp) {
         super(root, EventType.PULL_REQUEST_REVIEW, timestamp);
 
         action = PullRequestReviewActionContext.ensure(root.get("action"));

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.MoreCollectors;
 import eu.venthe.pipeline.orchestrator.projects.domain.common_contexts.JsonInputs;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;

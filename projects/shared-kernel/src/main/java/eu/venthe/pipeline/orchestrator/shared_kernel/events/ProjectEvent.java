@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -19,7 +19,7 @@ public interface ProjectEvent {
     UUID getId();
 
 
-    ZonedDateTime getTimestamp();
+    OffsetDateTime getTimestamp();
 
     <T extends ProjectEvent> T specify(Function<ObjectNode, T> creator);
 }

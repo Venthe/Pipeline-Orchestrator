@@ -9,7 +9,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.PullRequestAct
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 /**
  * This event occurs when there is activity on a pull request. For more information, see "About pull requests." For information about the APIs to manage pull requests, see the GraphQL API documentation or "Pulls" in the REST API documentation.
@@ -26,7 +26,7 @@ public class PullRequestEvent extends AbstractProjectEvent {
     private final PullRequestAction action;
     private final PullRequestContext pullRequest;
 
-    protected PullRequestEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected PullRequestEvent(ObjectNode root, OffsetDateTime timestamp) {
         super(root, EventType.PULL_REQUEST, timestamp);
 
         action = PullRequestActionContext.ensure(root.get("action"));

@@ -11,7 +11,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.git.Reference;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 /**
@@ -31,7 +31,7 @@ public class DeleteEvent extends AbstractProjectEvent {
     private final Reference.Name ref;
     private final ProjectRefTypeContext refType;
 
-    protected DeleteEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected DeleteEvent(ObjectNode root, OffsetDateTime timestamp) {
         super(root, EventType.DELETE, timestamp);
 
         description = ProjectDescriptionContext.create(root.get("description"));

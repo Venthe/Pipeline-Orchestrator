@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.nio.file.Path;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 /**
  * This event occurs when a GitHub Actions workflow is manually triggered. For more information, see "Manually running a workflow."
@@ -27,7 +27,7 @@ public class WorkflowDispatchEvent extends AbstractProjectEvent {
     private final Reference.Name ref;
     private final Path workflow;
 
-    protected WorkflowDispatchEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected WorkflowDispatchEvent(ObjectNode root, OffsetDateTime timestamp) {
         super(root, EventType.WORKFLOW_DISPATCH, timestamp);
 
         inputs = WorkflowDispatchInputsContext.create(root.get("inputs"));
