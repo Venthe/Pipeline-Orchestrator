@@ -1,0 +1,19 @@
+package {{ package }};
+
+public interface {{ className }} {
+
+{{#if properties}}
+{{#each properties}}
+{{#with (mergeContexts this package=../package className=../className __key=@key)}}
+  /*
+{{~#each this}}
+   * {{@key}}: {{this}}
+{{~/each}}
+  */
+{{#if (stringEquals type "string")}}{{> string}}{{/if}}
+{{#if (stringEquals type "object")}}{{> object}}{{/if}}
+{{/with}}
+{{/each}}
+{{~/if}}
+
+}

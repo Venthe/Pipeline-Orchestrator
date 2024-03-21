@@ -89,6 +89,7 @@ dependencies {
         testImplementation("org.testcontainers:mockserver:${DependencyVersion.TEST_CONTAINERS.version}")
         testImplementation("org.testcontainers:mongodb:${DependencyVersion.TEST_CONTAINERS.version}")
         testImplementation("org.testcontainers:testcontainers:${DependencyVersion.TEST_CONTAINERS.version}")
+        implementation("com.github.f4b6a3:uuid-creator:5.3.3")
     }
 
     implementation("org.slf4j:slf4j-api")
@@ -103,6 +104,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
         because("Only needed to run tests in a version of IntelliJ IDEA that bundles older versions")
     }
+    implementation("com.github.f4b6a3:uuid-creator")
 }
 
 tasks.withType<Test> {

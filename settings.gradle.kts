@@ -13,6 +13,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 
+    includeBuild("plugins/json-schema-to-pojo")
     // Include 'plugins build' to define convention plugins.
     includeBuild("build-logic")
 }

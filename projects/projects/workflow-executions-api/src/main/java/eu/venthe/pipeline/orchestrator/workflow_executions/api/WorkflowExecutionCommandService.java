@@ -1,6 +1,13 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions.api;
 
 import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.api.dto.*;
+import eu.venthe.pipeline.orchestrator.workflow_executions.api.model.JobId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.api.model.StepExecutionStatus;
+import eu.venthe.pipeline.orchestrator.workflow_executions.api.model.StepId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.api.model.WorkflowExecutionId;
+
+import java.util.Map;
 
 public interface WorkflowExecutionCommandService {
     void cancelRunningWorkflowExecutions(ProjectId projectId);

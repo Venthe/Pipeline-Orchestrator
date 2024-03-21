@@ -1,0 +1,48 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+required:
+  - author
+  - committer
+  - distinct
+  - id
+  - message
+  - timestamp
+  - tree_id
+  - url
+properties:
+  added:
+    type: array
+    items:
+      type: string
+    description: An array of files added in the commit.
+  author:
+    $ref: git-actor.yaml#
+  committer:
+    $ref: git-actor.yaml#
+  distinct:
+    type: boolean
+    description: Whether this commit is distinct from any that have been pushed before.
+  id:
+    type: string
+  message:
+    type: string
+    description: The commit message.
+  modified:
+    type: array
+    items:
+      type: string
+    description: An array of files modified by the commit.
+  removed:
+    type: array
+    items:
+      type: string
+    description: An array of files removed in the commit.
+  timestamp:
+    type: string
+    description: The ISO 8601 timestamp of the commit.
+  tree_id:
+    type: string
+  url:
+    type: string
+    description: URL that points to the commit API resource.
+additionalProperties: false
