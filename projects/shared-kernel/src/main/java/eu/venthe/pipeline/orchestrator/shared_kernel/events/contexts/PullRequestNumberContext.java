@@ -3,10 +3,10 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * The git ref resource.
+ * The pull request number.
  */
-public class RefContext {
-    public static String ensure(JsonNode ref) {
+public class PullRequestNumberContext {
+    public static Integer ensure(JsonNode number) {
         throw new UnsupportedOperationException();
     }
 }

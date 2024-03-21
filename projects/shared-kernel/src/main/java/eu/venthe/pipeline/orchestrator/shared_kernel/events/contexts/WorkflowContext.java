@@ -9,4 +9,8 @@ public class WorkflowContext {
     public static Optional<WorkflowContext> create(JsonNode workflow) {
         throw new UnsupportedOperationException();
     }
+
+    public static WorkflowContext ensure(JsonNode workflow) {
+        throw new UnsupportedOperationException();
+    }
 }

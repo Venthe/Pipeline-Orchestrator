@@ -2,13 +2,11 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import java.util.Optional;
-
 /**
- * description: The repository's current description.
+ * The pusher type for the event. Can be either user or a deploy key.
  */
-public class DescriptionContext {
-    public static Optional<String> create(JsonNode description) {
+public class ProjectPusherTypeContext {
+    public static String ensure(JsonNode pusherType) {
         throw new UnsupportedOperationException();
     }
 }

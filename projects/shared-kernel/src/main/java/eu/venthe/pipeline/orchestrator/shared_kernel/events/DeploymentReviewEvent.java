@@ -23,7 +23,7 @@ import static java.util.Arrays.stream;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-public class DeploymentReviewProjectEvent extends AbstractProjectEvent {
+public class DeploymentReviewEvent extends AbstractProjectEvent {
     private final DeploymentReviewAction action;
     private final String since;
     private final Optional<WorkflowRunContext> workflowRun;
@@ -33,11 +33,11 @@ public class DeploymentReviewProjectEvent extends AbstractProjectEvent {
     private final List<WorkflowJobRunContext> workflowJobRuns;
     private final List<ReviewersContext> reviewers;
 
-    protected DeploymentReviewProjectEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected DeploymentReviewEvent(ObjectNode root, ZonedDateTime timestamp) {
         super(root, EventType.DEPLOYMENT_REVIEW, timestamp);
 
         action = DeploymentReviewActionContext.ensure(root.get("action"));
-        since = SinceContext.ensure(root.get("since"));
+        since = DeploymentReviewSinceContext.ensure(root.get("since"));
         workflowRun = WorkflowRunContext.create(root.get("workflow_run"));
         approver = GithubUserContext.create(root.get("approver"));
         comment = CommentContext.create(root.get("comment"));

@@ -2,11 +2,13 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.Optional;
+
 /**
- * The name of the repository's default branch (usually main).
+ * description: The repository's current description.
  */
-public class MasterBranchContext {
-    public static String ensure(JsonNode masterBranch) {
+public class ProjectDescriptionContext {
+    public static Optional<String> create(JsonNode description) {
         throw new UnsupportedOperationException();
     }
 }

@@ -1,7 +1,6 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.AbstractProjectEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.DeploymentActionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.DeploymentContext;
@@ -26,13 +25,13 @@ import static java.util.Arrays.stream;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-public class DeploymentProjectEvent extends AbstractProjectEvent {
+public class DeploymentEvent extends AbstractProjectEvent {
     private final DeploymentAction action;
     private final DeploymentContext deployment;
     private final Optional<WorkflowContext> workflow;
     private final Optional<WorkflowRunContext> workflowRun;
 
-    protected DeploymentProjectEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected DeploymentEvent(ObjectNode root, ZonedDateTime timestamp) {
         super(root, EventType.DEPLOYMENT, timestamp);
 
         action = DeploymentActionContext.ensure(root.get("action"));

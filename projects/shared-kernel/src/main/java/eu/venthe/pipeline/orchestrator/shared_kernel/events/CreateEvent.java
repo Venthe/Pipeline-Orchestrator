@@ -1,9 +1,10 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.AbstractProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.GitReferenceNameContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.*;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.git.Reference;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -24,20 +25,20 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-public class CreateProjectEvent extends AbstractProjectEvent {
+public class CreateEvent extends AbstractProjectEvent {
     private final Optional<String> description;
     private final String masterBranch;
     private final String pusherType;
-    private final String ref;
-    private final RefTypeContext refType;
+    private final Reference.Name ref;
+    private final ProjectRefTypeContext refType;
 
-    protected CreateProjectEvent(ObjectNode root, ZonedDateTime timestamp) {
+    protected CreateEvent(ObjectNode root, ZonedDateTime timestamp) {
         super(root, EventType.CREATE, timestamp);
 
-        description = DescriptionContext.create(root.get("description"));
-        masterBranch = MasterBranchContext.ensure(root.get("master_branch"));
-        pusherType = PusherTypeContext.ensure(root.get("pusher_type"));
-        ref = RefContext.ensure(root.get("ref"));
-        refType = RefTypeContext.ensure(root.get("ref_type"));
+        description = ProjectDescriptionContext.create(root.get("description"));
+        masterBranch = ProjectHeadBranchContext.ensure(root.get("master_branch"));
+        pusherType = ProjectPusherTypeContext.ensure(root.get("pusher_type"));
+        ref = GitReferenceNameContext.ensure(root.get("ref"));
+        refType = ProjectRefTypeContext.ensure(root.get("ref_type"));
     }
 }

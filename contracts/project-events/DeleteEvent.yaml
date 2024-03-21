@@ -16,6 +16,18 @@ required:
   - ref
   - ref_type
 properties:
+  enterprise:
+    $ref: components/enterprise.yaml#
+  installation:
+    $ref: components/installation.yaml#
+  organization:
+    $ref: components/organization.yaml#
+  repository:
+    $ref: components/repository.yaml#
+  sender:
+    description: |
+      The GitHub user that triggered the event. This property is included in every webhook payload.
+    $ref: components/github-user.yaml#
   description:
     type: [ string,null ]
     description: The repository's current description.

@@ -10,23 +10,14 @@ import static java.util.Arrays.stream;
 
 @Getter
 @RequiredArgsConstructor
-public enum EventType {
-    CREATE("Create"),
-    DELETE("Delete"),
-    DEPLOYMENT("Deployment"),
-    DEPLOYMENT_REVIEW("DeploymentReview"),
-    DEPLOYMENT_STATUS("DeploymentStatus"),
-    PULL_REQUEST("PullRequest"),
-    PULL_REQUEST_REVIEW_COMMENT("PullRequestReviewComment"),
-    PULL_REQUEST_REVIEW("PullRequestReview"),
-    PUSH("Push"),
-    WORKFLOW_DISPATCH("WorkflowDispatch"),
-    WORKFLOW_JOB("WorkflowJob"),
-    WORKFLOW_RUN("WorkflowRun");
+public enum PullRequestReviewCommentAction {
+    CREATED("created"),
+    DELETED("deleted"),
+    EDITED("edited");
 
     private final String value;
 
-    public static Optional<EventType> of(String type) {
+    public static Optional<PullRequestReviewCommentAction> of(String type) {
         if (type == null) {
             return Optional.empty();
         }

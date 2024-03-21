@@ -8,6 +8,8 @@ description: |
 
   Note: An event will not be created when more than three tags are pushed at once.
 required:
+  - sender
+  - repository
   - after
   - base_ref
   - before
@@ -20,6 +22,18 @@ required:
   - pusher
   - ref
 properties:
+  enterprise:
+    $ref: components/enterprise.yaml#
+  installation:
+    $ref: components/installation.yaml#
+  organization:
+    $ref: components/organization.yaml#
+  repository:
+    $ref: components/repository.yaml#
+  sender:
+    description: |
+      The GitHub user that triggered the event. This property is included in every webhook payload.
+    $ref: components/github-user.yaml#
   after:
     type: string
     description: The SHA of the most recent commit on ref after the push.
