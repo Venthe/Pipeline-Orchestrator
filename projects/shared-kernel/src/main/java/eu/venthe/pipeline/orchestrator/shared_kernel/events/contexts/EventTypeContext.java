@@ -8,7 +8,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class EventTypeContext {
     public static EventType ensure(JsonNode root) {
-        return ContextUtilities.toText(root)
+        return ContextUtilities.createText(root)
                 .flatMap(EventType::of)
                 .orElseThrow(() -> new IllegalArgumentException("Event type must be present and matching"));
     }

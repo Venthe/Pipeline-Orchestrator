@@ -31,6 +31,6 @@ public class PullRequestEvent extends AbstractProjectEvent {
 
         action = PullRequestActionContext.ensure(root.get("action"));
         number = PullRequestNumberContext.ensure(root.get("number"));
-        pullRequest = PullRequestContext.ensure(root.get("pull_request"));
+        pullRequest = PullRequestContext.ensure(root.get("pullRequest"));
     }
 }

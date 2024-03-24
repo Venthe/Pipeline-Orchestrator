@@ -2,12 +2,12 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.*;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.GitCommitHashContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.GitReferenceNameContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.CommitHashContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.ReferenceNameContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.git.CommitHash;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.git.Reference;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitHash;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitReference;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -30,13 +30,13 @@ public class PushEvent extends AbstractProjectEvent {
     /**
      * The SHA of the most recent commit on ref after the push.
      */
-    private final CommitHash after;
+    private final GitHash after;
     /**
      * The SHA of the most recent commit on ref before the push.
      */
-    private final CommitHash before;
-    private final Optional<Reference.Name> baseRef;
-    private final List<CommitDetailContext> commits;
+    private final GitHash before;
+    private final Optional<GitReference.Name> baseRef;
+    private final List<CommitDetailsContext> commits;
     /**
      * URL that shows the changes in this ref update, from the before commit to the after commit. For a newly created ref that is directly based on the default branch, this is the comparison between the head of the default branch and the after commit. Otherwise, this shows all commits until the after commit.
      */
@@ -53,26 +53,26 @@ public class PushEvent extends AbstractProjectEvent {
      * Whether this push was a force push of the ref.
      */
     private final Boolean forced;
-    private final Optional<CommitDetailContext> headCommit;
-    private final GithubUserContext pusher;
+    private final Optional<CommitDetailsContext> headCommit;
+    private final UserContext pusher;
     /**
      * The full git ref that was pushed. Example: refs/heads/main or refs/tags/v3.14.1.
      */
-    private final Reference.Name ref;
+    private final GitReference.Name ref;
 
     protected PushEvent(ObjectNode root, OffsetDateTime timestamp) {
         super(root, EventType.PUSH, timestamp);
 
-        after = GitCommitHashContext.ensure(root.get("after"));
-        before = GitCommitHashContext.ensure(root.get("before"));
-        baseRef = GitReferenceNameContext.create(root.get("base_ref"));
-        commits = CommitDetailContext.list(root.get("commits"));
+        after = CommitHashContext.ensure(root.get("after"));
+        before = CommitHashContext.ensure(root.get("before"));
+        baseRef = ReferenceNameContext.create(root.get("baseRef"));
+        commits = CommitDetailsContext.list(root.get("commits"));
         compare = UrlContext.ensure(root.get("compare"));
         created = PushIsCreatingRefContext.ensure(root.get("created"));
         deleted = PushIsDeletingRefContext.ensure(root.get("deleted"));
         forced = PushIsForcedContext.ensure(root.get("forced"));
-        headCommit = CommitDetailContext.create(root.get("head_commit"));
-        pusher = GithubUserContext.ensure(root.get("pusher"));
-        ref = GitReferenceNameContext.ensure(root.get("ref"));
+        headCommit = CommitDetailsContext.create(root.get("headCommit"));
+        pusher = UserContext.ensure(root.get("pusher"));
+        ref = ReferenceNameContext.ensure(root.get("ref"));
     }
 }

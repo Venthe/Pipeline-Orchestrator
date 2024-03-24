@@ -32,8 +32,8 @@ public class DeploymentStatusEvent extends AbstractProjectEvent {
 
         action = DeploymentStatusActionContext.ensure(root.get("action"));
         deployment = DeploymentContext.ensure(root.get("deployment"));
-        deploymentStatus = DeploymentStatusContext.ensure(root.get("deployment_status"));
+        deploymentStatus = DeploymentStatusContext.ensure(root.get("deploymentStatus"));
         workflow = WorkflowContext.create(root.get("workflow"));
-        workflowRun = WorkflowRunContext.create(root.get("workflow_run"));
+        workflowRun = WorkflowRunContext.create(root.get("workflowRun"));
     }
 }

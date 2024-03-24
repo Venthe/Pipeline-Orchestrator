@@ -30,7 +30,7 @@ public class PullRequestReviewEvent extends AbstractProjectEvent {
         super(root, EventType.PULL_REQUEST_REVIEW, timestamp);
 
         action = PullRequestReviewActionContext.ensure(root.get("action"));
-        pullRequest = PullRequestContext.ensure(root.get("pull_request"));
+        pullRequest = PullRequestContext.ensure(root.get("pullRequest"));
         review = PullRequestReviewContext.ensure(root.get("review"));
     }
 }

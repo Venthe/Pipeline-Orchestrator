@@ -31,8 +31,8 @@ properties:
   task:
     type: string
     description: Parameter to specify a task to execute
-  payload object or:
-    type: string
+  payload:
+    type: [object, string]
   original_environment:
     type: string
   environment:

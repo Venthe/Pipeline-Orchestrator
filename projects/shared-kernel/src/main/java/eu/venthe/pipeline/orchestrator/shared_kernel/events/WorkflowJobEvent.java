@@ -24,6 +24,6 @@ public class WorkflowJobEvent extends AbstractProjectEvent {
         super(root, EventType.WORKFLOW_JOB, timestamp);
 
         deployment = DeploymentContext.create(root.get("deployment"));
-        workflowJob = WorkflowJobContext.ensure(root.get("workflow_job"));
+        workflowJob = WorkflowJobContext.ensure(root.get("workflowJob"));
     }
 }

@@ -1,11 +1,59 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.UrlContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.RepositoryVisibility;
 
-// $ref: components/repository.yaml#
+import java.net.URL;
+import java.util.Optional;
+
+// TODO: Add URL for the teams responsible of the repository
+// TODO: Add URL for the tags of the repository
+// TODO: Add URL for the releases of the repository
+// TODO: Add URL for the pull requests of the repository
+// TODO: Add URL for the issues of the repository
+// TODO: Add URL for the commits of the repository
+// TODO: Add URL for the blobs of the repository
+// TODO: Add URL for the deployments of the repository
+/**
+ * The repository on GitHub where the event occurred. Webhook payloads contain the repository property when the event
+ * occurs from activity in a repository.
+ */
 public class RepositoryContext {
-    public static RepositoryContext ensure(JsonNode root) {
+    /**
+     * Unique identifier of the repository
+     */
+    private final String id;
+    /**
+     * The name of the repository.
+     */
+    private final String name;
+    private final String fullName;
+    private final Optional<String> description;
+    private final UserContext owner;
+    private final URL url;
+    /**
+     * Whether the repository is private or public.
+     */
+    private final RepositoryVisibility visibility;
 
-        throw new UnsupportedOperationException();
+    private RepositoryContext(JsonNode root) {
+        if (!root.isObject()) {
+            throw new IllegalArgumentException();
+        }
+
+        this.id = ContextUtilities.ensure(root.get("id"), ContextUtilities.toTextMapper());
+        this.name = ContextUtilities.ensure(root.get("name"), ContextUtilities.toTextMapper());
+        this.fullName = ContextUtilities.ensure(root.get("fullName"), ContextUtilities.toTextMapper());
+        this.description = ContextUtilities.create(root.get("description"), ContextUtilities.toTextMapper());
+        this.owner = UserContext.ensure(root.get("owner"));
+        this.url = UrlContext.ensure(root.get("url"));
+        this.visibility = RepositoryVisibilityContext.ensure(root.get("visibility"));
+    }
+
+
+    public static RepositoryContext ensure(JsonNode root) {
+        return new RepositoryContext(root);
     }
 }

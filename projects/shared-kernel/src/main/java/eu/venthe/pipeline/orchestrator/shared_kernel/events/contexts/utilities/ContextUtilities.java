@@ -44,11 +44,11 @@ public class ContextUtilities {
         return create(root, mapper).orElseThrow();
     }
 
-    public static Function<JsonNode, String> toText() {
-        return fromText(UnaryOperator.identity());
+    public static Function<JsonNode, String> toTextMapper() {
+        return fromTextMapper(UnaryOperator.identity());
     }
 
-    public static <T> Function<JsonNode, T> fromText(Function<String, T> mapper) {
+    public static <T> Function<JsonNode, T> fromTextMapper(Function<String, T> mapper) {
         return node -> {
             if (!node.isTextual()) {
                 throw new IllegalArgumentException();
@@ -58,7 +58,11 @@ public class ContextUtilities {
         };
     }
 
-    public static Optional<String> toText(JsonNode root) {
-        return create(root, toText());
+    public static Optional<String> createText(JsonNode root) {
+        return create(root, toTextMapper());
+    }
+
+    public static String ensureText(JsonNode root) {
+        return createText(root).orElseThrow();
     }
 }

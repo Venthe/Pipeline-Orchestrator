@@ -1,7 +1,11 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.*;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.EventIdContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.EventTypeContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.RepositoryContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.UserContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -10,10 +14,12 @@ import lombok.ToString;
 
 import java.text.MessageFormat;
 import java.time.OffsetDateTime;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
+// TODO: Add optional enterprise context
+// TODO: Add optional installation context
+// TODO: Add optional organization context
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
@@ -28,26 +34,26 @@ public class AbstractProjectEvent implements ProjectEvent {
 
     private final EventType type;
     private final OffsetDateTime timestamp;
-    private final Optional<EnterpriseContext> enterprise;
-    private final Optional<InstallationContext> installation;
-    private final Optional<OrganizationContext> organization;
     private final RepositoryContext repository;
     /**
-     * The GitHub user that triggered the event. This property is included in every webhook payload.
+     * The user that triggered the event.
      */
-    private final GithubUserContext sender;
+    private final UserContext sender;
 
-    protected AbstractProjectEvent(ObjectNode root, EventType type, OffsetDateTime timestamp) {
+    protected AbstractProjectEvent(JsonNode _root, EventType type, OffsetDateTime timestamp) {
+        if (!_root.isObject()) {
+            throw new IllegalArgumentException();
+        }
+
+        var root = (ObjectNode) _root;
+
         this.root = root;
         this.timestamp = timestamp;
 
         this.type = EventTypeContext.ensure(root.get("type"));
         this.id = EventIdContext.ensure(root.get("id"));
-        this.enterprise = EnterpriseContext.create(root.get("enterprise"));
-        this.installation = InstallationContext.create(root.get("installation"));
-        this.organization = OrganizationContext.create(root.get("organization"));
         this.repository = RepositoryContext.ensure(root.get("repository"));
-        this.sender = GithubUserContext.ensure(root.get("sender"));
+        this.sender = UserContext.ensure(root.get("sender"));
 
         if (!getType().equals(type)) {
             throw new IllegalArgumentException(MessageFormat.format("Unsupported event type {0}. Expected {1}", getType(), type));

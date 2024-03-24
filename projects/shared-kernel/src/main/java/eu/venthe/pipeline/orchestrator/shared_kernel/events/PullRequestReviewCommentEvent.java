@@ -30,7 +30,7 @@ public class PullRequestReviewCommentEvent extends AbstractProjectEvent {
         super(root, EventType.PULL_REQUEST_REVIEW_COMMENT, timestamp);
 
         comment = PullRequestReviewCommentContext.ensure(root.get("comment"));
-        pullRequest = PullRequestContext.ensure(root.get("pull_request"));
+        pullRequest = PullRequestContext.ensure(root.get("pullRequest"));
         action = PullRequestReviewCommentActionContext.ensure(root.get("action"));
     }
 }

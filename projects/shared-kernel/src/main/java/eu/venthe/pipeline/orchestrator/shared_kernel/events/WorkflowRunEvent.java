@@ -25,6 +25,6 @@ public class WorkflowRunEvent extends AbstractProjectEvent {
         super(root, EventType.WORKFLOW_RUN, timestamp);
 
         workflow = WorkflowContext.ensure(root.get("workflow"));
-        workflowRun = WorkflowRunContext.ensure(root.get("workflow_run"));
+        workflowRun = WorkflowRunContext.ensure(root.get("workflowRun"));
     }
 }

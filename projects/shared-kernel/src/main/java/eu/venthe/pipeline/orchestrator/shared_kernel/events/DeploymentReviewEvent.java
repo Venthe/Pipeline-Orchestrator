@@ -25,7 +25,7 @@ public class DeploymentReviewEvent extends AbstractProjectEvent {
     private final DeploymentReviewAction action;
     private final String since;
     private final Optional<WorkflowRunContext> workflowRun;
-    private final Optional<GithubUserContext> approver;
+    private final Optional<UserContext> approver;
     private final Optional<String> comment;
     private final Optional<WorkflowJobRunContext> workflowJobRun;
     private final List<WorkflowJobRunContext> workflowJobRuns;
@@ -37,10 +37,10 @@ public class DeploymentReviewEvent extends AbstractProjectEvent {
         action = DeploymentReviewActionContext.ensure(root.get("action"));
         since = DeploymentReviewSinceContext.ensure(root.get("since"));
         workflowRun = WorkflowRunContext.create(root.get("workflow_run"));
-        approver = GithubUserContext.create(root.get("approver"));
+        approver = UserContext.create(root.get("approver"));
         comment = DeploymentReviewCommentContext.create(root.get("comment"));
-        workflowJobRun = WorkflowJobRunContext.create(root.get("workflow_job_run"));
-        workflowJobRuns = WorkflowJobRunContext.list(root.get("workflow_job_runs"));
+        workflowJobRun = WorkflowJobRunContext.create(root.get("workflowJobRun"));
+        workflowJobRuns = WorkflowJobRunContext.list(root.get("workflowJobRuns"));
         reviewers = ReviewersContext.list(root.get("reviewers"));
     }
 

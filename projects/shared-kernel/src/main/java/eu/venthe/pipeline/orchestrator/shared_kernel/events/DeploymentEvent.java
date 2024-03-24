@@ -14,11 +14,10 @@ import java.time.OffsetDateTime;
 import java.util.Optional;
 
 /**
- * This event occurs when there is activity relating to deployments. For more information, see "About deployments." For information about the APIs to manage deployments, see the GraphQL API documentation or "Deployments" in the REST API documentation.
+ * This event occurs when there is activity relating to deployments.
+ * For more information, see "About deployments."
  * <p>
  * For activity relating to deployment status, use the deployment_status event.
- * <p>
- * To subscribe to this event, a GitHub App must have at least read-level access for the "Deployments" repository permission.
  */
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
@@ -35,6 +34,6 @@ public class DeploymentEvent extends AbstractProjectEvent {
         action = DeploymentActionContext.ensure(root.get("action"));
         deployment = DeploymentContext.ensure(root.get("deployment"));
         workflow = WorkflowContext.create(root.get("workflow"));
-        workflowRun = WorkflowRunContext.create(root.get("workflow_run"));
+        workflowRun = WorkflowRunContext.create(root.get("workflowRun"));
     }
 }

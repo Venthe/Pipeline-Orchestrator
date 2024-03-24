@@ -2,10 +2,10 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.WorkflowDispatchInputsContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.GitReferenceNameContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.ReferenceNameContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.PathContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.git.Reference;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitReference;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -24,14 +24,14 @@ import java.time.OffsetDateTime;
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class WorkflowDispatchEvent extends AbstractProjectEvent {
     private final WorkflowDispatchInputsContext inputs;
-    private final Reference.Name ref;
+    private final GitReference.Name ref;
     private final Path workflow;
 
     protected WorkflowDispatchEvent(ObjectNode root, OffsetDateTime timestamp) {
         super(root, EventType.WORKFLOW_DISPATCH, timestamp);
 
         inputs = WorkflowDispatchInputsContext.create(root.get("inputs"));
-        ref = GitReferenceNameContext.ensure(root.get("ref"));
+        ref = ReferenceNameContext.ensure(root.get("ref"));
         workflow = PathContext.ensure(root.get("workflow"));
     }
 }
