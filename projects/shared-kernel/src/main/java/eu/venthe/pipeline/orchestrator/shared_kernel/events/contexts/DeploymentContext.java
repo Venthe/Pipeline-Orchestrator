@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.BooleanContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.DateTimeContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.CommitHashContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.GitHashContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.ReferenceContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitHash;
@@ -12,6 +12,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitHash;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
+// TODO: Implement context
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class DeploymentContext {
     /**
@@ -36,15 +37,11 @@ public class DeploymentContext {
      */
     private final Boolean productionEnvironment;
 
-    protected DeploymentContext(JsonNode _root) {
-        if (!_root.isObject()) {
-            throw new IllegalArgumentException();
-        }
-
-        var root = (ObjectNode) _root;
+    private DeploymentContext(final JsonNode _root) {
+        final var root = ContextUtilities.validateIsObjectNode(_root);
 
         this.id = ContextUtilities.ensureText(root.get("id"));
-        this.sha = CommitHashContext.ensure(root.get("sha"));
+        this.sha = GitHashContext.ensure(root.get("sha"));
         this.ref = ReferenceContext.ensure(root.get("ref"));
         this.task = ContextUtilities.createText(root.get("task"));
         this.createdAt = DateTimeContext.ensure(root.get("createdAt"));
@@ -54,11 +51,11 @@ public class DeploymentContext {
     }
 
 
-    public static DeploymentContext ensure(JsonNode deployment) {
+    public static DeploymentContext ensure(final JsonNode deployment) {
         return ContextUtilities.ensure(deployment, DeploymentContext::new);
     }
 
-    public static Optional<DeploymentContext> create(JsonNode deployment) {
+    public static Optional<DeploymentContext> create(final JsonNode deployment) {
         return ContextUtilities.create(deployment, DeploymentContext::new);
     }
 }

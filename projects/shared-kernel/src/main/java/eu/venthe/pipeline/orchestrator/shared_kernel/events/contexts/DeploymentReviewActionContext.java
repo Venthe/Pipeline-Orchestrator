@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.DeploymentRevi
 import static eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities.fromTextMapper;
 
 public class DeploymentReviewActionContext {
-    public static DeploymentReviewAction ensure(JsonNode action) {
+    public static DeploymentReviewAction ensure(final JsonNode action) {
         return ContextUtilities.ensure(action, fromTextMapper(value -> DeploymentReviewAction.of(value)
                 .orElseThrow(IllegalArgumentException::new)));
     }

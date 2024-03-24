@@ -10,7 +10,8 @@ import lombok.ToString;
 import java.time.OffsetDateTime;
 
 /**
- * This event occurs when there is activity relating to a run of a GitHub Actions workflow. For more information, see "About workflows." For information about the APIs to manage workflow runs, see the GraphQL documentation or "Workflow runs" in the REST API documentation.
+ * This event occurs when there is activity relating to a run of a GitHub Actions workflow.
+ * For more information, see "About workflows."
  * <p>
  * For activity relating to a job in a workflow run, use the workflow_job event.
  */

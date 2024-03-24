@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Optional;
 
 public class BooleanContext {
-    public static Optional<Boolean> create(JsonNode transientEnvironment) {
+    public static Optional<Boolean> create(final JsonNode transientEnvironment) {
         return null;
     }
 }

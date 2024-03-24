@@ -7,6 +7,8 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.C
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
+// TODO: Finish actor context
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public final class ActorContext {
     /**
      * The git author's name.
@@ -16,15 +18,15 @@ public final class ActorContext {
     private final Optional<OffsetDateTime> date;
     private final Optional<String> username;
 
-    private ActorContext(JsonNode author) {
-        if (!author.isObject()) {
-            throw new IllegalArgumentException();
-        }
+    private ActorContext(final JsonNode _root) {
+        final var root = ContextUtilities.validateIsObjectNode(_root);
 
-        name = ContextUtilities.ensure(author.get("name"), ContextUtilities.toTextMapper());
+        name = ContextUtilities.ensure(root.get("name"), ContextUtilities.toTextMapper());
+        
+        throw new UnsupportedOperationException();
     }
 
-    public static ActorContext ensure(JsonNode author) {
+    public static ActorContext ensure(final JsonNode author) {
         return ContextUtilities.create(author, ActorContext::new)
                 .orElseThrow(IllegalArgumentException::new);
     }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URL;
 
 public class UrlContext {
-    public static URL ensure(JsonNode commits) {
+    public static URL ensure(final JsonNode commits) {
         throw new UnsupportedOperationException();
     }
 }

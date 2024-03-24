@@ -20,6 +20,7 @@ import java.util.Optional;
  * The repository on GitHub where the event occurred. Webhook payloads contain the repository property when the event
  * occurs from activity in a repository.
  */
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class RepositoryContext {
     /**
      * Unique identifier of the repository
@@ -38,10 +39,8 @@ public class RepositoryContext {
      */
     private final RepositoryVisibility visibility;
 
-    private RepositoryContext(JsonNode root) {
-        if (!root.isObject()) {
-            throw new IllegalArgumentException();
-        }
+    private RepositoryContext(final JsonNode _root) {
+        final var root = ContextUtilities.validateIsObjectNode(_root);
 
         this.id = ContextUtilities.ensure(root.get("id"), ContextUtilities.toTextMapper());
         this.name = ContextUtilities.ensure(root.get("name"), ContextUtilities.toTextMapper());
@@ -53,7 +52,7 @@ public class RepositoryContext {
     }
 
 
-    public static RepositoryContext ensure(JsonNode root) {
+    public static RepositoryContext ensure(final JsonNode root) {
         return new RepositoryContext(root);
     }
 }

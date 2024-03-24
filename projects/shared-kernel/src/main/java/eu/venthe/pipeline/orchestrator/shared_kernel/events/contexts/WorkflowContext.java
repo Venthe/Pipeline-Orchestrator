@@ -21,12 +21,8 @@ public class WorkflowContext {
     private final URL url;
     private final OffsetDateTime updatedAt;
 
-    private WorkflowContext(JsonNode _root) {
-        if (!_root.isObject()) {
-            throw new IllegalArgumentException();
-        }
-
-        var root = (ObjectNode) _root;
+    private WorkflowContext(final JsonNode _root) {
+        final var root = ContextUtilities.validateIsObjectNode(_root);
 
         id = ContextUtilities.ensureText(root.get("id"));
         name = ContextUtilities.ensureText(root.get("name"));
@@ -37,11 +33,11 @@ public class WorkflowContext {
 
     }
 
-    public static Optional<WorkflowContext> create(JsonNode workflow) {
+    public static Optional<WorkflowContext> create(final JsonNode workflow) {
         return ContextUtilities.create(workflow, WorkflowContext::new);
     }
 
-    public static WorkflowContext ensure(JsonNode workflow) {
+    public static WorkflowContext ensure(final JsonNode workflow) {
         return ContextUtilities.ensure(workflow, WorkflowContext::new);
     }
 }

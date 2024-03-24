@@ -12,11 +12,11 @@ import lombok.ToString;
 import java.time.OffsetDateTime;
 
 /**
- * This event occurs when there is activity relating to a pull request review. A pull request review is a group of pull request review comments in addition to a body comment and a state. For more information, see "About pull request reviews." For information about the APIs to manage pull request reviews, see the GraphQL API documentation or "Pull request reviews" in the REST API documentation.
+ * This event occurs when there is activity relating to a pull request review. A pull request review is a group of pull
+ * request review comments in addition to a body comment and a state. For more information, see "About pull request reviews."
  * <p>
- * For activity related to pull request review comments, pull request comments, or pull request review threads, use the pull_request_review_comment, issue_comment, or pull_request_review_thread events instead.
- * <p>
- * To subscribe to this event, a GitHub App must have at least read-level access for the "Pull requests" repository permission.
+ * For activity related to pull request review comments, pull request comments, or pull request review threads, use
+ * the pull_request_review_comment, issue_comment, or pull_request_review_thread events instead.
  */
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)

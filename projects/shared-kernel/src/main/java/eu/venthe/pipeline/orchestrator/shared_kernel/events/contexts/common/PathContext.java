@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class PathContext {
-    public static Path ensure(JsonNode workflow) {
+    public static Path ensure(final JsonNode workflow) {
         throw new UnsupportedOperationException();
     }
 

@@ -34,14 +34,18 @@ public class ContextUtilities {
                 );
     }
 
-    public static <T> Optional<T> create(JsonNode root, Function<JsonNode, T> mapper) {
+    public static <T> Optional<T> create(final JsonNode root, Function<JsonNode, T> mapper) {
         return Optional.ofNullable(root)
                 .filter(Predicate.not(JsonNode::isNull))
                 .map(mapper::apply);
     }
 
-    public static <T> T ensure(JsonNode root, Function<JsonNode, T> mapper) {
+    public static <T> T ensure(final JsonNode root, Function<JsonNode, T> mapper) {
         return create(root, mapper).orElseThrow();
+    }
+
+    public static <T> T ensureOptional(JsonNode root, Function<JsonNode, Optional<T>> mapper) {
+        return ensure(root, mapper).orElseThrow();
     }
 
     public static Function<JsonNode, String> toTextMapper() {
@@ -64,5 +68,13 @@ public class ContextUtilities {
 
     public static String ensureText(JsonNode root) {
         return createText(root).orElseThrow();
+    }
+
+    public static ObjectNode validateIsObjectNode(JsonNode root) {
+        if (!root.isObject()) {
+            throw new IllegalArgumentException();
+        }
+
+        return (ObjectNode) root;
     }
 }

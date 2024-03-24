@@ -4,10 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.DateTimeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.ActorContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.GitHashContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.CommitMessageContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.PathContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.CommitTreeHashContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitHash;
 import lombok.Getter;
 
 import java.net.URL;
@@ -51,17 +52,15 @@ public class CommitDetailsContext {
      */
     private final OffsetDateTime timestamp;
 
-    private final CommitTreeHashContext treeId;
+    private final GitHash treeId;
 
     /**
      * URL that points to the commit API resource.
      */
     private final URL url;
 
-    protected CommitDetailsContext(JsonNode root) {
-        if (!root.isObject()) {
-            throw new IllegalArgumentException();
-        }
+    private CommitDetailsContext(final JsonNode _root) {
+        final var root = ContextUtilities.validateIsObjectNode(_root);
 
         author = ActorContext.ensure(root.get("author"));
         committer = ActorContext.ensure(root.get("committer"));
@@ -72,7 +71,7 @@ public class CommitDetailsContext {
         modified = PathContext.list(root.get("modified"));
         removed = PathContext.list(root.get("removed"));
         timestamp = DateTimeContext.ensure(root.get("timestamp"));
-        treeId = CommitTreeHashContext.ensure(root.get("tree_id"));
+        treeId = GitHashContext.ensure(root.get("tree_id"));
         url = UrlContext.ensure(root.get("url"));
     }
 
@@ -86,7 +85,7 @@ public class CommitDetailsContext {
                 .toList();
     }
 
-    public static Optional<CommitDetailsContext> create(JsonNode headCommit) {
+    public static Optional<CommitDetailsContext> create(final JsonNode headCommit) {
         return ContextUtilities.create(headCommit, CommitDetailsContext::new);
     }
 }

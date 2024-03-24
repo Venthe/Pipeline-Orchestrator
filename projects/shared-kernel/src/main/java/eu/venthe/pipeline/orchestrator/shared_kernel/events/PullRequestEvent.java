@@ -12,11 +12,9 @@ import lombok.ToString;
 import java.time.OffsetDateTime;
 
 /**
- * This event occurs when there is activity on a pull request. For more information, see "About pull requests." For information about the APIs to manage pull requests, see the GraphQL API documentation or "Pulls" in the REST API documentation.
+ * This event occurs when there is activity on a pull request. For more information, see "About pull requests."
  * <p>
  * For activity related to pull request reviews, pull request review comments, pull request comments, or pull request review threads, use the pull_request_review, pull_request_review_comment, issue_comment, or pull_request_review_thread events instead.
- * <p>
- * To subscribe to this event, a GitHub App must have at least read-level access for the "Pull requests" repository permission.
  */
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)

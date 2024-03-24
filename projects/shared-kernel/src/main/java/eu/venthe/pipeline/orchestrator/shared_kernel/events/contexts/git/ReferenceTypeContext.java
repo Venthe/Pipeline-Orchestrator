@@ -8,7 +8,7 @@ import static eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.util
 
 @UtilityClass
 public class ReferenceTypeContext {
-    public static String ensure(JsonNode refType) {
+    public static String ensure(final JsonNode refType) {
         return ContextUtilities.ensure(refType, toTextMapper());
     }
 }

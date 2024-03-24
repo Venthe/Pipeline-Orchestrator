@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @UtilityClass
 public class EventIdContext {
-    public static UUID ensure(JsonNode root) {
+    public static UUID ensure(final JsonNode root) {
         return ContextUtilities.createText(root)
                 .map(UUID::fromString)
                 .orElseThrow(() -> new IllegalArgumentException("UUID must be present"));

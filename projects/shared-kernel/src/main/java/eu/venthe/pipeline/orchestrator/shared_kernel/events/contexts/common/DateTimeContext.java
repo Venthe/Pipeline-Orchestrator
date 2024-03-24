@@ -11,12 +11,12 @@ import static java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
 @UtilityClass
 public class DateTimeContext {
-    public static Optional<OffsetDateTime> create(JsonNode root) {
+    public static Optional<OffsetDateTime> create(final JsonNode root) {
         return ContextUtilities.createText(root)
                 .map(dateTime -> OffsetDateTime.parse(dateTime, ISO_OFFSET_DATE_TIME));
     }
 
-    public static OffsetDateTime ensure(JsonNode root) {
+    public static OffsetDateTime ensure(final JsonNode root) {
         return create(root).orElseThrow(() -> new IllegalArgumentException("DateTime must be present"));
     }
 }
