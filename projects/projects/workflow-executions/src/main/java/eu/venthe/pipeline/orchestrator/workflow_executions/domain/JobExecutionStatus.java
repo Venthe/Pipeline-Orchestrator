@@ -33,7 +33,7 @@ public enum JobExecutionStatus {
     @JsonCreator
     public static JobExecutionStatus of(String type) {
         if (type == null) {
-            throw new RuntimeException();
+            throw new IllegalArgumentException();
         }
 
         return stream(values())

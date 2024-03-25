@@ -9,4 +9,5 @@ import lombok.experimental.SuperBuilder;
 public class ProjectSourceConfigurationAddedEvent implements DomainEvent {
     String sourceId;
     String sourceType;
+    String type = "project_source_configuration_added";
 }

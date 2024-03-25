@@ -5,4 +5,5 @@ import lombok.Value;
 
 @Value
 public class ProjectSourceConfigurationRemovedEvent implements DomainEvent {
+    String type = "project_source_configuration_removed";
 }

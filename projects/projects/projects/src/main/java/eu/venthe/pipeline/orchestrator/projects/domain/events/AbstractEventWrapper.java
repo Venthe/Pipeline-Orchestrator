@@ -1,12 +1,13 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
-import eu.venthe.pipeline.orchestrator.projects.api.Event;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public abstract class AbstractEventWrapper<T extends Event> implements EventWrapper<T> {
+public abstract class AbstractEventWrapper<T extends ProjectEvent> implements EventWrapper<T> {
     private final T event;
 
     @Override
@@ -15,7 +16,7 @@ public abstract class AbstractEventWrapper<T extends Event> implements EventWrap
     }
 
     @Override
-    public String getType() {
+    public EventType getType() {
         return event.getType();
     }
 }

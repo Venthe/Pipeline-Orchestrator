@@ -29,4 +29,10 @@ public class WorkflowDispatchInputsContext {
     public static WorkflowDispatchInputsContext create(final JsonNode _inputs) {
         return ContextUtilities.ensure(_inputs, WorkflowDispatchInputsContext::new);
     }
+
+    public Map<String, String> getSimple() {
+        return inputs.entrySet().stream()
+                .map(e -> Map.entry(e.getKey(), e.getValue().serialize()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
 }

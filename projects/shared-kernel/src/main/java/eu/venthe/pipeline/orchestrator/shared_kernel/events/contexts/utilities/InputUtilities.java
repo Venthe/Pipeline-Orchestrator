@@ -28,6 +28,10 @@ public class InputUtilities {
         T value;
         Type type;
 
+        public String serialize() {
+            return value.toString();
+        }
+
         public static InputValue<String> ofString(String value) {
             return new InputValue<>(value, Type.STRING);
         }

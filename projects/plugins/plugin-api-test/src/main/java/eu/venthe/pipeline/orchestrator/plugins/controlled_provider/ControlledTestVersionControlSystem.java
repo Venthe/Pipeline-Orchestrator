@@ -4,6 +4,7 @@ import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProv
 import org.springframework.util.AntPathMatcher;
 
 import java.util.*;
+import java.util.function.Function;
 
 public class ControlledTestVersionControlSystem implements VersionControlSystemProvider {
 
@@ -17,6 +18,11 @@ public class ControlledTestVersionControlSystem implements VersionControlSystemP
     public Optional<byte[]> getFile(String projectName, String ref, String path) {
         return Optional.ofNullable(files.get(new FileRef(projectName, ref, path)))
                 .map(String::getBytes);
+    }
+
+    @Override
+    public <T> Optional<T> getFile(String projectName, String ref, String path, Function<byte[], T> mapper) {
+        throw new UnsupportedOperationException();
     }
 
     public List<String> getFiles(String project, String ref, String glob) {

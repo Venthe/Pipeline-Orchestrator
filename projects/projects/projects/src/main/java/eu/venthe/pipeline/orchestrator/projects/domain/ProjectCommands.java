@@ -1,12 +1,12 @@
 package eu.venthe.pipeline.orchestrator.projects.domain;
 
-import eu.venthe.pipeline.orchestrator.projects.api.Event;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
 
 import java.util.Collection;
 
 public interface ProjectCommands {
-    default Collection<DomainEvent> handleEvent(Event event) {
+    default Collection<DomainEvent> handleEvent(ProjectEvent event) {
         throw new UnsupportedOperationException();
     }
 

@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
-import eu.venthe.pipeline.orchestrator.projects.api.PushEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnBranches;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnPaths;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.PushEvent;
 
 import java.util.Collection;
 import java.util.function.UnaryOperator;

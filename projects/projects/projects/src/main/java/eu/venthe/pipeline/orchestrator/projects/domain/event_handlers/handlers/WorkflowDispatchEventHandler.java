@@ -1,10 +1,10 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.handlers;
 
-import eu.venthe.pipeline.orchestrator.projects.api.Event;
-import eu.venthe.pipeline.orchestrator.projects.api.WorkflowDispatchEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.WorkflowDispatchEventWrapper;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.WorkflowDispatchEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
     public Collection<DomainEvent> _handle(Project project, WorkflowDispatchEvent event) {
         log.info("Event triggers single workflow on path {}", event.getWorkflow());
 
-        var workflow = project.getWorkflow(event.getRef(), event.getWorkflow())
+        var workflow = project.getWorkflow(event.getRef(), event.getWorkflow().toString())
                 .orElseThrow();
 
         log.trace("Workflow loaded {}", workflow);
@@ -41,7 +41,7 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
         throw new UnsupportedOperationException();
     }
 
-    public boolean canHandle(Event event) {
+    public boolean canHandle(ProjectEvent event) {
         return event instanceof WorkflowDispatchEvent;
     }
 }

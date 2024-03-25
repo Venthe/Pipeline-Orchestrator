@@ -1,5 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.api;
 
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
+
 public interface ProjectsCommandService {
 
     default void add(CreateProjectSpecification newProjectDto) {
@@ -22,7 +24,7 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default void handleEvent(String projectId, Event event) {
+    default void handleEvent(String projectId, ProjectEvent event) {
         throw new UnsupportedOperationException();
     }
 }

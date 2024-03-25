@@ -1,6 +1,6 @@
 plugins {
     id("buildlogic.java-library-conventions")
-    id("org.openapi.generator") version "7.4.0"
+    id("eu.venthe.gradle.generate_openapi_client") version "internal"
 }
 
 group = "eu.venthe.pipeline"
@@ -18,45 +18,12 @@ dependencies {
     testImplementation("org.slf4j:slf4j-simple")
 }
 
-tasks.register("cleanGeneratedGerritClient") {
-    description = ""
-    group = "openapi"
-
-    delete(
-            "${layout.buildDirectory.get()}/generated/openapi"
-    )
-}
-
-val _group = group
-val gerritApi by tasks.register(
-        name = "generateGerritClient",
-        type = org.openapitools.generator.gradle.plugin.tasks.GenerateTask::class,
-) {
-    description = ""
-    group = "openapi"
+openApiGenerate {
     outputDir.set("${layout.buildDirectory.get()}/generated/openapi")
-    apiPackage.set("${_group}.gerrit.api")
-    invokerPackage.set("${_group}.gerrit.invoker")
-    modelPackage.set("${_group}.gerrit.model")
     templateDir.set("$projectDir/src/main/resources/template/gerrit/")
-
-    generatorName.set("java")
-    inputSpec.set("$rootDir/schemas/gerrit.openapi.yaml")
-    configOptions.set(mapOf(
-            "useJakartaEe" to "true",
-            "library" to "resttemplate",
-            "licenseName" to "MIT",
-            "licenseUrl" to "https://opensource.org/licenses/MIT"
-    ))
-}
-
-tasks.withType<JavaCompile>().configureEach {
-    dependsOn(gerritApi)
-    mustRunAfter(gerritApi)
-}
-
-openApiValidate {
-    inputSpec.set("$rootDir/schemas/gerrit.openapi.yaml")
+    inputSpec.set("$projectDir/src/main/resources/schemas/gerrit.openapi.yaml")
+    validateSpec = true
+    targetPackage = "eu.venthe.pipeline.gerrit"
 }
 
 java.sourceSets["main"].java {

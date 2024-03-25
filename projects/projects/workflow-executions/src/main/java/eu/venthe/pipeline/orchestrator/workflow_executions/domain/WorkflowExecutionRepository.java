@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.workflow_executions.domain;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.WorkflowExecution;
@@ -10,3 +11,4 @@ public interface WorkflowExecutionRepository {
 
     Optional<WorkflowExecution> get(String workflowExecutionId);
 }
+*/

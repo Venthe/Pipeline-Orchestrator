@@ -1,10 +1,10 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.projects.api.Event;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.*;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +65,7 @@ public class Workflow {
         return jobsContext;
     }
 
-    public <T extends Event> Boolean on(EventWrapper<T> event) {
+    public <T extends ProjectEvent> Boolean on(EventWrapper<T> event) {
 
         Boolean result = getOnContext().on(event);
         log.info("[id:{}][type:{}] Event match: {}", event.getId(), event.getType(), result);

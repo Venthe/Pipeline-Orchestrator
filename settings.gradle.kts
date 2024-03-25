@@ -14,6 +14,7 @@ pluginManagement {
     }
 
     includeBuild("plugins/json-schema-to-pojo")
+    includeBuild("plugins/generate-openapi-client")
     // Include 'plugins build' to define convention plugins.
     includeBuild("build-logic")
 }

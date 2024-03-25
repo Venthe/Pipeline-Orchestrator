@@ -7,4 +7,5 @@ import lombok.Value;
 public class ProjectDiscoveredEvent implements DomainEvent {
     String projectName;
     String systemId;
+    String type = "project_discovered";
 }

@@ -3,8 +3,9 @@ package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.MoreCollectors;
-import eu.venthe.pipeline.orchestrator.projects.api.Event;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +28,7 @@ public class OnContext {
         return create(on).orElseThrow(() -> new IllegalArgumentException("There is no \"on\" property, this workflow will never run"));
     }
 
-    public <T extends Event> Boolean on(EventWrapper<T> event) {
+    public <T extends ProjectEvent> Boolean on(EventWrapper<T> event) {
         if (event == null) throw new IllegalArgumentException("Input should not be null");
 
         if (!root.isTextual() && root.isEmpty()) {
@@ -95,7 +96,7 @@ public class OnContext {
         throw new UnsupportedOperationException();
     }
 
-    private Boolean singleEvent(String node, String type) {
-        return node.equalsIgnoreCase(type);
+    private Boolean singleEvent(String node, EventType type) {
+        return node.equalsIgnoreCase(type.getValue());
     }
 }
