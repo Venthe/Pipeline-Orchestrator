@@ -6,5 +6,5 @@ group = "eu.venthe.pipeline"
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
-    implementation(project(":infrastructure:message-broker-api"))
+    implementation(project(":infrastructure-message-broker-api"))
 }

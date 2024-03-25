@@ -4,8 +4,8 @@ import eu.venthe.pipeline.orchestrator.infrastructure.in_memory_repository.InMem
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.EnvelopeImpl;
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.MessageBroker;
 import eu.venthe.pipeline.orchestrator.projects.domain.Project;
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectRepository;
+import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectsSourceRepository;

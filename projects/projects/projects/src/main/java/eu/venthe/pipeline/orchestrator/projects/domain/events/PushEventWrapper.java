@@ -22,13 +22,14 @@ public class PushEventWrapper extends AbstractEventWrapper<PushEvent> {
 
     @Override
     public Boolean matches(OnPaths onPaths) {
-        return onPaths.match(getEvent().getCommits().stream()
+        throw new UnsupportedOperationException();
+        /*return onPaths.match(getEvent().getCommits().stream()
                 .flatMap(e -> Stream.of(
                         e.getAdded().stream().flatMap(Collection::stream),
                         e.getModified().stream().flatMap(Collection::stream),
                         e.getRemoved().stream().flatMap(Collection::stream)
                 ))
                 .flatMap(UnaryOperator.identity())
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toSet()));*/
     }
 }

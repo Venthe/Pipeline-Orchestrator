@@ -55,7 +55,7 @@ public class OnContext {
             }
 
             Optional<JsonNode> node = root.properties().stream()
-                    .filter(e -> Optional.ofNullable(e.getKey()).map(w -> event.getType().equalsIgnoreCase(w)).orElse(false))
+                    .filter(e -> Optional.ofNullable(e.getKey()).map(w -> event.getType().getValue().equalsIgnoreCase(w)).orElse(false))
                     .map(Map.Entry::getValue)
                     .collect(MoreCollectors.toOptional());
 

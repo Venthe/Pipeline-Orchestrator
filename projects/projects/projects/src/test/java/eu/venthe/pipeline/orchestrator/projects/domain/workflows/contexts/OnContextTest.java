@@ -5,16 +5,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-import eu.venthe.pipeline.orchestrator.projects.api.Event;
-import eu.venthe.pipeline.orchestrator.projects.api.PullRequestEvent;
-import eu.venthe.pipeline.orchestrator.projects.api.PushEvent;
-import eu.venthe.pipeline.orchestrator.projects.api.WorkflowDispatchEvent;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.PullRequestEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.PushEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.WorkflowDispatchEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
 import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.PullRequestEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.PushEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.WorkflowDispatchEvent;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ThrowableAssert;
@@ -662,7 +662,7 @@ class OnContextTest {
     }
 
     @SneakyThrows
-    private <T extends Event> EventWrapper<?> getEvent(String value) {
+    private <T extends ProjectEvent> EventWrapper<?> getEvent(String value) {
         ObjectNode eventTree = (ObjectNode) objectMapper.readTree(value);
         eventTree.set("id", objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
 

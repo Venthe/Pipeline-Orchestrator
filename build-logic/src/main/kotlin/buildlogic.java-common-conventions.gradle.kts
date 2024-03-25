@@ -105,5 +105,5 @@ tasks.withType<Test> {
 }
 
 allprojects {
-    layout.buildDirectory = File(rootProject.projectDir, "build/${project.name}")
+    layout.buildDirectory = File(rootProject.projectDir, "build/${project.path.replace("^:".toRegex(), "").replace(":", "-")}")
 }

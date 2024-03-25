@@ -1,6 +1,6 @@
 fun includeNestedProject(vararg projectNames: String, prefix: String = "projects") {
     projectNames.forEach {
-        val sanitizedName = it.replace("/", ":")
+        val sanitizedName = it.replace("/", "-")
         include(sanitizedName)
         project(":$sanitizedName").projectDir = file("${prefix}/${it}")
     }
