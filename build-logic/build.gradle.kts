@@ -9,5 +9,5 @@ repositories {
 }
 
 dependencies {
-    implementation("io.freefair.gradle:lombok-plugin:8.4")
+    implementation("io.freefair.gradle:lombok-plugin:8.6")
 }

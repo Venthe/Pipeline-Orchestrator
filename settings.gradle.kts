@@ -22,6 +22,7 @@ pluginManagement {
 rootProject.name = "orchestrator"
 
 includeNestedProject(
+        "shared-kernel",
         "application",
         "infrastructure/git",
         "infrastructure/in-memory-message-broker",
@@ -43,7 +44,6 @@ includeNestedProject(
         "projects/workflow-executions-api",
         "projects/shared-kernel",
         "security",
-        "shared-kernel",
         "task-scheduler",
         "task-scheduler-api",
         "utilities",

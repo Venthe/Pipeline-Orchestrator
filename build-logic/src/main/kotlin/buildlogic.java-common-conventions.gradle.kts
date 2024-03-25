@@ -14,18 +14,11 @@ java {
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
-
-val versionsTestcontainers = "1.17.6"
+//configurations {
+//    compileOnly {
+//        extendsFrom(configurations.annotationProcessor.get())
+//    }
+//}
 
 public enum class DependencyVersion(val version: String) {
     ASSERTJ("3.25.3"),
