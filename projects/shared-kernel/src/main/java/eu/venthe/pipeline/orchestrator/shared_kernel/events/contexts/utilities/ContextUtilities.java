@@ -4,13 +4,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.experimental.UtilityClass;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
-import java.util.stream.Collector;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
+import static java.util.Collections.emptyList;
 
 @UtilityClass
 public class ContextUtilities {
@@ -19,19 +21,6 @@ public class ContextUtilities {
         return Optional.ofNullable(root)
                 .filter(Predicate.not(JsonNode::isNull))
                 .map(node -> creator.apply((ObjectNode) node));
-    }
-
-    public static <T extends Collection<String>> Optional<T> createStringCollection(JsonNode node, Collector<String, ?, T> collector) {
-        return Optional.ofNullable(node)
-                .filter(Predicate.not(JsonNode::isNull))
-                .filter(JsonNode::isArray)
-                .map(e -> StreamSupport.stream(e.spliterator(), false)
-                        .filter(Predicate.not(JsonNode::isNull))
-                        .filter(JsonNode::isTextual)
-                        .map(JsonNode::asText)
-                        .filter(Predicate.not(String::isBlank))
-                        .collect(collector)
-                );
     }
 
     public static <T> Optional<T> create(final JsonNode root, Function<JsonNode, T> mapper) {
@@ -68,6 +57,18 @@ public class ContextUtilities {
         }
 
         return (ObjectNode) root;
+    }
+
+    @UtilityClass
+    public static class Collection {
+        public static <U, T extends java.util.Collection<U>> T createCollection(JsonNode node, Function<Stream<JsonNode>, T> mapper) {
+            return Optional.ofNullable(node)
+                    .filter(Predicate.not(JsonNode::isNull))
+                    .filter(Predicate.not(JsonNode::isMissingNode))
+                    .filter(JsonNode::isArray)
+                    .map(e -> mapper.apply(StreamSupport.stream(e.spliterator(), false)))
+                    .orElseGet(() -> (T) new ArrayList<U>());
+        }
     }
 
     @UtilityClass

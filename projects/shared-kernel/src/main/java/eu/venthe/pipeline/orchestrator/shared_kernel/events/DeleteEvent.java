@@ -1,15 +1,15 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.ProjectDescriptionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.ReferenceContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.ReferenceTypeContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.OffsetDateTime;
 import java.util.Optional;
 
 /**
@@ -35,7 +35,8 @@ public class DeleteEvent extends AbstractProjectEvent {
     public DeleteEvent(ObjectNode root) {
         super(root, EventType.DELETE);
 
-        description = ProjectDescriptionContext.create(root.get("description"));
+        final JsonNode description1 = root.get("description");
+        description = ContextUtilities.Text.create(description1);
         mainBranch = ReferenceContext.ensure(root.get("mainBranch"));
         ref = ReferenceContext.ensure(root.get("ref"));
         refType = ReferenceTypeContext.ensure(root.get("refType"));

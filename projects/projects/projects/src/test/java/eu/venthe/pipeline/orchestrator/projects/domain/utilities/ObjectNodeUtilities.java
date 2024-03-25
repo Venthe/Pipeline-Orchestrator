@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.experimental.UtilityClass;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,14 @@ public class ObjectNodeUtilities {
 
     public static void deepSetIfNotPresent(ObjectMapper mapper, JsonNode node, String path, JsonNode value) {
         deepSet(mapper, node, path, value, true);
+    }
+
+    public static void deepSetIfNotPresent(ObjectMapper mapper, JsonNode node, Map<String, JsonNode> changes) {
+        deepSet(mapper, node, changes, true);
+    }
+
+    public static void deepSet(ObjectMapper mapper, JsonNode node, Map<String, JsonNode> changes, boolean ifNotPresent) {
+        changes.forEach((key, value) -> deepSet(mapper, node, key, value, ifNotPresent));
     }
 
     public static void deepSet(ObjectMapper mapper, JsonNode node, String path, JsonNode value, boolean ifNotPresent) {
@@ -50,12 +59,12 @@ public class ObjectNodeUtilities {
             while (currentNode.size() <= index) {
                 ((ArrayNode) currentNode).addNull();
             }
-            if (currentNode.get(index) != null && !currentNode.get(index).isMissingNode() && !ifNotPresent) {
+            if (currentNode.get(index) != null && !currentNode.get(index).isMissingNode() && ifNotPresent) {
                 return;
             }
             ((ArrayNode) currentNode).set(index, value);
         } else {
-            if (currentNode.get(keys[keys.length - 1]) != null && !currentNode.get(keys[keys.length - 1]).isMissingNode() && !ifNotPresent) {
+            if (currentNode.get(keys[keys.length - 1]) != null && !currentNode.get(keys[keys.length - 1]).isMissingNode() && ifNotPresent) {
                 return;
             }
             ((ObjectNode) currentNode).set(keys[keys.length - 1], value);

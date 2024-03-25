@@ -1,13 +1,11 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.PullRequestEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.PushEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.WorkflowDispatchEventWrapper;
-import eu.venthe.pipeline.orchestrator.projects.domain.utilities.ObjectNodeUtilities;
 import eu.venthe.pipeline.orchestrator.projects.domain.utilities.TestContextProvider;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
 import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
@@ -20,6 +18,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 import java.util.UUID;
+
+import static eu.venthe.pipeline.orchestrator.projects.domain.utilities.ObjectNodeUtilities.*;
 
 class OnContextTest {
     private final ObjectMapper objectMapper = YamlUtility.OBJECT_MAPPER;
@@ -311,6 +311,9 @@ class OnContextTest {
                     commits:
                       - message: Abc
                         timestamp: 2011-12-03T10:15:30+01:00
+                        distinct: true
+                        id: "123"
+                        url: http://foo
                         added:
                           - test.yaml
                         tree_id: "123"
@@ -343,9 +346,12 @@ class OnContextTest {
                     commits:
                       - message: Abc
                         timestamp: 2011-12-03T10:15:30+01:00
+                        distinct: true
+                        id: "123"
                         added:
                           - test.yaml
                         tree_id: "123"
+                        url: http://foo
                         author:
                           name: Test User
                         committer:
@@ -375,9 +381,12 @@ class OnContextTest {
                     commits:
                       - message: Abc
                         timestamp: 2011-12-03T10:15:30+01:00
+                        distinct: true
+                        id: "123"
                         added:
                           - a.yaml
                         tree_id: "123"
+                        url: http://foo
                         author:
                           name: Test User
                         committer:
@@ -662,9 +671,9 @@ class OnContextTest {
     private <T extends ProjectEvent> EventWrapper<?> getEvent(String value) {
         ObjectNode eventTree = (ObjectNode) objectMapper.readTree(value);
 
-        ObjectNodeUtilities.deepSetIfNotPresent(objectMapper, eventTree, "id", objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
-        testContextProvider.repository(eventTree, "repository");
-        testContextProvider.sampleUser(eventTree, "sender");
+        deepSetIfNotPresent(objectMapper, eventTree, "id", objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
+        deepSetIfNotPresent(objectMapper, eventTree, testContextProvider.repository("repository"));
+        deepSetIfNotPresent(objectMapper, eventTree, testContextProvider.sampleUser("sender"));
 
         return switch (eventTree.get("type").asText().toLowerCase(Locale.ROOT)) {
             case "workflow_dispatch" -> mapWorkflowDispatch(eventTree);
@@ -675,19 +684,35 @@ class OnContextTest {
     }
 
     private PushEventWrapper mapPush(ObjectNode eventTree) {
+        deepSetIfNotPresent(objectMapper, eventTree, "after", objectMapper.getNodeFactory().textNode("Sample sha"));
+        deepSetIfNotPresent(objectMapper, eventTree, "before", objectMapper.getNodeFactory().textNode("Sample sha"));
+        deepSetIfNotPresent(objectMapper, eventTree, "compare", objectMapper.getNodeFactory().textNode("http://foo"));
+
+        deepSetIfNotPresent(objectMapper, eventTree, "created", objectMapper.getNodeFactory().booleanNode(false));
+        deepSetIfNotPresent(objectMapper, eventTree, "deleted", objectMapper.getNodeFactory().booleanNode(false));
+        deepSetIfNotPresent(objectMapper, eventTree, "forced", objectMapper.getNodeFactory().booleanNode(false));
+        deepSetIfNotPresent(objectMapper, eventTree, testContextProvider.sampleUser("pusher"));
+
+        deepSetIfNotPresent(objectMapper, eventTree, "commits", objectMapper.getNodeFactory().arrayNode());
+
         return new PushEventWrapper(new AbstractProjectEvent(eventTree).specify(PushEvent::new));
     }
 
     private WorkflowDispatchEventWrapper mapWorkflowDispatch(ObjectNode eventTree) {
-        ObjectNodeUtilities.deepSetIfNotPresent(objectMapper, eventTree, "ref", objectMapper.getNodeFactory().textNode("main"));
+        deepSetIfNotPresent(objectMapper, eventTree, "ref", objectMapper.getNodeFactory().textNode("main"));
+        deepSetIfNotPresent(objectMapper, eventTree, "workflow", objectMapper.getNodeFactory().textNode(".pipeline/workflows/sample.yml"));
 
         return new WorkflowDispatchEventWrapper(new AbstractProjectEvent(eventTree).specify(WorkflowDispatchEvent::new));
     }
 
     private PullRequestEventWrapper mapPullRequest(ObjectNode eventTree) {
-        ObjectNodeUtilities.deepSetIfNotPresent(objectMapper, eventTree, "pullRequest.base.ref", objectMapper.getNodeFactory().textNode("main"));
-        ObjectNodeUtilities.deepSetIfNotPresent(objectMapper, eventTree, "action", objectMapper.getNodeFactory().textNode("opened"));
-        ObjectNodeUtilities.deepSetIfNotPresent(objectMapper, eventTree, "number", objectMapper.getNodeFactory().numberNode(1));
+        deepSetIfNotPresent(objectMapper, eventTree, "pullRequest.base.label", objectMapper.getNodeFactory().textNode("label"));
+        deepSetIfNotPresent(objectMapper, eventTree, "pullRequest.base.ref", objectMapper.getNodeFactory().textNode("main"));
+        deepSetIfNotPresent(objectMapper, eventTree, "pullRequest.base.sha", objectMapper.getNodeFactory().textNode("Sample sha"));
+        deepSetIfNotPresent(objectMapper, eventTree, "action", objectMapper.getNodeFactory().textNode("opened"));
+        deepSetIfNotPresent(objectMapper, eventTree, "number", objectMapper.getNodeFactory().numberNode(1));
+
+        deepSetIfNotPresent(objectMapper, eventTree, testContextProvider.sampleUser("pullRequest.base.user"));
 
         return new PullRequestEventWrapper(new AbstractProjectEvent(eventTree).specify(PullRequestEvent::new));
     }

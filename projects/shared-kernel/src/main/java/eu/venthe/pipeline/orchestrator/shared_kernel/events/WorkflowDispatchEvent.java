@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.nio.file.Path;
-import java.time.OffsetDateTime;
 
 /**
  * This event occurs when a GitHub Actions workflow is manually triggered. For more information, see "Manually running a workflow."

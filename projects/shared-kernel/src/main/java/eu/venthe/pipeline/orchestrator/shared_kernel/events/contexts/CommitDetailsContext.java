@@ -1,6 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.BooleanContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.DateTimeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.ActorContext;
@@ -8,17 +9,15 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.GitHash
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.CommitMessageContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.PathContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitHash;
 import lombok.Getter;
 
 import java.net.URL;
+import java.nio.file.Path;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 @Getter
-// components/commit-details.yaml#
 public class CommitDetailsContext {
     private final ActorContext author;
     private final ActorContext committer;
@@ -26,17 +25,17 @@ public class CommitDetailsContext {
     /**
      * An array of files added in the commit.
      */
-    private final List<String> added;
+    private final List<Path> added;
 
     /**
      * An array of files modified by the commit.
      */
-    private final List<String> modified;
+    private final List<Path> modified;
 
     /**
      * An array of files removed in the commit.
      */
-    private final List<String> removed;
+    private final List<Path> removed;
 
     /**
      * Whether this commit is distinct from any that have been pushed before.
@@ -52,7 +51,7 @@ public class CommitDetailsContext {
      */
     private final OffsetDateTime timestamp;
 
-    private final GitHash treeId;
+    private final String treeId;
 
     /**
      * URL that points to the commit API resource.
@@ -64,8 +63,10 @@ public class CommitDetailsContext {
 
         author = ActorContext.ensure(root.get("author"));
         committer = ActorContext.ensure(root.get("committer"));
-        distinct = CommitDetailsIsDistinctContext.ensure(root.get("distinct"));
-        id = CommitDetailsIdContext.ensure(root.get("id"));
+        final JsonNode distinct1 = root.get("distinct");
+        distinct = BooleanContext.ensure(distinct1);
+        final JsonNode id1 = root.get("id");
+        id = ContextUtilities.Text.ensure(id1);
         message = CommitMessageContext.ensure(root.get("message"));
         added = PathContext.list(root.get("added"));
         modified = PathContext.list(root.get("modified"));
@@ -76,13 +77,9 @@ public class CommitDetailsContext {
     }
 
     public static List<CommitDetailsContext> list(JsonNode commits) {
-        if (!commits.isArray()) {
-            throw new IllegalArgumentException();
-        }
-
-        return StreamSupport.stream(commits.spliterator(), false)
+        return ContextUtilities.Collection.createCollection(commits, stream-> stream
                 .map(CommitDetailsContext::new)
-                .toList();
+                .toList());
     }
 
     public static Optional<CommitDetailsContext> create(final JsonNode headCommit) {

@@ -4,6 +4,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnB
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnPaths;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.PushEvent;
 
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -22,14 +23,15 @@ public class PushEventWrapper extends AbstractEventWrapper<PushEvent> {
 
     @Override
     public Boolean matches(OnPaths onPaths) {
-        throw new UnsupportedOperationException();
-        /*return onPaths.match(getEvent().getCommits().stream()
+        Collection<String> changedFiles = getEvent().getCommits().stream()
                 .flatMap(e -> Stream.of(
-                        e.getAdded().stream().flatMap(Collection::stream),
-                        e.getModified().stream().flatMap(Collection::stream),
-                        e.getRemoved().stream().flatMap(Collection::stream)
+                        e.getAdded().stream(),
+                        e.getModified().stream(),
+                        e.getRemoved().stream()
                 ))
                 .flatMap(UnaryOperator.identity())
-                .collect(Collectors.toSet()));*/
+                .map(Path::toString)
+                .collect(Collectors.toSet());
+        return onPaths.match(changedFiles);
     }
 }

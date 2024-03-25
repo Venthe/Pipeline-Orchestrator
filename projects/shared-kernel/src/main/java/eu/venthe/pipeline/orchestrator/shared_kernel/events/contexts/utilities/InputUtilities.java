@@ -15,7 +15,7 @@ public class InputUtilities {
             return InputValue.ofString(node.textValue());
         } else if (node.isNumber()) {
             return InputValue.ofNumber(node.decimalValue());
-        } else if (node.isObject()) {
+        } else if (node.isBoolean()) {
             return InputValue.ofBoolean(node.booleanValue());
         } else {
             throw new IllegalArgumentException();

@@ -54,6 +54,10 @@ public class RepositoryContext {
 
 
     public static RepositoryContext ensure(final JsonNode root) {
-        return new RepositoryContext(root);
+        return ContextUtilities.ensure(root, RepositoryContext::new);
+    }
+
+    public static Optional<RepositoryContext> create(JsonNode root) {
+        return ContextUtilities.create(root, RepositoryContext::new);
     }
 }

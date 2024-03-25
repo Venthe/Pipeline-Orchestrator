@@ -1,18 +1,18 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.*;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.BooleanContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.GitHashContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.ReferenceContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitHash;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.net.URL;
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,11 +29,11 @@ public class PushEvent extends AbstractProjectEvent {
     /**
      * The SHA of the most recent commit on ref after the push.
      */
-    private final GitHash after;
+    private final String after;
     /**
      * The SHA of the most recent commit on ref before the push.
      */
-    private final GitHash before;
+    private final String before;
     private final Optional<String> baseRef;
     private final List<CommitDetailsContext> commits;
     /**
@@ -67,9 +67,12 @@ public class PushEvent extends AbstractProjectEvent {
         baseRef = ReferenceContext.create(root.get("baseRef"));
         commits = CommitDetailsContext.list(root.get("commits"));
         compare = UrlContext.ensure(root.get("compare"));
-        created = PushIsCreatingRefContext.ensure(root.get("created"));
-        deleted = PushIsDeletingRefContext.ensure(root.get("deleted"));
-        forced = PushIsForcedContext.ensure(root.get("forced"));
+        final JsonNode forced1 = root.get("created");
+        created = BooleanContext.ensure(forced1);
+        final JsonNode forced2 = root.get("deleted");
+        deleted = BooleanContext.ensure(forced2);
+        final JsonNode forced3 = root.get("forced");
+        forced = BooleanContext.ensure(forced3);
         headCommit = CommitDetailsContext.create(root.get("headCommit"));
         pusher = UserContext.ensure(root.get("pusher"));
         ref = ReferenceContext.ensure(root.get("ref"));

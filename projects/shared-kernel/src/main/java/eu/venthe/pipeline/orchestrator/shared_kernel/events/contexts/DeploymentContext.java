@@ -18,7 +18,7 @@ public class DeploymentContext {
      * Unique identifier of the deployment
      */
     private final String id;
-    private final GitHash sha;
+    private final String sha;
     private final String ref;
     /**
      * The name of the task for the deployment (e.g., deploy or deploy:migrations).

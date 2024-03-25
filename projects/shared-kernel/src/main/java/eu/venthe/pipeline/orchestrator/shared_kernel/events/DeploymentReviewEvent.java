@@ -1,9 +1,11 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.DateTimeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.model.DeploymentReviewActionContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.DeploymentReviewAction;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.EqualsAndHashCode;
@@ -40,7 +42,8 @@ public class DeploymentReviewEvent extends AbstractProjectEvent {
         since = DateTimeContext.ensure(root.get("since"));
         workflowRun = WorkflowRunContext.create(root.get("workflowRun"));
         approver = UserContext.create(root.get("approver"));
-        comment = DeploymentReviewCommentContext.create(root.get("comment"));
+        final JsonNode comment1 = root.get("comment");
+        comment = ContextUtilities.Text.create(comment1);
         workflowJobRun = WorkflowJobRunContext.create(root.get("workflowJobRun"));
         workflowJobRuns = WorkflowJobRunContext.list(root.get("workflowJobRuns"));
         reviewers = ReviewersContext.list(root.get("reviewers"));

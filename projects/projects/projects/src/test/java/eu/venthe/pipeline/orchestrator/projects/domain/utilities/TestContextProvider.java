@@ -2,15 +2,14 @@ package eu.venthe.pipeline.orchestrator.projects.domain.utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Collection;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static eu.venthe.pipeline.orchestrator.projects.domain.utilities.ObjectNodeUtilities.*;
+import static eu.venthe.pipeline.orchestrator.projects.domain.utilities.ObjectNodeUtilities.pathHelper;
 
 public class TestContextProvider {
     private final ObjectMapper objectMapper;
@@ -19,27 +18,29 @@ public class TestContextProvider {
         this.objectMapper = objectMapper;
     }
 
-    public void sampleUser(JsonNode eventTree) {
-        sampleUser(eventTree, null);
+    public Map<String, JsonNode> sampleUser(String prefix) {
+        return Map.of(
+                pathHelper(prefix, "id"), objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()),
+                pathHelper(prefix, "login"), objectMapper.getNodeFactory().textNode("Login"),
+                pathHelper(prefix, "userType"), objectMapper.getNodeFactory().textNode("user")
+        );
     }
 
-    public void sampleUser(JsonNode eventTree, String prefix) {
-        deepSetIfNotPresent(objectMapper, eventTree, pathHelper(prefix, "id"), objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
-        deepSetIfNotPresent(objectMapper, eventTree, pathHelper(prefix, "login"), objectMapper.getNodeFactory().textNode("Login"));
-        deepSetIfNotPresent(objectMapper, eventTree, pathHelper(prefix, "userType"), objectMapper.getNodeFactory().textNode("user"));
-    }
-
-    public void repository(JsonNode eventTree) {
-        repository(eventTree, null);
-    }
-
-    public void repository(JsonNode eventTree, String prefix) {
-        deepSetIfNotPresent(objectMapper, eventTree, pathHelper(prefix, "id"), objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
-        deepSetIfNotPresent(objectMapper, eventTree, pathHelper(prefix, "name"), objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
-        deepSetIfNotPresent(objectMapper, eventTree, pathHelper(prefix, "fullName"), objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
-        deepSetIfNotPresent(objectMapper, eventTree, pathHelper(prefix, "description"), objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
-        deepSetIfNotPresent(objectMapper, eventTree, pathHelper(prefix, "url"), objectMapper.getNodeFactory().textNode("http://dummy"));
-        deepSetIfNotPresent(objectMapper, eventTree, pathHelper(prefix, "visibility"), objectMapper.getNodeFactory().textNode("public"));
-        sampleUser(eventTree, pathHelper(prefix, "owner"));
+    public Map<String, JsonNode> repository(String prefix) {
+        Map<String, JsonNode> owner = sampleUser(pathHelper(prefix, "owner"));
+        Map<String, JsonNode> repository = Map.ofEntries(
+                Map.entry(pathHelper(prefix, "id"), objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString())),
+                Map.entry(pathHelper(prefix, "name"), objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString())),
+                Map.entry(pathHelper(prefix, "fullName"), objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString())),
+                Map.entry(pathHelper(prefix, "description"), objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString())),
+                Map.entry(pathHelper(prefix, "url"), objectMapper.getNodeFactory().textNode("http://dummy")),
+                Map.entry(pathHelper(prefix, "visibility"), objectMapper.getNodeFactory().textNode("public"))
+        );
+        return Stream.of(
+                        owner.entrySet(),
+                        repository.entrySet()
+                )
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

@@ -1,14 +1,15 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.projects.domain.utilities.GlobPatternMatching;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -22,13 +23,18 @@ public class AbstractOnPropertyAndIgnoredProperty {
         if (!root.isObject()) throw new IllegalArgumentException();
 
         this.root = root;
-        this.patterns =  getList(patternsKey);
-        this.patternsIgnore =  getList(patternsIgnoreKey);
+        this.patterns = getList(patternsKey);
+        this.patternsIgnore = getList(patternsIgnoreKey);
     }
 
     private List<String> getList(String path) {
-        return ContextUtilities.createStringCollection(this.root.get(path), Collectors.toList())
-                .orElse(Collections.emptyList());
+        JsonNode node = this.root.get(path);
+        return ContextUtilities.Collection.createCollection(node,
+                stream -> stream.filter(Predicate.not(JsonNode::isNull))
+                        .filter(JsonNode::isTextual)
+                        .map(JsonNode::asText)
+                        .filter(Predicate.not(String::isBlank))
+                        .collect(Collectors.toList()));
     }
 
     public boolean match(String property) {
