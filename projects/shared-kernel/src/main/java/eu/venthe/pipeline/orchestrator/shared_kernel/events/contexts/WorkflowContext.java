@@ -1,10 +1,10 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.DateTimeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.PathContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.UrlContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.model.WorkflowStateContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.WorkflowState;
 
@@ -24,8 +24,8 @@ public class WorkflowContext {
     private WorkflowContext(final JsonNode _root) {
         final var root = ContextUtilities.validateIsObjectNode(_root);
 
-        id = ContextUtilities.ensureText(root.get("id"));
-        name = ContextUtilities.ensureText(root.get("name"));
+        id = ContextUtilities.Text.ensure(root.get("id"));
+        name = ContextUtilities.Text.ensure(root.get("name"));
         path = PathContext.ensure(root.get("path"));
         state = WorkflowStateContext.ensure(root.get("state"));
         url = UrlContext.ensure(root.get("url"));

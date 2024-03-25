@@ -7,7 +7,8 @@ group = "eu.venthe.pipeline"
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
-    implementation(project(":plugins-plugin-api"))
+    implementation(project(":plugins:plugin-api"))
+
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("io.swagger.core.v3:swagger-annotations")
     implementation("io.swagger.core.v3:swagger-models")

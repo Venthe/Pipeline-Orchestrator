@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.WorkflowContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.WorkflowRunContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -18,12 +19,13 @@ import java.time.OffsetDateTime;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class WorkflowRunEvent extends AbstractProjectEvent {
     private final WorkflowContext workflow;
     private final WorkflowRunContext workflowRun;
 
-    protected WorkflowRunEvent(ObjectNode root, OffsetDateTime timestamp) {
-        super(root, EventType.WORKFLOW_RUN, timestamp);
+    public WorkflowRunEvent(ObjectNode root) {
+        super(root, EventType.WORKFLOW_RUN);
 
         workflow = WorkflowContext.ensure(root.get("workflow"));
         workflowRun = WorkflowRunContext.ensure(root.get("workflowRun"));

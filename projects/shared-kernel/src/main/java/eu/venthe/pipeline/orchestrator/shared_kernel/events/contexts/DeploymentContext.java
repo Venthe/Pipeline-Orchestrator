@@ -1,7 +1,6 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.BooleanContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.DateTimeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.GitHashContext;
@@ -40,10 +39,10 @@ public class DeploymentContext {
     private DeploymentContext(final JsonNode _root) {
         final var root = ContextUtilities.validateIsObjectNode(_root);
 
-        this.id = ContextUtilities.ensureText(root.get("id"));
+        this.id = ContextUtilities.Text.ensure(root.get("id"));
         this.sha = GitHashContext.ensure(root.get("sha"));
         this.ref = ReferenceContext.ensure(root.get("ref"));
-        this.task = ContextUtilities.createText(root.get("task"));
+        this.task = ContextUtilities.Text.create(root.get("task"));
         this.createdAt = DateTimeContext.ensure(root.get("createdAt"));
         this.updatedAt = DateTimeContext.ensure(root.get("updatedAt"));
         this.transientEnvironment = BooleanContext.create(root.get("transientEnvironment")).orElse(false);

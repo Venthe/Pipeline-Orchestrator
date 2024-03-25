@@ -3,8 +3,10 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.DateTimeContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.model.DeploymentReviewActionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.DeploymentReviewAction;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -20,6 +22,7 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class DeploymentReviewEvent extends AbstractProjectEvent {
     private final DeploymentReviewAction action;
     private final OffsetDateTime since;
@@ -30,8 +33,8 @@ public class DeploymentReviewEvent extends AbstractProjectEvent {
     private final List<WorkflowJobRunContext> workflowJobRuns;
     private final List<ReviewersContext> reviewers;
 
-    protected DeploymentReviewEvent(ObjectNode root, OffsetDateTime timestamp) {
-        super(root, EventType.DEPLOYMENT_REVIEW, timestamp);
+    public DeploymentReviewEvent(ObjectNode root) {
+        super(root, EventType.DEPLOYMENT_REVIEW);
 
         action = DeploymentReviewActionContext.ensure(root.get("action"));
         since = DateTimeContext.ensure(root.get("since"));

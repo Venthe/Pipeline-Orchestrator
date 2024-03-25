@@ -3,9 +3,10 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.EventIdContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.EventTypeContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.model.EventTypeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.RepositoryContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.UserContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -13,7 +14,6 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.text.MessageFormat;
-import java.time.OffsetDateTime;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -33,31 +33,27 @@ public class AbstractProjectEvent implements ProjectEvent {
     private final UUID id;
 
     private final EventType type;
-    private final OffsetDateTime timestamp;
     private final RepositoryContext repository;
     /**
      * The user that triggered the event.
      */
     private final UserContext sender;
 
-    protected AbstractProjectEvent(JsonNode _root, EventType type, OffsetDateTime timestamp) {
-        if (!_root.isObject()) {
-            throw new IllegalArgumentException();
+    protected AbstractProjectEvent(JsonNode _root, EventType type) {
+        this(_root);
+
+        if (!getType().equals(type)) {
+            throw new IllegalArgumentException(MessageFormat.format("Unsupported event type {0}. Expected {1}", getType(), type));
         }
+    }
 
-        var root = (ObjectNode) _root;
-
-        this.root = root;
-        this.timestamp = timestamp;
+    public AbstractProjectEvent(JsonNode _root) {
+        this.root = ContextUtilities.validateIsObjectNode(_root);
 
         this.type = EventTypeContext.ensure(root.get("type"));
         this.id = EventIdContext.ensure(root.get("id"));
         this.repository = RepositoryContext.ensure(root.get("repository"));
         this.sender = UserContext.ensure(root.get("sender"));
-
-        if (!getType().equals(type)) {
-            throw new IllegalArgumentException(MessageFormat.format("Unsupported event type {0}. Expected {1}", getType(), type));
-        }
     }
 
     @Override

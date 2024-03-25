@@ -5,6 +5,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.ProjectDesc
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.ReferenceContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.ReferenceTypeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -17,6 +18,7 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class CreateEvent extends AbstractProjectEvent {
     /**
      * The repository's current description.
@@ -29,8 +31,8 @@ public class CreateEvent extends AbstractProjectEvent {
     private final String ref;
     private final String refType;
 
-    protected CreateEvent(ObjectNode root, OffsetDateTime timestamp) {
-        super(root, EventType.CREATE, timestamp);
+    public CreateEvent(ObjectNode root) {
+        super(root, EventType.CREATE);
 
         description = ProjectDescriptionContext.create(root.get("description"));
         mainBranch = ReferenceContext.ensure(root.get("mainBranch"));

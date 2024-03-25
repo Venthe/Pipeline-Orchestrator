@@ -18,8 +18,5 @@ public interface ProjectEvent {
 
     UUID getId();
 
-
-    OffsetDateTime getTimestamp();
-
     <T extends ProjectEvent> T specify(Function<ObjectNode, T> creator);
 }

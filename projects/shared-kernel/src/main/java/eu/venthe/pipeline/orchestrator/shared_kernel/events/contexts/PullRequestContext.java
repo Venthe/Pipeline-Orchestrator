@@ -6,6 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 // components/pull-request.yaml#
 public class PullRequestContext {
     public static PullRequestContext ensure(final JsonNode pullRequest) {
-        throw new UnsupportedOperationException();
+        FIXME throw new UnsupportedOperationException();
     }
 }

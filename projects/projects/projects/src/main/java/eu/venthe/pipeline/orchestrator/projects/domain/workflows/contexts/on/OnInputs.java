@@ -29,13 +29,16 @@ public class OnInputs {
 
         return root.properties().stream()
                 .filter(e -> e.getValue().isObject())
-                .map(e -> new InputDefinition(
-                        e.getKey(),
-                        Optional.ofNullable(e.getValue().get("required"))
-                                .map(JsonNode::asBoolean)
-                                .orElse(false),
-                        ContextUtilities.ensureText(e.getValue().get("type"))
-                ))
+                .map(e -> {
+                    JsonNode root1 = e.getValue().get("type");
+                    return new InputDefinition(
+                            e.getKey(),
+                            Optional.ofNullable(e.getValue().get("required"))
+                                    .map(JsonNode::asBoolean)
+                                    .orElse(false),
+                            ContextUtilities.Text.ensure(root1)
+                    );
+                })
                 .filter(InputDefinition::getRequired)
                 .toList();
     }

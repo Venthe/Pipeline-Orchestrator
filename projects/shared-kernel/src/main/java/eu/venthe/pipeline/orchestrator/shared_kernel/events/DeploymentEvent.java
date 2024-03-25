@@ -1,16 +1,16 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.DeploymentActionContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.model.DeploymentActionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.DeploymentContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.WorkflowContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.WorkflowRunContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.DeploymentAction;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.OffsetDateTime;
 import java.util.Optional;
 
 /**
@@ -22,14 +22,15 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class DeploymentEvent extends AbstractProjectEvent {
     private final DeploymentAction action;
     private final DeploymentContext deployment;
     private final Optional<WorkflowContext> workflow;
     private final Optional<WorkflowRunContext> workflowRun;
 
-    protected DeploymentEvent(ObjectNode root, OffsetDateTime timestamp) {
-        super(root, EventType.DEPLOYMENT, timestamp);
+    public DeploymentEvent(ObjectNode root) {
+        super(root, EventType.DEPLOYMENT);
 
         action = DeploymentActionContext.ensure(root.get("action"));
         deployment = DeploymentContext.ensure(root.get("deployment"));

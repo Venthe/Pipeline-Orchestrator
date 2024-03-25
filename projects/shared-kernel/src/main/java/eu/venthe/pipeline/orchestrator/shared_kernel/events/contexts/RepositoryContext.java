@@ -2,6 +2,7 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.UrlContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.model.RepositoryVisibilityContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.RepositoryVisibility;
 

@@ -6,6 +6,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.PullRequest
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.PullRequestReviewContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.PullRequestReviewAction;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -21,13 +22,14 @@ import java.time.OffsetDateTime;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class PullRequestReviewEvent extends AbstractProjectEvent {
     private final PullRequestReviewAction action;
     private final PullRequestContext pullRequest;
     private final PullRequestReviewContext review;
 
-    protected PullRequestReviewEvent(ObjectNode root, OffsetDateTime timestamp) {
-        super(root, EventType.PULL_REQUEST_REVIEW, timestamp);
+    public PullRequestReviewEvent(ObjectNode root) {
+        super(root, EventType.PULL_REQUEST_REVIEW);
 
         action = PullRequestReviewActionContext.ensure(root.get("action"));
         pullRequest = PullRequestContext.ensure(root.get("pullRequest"));

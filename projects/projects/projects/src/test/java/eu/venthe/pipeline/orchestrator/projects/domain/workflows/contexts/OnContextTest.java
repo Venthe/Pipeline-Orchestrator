@@ -1,20 +1,17 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.TextNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.PullRequestEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.PushEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.WorkflowDispatchEventWrapper;
+import eu.venthe.pipeline.orchestrator.projects.domain.utilities.ObjectNodeUtilities;
+import eu.venthe.pipeline.orchestrator.projects.domain.utilities.TestContextProvider;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
 import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.PullRequestEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.PushEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.WorkflowDispatchEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.*;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ThrowableAssert;
@@ -22,11 +19,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
-import java.util.Optional;
 import java.util.UUID;
 
 class OnContextTest {
     private final ObjectMapper objectMapper = YamlUtility.OBJECT_MAPPER;
+    private final TestContextProvider testContextProvider = new TestContextProvider(objectMapper);
 
     @Test
     void notNull1() {
@@ -664,7 +661,10 @@ class OnContextTest {
     @SneakyThrows
     private <T extends ProjectEvent> EventWrapper<?> getEvent(String value) {
         ObjectNode eventTree = (ObjectNode) objectMapper.readTree(value);
-        eventTree.set("id", objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
+
+        ObjectNodeUtilities.deepSetIfNotPresent(objectMapper, eventTree, "id", objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));
+        testContextProvider.repository(eventTree, "repository");
+        testContextProvider.sampleUser(eventTree, "sender");
 
         return switch (eventTree.get("type").asText().toLowerCase(Locale.ROOT)) {
             case "workflow_dispatch" -> mapWorkflowDispatch(eventTree);
@@ -674,23 +674,21 @@ class OnContextTest {
         };
     }
 
-    private PushEventWrapper mapPush(ObjectNode eventTree) throws JsonProcessingException {
-        return new PushEventWrapper(objectMapper.treeToValue(eventTree, PushEvent.class));
+    private PushEventWrapper mapPush(ObjectNode eventTree) {
+        return new PushEventWrapper(new AbstractProjectEvent(eventTree).specify(PushEvent::new));
     }
 
-    private WorkflowDispatchEventWrapper mapWorkflowDispatch(ObjectNode eventTree) throws JsonProcessingException {
-        TextNode ref = Optional.ofNullable((TextNode) eventTree.get("ref")).filter(JsonNode::isTextual).orElse(objectMapper.getNodeFactory().textNode("main"));
-        eventTree.set("ref", ref);
-        return new WorkflowDispatchEventWrapper(objectMapper.treeToValue(eventTree, WorkflowDispatchEvent.class));
+    private WorkflowDispatchEventWrapper mapWorkflowDispatch(ObjectNode eventTree) {
+        ObjectNodeUtilities.deepSetIfNotPresent(objectMapper, eventTree, "ref", objectMapper.getNodeFactory().textNode("main"));
+
+        return new WorkflowDispatchEventWrapper(new AbstractProjectEvent(eventTree).specify(WorkflowDispatchEvent::new));
     }
 
-    private PullRequestEventWrapper mapPullRequest(ObjectNode eventTree) throws JsonProcessingException {
-        ObjectNode pullRequest = Optional.ofNullable((ObjectNode) eventTree.get("pull_request")).orElse(objectMapper.createObjectNode());
-        ObjectNode base = Optional.ofNullable((ObjectNode) pullRequest.get("base")).orElse(objectMapper.createObjectNode());
-        TextNode ref = Optional.ofNullable((TextNode) base.get("ref")).filter(JsonNode::isTextual).orElse(objectMapper.getNodeFactory().textNode("main"));
-        base.set("ref", ref);
-        pullRequest.set("base", base);
-        eventTree.set("pull_request", pullRequest);
-        return new PullRequestEventWrapper(objectMapper.treeToValue(eventTree, PullRequestEvent.class));
+    private PullRequestEventWrapper mapPullRequest(ObjectNode eventTree) {
+        ObjectNodeUtilities.deepSetIfNotPresent(objectMapper, eventTree, "pullRequest.base.ref", objectMapper.getNodeFactory().textNode("main"));
+        ObjectNodeUtilities.deepSetIfNotPresent(objectMapper, eventTree, "action", objectMapper.getNodeFactory().textNode("opened"));
+        ObjectNodeUtilities.deepSetIfNotPresent(objectMapper, eventTree, "number", objectMapper.getNodeFactory().numberNode(1));
+
+        return new PullRequestEventWrapper(new AbstractProjectEvent(eventTree).specify(PullRequestEvent::new));
     }
 }

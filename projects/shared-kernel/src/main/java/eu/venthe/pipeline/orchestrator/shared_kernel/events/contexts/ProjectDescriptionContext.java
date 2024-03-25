@@ -12,6 +12,6 @@ import java.util.Optional;
 @UtilityClass
 public class ProjectDescriptionContext {
     public static Optional<String> create(final JsonNode description) {
-        return ContextUtilities.createText(description);
+        return ContextUtilities.Text.create(description);
     }
 }

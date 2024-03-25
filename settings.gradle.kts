@@ -1,8 +1,11 @@
 fun includeNestedProject(vararg projectNames: String, prefix: String = "projects") {
     projectNames.forEach {
-        val sanitizedName = it.replace("/", "-")
+        val sanitizedName = it.replace("/", ":")
+        val projectDirectory = file("${prefix}/${it}")
+        val fullProjectName = ":$sanitizedName"
+
         include(sanitizedName)
-        project(":$sanitizedName").projectDir = file("${prefix}/${it}")
+        project(fullProjectName).projectDir = projectDirectory
     }
 }
 
@@ -22,7 +25,6 @@ pluginManagement {
 rootProject.name = "orchestrator"
 
 includeNestedProject(
-        "shared-kernel",
         "application",
         "infrastructure/git",
         "infrastructure/in-memory-message-broker",
@@ -40,10 +42,12 @@ includeNestedProject(
         "projects-source-api",
         "projects/projects",
         "projects/projects-api",
+        // FIXME: https://github.com/gradle/gradle/issues/847
+        "projects/projects-shared-kernel",
         "projects/workflow-executions",
         "projects/workflow-executions-api",
-        "projects/shared-kernel",
         "security",
+        "shared-kernel",
         "task-scheduler",
         "task-scheduler-api",
         "utilities",

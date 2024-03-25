@@ -12,19 +12,19 @@ group = "eu.venthe.pipeline"
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
-    implementation(project(":plugins-plugin-api"))
-    implementation(project(":projects-projects-api"))
-    implementation(project(":projects-projects"))
+    implementation(project(":plugins:plugin-api"))
+    implementation(project(":projects:projects-api"))
+    implementation(project(":projects:projects"))
     implementation(project(":projects-source-api"))
-    implementation(project(":projects-shared-kernel"))
+    implementation(project(":projects:projects-shared-kernel"))
     implementation(project(":projects-source"))
     implementation(project(":shared-kernel"))
-    implementation(project(":infrastructure-in-memory-repository"))
-    implementation(project(":infrastructure-in-memory-message-broker"))
-    implementation(project(":infrastructure-message-broker-api"))
+    implementation(project(":infrastructure:in-memory-repository"))
+    implementation(project(":infrastructure:in-memory-message-broker"))
+    implementation(project(":infrastructure:message-broker-api"))
     implementation(project(":shared-kernel"))
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
     implementation("com.fasterxml.jackson.core:jackson-databind")

@@ -7,18 +7,11 @@ repositories {
     mavenCentral()
 }
 
-// Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
-
-//configurations {
-//    compileOnly {
-//        extendsFrom(configurations.annotationProcessor.get())
-//    }
-//}
 
 public enum class DependencyVersion(val version: String) {
     ASSERTJ("3.25.3"),
@@ -105,5 +98,7 @@ tasks.withType<Test> {
 }
 
 allprojects {
-    layout.buildDirectory = File(rootProject.projectDir, "build/${project.path.replace("^:".toRegex(), "").replace(":", "-")}")
+    val path = project.path.replace("^:".toRegex(), "").replace(":", "/")
+    val file = File(rootProject.projectDir, "build/$path")
+    layout.buildDirectory = file
 }

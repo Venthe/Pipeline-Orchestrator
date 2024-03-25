@@ -1,15 +1,14 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.PullRequestActionContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.model.PullRequestActionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.PullRequestContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.PullRequestNumberContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.PullRequestAction;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-
-import java.time.OffsetDateTime;
 
 /**
  * This event occurs when there is activity on a pull request. For more information, see "About pull requests."
@@ -19,13 +18,14 @@ import java.time.OffsetDateTime;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class PullRequestEvent extends AbstractProjectEvent {
     private final Integer number;
     private final PullRequestAction action;
     private final PullRequestContext pullRequest;
 
-    protected PullRequestEvent(ObjectNode root, OffsetDateTime timestamp) {
-        super(root, EventType.PULL_REQUEST, timestamp);
+    public PullRequestEvent(ObjectNode root) {
+        super(root, EventType.PULL_REQUEST);
 
         action = PullRequestActionContext.ensure(root.get("action"));
         number = PullRequestNumberContext.ensure(root.get("number"));

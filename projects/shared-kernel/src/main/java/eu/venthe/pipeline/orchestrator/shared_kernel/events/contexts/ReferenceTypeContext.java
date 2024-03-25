@@ -16,6 +16,6 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ReferenceTypeContext {
     public static String ensure(final JsonNode root) {
-        return ContextUtilities.ensureText(root);
+        return ContextUtilities.Text.ensure(root);
     }
 }

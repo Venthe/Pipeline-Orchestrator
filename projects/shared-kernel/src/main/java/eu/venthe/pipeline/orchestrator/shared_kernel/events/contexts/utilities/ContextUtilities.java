@@ -62,19 +62,22 @@ public class ContextUtilities {
         };
     }
 
-    public static Optional<String> createText(JsonNode root) {
-        return create(root, toTextMapper());
-    }
-
-    public static String ensureText(JsonNode root) {
-        return createText(root).orElseThrow();
-    }
-
     public static ObjectNode validateIsObjectNode(JsonNode root) {
         if (!root.isObject()) {
             throw new IllegalArgumentException();
         }
 
         return (ObjectNode) root;
+    }
+
+    @UtilityClass
+    public static class Text {
+        public static Optional<String> create(JsonNode root) {
+            return ContextUtilities.create(root, toTextMapper());
+        }
+
+        public static String ensure(JsonNode root) {
+            return create(root).orElseThrow();
+        }
     }
 }

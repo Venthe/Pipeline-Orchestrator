@@ -11,8 +11,8 @@ import static java.util.Arrays.stream;
 @Getter
 @RequiredArgsConstructor
 public enum RepositoryVisibility {
-    PRIVATE("PRIVATE"),
-    PUBLIC("PUBLIC");
+    PRIVATE("private"),
+    PUBLIC("public");
 
     private final String value;
 

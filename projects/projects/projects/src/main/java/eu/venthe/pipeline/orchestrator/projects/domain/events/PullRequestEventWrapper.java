@@ -17,7 +17,6 @@ public class PullRequestEventWrapper extends AbstractEventWrapper<PullRequestEve
 
     @Override
     public Boolean matches(OnBranches onBranches) {
-        throw new UnsupportedOperationException();
-        // return onBranches.match(getEvent().getPullRequest().getBase().getRef());
+        return onBranches.match(getEvent().getPullRequest().getBase().getRef());
     }
 }

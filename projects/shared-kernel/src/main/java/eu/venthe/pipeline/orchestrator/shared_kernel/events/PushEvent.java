@@ -7,6 +7,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.Referen
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitHash;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -23,6 +24,7 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class PushEvent extends AbstractProjectEvent {
     /**
      * The SHA of the most recent commit on ref after the push.
@@ -57,8 +59,8 @@ public class PushEvent extends AbstractProjectEvent {
      */
     private final String ref;
 
-    protected PushEvent(ObjectNode root, OffsetDateTime timestamp) {
-        super(root, EventType.PUSH, timestamp);
+    public PushEvent(ObjectNode root) {
+        super(root, EventType.PUSH);
 
         after = GitHashContext.ensure(root.get("after"));
         before = GitHashContext.ensure(root.get("before"));

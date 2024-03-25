@@ -5,6 +5,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.WorkflowDis
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.git.ReferenceContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.common.PathContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -19,13 +20,14 @@ import java.time.OffsetDateTime;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class WorkflowDispatchEvent extends AbstractProjectEvent {
     private final WorkflowDispatchInputsContext inputs;
     private final String ref;
     private final Path workflow;
 
-    protected WorkflowDispatchEvent(ObjectNode root, OffsetDateTime timestamp) {
-        super(root, EventType.WORKFLOW_DISPATCH, timestamp);
+    public WorkflowDispatchEvent(ObjectNode root) {
+        super(root, EventType.WORKFLOW_DISPATCH);
 
         inputs = WorkflowDispatchInputsContext.create(root.get("inputs"));
         ref = ReferenceContext.ensure(root.get("ref"));
