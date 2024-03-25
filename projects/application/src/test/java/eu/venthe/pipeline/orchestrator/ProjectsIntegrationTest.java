@@ -3,6 +3,7 @@ package eu.venthe.pipeline.orchestrator;
 import eu.venthe.pipeline.orchestrator.projects.api.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.api.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationCommandService;
+import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationQueryService;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ReadProjectSourceConfigurationDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import static org.awaitility.Awaitility.await;
 class ProjectsIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     ProjectsSourceConfigurationCommandService projectsSourceConfigurationService;
+    @Autowired
+    ProjectsSourceConfigurationQueryService projectsSourceConfigurationQueryService;
 
     @Autowired
     ProjectsQueryService projectsService;
@@ -32,7 +35,7 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
         String sourceType = "gerrit";
         String projectId = projectsSourceConfigurationService.addProjectSourceConfiguration(id, sourceType, properties);
 
-        Set<ReadProjectSourceConfigurationDto> projectConfigurations = projectsSourceConfigurationService.listConfigurations();
+        Set<ReadProjectSourceConfigurationDto> projectConfigurations = projectsSourceConfigurationQueryService.listConfigurations();
         await().untilAsserted(() -> {
             assertThat(projectConfigurations).singleElement()
                     .isEqualTo(new ReadProjectSourceConfigurationDto(id, sourceType));

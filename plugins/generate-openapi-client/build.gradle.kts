@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
+
 plugins {
     kotlin("jvm") version "1.9.23"
     `java-gradle-plugin`
@@ -5,6 +7,10 @@ plugins {
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 repositories {

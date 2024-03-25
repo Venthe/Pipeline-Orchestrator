@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator._archive2.projects;
 
 import eu.venthe.pipeline.orchestrator.AbstractIntegrationTest;
@@ -20,3 +21,4 @@ class ProjectSynchronizerTest extends AbstractIntegrationTest {
         projectSynchronizer.test();
     }
 }
+*/

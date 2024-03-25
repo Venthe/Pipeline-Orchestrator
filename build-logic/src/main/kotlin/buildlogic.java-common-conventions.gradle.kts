@@ -11,9 +11,11 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
-public enum class DependencyVersion(val version: String) {
+enum class DependencyVersion(val version: String) {
     ASSERTJ("3.25.3"),
     AWAITILITY("4.2.0"),
     COMMONS_TEXT("1.11.0"),
@@ -93,12 +95,12 @@ dependencies {
     implementation("com.github.f4b6a3:uuid-creator")
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
 allprojects {
     val path = project.path.replace("^:".toRegex(), "").replace(":", "/")
     val file = File(rootProject.projectDir, "build/$path")
     layout.buildDirectory = file
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
 }

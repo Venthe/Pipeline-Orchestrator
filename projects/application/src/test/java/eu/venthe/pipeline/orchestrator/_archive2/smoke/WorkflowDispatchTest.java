@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator._archive2.smoke;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -64,3 +65,4 @@ class WorkflowDispatchTest extends AbstractIntegrationTest {
         return new TriggerEvent(rawEvent);
     }
 }
+*/

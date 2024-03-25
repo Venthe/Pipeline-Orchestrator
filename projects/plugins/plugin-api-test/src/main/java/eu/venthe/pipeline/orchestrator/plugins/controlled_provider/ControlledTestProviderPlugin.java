@@ -4,10 +4,12 @@ import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectPlugin;
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectProvider;
 import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.UUID;
 
+@Component
 @RequiredArgsConstructor
 public class ControlledTestProviderPlugin implements ProjectPlugin {
     public static final String SOURCE_TYPE = "test_provider";
