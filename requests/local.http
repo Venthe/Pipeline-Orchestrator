@@ -1,0 +1,2 @@
+GET http://localhost:8081/projects-source-configurations/list
+Accept: application/json;text/json
