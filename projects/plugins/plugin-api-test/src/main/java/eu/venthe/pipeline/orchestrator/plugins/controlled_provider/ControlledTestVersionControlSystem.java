@@ -1,11 +1,13 @@
 package eu.venthe.pipeline.orchestrator.plugins.controlled_provider;
 
 import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
+import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.*;
 import java.util.function.Function;
 
+@Service
 public class ControlledTestVersionControlSystem implements VersionControlSystemProvider {
 
     private final Map<FileRef, String> files = new HashMap<>();

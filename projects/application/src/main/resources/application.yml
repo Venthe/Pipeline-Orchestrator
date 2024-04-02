@@ -6,12 +6,13 @@ spring:
     banner-mode: off
   mustache:
     check-template-location: false
+gerrit.enabled: true
 logging:
   level:
     "org.apache.http": DEBUG
-    "org.springframework.web": TRACE
-    "org.springframework.web.client": TRACE
-    "org.springframework.web.client.RestTemplate": TRACE
+    "org.springframework.web": DEBUG
+    "org.springframework.web.client": DEBUG
+    "org.springframework.web.client.RestTemplate": DEBUG
 #versionControlSystem: gerrit
 #jobExecutor: docker
 plugins:

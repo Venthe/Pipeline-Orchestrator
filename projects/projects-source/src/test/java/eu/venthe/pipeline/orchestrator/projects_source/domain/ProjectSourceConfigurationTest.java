@@ -38,7 +38,7 @@ class ProjectSourceConfigurationTest {
     void setup() {
         versionControlSystem = new ControlledTestVersionControlSystem();
         projectProvider = new ControlledTestProjectProvider();
-        projectSourceConfigurationFactory = new ProjectSourceConfigurationFactory(Set.of(new ControlledTestProviderPlugin(versionControlSystem, projectProvider)));
+        projectSourceConfigurationFactory = new ProjectSourceConfigurationFactoryImpl(Set.of(new ControlledTestProviderPlugin(versionControlSystem, projectProvider)));
         configurationId = generateId();
     }
 

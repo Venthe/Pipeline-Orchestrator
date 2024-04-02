@@ -4,6 +4,7 @@ import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectDto;
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectProvider;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -17,6 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Service
 @Slf4j
 public class ControlledTestProjectProvider implements ProjectProvider {
     private final Set<ProjectDto> projects = new HashSet<>();

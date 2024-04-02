@@ -1,12 +1,10 @@
 package eu.venthe.pipeline.orchestrator.projects_source.application;
 
+import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectPlugin;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationQueryService;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ReadProjectSourceConfigurationDto;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationCommandService;
-import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfigurationFactory;
-import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectsSourceRepository;
+import eu.venthe.pipeline.orchestrator.projects_source.domain.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +25,7 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
     private final ProjectsSourceRepository repository;
     private final DomainMessageBroker messageBroker;
     private final ProjectSourceConfigurationFactory factory;
+    private final ProjectSourcePluginQueryService pluginQueryService;
 
     @Override
     public String addProjectSourceConfiguration(String id, String sourceType, Map<String, String> properties) {
@@ -71,6 +70,16 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
     public Optional<ReadProjectSourceConfigurationDto> getConfiguration(String projectSourceConfigurationId) {
         return repository.find(ProjectSourceConfigurationId.of(projectSourceConfigurationId))
                 .map(projectSourceConfiguration -> projectSourceConfiguration.visitor(ReadProjectSourceConfigurationDto::new));
+    }
+
+    @Override
+    public Set<String> listSystemTypes() {
+        return pluginQueryService.listSystemTypes();
+    }
+
+    @Override
+    public Optional<ProjectPlugin> getPluginDefinition(String systemType) {
+        return pluginQueryService.getPlugin(systemType);
     }
 
 }

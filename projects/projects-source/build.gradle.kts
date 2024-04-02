@@ -15,4 +15,6 @@ dependencies {
 
     implementation("org.springframework:spring-web")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
+    implementation("com.fasterxml.jackson.core:jackson-databind")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 }
