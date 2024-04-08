@@ -1,10 +1,14 @@
 package eu.venthe.pipeline.orchestrator.projects_source.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.venthe.pipeline.orchestrator.plugins.projects.CreateProjectSourceConfigurationDto;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,15 +29,19 @@ public class ProjectsSourceController {
     }
 
     @PostMapping("/{projectSourceConfigurationId}/synchronize")
-    public ResponseEntity<?> synchronizeProjects(@PathVariable String projectSourceConfigurationId) {
+    public ResponseEntity<?> synchronizeProjects(@PathVariable("projectSourceConfigurationId") String projectSourceConfigurationId) {
         commandService.synchronizeProjects(projectSourceConfigurationId);
 
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/")
-    public ResponseEntity<?> synchronizeProjects(@RequestBody CreateProjectSourceConfigurationDto configurationDto) {
-        commandService.addProjectSourceConfiguration(configurationDto.getId(), configurationDto.getSourceType(), configurationDto.getProperties());
+    @PostMapping(consumes = {"application/json"})
+    public ResponseEntity<?> synchronizeProjects(@RequestBody ObjectNode configurationDto) {
+        commandService.addProjectSourceConfiguration(
+                configurationDto.get("configurationId").asText(),
+                configurationDto.get("systemType").asText(),
+                Map.of()
+        );
 
         return ResponseEntity.ok().build();
     }

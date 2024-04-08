@@ -34,7 +34,7 @@ public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfig
                 .forEach(project -> {
                     if (knownProjects.get(project.getId()) != null) {
                         log.info("Project {} is already registered", project.getId());
-                        return;
+                        //return;
                     }
 
                     log.info("Registering project {}", project.getId());

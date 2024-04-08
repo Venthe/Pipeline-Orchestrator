@@ -1,4 +1,3 @@
-/*
 package eu.venthe.pipeline.orchestrator.projects.api;
 
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.MessageListenerRegistry;
@@ -10,17 +9,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProjectEventListener {
     private final ProjectsCommandService projectsService;
+    private final ProjectsQueryService queryService;
 
-    public ProjectEventListener(MessageListenerRegistry listener, ProjectsCommandService projectsService) {
+    public ProjectEventListener(MessageListenerRegistry listener, ProjectsCommandService projectsService, ProjectsQueryService queryService) {
         this.projectsService = projectsService;
+        this.queryService = queryService;
 
-        listener.observe(ProjectDiscoveredEvent.class, (envelope -> projectAdded(envelope.getData())));
+        listener.observe(ProjectDiscoveredEvent.class, (envelope -> projectDiscovered(envelope.getData())));
     }
 
-    public void projectAdded(ProjectDiscoveredEvent event) {
+    public void projectDiscovered(ProjectDiscoveredEvent event) {
         log.info("Received ProjectSourceConfigurationAddedEvent. {}", event);
-        projectsService.add(new CreateProjectSpecification(new ProjectId(event.getProjectName(), event.getSystemId())));
-    }
 
+        if (queryService.find(event.getSystemId(), event.getProjectName()).isEmpty()) {
+            projectsService.add(new CreateProjectSpecification(event.getProjectName(), event.getSystemId()));
+        } else {
+            throw new UnsupportedOperationException();
+        }
+    }
 }
-*/

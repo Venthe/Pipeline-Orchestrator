@@ -12,26 +12,48 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static eu.venthe.pipeline.orchestrator.projects.domain.utilities.PipelineUtilities.resolveFromOrchestratorDirectory;
 
 @RequiredArgsConstructor
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Project implements Aggregate<ProjectId>, ProjectCommands {
-    private final EventHandlerProvider eventHandlerProvider;
-    private final VersionControlSystemProvider versionControlSystemProvider;
-    private final WorkflowFactory workflowFactory;
+public class Project implements Aggregate<ProjectId> {
 
     @EqualsAndHashCode.Include
     private final ProjectId id;
 
-    @Override
-    public Collection<DomainEvent> handleEvent(ProjectEvent event) {
-        return eventHandlerProvider.handle(this, event);
+    public Function<EventHandlerProvider, Collection<DomainEvent>> handleEvent(ProjectEvent event) {
+        return eventHandlerProvider -> eventHandlerProvider.handle(this, event);
     }
 
-    public Optional<eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow> getWorkflow(String ref, String workflow) {
-        return versionControlSystemProvider.getFile(id.getId(), ref, resolveFromOrchestratorDirectory(workflow), workflowFactory::fromBytes);
+    public BiFunction<VersionControlSystemProvider, WorkflowFactory, Optional<eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow>> getWorkflow(String ref, String workflow) {
+        return (versionControlSystemProvider, workflowFactory) -> versionControlSystemProvider.getFile(id.getId(), ref, resolveFromOrchestratorDirectory(workflow), workflowFactory::fromBytes);
+    }
+
+    public Collection<DomainEvent> registerManualWorkflow(String path) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Collection<DomainEvent> unregisterManualWorkflow(String path) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Collection<DomainEvent> refreshProject() {
+        throw new UnsupportedOperationException();
+    }
+
+    public Collection<DomainEvent> registerTrackedRef(String ref) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Collection<DomainEvent> unregisterTrackedRef(String ref) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Collection<DomainEvent> executeManualWorkflow(String path) {
+        throw new UnsupportedOperationException();
     }
 }

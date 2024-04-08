@@ -47,6 +47,13 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
 
+    testImplementation(platform("io.cucumber:cucumber-bom:7.16.1"))
+    testImplementation("io.cucumber:cucumber-java")
+    testImplementation("io.cucumber:cucumber-junit")
+    testImplementation("io.cucumber:cucumber-spring")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine")
+    testImplementation("org.junit.platform:junit-platform-suite")
+
     // implementation("com.google.code.findbugs:jsr305:3.0.2")
     // implementation("io.vertx:vertx-json-schema:4.5.1")
     // implementation("javax.validation:validation-api:2.0.1.Final")
@@ -54,4 +61,9 @@ dependencies {
     // implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     // implementation("org.springframework.kafka:spring-kafka")
     // testImplementation("org.springframework.kafka:spring-kafka-test")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+    systemProperty("cucumber.junit-platform.naming-strategy", "long")
 }
