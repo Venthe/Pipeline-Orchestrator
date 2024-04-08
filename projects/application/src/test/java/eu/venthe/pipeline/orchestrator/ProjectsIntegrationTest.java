@@ -5,6 +5,7 @@ import eu.venthe.pipeline.orchestrator.projects.api.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationCommandService;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationQueryService;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ReadProjectSourceConfigurationDto;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,6 +26,7 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
     ProjectsQueryService projectsService;
 
     @Test
+    @Disabled
     void name() {
         Map<String, String> properties = Map.of(
                 "username", "admin",

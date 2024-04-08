@@ -6,6 +6,8 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
 
     // id("org.graalvm.buildtools.native") version "0.9.18"
+
+    `jvm-test-suite`
 }
 
 group = "eu.venthe.pipeline"
@@ -47,13 +49,6 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
 
-    testImplementation(platform("io.cucumber:cucumber-bom:7.16.1"))
-    testImplementation("io.cucumber:cucumber-java")
-    testImplementation("io.cucumber:cucumber-junit")
-    testImplementation("io.cucumber:cucumber-spring")
-    testImplementation("io.cucumber:cucumber-junit-platform-engine")
-    testImplementation("org.junit.platform:junit-platform-suite")
-
     // implementation("com.google.code.findbugs:jsr305:3.0.2")
     // implementation("io.vertx:vertx-json-schema:4.5.1")
     // implementation("javax.validation:validation-api:2.0.1.Final")
@@ -63,7 +58,45 @@ dependencies {
     // testImplementation("org.springframework.kafka:spring-kafka-test")
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-    systemProperty("cucumber.junit-platform.naming-strategy", "long")
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) { useJUnitJupiter() }
+
+        register<JvmTestSuite>("endToEndTest") {
+            useJUnitJupiter()
+
+            dependencies {
+                implementation(project())
+                implementation(project(":application"))
+                implementation(project(":plugins:plugin-api"))
+                implementation(project(":projects:projects-api"))
+                implementation(project(":projects-source-api"))
+                implementation(project(":plugins:plugin-api-test"))
+                implementation(project(":infrastructure:message-broker-api"))
+                implementation(platform("io.cucumber:cucumber-bom:7.16.1"))
+                implementation("io.cucumber:cucumber-java")
+                implementation("io.cucumber:cucumber-junit")
+                implementation("io.cucumber:cucumber-spring")
+                implementation("io.cucumber:cucumber-junit-platform-engine")
+                implementation("org.junit.platform:junit-platform-suite")
+                implementation("org.assertj:assertj-core")
+                implementation("org.springframework.boot:spring-boot-starter-test")
+                implementation("org.slf4j:slf4j-api")
+            }
+
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                        systemProperty("cucumber.junit-platform.naming-strategy", "long")
+                    }
+                }
+            }
+        }
+    }
+}
+
+tasks.named("check") {
+    dependsOn("endToEndTest")
+    shouldRunAfter("endToEndTest")
 }

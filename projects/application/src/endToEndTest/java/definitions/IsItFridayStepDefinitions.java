@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator;
+package definitions;
 
 import eu.venthe.pipeline.orchestrator.projects.api.ProjectsQueryService;
 import io.cucumber.java.en.Given;
@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
-public class MyStepdefs {
+public class IsItFridayStepDefinitions {
     private final ProjectsQueryService projectsQueryService;
     String today;
     String msg;
@@ -33,7 +33,7 @@ public class MyStepdefs {
 
     @Then("I should be told {string}")
     public void iShouldBeTold(String arg0) {
-        log.info("{}", projectsQueryService.listProjects());
+        log.info("!!{}!!", projectsQueryService.listProjects());
         Assertions.assertThat(msg).isEqualToIgnoringCase(arg0);
     }
 }
