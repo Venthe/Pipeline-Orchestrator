@@ -6,6 +6,8 @@ spring:
     banner-mode: off
   mustache:
     check-template-location: false
+  thymeleaf:
+    check-template-location: false
 gerrit.enabled: true
 logging:
   level:

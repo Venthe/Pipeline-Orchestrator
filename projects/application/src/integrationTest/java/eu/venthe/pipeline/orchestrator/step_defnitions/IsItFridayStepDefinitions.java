@@ -1,6 +1,6 @@
-package definitions;
+package eu.venthe.pipeline.orchestrator.step_defnitions;
 
-import eu.venthe.pipeline.orchestrator.projects.api.ProjectsQueryService;
+import dasniko.testcontainers.keycloak.KeycloakContainer;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,7 +13,8 @@ import java.util.Objects;
 @Slf4j
 @RequiredArgsConstructor
 public class IsItFridayStepDefinitions {
-    private final ProjectsQueryService projectsQueryService;
+    private final KeycloakContainer keycloakContainer;
+
     String today;
     String msg;
 
@@ -33,7 +34,6 @@ public class IsItFridayStepDefinitions {
 
     @Then("I should be told {string}")
     public void iShouldBeTold(String arg0) {
-        log.info("!!{}!!", projectsQueryService.listProjects());
         Assertions.assertThat(msg).isEqualToIgnoringCase(arg0);
     }
 }

@@ -14,6 +14,7 @@ group = "eu.venthe.pipeline"
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
+    // Project modules
     implementation(project(":plugins:plugin-api"))
     implementation(project(":plugins:gerrit-source-plugin"))
     implementation(project(":projects:projects-api"))
@@ -28,53 +29,54 @@ dependencies {
     implementation(project(":infrastructure:message-broker-api"))
     implementation(project(":shared-kernel"))
 
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
-
+    // Web API
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    // implementation("org.springframework:spring-web")
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
+    // Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.togglz:togglz-spring-security")
+
+    // Libraries
     implementation("com.google.guava:guava")
     implementation("commons-codec:commons-codec")
-    implementation("de.undercouch:bson4jackson")
-    implementation("org.hibernate.validator:hibernate-validator")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework:spring-web")
     implementation("org.togglz:togglz-spring-boot-starter")
 
+    // Development
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
-    testImplementation("org.mock-server:mockserver-client-java")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.testcontainers:testcontainers")
-    testImplementation("org.testcontainers:junit-jupiter")
+    // Persistence
+    implementation("de.undercouch:bson4jackson")
+    implementation("org.hibernate.validator:hibernate-validator")
+    // implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 
+    // Observability
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    // implementation("org.springframework.kafka:spring-kafka")
+
+    // Static analysis
     // implementation("com.google.code.findbugs:jsr305:3.0.2")
     // implementation("io.vertx:vertx-json-schema:4.5.1")
-    // implementation("javax.validation:validation-api:2.0.1.Final")
-    // implementation("org.jetbrains:annotations:23.0.0")
-    // implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-    // implementation("org.springframework.kafka:spring-kafka")
-    // testImplementation("org.springframework.kafka:spring-kafka-test")
 }
 
+@Suppress("UnstableApiUsage")
 testing {
     suites {
         val test by getting(JvmTestSuite::class) { useJUnitJupiter() }
 
-        register<JvmTestSuite>("endToEndTest") {
+        register<JvmTestSuite>("integrationTest") {
             useJUnitJupiter()
 
             dependencies {
+                implementation(platform("io.cucumber:cucumber-bom:7.16.1"))
                 implementation(project())
                 implementation(project(":application"))
-                implementation(project(":plugins:plugin-api"))
-                implementation(project(":projects:projects-api"))
-                implementation(project(":projects-source-api"))
-                implementation(project(":plugins:plugin-api-test"))
-                implementation(project(":infrastructure:message-broker-api"))
-                implementation(platform("io.cucumber:cucumber-bom:7.16.1"))
-                implementation("io.cucumber:cucumber-java")
+                implementation("org.springframework:spring-web")
+                implementation("io.cucumber:cucumber-java") {}
                 implementation("io.cucumber:cucumber-junit")
                 implementation("io.cucumber:cucumber-spring")
                 implementation("io.cucumber:cucumber-junit-platform-engine")
@@ -82,11 +84,22 @@ testing {
                 implementation("org.assertj:assertj-core")
                 implementation("org.springframework.boot:spring-boot-starter-test")
                 implementation("org.slf4j:slf4j-api")
+                //implementation("org.mock-server:mockserver-client-java:5.15.0")
+                implementation("org.testcontainers:testcontainers")
+                implementation("org.testcontainers:junit-jupiter")
+                implementation("com.fasterxml.jackson.core:jackson-databind")
+                implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+                implementation("com.github.dasniko:testcontainers-keycloak:3.3.0")
+                // implementation("org.springframework.kafka:spring-kafka-test")// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+                implementation("io.jsonwebtoken:jjwt-api:0.12.5")// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+                runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.5")
+                implementation("io.jsonwebtoken:jjwt-jackson:0.12.5")
             }
 
             targets {
                 all {
                     testTask.configure {
+                        useJUnitPlatform()
                         shouldRunAfter(test)
                         systemProperty("cucumber.junit-platform.naming-strategy", "long")
                     }
@@ -97,6 +110,6 @@ testing {
 }
 
 tasks.named("check") {
-    dependsOn("endToEndTest")
-    shouldRunAfter("endToEndTest")
+    dependsOn("integrationTest")
+    shouldRunAfter("integrationTest")
 }

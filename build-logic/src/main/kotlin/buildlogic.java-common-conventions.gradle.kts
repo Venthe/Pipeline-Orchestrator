@@ -66,11 +66,13 @@ dependencies {
         implementation("org.springframework:spring-context:${DependencyVersion.SPRING_FRAMEWORK.version}")
         implementation("org.springframework:spring-web:${DependencyVersion.SPRING_FRAMEWORK.version}")
         implementation("org.togglz:togglz-spring-boot-starter:${DependencyVersion.TOGGLZ_SPRING_BOOT_STARTER.version}")
+        implementation("org.togglz:togglz-spring-security:${DependencyVersion.TOGGLZ_SPRING_BOOT_STARTER.version}")
         testImplementation("org.assertj:assertj-core:${DependencyVersion.ASSERTJ.version}")
         testImplementation("org.awaitility:awaitility:${DependencyVersion.AWAITILITY.version}")
         testImplementation("org.junit.jupiter:junit-jupiter-api:${DependencyVersion.JUNIT.version}")
         testImplementation("org.junit.jupiter:junit-jupiter-params:${DependencyVersion.JUNIT.version}")
         testImplementation("org.mock-server:mockserver-client-java:${DependencyVersion.MOCKSERVER_CLIENT_JAVA.version}")
+        implementation("org.mock-server:mockserver-client-java:${DependencyVersion.MOCKSERVER_CLIENT_JAVA.version}")
         testImplementation("org.slf4j:slf4j-simple:${DependencyVersion.SLF4J.version}") // FIXME: Swap for logback
         testImplementation("org.testcontainers:junit-jupiter:${DependencyVersion.TEST_CONTAINERS.version}")
         testImplementation("org.testcontainers:kafka:${DependencyVersion.TEST_CONTAINERS.version}")
