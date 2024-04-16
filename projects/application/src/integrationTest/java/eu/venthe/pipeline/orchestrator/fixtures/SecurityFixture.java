@@ -53,4 +53,9 @@ public class SecurityFixture {
                  .get("public_key")
                  .asText();
     }
+
+    public void verify(JsonWebToken token) {
+        String publicKey = getPublicKey();
+        token.verify(publicKey);
+    }
 }

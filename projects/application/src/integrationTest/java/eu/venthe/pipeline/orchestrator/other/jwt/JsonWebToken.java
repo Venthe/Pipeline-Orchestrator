@@ -20,7 +20,7 @@ public class JsonWebToken {
 
     private final JsonNode header;
     private final JsonNode payload;
-    private final JsonNode signature;
+    private final String signature;
 
     @SneakyThrows
     public JsonWebToken(final ObjectMapper objectMapper, final String token) {
@@ -30,7 +30,7 @@ public class JsonWebToken {
         var decoder = Base64.getUrlDecoder();
         header = objectMapper.readTree(new String(decoder.decode(chunks[0])));
         payload = objectMapper.readTree(new String(decoder.decode(chunks[1])));
-        signature = objectMapper.readTree(new String(decoder.decode(chunks[2])));
+        signature = chunks[2];
     }
 
     @SneakyThrows

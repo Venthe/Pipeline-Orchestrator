@@ -24,7 +24,6 @@ public class SecurityStepDefinition {
     @Then("login details are available")
     public void login_details_are_available() {
         Assertions.assertThat(token).isNotNull();
-        var key = securityFixture.getPublicKey();
-        token.verify(key);
+        securityFixture.verify(token);
     }
 }
