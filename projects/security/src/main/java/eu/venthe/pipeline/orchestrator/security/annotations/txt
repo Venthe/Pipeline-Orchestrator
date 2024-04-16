@@ -1,0 +1,51 @@
+Designing RBAC (Role-Based Access Control) roles for a CI/CD (Continuous Integration/Continuous Deployment) system involves identifying the various tasks, privileges, and responsibilities involved in the CI/CD process. Here's a suggested RBAC model:
+
+Admin Role:
+Description: This role has full control over the CI/CD system, including managing users, projects, pipelines, and integrations.
+        Privileges:
+Create, read, update, and delete projects.
+        Create, read, update, and delete pipelines.
+Manage user roles and permissions.
+Access to system configuration settings.
+View logs and metrics.
+
+Developer Role:
+Description: Developers responsible for writing code and configuring CI/CD pipelines for their projects.
+Privileges:
+Create, read, update, and delete pipelines for projects they have access to.
+Trigger manual pipeline runs.
+View pipeline statuses and logs for projects they have access to.
+Access to project-specific settings.
+View project metrics.
+
+        QA/Test Role:
+Description: Quality assurance engineers responsible for testing applications deployed through CI/CD.
+        Privileges:
+Trigger manual pipeline runs for testing purposes.
+View pipeline statuses and logs for projects they have access to.
+Access to test environments.
+Ability to view and manage test results.
+Access to project-specific settings related to testing.
+
+Operations Role:
+Description: Operations personnel responsible for monitoring and maintaining the CI/CD infrastructure.
+Privileges:
+View system-wide logs and metrics.
+Monitor resource usage and performance.
+Manage system integrations and external services.
+Access to system configuration settings.
+Restart services and troubleshoot issues.
+
+Viewer Role:
+Description: Users who need read-only access to view project and pipeline information.
+Privileges:
+        View pipelines, pipeline statuses, and logs.
+View project settings and configuration.
+Access to project metrics for reporting purposes.
+
+Auditor Role:
+Description: Users responsible for auditing CI/CD activities for compliance and security purposes.
+Privileges:
+View audit logs.
+Access to historical pipeline runs and results.
+Review access control settings and user activity.

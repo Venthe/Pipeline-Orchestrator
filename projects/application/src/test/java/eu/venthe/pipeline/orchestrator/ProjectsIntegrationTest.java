@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator;
 
-import eu.venthe.pipeline.orchestrator.projects.api.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.api.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationCommandService;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationQueryService;
@@ -43,7 +43,7 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
                     .isEqualTo(new ReadProjectSourceConfigurationDto(id, sourceType));
         });
 
-        projectsSourceConfigurationService.synchronizeProjects(projectId);
+        projectsSourceConfigurationService.synchronizeProject(projectId);
 
         await().untilAsserted(() -> {
             Collection<ProjectDto> projects = projectsService.listProjects();

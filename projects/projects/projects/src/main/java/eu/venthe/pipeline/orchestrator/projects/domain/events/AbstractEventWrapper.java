@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.model.EventType;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.model.EventType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

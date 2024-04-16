@@ -1,22 +1,21 @@
 package eu.venthe.pipeline.orchestrator.projects.api;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.CreateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.UpdateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
 
 public interface ProjectsCommandService {
 
-    default void add(CreateProjectSpecification newProjectDto) {
+    default void add(CreateProjectSpecificationDto newProjectDto) {
         throw new UnsupportedOperationException();
     }
 
-    default void update(String projectId) {
+    default void updateDetails(String projectId, UpdateProjectSpecificationDto updateProjectSpecification) {
         throw new UnsupportedOperationException();
     }
 
-    default void archive(String projectId) {
-        throw new UnsupportedOperationException();
-    }
-
-    default void makePublic(String projectId) {
+    default void changeStatus(String projectId, ProjectStatus status) {
         throw new UnsupportedOperationException();
     }
 
@@ -24,7 +23,23 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default void handleEvent(String projectId, ProjectEvent event) {
+    default void handleVersionControlEvent(String projectId, ProjectEvent event) {
+        throw new UnsupportedOperationException();
+    }
+
+    default void registerManualWorkflow(String projectId) {
+        throw new UnsupportedOperationException();
+    }
+
+    default void unregisterManualWorkflow(String projectId) {
+        throw new UnsupportedOperationException();
+    }
+
+    default void registerTrackedBranch(String projectId) {
+        throw new UnsupportedOperationException();
+    }
+
+    default void unregisterTrackedBranch(String projectId) {
         throw new UnsupportedOperationException();
     }
 }

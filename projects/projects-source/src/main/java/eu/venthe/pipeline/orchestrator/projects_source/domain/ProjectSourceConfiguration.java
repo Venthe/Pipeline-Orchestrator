@@ -3,8 +3,9 @@ package eu.venthe.pipeline.orchestrator.projects_source.domain;
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectProvider;
 import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
 import eu.venthe.pipeline.orchestrator.projects_source.api.events.ProjectDiscoveredEvent;
+import eu.venthe.pipeline.orchestrator.projects_source.api.events.ProjectSourceConfigurationRemovedEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,15 +31,16 @@ public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfig
         Set<DomainEvent> domainEvents = new HashSet<>();
 
         projectProvider.getProjects().stream()
-                .map(projectDto -> new KnownProject(projectDto.getId(), id.getValue()))
+                .map(projectDto -> new KnownProject(projectDto.getId(), id.getValue(), projectDto.getStatus()))
                 .forEach(project -> {
                     if (knownProjects.get(project.getId()) != null) {
                         log.info("Project {} is already registered", project.getId());
                         //return;
+                    } else {
+                        log.info("Registering project {}", project.getId());
                     }
 
-                    log.info("Registering project {}", project.getId());
-                    domainEvents.add(new ProjectDiscoveredEvent(project.getId(), id.getValue()));
+                    domainEvents.add(new ProjectDiscoveredEvent(project.getId(), id.getValue(), project.getStatus()));
                     knownProjects.put(project.getId(), project);
                 });
 
@@ -47,7 +49,7 @@ public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfig
     }
 
     public Collection<DomainEvent> delete() {
-        throw new UnsupportedOperationException();
+        return List.of(new ProjectSourceConfigurationRemovedEvent(id.getValue()));
     }
 
     public <T> T visitor(ProjectSourceVisitor<T> visitor) {

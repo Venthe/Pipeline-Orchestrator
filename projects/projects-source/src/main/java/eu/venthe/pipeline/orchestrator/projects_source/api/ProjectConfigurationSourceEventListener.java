@@ -18,6 +18,6 @@ public class ProjectConfigurationSourceEventListener {
 
     public void projectSourceAdded(ProjectSourceConfigurationAddedEvent event) {
         log.info("Received ProjectSourceConfigurationAddedEvent. {}", event);
-        projectsSourceConfigurationService.synchronizeProjects(event.getSourceId());
+        projectsSourceConfigurationService.synchronizeProject(event.getSourceId());
     }
 }

@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator.plugins.controlled_provider;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectDto;
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectProvider;
+import eu.venthe.pipeline.orchestrator.shared_kernel.projects.ProjectStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +49,7 @@ public class ControlledTestProjectProvider implements ProjectProvider {
         JsonNode body = forEntity.getBody();
         return StreamSupport.stream(body.spliterator(), true)
                 .filter(n -> n.get("type").asText().equalsIgnoreCase("directory"))
-                .map(n -> new ProjectDto(ProjectDto.Status.ACTIVE, n.get("path").asText()))
+                .map(n -> new ProjectDto(eu.venthe.pipeline.orchestrator.shared_kernel.projects.ProjectStatus.PUBLIC, n.get("path").asText()))
                 .collect(Collectors.toSet());
     }
 
@@ -66,7 +66,7 @@ public class ControlledTestProjectProvider implements ProjectProvider {
         return Files.list(path)
                 .map(Path::getFileName)
                 .map(Path::toString)
-                .map(id -> new ProjectDto(ProjectDto.Status.ACTIVE, id))
+                .map(id -> new ProjectDto(ProjectStatus.PUBLIC, id))
                 .collect(Collectors.toSet());
     }
 

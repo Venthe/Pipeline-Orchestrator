@@ -26,7 +26,7 @@ public class GerritProjectProvider implements ProjectProvider {
     @Override
     public Collection<ProjectDto> getProjects() {
         return getListProjects().keySet().stream()
-                .map(projectId -> new ProjectDto(ProjectDto.Status.ACTIVE, projectId))
+                .map(projectId -> new ProjectDto(eu.venthe.pipeline.orchestrator.shared_kernel.projects.ProjectStatus.PUBLIC, projectId))
                 .collect(Collectors.toSet());
     }
 

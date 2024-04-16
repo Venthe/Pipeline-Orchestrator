@@ -1,9 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects_source.api.events;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
-import lombok.Builder;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
 import lombok.Value;
-import lombok.experimental.SuperBuilder;
 
 @Value
 public class ProjectSourceConfigurationAddedEvent implements DomainEvent {

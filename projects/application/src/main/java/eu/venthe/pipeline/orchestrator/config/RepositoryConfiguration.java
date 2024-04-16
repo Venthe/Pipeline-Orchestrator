@@ -10,7 +10,7 @@ import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfi
 import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.projects_source.domain.ProjectsSourceRepository;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

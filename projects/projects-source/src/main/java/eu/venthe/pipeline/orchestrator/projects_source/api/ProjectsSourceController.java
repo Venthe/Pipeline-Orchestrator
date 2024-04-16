@@ -2,13 +2,13 @@ package eu.venthe.pipeline.orchestrator.projects_source.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.TextNode;
+import eu.venthe.pipeline.orchestrator.security.annotations.IsProjectManager;
+import eu.venthe.pipeline.orchestrator.security.annotations.IsSystemAdministrator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,15 +28,29 @@ public class ProjectsSourceController {
         return ResponseEntity.ok(queryService.getConfiguration(projectSourceConfigurationId));
     }
 
+    @DeleteMapping("/{projectSourceConfigurationId}")
+    public ResponseEntity<?> removeProjectSourceConfiguration(@PathVariable String projectSourceConfigurationId) {
+        commandService.removeProjectSourceConfiguration(projectSourceConfigurationId);
+
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/{projectSourceConfigurationId}/synchronize")
-    public ResponseEntity<?> synchronizeProjects(@PathVariable("projectSourceConfigurationId") String projectSourceConfigurationId) {
-        commandService.synchronizeProjects(projectSourceConfigurationId);
+    public ResponseEntity<?> synchronizeProject(@PathVariable("projectSourceConfigurationId") String projectSourceConfigurationId) {
+        commandService.synchronizeProject(projectSourceConfigurationId);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/synchronize")
+    public ResponseEntity<?> synchronizeProjects() {
+        commandService.synchronizeProjects();
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(consumes = {"application/json"})
-    public ResponseEntity<?> synchronizeProjects(@RequestBody ObjectNode configurationDto) {
+    public ResponseEntity<?> addProjectSourceConfiguration(@RequestBody ObjectNode configurationDto) {
         commandService.addProjectSourceConfiguration(
                 configurationDto.get("configurationId").asText(),
                 configurationDto.get("systemType").asText(),

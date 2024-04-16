@@ -1,10 +1,9 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions.api.events;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
+import lombok.Value;
 
+@Value
 public class WorkflowFinishedEvent implements DomainEvent {
-    @Override
-    public String getType() {
-        return "workflow_finished_event";
-    }
+    String type = "workflow_finished_event";
 }

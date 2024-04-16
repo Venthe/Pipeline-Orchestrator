@@ -4,8 +4,9 @@ import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProv
 import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
+import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,8 @@ public class Project implements Aggregate<ProjectId> {
 
     @EqualsAndHashCode.Include
     private final ProjectId id;
+
+    private ProjectStatus status;
 
     public Function<EventHandlerProvider, Collection<DomainEvent>> handleEvent(ProjectEvent event) {
         return eventHandlerProvider -> eventHandlerProvider.handle(this, event);

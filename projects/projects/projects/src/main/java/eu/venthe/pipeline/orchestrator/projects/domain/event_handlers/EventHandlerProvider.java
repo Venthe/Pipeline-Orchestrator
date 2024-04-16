@@ -3,8 +3,8 @@ package eu.venthe.pipeline.orchestrator.projects.domain.event_handlers;
 import com.google.common.collect.MoreCollectors;
 import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.handlers.DefaultEventHandler;
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

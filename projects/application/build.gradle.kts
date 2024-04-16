@@ -36,8 +36,8 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
     // Security
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.togglz:togglz-spring-security")
+    //implementation("org.springframework.boot:spring-boot-starter-security")
+    //implementation("org.togglz:togglz-spring-security")
 
     // Libraries
     implementation("com.google.guava:guava")

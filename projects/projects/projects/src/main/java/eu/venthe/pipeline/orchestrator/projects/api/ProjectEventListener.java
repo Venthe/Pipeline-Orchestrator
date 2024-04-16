@@ -1,9 +1,14 @@
 package eu.venthe.pipeline.orchestrator.projects.api;
 
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.MessageListenerRegistry;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.CreateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.UpdateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects_source.api.events.ProjectDiscoveredEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -21,10 +26,11 @@ public class ProjectEventListener {
     public void projectDiscovered(ProjectDiscoveredEvent event) {
         log.info("Received ProjectSourceConfigurationAddedEvent. {}", event);
 
-        if (queryService.find(event.getSystemId(), event.getProjectName()).isEmpty()) {
-            projectsService.add(new CreateProjectSpecification(event.getProjectName(), event.getSystemId()));
-        } else {
-            throw new UnsupportedOperationException();
+        Optional<ProjectDto> projectDto = queryService.find(event.getSystemId(), event.getProjectName());
+        if (projectDto.isEmpty()) {
+            projectsService.add(new CreateProjectSpecificationDto(event.getProjectName(), event.getSystemId()));
+        } else if (event.getStatus() != projectDto.get().getStatus() || !event.getProjectName().equalsIgnoreCase(projectDto.get().getName())) {
+            projectsService.updateDetails(event.getSystemId(), new UpdateProjectSpecificationDto(event.getStatus(), event.getProjectName()));
         }
     }
 }

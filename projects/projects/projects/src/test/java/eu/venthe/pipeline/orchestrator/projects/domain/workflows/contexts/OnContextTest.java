@@ -9,7 +9,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.events.WorkflowDispatchEv
 import eu.venthe.pipeline.orchestrator.projects.domain.utilities.TestContextProvider;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
 import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.*;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.*;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ThrowableAssert;

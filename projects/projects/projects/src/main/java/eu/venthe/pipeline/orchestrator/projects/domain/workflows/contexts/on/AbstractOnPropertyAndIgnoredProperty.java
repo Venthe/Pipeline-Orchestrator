@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.utilities.GlobPatternMatching;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.contexts.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

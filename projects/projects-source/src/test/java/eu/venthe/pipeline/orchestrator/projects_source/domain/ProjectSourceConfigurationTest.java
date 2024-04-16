@@ -6,7 +6,7 @@ import eu.venthe.pipeline.orchestrator.plugins.controlled_provider.ControlledTes
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects_source.api.events.ProjectDiscoveredEvent;
 import eu.venthe.pipeline.orchestrator.projects_source.api.events.ProjectSourceConfigurationAddedEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;

@@ -1,0 +1,26 @@
+### List configurations
+GET http://localhost:8081/projects-source-configurations/list
+Accept: application/json;text/json
+
+### Synchronize all projects
+POST http://localhost:8081/projects-source-configurations/synchronize
+
+{}
+
+### Create configuration
+POST http://localhost:8081/projects-source-configurations
+Content-Type: application/json
+
+{
+  "systemType": "test_provider",
+  "configurationId": "test",
+  "properties": {}
+}
+
+### Synchronize test project
+POST http://localhost:8081/projects-source-configurations/test/synchronize
+
+{}
+
+### Delete test project
+DELETE http://localhost:8081/projects-source-configurations/test

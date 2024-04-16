@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnBranches;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnTypes;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.PullRequestEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.PullRequestEvent;
 
 // TODO: Matches
 public class PullRequestEventWrapper extends AbstractEventWrapper<PullRequestEvent> {

@@ -5,7 +5,9 @@ import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigu
 import eu.venthe.pipeline.orchestrator.projects_source.api.ReadProjectSourceConfigurationDto;
 import eu.venthe.pipeline.orchestrator.projects_source.api.ProjectsSourceConfigurationCommandService;
 import eu.venthe.pipeline.orchestrator.projects_source.domain.*;
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainEvent;
+import eu.venthe.pipeline.orchestrator.security.annotations.IsProjectManager;
+import eu.venthe.pipeline.orchestrator.security.annotations.IsSystemAdministrator;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,7 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
     private final ProjectSourceConfigurationFactory factory;
     private final ProjectSourcePluginQueryService pluginQueryService;
 
+    @IsSystemAdministrator
     @Override
     public String addProjectSourceConfiguration(String id, String sourceType, Map<String, String> properties) {
         Pair<ProjectSourceConfiguration, Collection<DomainEvent>> result = factory.createConfiguration(id, sourceType, properties);
@@ -39,8 +42,10 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
         return configuration.getId().getValue();
     }
 
+    @IsSystemAdministrator
+    @IsProjectManager
     @Override
-    public void synchronizeProjects(String projectSourceConfigurationId) {
+    public void synchronizeProject(String projectSourceConfigurationId) {
         ProjectSourceConfiguration configuration = repository.find(ProjectSourceConfigurationId.of(projectSourceConfigurationId))
                 .orElseThrow(ProjectSourceConfigurationNotFoundException::new);
 
@@ -49,6 +54,7 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
         log.info("Projects synchronized for {}", projectSourceConfigurationId);
     }
 
+    @IsSystemAdministrator
     @Override
     public void removeProjectSourceConfiguration(String projectSourceConfigurationId) {
         ProjectSourceConfiguration configuration = repository.find(ProjectSourceConfigurationId.of(projectSourceConfigurationId))
@@ -59,6 +65,13 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
         messageBroker.publish(result);
     }
 
+    @IsSystemAdministrator
+    @Override
+    public void synchronizeProjects() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @IsSystemAdministrator
     @Override
     public Set<ReadProjectSourceConfigurationDto> listConfigurations() {
         return repository.findAll().stream()
@@ -66,17 +79,20 @@ public class ProjectsSourceConfigurationServiceImpl implements ProjectsSourceCon
                 .collect(Collectors.toSet());
     }
 
+    @IsSystemAdministrator
     @Override
     public Optional<ReadProjectSourceConfigurationDto> getConfiguration(String projectSourceConfigurationId) {
         return repository.find(ProjectSourceConfigurationId.of(projectSourceConfigurationId))
                 .map(projectSourceConfiguration -> projectSourceConfiguration.visitor(ReadProjectSourceConfigurationDto::new));
     }
 
+    @IsSystemAdministrator
     @Override
     public Set<String> listSystemTypes() {
         return pluginQueryService.listSystemTypes();
     }
 
+    @IsSystemAdministrator
     @Override
     public Optional<ProjectPlugin> getPluginDefinition(String systemType) {
         return pluginQueryService.getPlugin(systemType);
