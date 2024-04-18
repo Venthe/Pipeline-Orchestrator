@@ -1,6 +1,5 @@
 package eu.venthe.pipeline.orchestrator.plugins.projects;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.projects.ProjectStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -79,6 +79,7 @@ dependencies {
         testImplementation("org.testcontainers:mockserver:${DependencyVersion.TEST_CONTAINERS.version}")
         testImplementation("org.testcontainers:mongodb:${DependencyVersion.TEST_CONTAINERS.version}")
         testImplementation("org.testcontainers:testcontainers:${DependencyVersion.TEST_CONTAINERS.version}")
+        testImplementation("org.mockito:mockito-core:5.11.0")
         implementation("com.github.f4b6a3:uuid-creator:5.3.3")
     }
 
@@ -89,6 +90,7 @@ dependencies {
     testImplementation("org.awaitility:awaitility")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testImplementation("org.mockito:mockito-core")
     testImplementation(platform("org.junit:junit-bom:${DependencyVersion.JUNIT.version}"))
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher") {

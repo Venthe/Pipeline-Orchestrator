@@ -2,9 +2,9 @@ package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.projects.domain.utilities.GraphUtility;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.BaseJobContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 import lombok.RequiredArgsConstructor;
 
 import java.util.*;
@@ -23,7 +23,7 @@ public class JobsContext {
     }
 
     public List<List<String>> getTree() {
-        if(!root.isObject()) throw new RuntimeException();
+        if (!root.isObject()) throw new RuntimeException();
 
         Set<GraphUtility.JobRequirements> jobRequirements = root.properties().stream()
                 .map(e -> Map.entry(e.getKey(), BaseJobContext.create(e.getValue())))

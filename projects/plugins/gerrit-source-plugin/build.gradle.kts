@@ -8,7 +8,7 @@ version = "0.0.1-SNAPSHOT"
 
 dependencies {
     implementation(project(":shared-kernel"))
-    implementation(project(":plugins:plugin-api"))
+    implementation(project(":plugins:source-plugin-api"))
 
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("io.swagger.core.v3:swagger-annotations")

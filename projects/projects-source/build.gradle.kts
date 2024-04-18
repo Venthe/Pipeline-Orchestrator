@@ -6,7 +6,7 @@ group = "eu.venthe.pipeline"
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
-    implementation(project(":plugins:plugin-api"))
+    implementation(project(":plugins:source-plugin-api"))
     implementation(project(":shared-kernel"))
     implementation(project(":security"))
     implementation(project(":projects:projects-api"))

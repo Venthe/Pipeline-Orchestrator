@@ -1,3 +1,5 @@
+// TODO: Gradle enforcer plugin
+
 fun includeNestedProject(vararg projectNames: String, prefix: String = "projects") {
     projectNames.forEach {
         val sanitizedName = it.replace("/", ":")
@@ -36,7 +38,8 @@ includeNestedProject(
     "plugins/docker-job-executor-plugin",
     "plugins/gerrit-source-plugin",
     "plugins/jenkins-job-executor-plugin",
-    "plugins/plugin-api",
+    "plugins/source-plugin-api",
+    "plugins/job-executor-plugin-api",
     "plugins/plugin-api-test",
     "plugins/test-job-executor-plugin",
     "projects-source",

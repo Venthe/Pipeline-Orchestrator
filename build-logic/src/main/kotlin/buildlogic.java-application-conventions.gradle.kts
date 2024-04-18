@@ -3,6 +3,3 @@ plugins {
 
     application
 }
-
-dependencies {
-}

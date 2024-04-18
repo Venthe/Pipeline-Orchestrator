@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.plugins.docker;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerCmd;
 import com.github.dockerjava.api.command.CreateContainerResponse;
-import eu.venthe.pipeline.orchestrator.plugins.job_executors.JobExecutor;
+import eu.venthe.pipeline.orchestrator.plugins.job_executors.JobExecutorPlugin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +11,11 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class DockerJobExecutor implements JobExecutor {
+public class DockerJobExecutorPlugin implements JobExecutorPlugin {
     private final DockerClient dockerClient;
 
     @Override
-    public void queueStepped(String workflowExecutionId, String jobId) {
+    public void queueJobExecution(String workflowExecutionId, String jobId) {
         try (CreateContainerCmd containerCmd = dockerClient.createContainerCmd("docker.home.arpa/venthe/ubuntu-runner:23.10")) {
             CreateContainerResponse exec = containerCmd
                     .withEnv(

@@ -15,7 +15,7 @@ public class BaseJobContext {
     private final ObjectNode root;
 
     public static BaseJobContext create(JsonNode root) {
-        if(!root.isObject()) throw new IllegalArgumentException();
+        if (!root.isObject()) throw new IllegalArgumentException();
         return new BaseJobContext((ObjectNode) root);
     }
 

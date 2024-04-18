@@ -15,7 +15,8 @@ version = "0.0.1-SNAPSHOT"
 
 dependencies {
     // Project modules
-    implementation(project(":plugins:plugin-api"))
+    implementation(project(":plugins:job-executor-plugin-api"))
+    implementation(project(":plugins:source-plugin-api"))
     implementation(project(":plugins:gerrit-source-plugin"))
     implementation(project(":projects:projects-api"))
     implementation(project(":projects:projects"))
