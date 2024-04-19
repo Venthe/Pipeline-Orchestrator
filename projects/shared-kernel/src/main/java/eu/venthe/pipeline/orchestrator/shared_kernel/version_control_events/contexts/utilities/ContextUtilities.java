@@ -60,6 +60,16 @@ public class ContextUtilities {
         return (ObjectNode) root;
     }
 
+    public static Function<JsonNode, Boolean> toBoolean() {
+        return node -> {
+            if (!node.isBoolean()) {
+                throw new IllegalArgumentException();
+            }
+
+            return node.asBoolean();
+        };
+    }
+
     @UtilityClass
     public static class Collection {
         public static <U, T extends java.util.Collection<U>> T createCollection(JsonNode node, Function<Stream<JsonNode>, T> mapper) {
