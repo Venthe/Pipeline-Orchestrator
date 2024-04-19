@@ -6,7 +6,6 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.cont
 import lombok.Getter;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 /**
  * Use jobs.<job_id>.strategy to use a matrix strategy for your jobs. A matrix strategy lets you use variables in a

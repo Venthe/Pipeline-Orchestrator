@@ -14,8 +14,10 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static java.util.Collections.*;
-import static java.util.Optional.*;
+import static java.util.Collections.emptyMap;
+import static java.util.Collections.emptySet;
+import static java.util.Optional.of;
+import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 

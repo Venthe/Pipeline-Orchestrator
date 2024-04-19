@@ -14,7 +14,7 @@ public class StepsContext {
 
         JsonNode steps = root.get("steps");
 
-        if(steps == null || steps.isNull()) {
+        if (steps == null || steps.isNull()) {
             return Optional.empty();
         }
 

@@ -2,6 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities;
 import lombok.RequiredArgsConstructor;
 
@@ -14,9 +15,8 @@ import java.util.function.Function;
 public class BaseJobContext {
     private final ObjectNode root;
 
-    public static BaseJobContext create(JsonNode root) {
-        if (!root.isObject()) throw new IllegalArgumentException();
-        return new BaseJobContext((ObjectNode) root);
+    public static BaseJobContext ensure(JsonNode root) {
+        return new BaseJobContext(ContextUtilities.validateIsObjectNode(root));
     }
 
     public List<String> getNeeds() {
