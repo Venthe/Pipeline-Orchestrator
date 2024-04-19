@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.on.*;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.model.EventType;
 

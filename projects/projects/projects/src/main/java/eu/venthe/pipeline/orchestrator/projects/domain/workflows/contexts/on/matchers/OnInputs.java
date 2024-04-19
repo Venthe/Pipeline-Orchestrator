@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.on;
+package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Sets;

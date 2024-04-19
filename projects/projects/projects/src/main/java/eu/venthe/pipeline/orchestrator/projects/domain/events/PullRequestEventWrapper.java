@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.on.OnBranches;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.on.OnTypes;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.OnBranches;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.OnTypes;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.PullRequestEvent;
 
 // TODO: Matches

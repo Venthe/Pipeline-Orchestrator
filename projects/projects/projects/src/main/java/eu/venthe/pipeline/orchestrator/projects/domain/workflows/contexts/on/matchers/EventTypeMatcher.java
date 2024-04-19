@@ -19,7 +19,7 @@ public class EventTypeMatcher implements OnMatcher {
         return matchType(eventType, event.getType().getValue());
     }
 
-    public static Boolean matchType(String type, String otherType) {
+    public static boolean matchType(String type, String otherType) {
         return type.equalsIgnoreCase(otherType);
     }
 }

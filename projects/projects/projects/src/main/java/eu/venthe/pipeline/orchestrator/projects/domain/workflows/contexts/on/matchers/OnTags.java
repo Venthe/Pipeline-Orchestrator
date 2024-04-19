@@ -1,7 +1,6 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.on;
+package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class OnTags extends AbstractOnPropertyAndIgnoredProperty {
     public OnTags(JsonNode root) {
