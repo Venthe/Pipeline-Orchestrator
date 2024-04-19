@@ -4,6 +4,8 @@ import eu.venthe.pipeline.orchestrator.projects.api.dto.CreateProjectSpecificati
 import eu.venthe.pipeline.orchestrator.projects.api.dto.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.api.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.api.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.WorkflowDetailDto;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.WorkflowTaskDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.EventHandlerProvider;
@@ -15,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,6 +38,16 @@ public class ProjectsServiceImpl implements ProjectsQueryService, ProjectsComman
     @Override
     public Optional<ProjectDto> find(String systemId, String projectName) {
         return projectRepository.find(ProjectId.of(systemId, projectName)).map(ProjectsServiceImpl::toProjectDto);
+    }
+
+    @Override
+    public Optional<WorkflowDetailDto> showWorkflowDetail(String systemId) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<WorkflowTaskDto> showAllTasks() {
+        throw new UnsupportedOperationException();
     }
 
     @Override

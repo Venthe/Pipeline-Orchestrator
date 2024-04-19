@@ -1,20 +1,14 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.TextNode;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 import lombok.experimental.UtilityClass;
 
 import java.util.Optional;
-import java.util.function.Predicate;
 
 @UtilityClass
 public class NameContext {
-
-    public static Optional<String> name(ObjectNode root) {
-        return Optional.ofNullable(root.get("name"))
-                .filter(Predicate.not(JsonNode::isNull))
-                .map(TextNode.class::cast)
-                .map(TextNode::asText);
+    public static Optional<String> create(JsonNode root) {
+        return ContextUtilities.Text.create(root);
     }
 }

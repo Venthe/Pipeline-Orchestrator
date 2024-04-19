@@ -38,7 +38,7 @@ class OnContextTest {
     void notNull2() {
         // given
         var workflow = getWorkflow("""
-                on: ~
+                on: any
                 jobs: {}
                 """);
 
@@ -46,7 +46,7 @@ class OnContextTest {
         ThrowableAssert.ThrowingCallable action = () -> workflow.on(null);
 
         // then
-        Assertions.assertThatThrownBy(action).hasMessage("Input should not be null");
+        Assertions.assertThatThrownBy(action).hasMessage("Eevent should not be null");
     }
 
     @Test

@@ -16,6 +16,7 @@ dependencies {
 
     implementation("org.springframework:spring-web")
     implementation("com.google.guava:guava")
+    implementation("org.jgrapht:jgrapht-core")
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
     implementation("commons-io:commons-io")

@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on;
+package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.on;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -16,7 +16,7 @@ public class OnTypes {
     private final Optional<String> text;
     private final Optional<List<String>> array;
 
-    public OnTypes(JsonNode root) {
+    private OnTypes(JsonNode root) {
         this.root = root;
 
         text = Optional.ofNullable(this.root)
@@ -31,7 +31,7 @@ public class OnTypes {
 
     }
 
-    public static Optional<OnTypes> create(ObjectNode root) {
+    public static Optional<OnTypes> create(JsonNode root) {
         return Optional.ofNullable(root.get("types"))
                 .filter(Predicate.not(JsonNode::isNull))
                 .map(OnTypes::new);

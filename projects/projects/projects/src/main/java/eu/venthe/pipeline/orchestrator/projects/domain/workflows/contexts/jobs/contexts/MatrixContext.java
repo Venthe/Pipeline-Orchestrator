@@ -41,8 +41,8 @@ public class MatrixContext {
 
     private final Set<ObjectNode> exclude;
 
-    private MatrixContext(ObjectNode root) {
-        this.root = root;
+    private MatrixContext(JsonNode _root) {
+        this.root = ContextUtilities.validateIsObjectNode(_root);
 
         this.properties = of(this.root)
                 .map(r -> r.properties().stream()
@@ -89,7 +89,7 @@ public class MatrixContext {
     }
 
     public static Optional<MatrixContext> create(JsonNode root) {
-        return ContextUtilities.get(MatrixContext::new, root);
+        return ContextUtilities.create(root, MatrixContext::new);
     }
 
     public static MatrixContext ensure(JsonNode root) {

@@ -5,30 +5,33 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @UtilityClass
 public class ContextUtilities {
-    @Deprecated
-    public static <T> Optional<T> get(Function<ObjectNode, T> creator, JsonNode root) {
-        return Optional.ofNullable(root)
-                .filter(Predicate.not(JsonNode::isNull))
-                .map(node -> creator.apply((ObjectNode) node));
-    }
-
     public static <T> Optional<T> create(final JsonNode root, Function<JsonNode, T> mapper) {
         return Optional.ofNullable(root)
                 .filter(Predicate.not(JsonNode::isNull))
                 .map(mapper::apply);
     }
 
+    public static JsonNode ensure(final JsonNode root) {
+        return ensure(root, Function.identity());
+    }
+
     public static <T> T ensure(final JsonNode root, Function<JsonNode, T> mapper) {
-        return create(root, mapper).orElseThrow();
+        return ensure(root, mapper, () -> new NoSuchElementException("No value present"));
+    }
+
+    public static <T> T ensure(final JsonNode root, Function<JsonNode, T> mapper, Supplier<RuntimeException> supplier) {
+        return create(root, mapper).orElseThrow(supplier);
     }
 
     public static <T> T ensureOptional(JsonNode root, Function<JsonNode, Optional<T>> mapper) {

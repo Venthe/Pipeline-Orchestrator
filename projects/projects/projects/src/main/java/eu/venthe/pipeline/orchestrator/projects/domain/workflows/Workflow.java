@@ -1,10 +1,12 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.*;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.OnContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -13,61 +15,46 @@ import lombok.extern.slf4j.Slf4j;
 import java.text.MessageFormat;
 import java.util.Optional;
 
+@SuppressWarnings("ALL")
 @Slf4j
 @Getter
 public class Workflow {
-
+    @Getter(AccessLevel.NONE)
     private final ObjectNode root;
     private final WorkflowRef ref;
-    private final OnContext onContext;
-    private JobsContext jobsContext;
 
-    public Workflow(ObjectNode root, WorkflowRef workflowRef) {
-        if (root == null) throw new IllegalArgumentException("Workflow should not be null");
+    /*
+     * The name of the workflow. If you omit name, System displays the workflow file path relative to the root of the repository.
+     */
+    private final String name;
+    private final Optional<String> runName;
+    private final OnContext on;
+    private final Optional<PermissionsContext> permissions;
+    private final Optional<EnvironmentContext> environment;
+    private final Optional<DefaultsContext> defaults;
+    private final Optional<ConcurrencyContext> concurrency;
+    private final JobsContext jobs;
+
+    public Workflow(JsonNode _root, WorkflowRef workflowRef) {
+        if (_root == null) throw new IllegalArgumentException("Workflow should not be null");
         if (workflowRef == null) throw new IllegalArgumentException("WorkflowRef should not be null");
+        if (!_root.isObject()) throw new IllegalArgumentException("Root should be an object");
 
-        this.root = root;
+        this.root = (ObjectNode) _root;
         this.ref = workflowRef;
 
-        onContext = OnContext.ensure(root.get("on"));
-        jobsContext = JobsContext.ensure(root.get("jobs"));
-    }
-
-     /*
-     * The name of the workflow. If you omit name, System displays the workflow file path relative to the root of the repository.
-    */
-
-    public String getName() {
-        return NameContext.name(root).orElse(ref .getFilePath());
-    }
-
-    public Optional<String> getRunName() {
-        return RunNameContext.runName(root);
-    }
-
-    public Optional<PermissionsContext> getPermissions() {
-        return PermissionsContext.create(root);
-    }
-
-    public Optional<EnvironmentContext> getEnv() {
-        return EnvironmentContext.create(root);
-    }
-
-    public Optional<DefaultsContext> getDefaults() {
-        return DefaultsContext.create(root);
-    }
-
-    public Optional<ConcurrencyContext> getConcurrency() {
-        return ConcurrencyContext.create(root);
-    }
-
-    public JobsContext getJobs() {
-        return jobsContext;
+        name = NameContext.create(root.get("name")).orElse(ref.getFilePath());
+        runName = RunNameContext.create(root.get("runName"));
+        on = OnContext.ensure(root.get("on"));
+        permissions = PermissionsContext.create(root.get("permissions"));
+        environment = EnvironmentContext.create(root.get("env"));
+        defaults = DefaultsContext.create(root.get("defaults"));
+        concurrency = ConcurrencyContext.create(root.get("concurrency"));
+        jobs = JobsContext.ensure(root.get("jobs"));
     }
 
     public <T extends ProjectEvent> Boolean on(EventWrapper<T> event) {
-
-        Boolean result = getOnContext().on(event);
+        Boolean result = on.on(event);
         log.info("[id:{}][type:{}] Event match: {}", event.getId(), event.getType(), result);
 
         return result;

@@ -1,19 +1,22 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.contexts;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 public class OutputsContext {
     private final ObjectNode root;
 
-    public static Optional<OutputsContext> create(ObjectNode root) {
-        return ContextUtilities.get(OutputsContext::new, root.get("outputs"));
+    public OutputsContext(JsonNode root) {
+        this.root = ContextUtilities.validateIsObjectNode(root);
+    }
+
+    public static Optional<OutputsContext> create(JsonNode root) {
+        return ContextUtilities.create(root, OutputsContext::new);
     }
 
     public Map<String, String> getProperties() {

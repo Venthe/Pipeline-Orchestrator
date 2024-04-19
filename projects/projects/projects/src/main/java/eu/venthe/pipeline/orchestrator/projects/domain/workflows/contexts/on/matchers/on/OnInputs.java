@@ -1,7 +1,6 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on;
+package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.on;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Sets;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +17,16 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class OnInputs {
-    private final ObjectNode root;
+    private final JsonNode root;
 
-    public static Optional<OnInputs> create(ObjectNode root) {
-        return ContextUtilities.get(OnInputs::new, root.get("inputs"));
+    public static Optional<OnInputs> create(JsonNode root) {
+        JsonNode root1 = root.get("inputs");
+
+        if (root1.isEmpty() || root1.isMissingNode() || root1.isNull()) {
+            return Optional.empty();
+        }
+
+        return ContextUtilities.create(root1, OnInputs::new);
     }
 
     public List<InputDefinition> requiredInputs() {

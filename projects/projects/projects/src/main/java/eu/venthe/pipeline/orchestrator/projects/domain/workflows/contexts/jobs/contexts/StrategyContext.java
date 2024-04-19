@@ -6,6 +6,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.cont
 import lombok.Getter;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Use jobs.<job_id>.strategy to use a matrix strategy for your jobs. A matrix strategy lets you use variables in a
@@ -23,8 +24,8 @@ public class StrategyContext {
     @Getter
     private final Integer maxParallel;
 
-    private StrategyContext(ObjectNode root) {
-        this.root = root;
+    private StrategyContext(JsonNode root) {
+        this.root = ContextUtilities.validateIsObjectNode(root);
 
         matrix = MatrixContext.ensure(this.root.get("matrix"));
 
@@ -39,7 +40,7 @@ public class StrategyContext {
     }
 
     public static Optional<StrategyContext> create(JsonNode root) {
-        return ContextUtilities.get(StrategyContext::new, root);
+        return ContextUtilities.create(root, StrategyContext::new);
     }
 
     public static StrategyContext ensure(JsonNode root) {

@@ -34,6 +34,6 @@ public class StepJobContext {
     }
 
     public Optional<OutputsContext> getOutputs() {
-        return OutputsContext.create(root);
+        return OutputsContext.create(root.get("outputs"));
     }
 }
