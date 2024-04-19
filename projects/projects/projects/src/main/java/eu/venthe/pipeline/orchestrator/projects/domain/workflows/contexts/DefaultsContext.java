@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
-// TODO: Defaults
+// TODO: Implement context
 @RequiredArgsConstructor
 public class DefaultsContext {
     private final JsonNode root;

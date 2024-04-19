@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+// TODO: Implement context
 @RequiredArgsConstructor
 public class EnvironmentContext {
     private final JsonNode root;

@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.OnBranches;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.OnInputs;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.OnWorkflowDispatchInputs;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.WorkflowDispatchEvent;
 
 public class WorkflowDispatchEventWrapper extends AbstractEventWrapper<WorkflowDispatchEvent> {
@@ -10,8 +10,8 @@ public class WorkflowDispatchEventWrapper extends AbstractEventWrapper<WorkflowD
     }
 
     @Override
-    public Boolean matches(OnInputs onInputs) {
-        return onInputs.match(getEvent().getInputs().getSimple());
+    public Boolean matches(OnWorkflowDispatchInputs onWorkflowDispatchInputs) {
+        return onWorkflowDispatchInputs.match(getEvent().getInputs().getSimple());
     }
 
     @Override

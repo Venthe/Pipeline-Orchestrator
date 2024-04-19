@@ -7,11 +7,15 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.mode
 public interface EventWrapper<T extends ProjectEvent> {
     T getEvent();
 
-    default Boolean matches(OnTypes onTypes) {
+    default Boolean matches(OnActivityType onTypes) {
         return true;
     }
 
-    default Boolean matches(OnInputs onInputs) {
+    default Boolean matches(OnWorkflowDispatchInputs onWorkflowDispatchInputs) {
+        return true;
+    }
+
+    default Boolean matches(OnWorkflowCallInputs onWorkflowCallInputs) {
         return true;
     }
 

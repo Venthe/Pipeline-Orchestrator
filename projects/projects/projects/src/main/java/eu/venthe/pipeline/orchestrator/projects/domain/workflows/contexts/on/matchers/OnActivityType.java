@@ -10,12 +10,12 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 @Slf4j
-public class OnTypes {
+public class OnActivityType {
     private final JsonNode root;
     private final Optional<String> text;
     private final Optional<List<String>> array;
 
-    private OnTypes(JsonNode root) {
+    private OnActivityType(JsonNode root) {
         this.root = root;
 
         text = Optional.ofNullable(this.root)
@@ -30,10 +30,10 @@ public class OnTypes {
 
     }
 
-    public static Optional<OnTypes> create(JsonNode root) {
+    public static Optional<OnActivityType> create(JsonNode root) {
         return Optional.ofNullable(root.get("types"))
                 .filter(Predicate.not(JsonNode::isNull))
-                .map(OnTypes::new);
+                .map(OnActivityType::new);
     }
 
     public Optional<String> text() {

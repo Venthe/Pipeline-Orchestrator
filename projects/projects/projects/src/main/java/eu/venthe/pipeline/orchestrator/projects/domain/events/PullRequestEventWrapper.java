@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.OnBranches;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.OnTypes;
+import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.OnActivityType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.PullRequestEvent;
 
 // TODO: Matches
@@ -11,7 +11,7 @@ public class PullRequestEventWrapper extends AbstractEventWrapper<PullRequestEve
     }
 
     @Override
-    public Boolean matches(OnTypes onTypes) {
+    public Boolean matches(OnActivityType onTypes) {
         return onTypes.match(getEvent().getAction().toString());
     }
 

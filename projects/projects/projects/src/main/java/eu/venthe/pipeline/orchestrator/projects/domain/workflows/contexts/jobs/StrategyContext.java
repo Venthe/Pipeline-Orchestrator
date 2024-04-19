@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.contexts;
+package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.util.Optional;
 
+// TODO: Implement context
 /**
  * Use jobs.<job_id>.strategy to use a matrix strategy for your jobs. A matrix strategy lets you use variables in a
  * single job definition to automatically create multiple job runs that are based on the combinations of the variables.
@@ -40,10 +41,6 @@ public class StrategyContext {
 
     public static Optional<StrategyContext> create(JsonNode root) {
         return ContextUtilities.create(root, StrategyContext::new);
-    }
-
-    public static StrategyContext ensure(JsonNode root) {
-        return create(root).orElseThrow(() -> new IllegalArgumentException("Strategy must be present"));
     }
 
 }

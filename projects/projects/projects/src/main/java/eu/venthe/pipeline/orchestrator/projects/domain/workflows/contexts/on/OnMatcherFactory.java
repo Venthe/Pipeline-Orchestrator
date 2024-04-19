@@ -18,7 +18,7 @@ public class OnMatcherFactory {
 
         if (EventTypeMatcher.matchType(key, "pull_request")) {
             return validOnEmpty(configuration, () -> votes(
-                    OnTypes.create(configuration).map(event::matches).orElse(true),
+                    OnActivityType.create(configuration).map(event::matches).orElse(true),
                     event.matches(OnBranches.create(configuration)),
                     event.matches(OnPaths.create(configuration))
             ));
@@ -26,7 +26,7 @@ public class OnMatcherFactory {
 
         if (EventTypeMatcher.matchType(key, "pull_request_target")) {
             return validOnEmpty(configuration, () -> votes(
-                    OnTypes.create(configuration).map(event::matches).orElse(true),
+                    OnActivityType.create(configuration).map(event::matches).orElse(true),
                     event.matches(OnBranches.create(configuration)),
                     event.matches(OnPaths.create(configuration))
             ));
@@ -34,7 +34,7 @@ public class OnMatcherFactory {
 
         if (EventTypeMatcher.matchType(key, "push")) {
             return validOnEmpty(configuration, () -> votes(
-                    OnTypes.create(configuration).map(event::matches).orElse(true),
+                    OnActivityType.create(configuration).map(event::matches).orElse(true),
                     event.matches(OnBranches.create(configuration)),
                     event.matches(OnTags.create(configuration)),
                     event.matches(OnPaths.create(configuration))
@@ -55,12 +55,12 @@ public class OnMatcherFactory {
 
         if (EventTypeMatcher.matchType(key, "workflow_dispatch")) {
             return validOnEmpty(configuration, () -> votes(
-                    OnInputs.create(configuration).map(event::matches).orElse(true)
+                    OnWorkflowDispatchInputs.create(configuration).map(event::matches).orElse(true)
             ));
         }
 
         return validOnEmpty(configuration, () -> votes(
-                OnTypes.create(configuration).map(event::matches).orElse(true)
+                OnActivityType.create(configuration).map(event::matches).orElse(true)
         ));
     }
 

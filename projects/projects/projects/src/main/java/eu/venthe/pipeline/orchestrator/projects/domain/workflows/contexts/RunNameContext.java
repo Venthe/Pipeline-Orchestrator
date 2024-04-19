@@ -6,7 +6,6 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.cont
 import java.util.Optional;
 
 public class RunNameContext {
-
     public static Optional<String> create(JsonNode root) {
         return ContextUtilities.Text.create(root);
     }

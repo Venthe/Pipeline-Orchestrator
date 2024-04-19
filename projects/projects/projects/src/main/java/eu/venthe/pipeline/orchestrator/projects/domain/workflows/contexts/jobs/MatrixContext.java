@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.contexts;
+package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +21,7 @@ import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 
+// TODO: Implement context
 /**
  * Use jobs.<job_id>.strategy.matrix to define a matrix of different job configurations. Within your matrix, define
  * one or more variables followed by an array of values. For example, the following matrix has a variable called

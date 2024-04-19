@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.contexts;
+package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
+// TODO: Implement context
 @RequiredArgsConstructor
 public class StepsContext {
     private final ArrayNode root;

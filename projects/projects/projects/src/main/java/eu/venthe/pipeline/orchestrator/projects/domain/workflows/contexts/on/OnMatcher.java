@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers;
+package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;

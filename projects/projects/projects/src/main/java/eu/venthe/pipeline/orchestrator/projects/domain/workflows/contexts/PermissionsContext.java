@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
+// TODO: Implement context
 @RequiredArgsConstructor
 public class PermissionsContext {
     private final JsonNode root;

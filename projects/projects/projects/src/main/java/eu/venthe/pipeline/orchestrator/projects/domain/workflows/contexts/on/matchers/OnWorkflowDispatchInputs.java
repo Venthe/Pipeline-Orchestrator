@@ -16,17 +16,17 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
-public class OnInputs {
+public class OnWorkflowDispatchInputs {
     private final JsonNode root;
 
-    public static Optional<OnInputs> create(JsonNode root) {
+    public static Optional<OnWorkflowDispatchInputs> create(JsonNode root) {
         JsonNode root1 = root.get("inputs");
 
         if (root1.isEmpty() || root1.isMissingNode() || root1.isNull()) {
             return Optional.empty();
         }
 
-        return ContextUtilities.create(root1, OnInputs::new);
+        return ContextUtilities.create(root1, OnWorkflowDispatchInputs::new);
     }
 
     public List<InputDefinition> requiredInputs() {
