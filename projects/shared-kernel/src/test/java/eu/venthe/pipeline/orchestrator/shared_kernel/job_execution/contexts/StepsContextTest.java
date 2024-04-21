@@ -28,10 +28,10 @@ class StepsContextTest extends AbstractContextTest {
                 """);
 
         // When
-        Map<String, StepsContext.StepContext> ensure = StepsContext.ensure(jsonNode);
+        StepsContext ensure = StepsContext.ensure(jsonNode);
 
         // Then
-        Assertions.assertThat(ensure)
+        Assertions.assertThat(ensure.getSteps())
                 .containsEntry("checkout", StepsContext.StepContext.builder()
                         .outcome("success")
                         .conclusion("success")

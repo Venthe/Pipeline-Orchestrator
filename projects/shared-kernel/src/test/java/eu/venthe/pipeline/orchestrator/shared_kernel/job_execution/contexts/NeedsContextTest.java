@@ -26,10 +26,10 @@ class NeedsContextTest extends AbstractContextTest {
                 """);
 
         // When
-        Map<String, NeedsContext.JobNeed> ensure = NeedsContext.ensure(root);
+        NeedsContext ensure = NeedsContext.ensure(root);
 
         // Then
-        Assertions.assertThat(ensure)
+        Assertions.assertThat(ensure.getJobs())
                 .containsEntry(
                         "build",
                         NeedsContext.JobNeed.builder()

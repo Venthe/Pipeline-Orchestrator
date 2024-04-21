@@ -23,10 +23,10 @@ class JobsContextTest extends AbstractContextTest {
                 """);
 
         // When
-        Map<String, JobsContext> ensure = JobsContext.ensure(jsonNode);
+        JobsContext ensure = JobsContext.ensure(jsonNode);
 
         // Then
-        Assertions.assertThat(ensure).containsEntry("example_job", JobsContext.builder()
+        Assertions.assertThat(ensure.getInputs()).containsEntry("example_job", JobsContext.JobJobsContext.builder()
                 .result("success")
                 .output("output1", "hello")
                 .output("output2", "world")

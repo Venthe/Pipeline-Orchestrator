@@ -3,13 +3,10 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Singular;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
-import lombok.experimental.UtilityClass;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.sameKey;
@@ -20,17 +17,27 @@ import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMa
  * that this doesn't include implicitly dependent jobs (for example, dependent jobs of a dependent job). For more
  * information on defining job dependencies, see "Workflow syntax for GitHub Actions."
  */
-@UtilityClass
+@Getter
+@EqualsAndHashCode
+@RequiredArgsConstructor
 public class NeedsContext {
     /**
      * This context is only populated for workflow runs that have dependent jobs, and changes for each job in a workflow
      * run. You can access this context from any job or step in a workflow. This object contains all the properties
      * listed below.
      */
-    public static Map<String, JobNeed> ensure(JsonNode jobs) {
-        return ContextUtilities.validateIsObjectNode(jobs).properties().stream()
+    private final Map<String, JobNeed> jobs = new HashMap<>();
+
+    private NeedsContext(JsonNode _root) {
+        ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
+
+        jobs.putAll(ContextUtilities.validateIsObjectNode(root).properties().stream()
                 .map(sameKey(e -> ContextUtilities.ensure(e, JobNeed::new)))
-                .collect(toMap());
+                .collect(toMap()));
+    }
+
+    public static NeedsContext ensure(JsonNode jobs) {
+        return ContextUtilities.ensure(jobs, NeedsContext::new);
     }
 
     /**

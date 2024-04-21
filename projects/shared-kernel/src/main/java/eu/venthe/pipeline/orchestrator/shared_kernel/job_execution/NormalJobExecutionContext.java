@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 
-import java.util.Map;
 import java.util.Optional;
 
 @SuppressWarnings("ALL")
@@ -16,12 +15,12 @@ public class NormalJobExecutionContext implements JobContext_ {
     private final EnvContext env;
     private final VarsContext vars;
     private final JobContext job;
-    private final Map<String, StepsContext.StepContext> steps;
+    private final StepsContext steps;
     private final RunnerContext runner;
     private final SecretsContext secrets;
     private final StrategyContext strategy;
     private final Optional<MatrixContext> matrix;
-    private final Map<String, NeedsContext.JobNeed> needs;
+    private final NeedsContext needs;
     private final Optional<InputsContext> inputs;
 
     public NormalJobExecutionContext(JsonNode _root) {

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 
-import java.util.Map;
 import java.util.Optional;
 
 @SuppressWarnings("ALL")
@@ -23,13 +22,13 @@ public class ReusableWorkflowJobContext implements JobContext_ {
      * This is only available in reusable workflows, and can only be used to set outputs for a reusable workflow. This
      * object contains all the properties listed below.
      */
-    private final Map<String, JobsContext> jobs;
-    private final Map<String, StepsContext.StepContext> steps;
+    private final JobsContext jobs;
+    private final StepsContext steps;
     private final RunnerContext runner;
     private final SecretsContext secrets;
     private final StrategyContext strategy;
     private final Optional<MatrixContext> matrix;
-    private final Map<String, NeedsContext.JobNeed> needs;
+    private final NeedsContext needs;
     private final Optional<InputsContext> inputs;
 
     public ReusableWorkflowJobContext(JsonNode _root) {

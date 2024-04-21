@@ -9,6 +9,7 @@ import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.sameKey;
@@ -19,30 +20,43 @@ import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMa
 @EqualsAndHashCode
 @SuperBuilder
 public class JobsContext {
-
-    /**
-     * The result of a job in the reusable workflow. Possible values are success, failure, cancelled, or skipped.
-     */
-    private final String result;
-
-    /**
-     * The set of outputs of a job in a reusable workflow.
-     */
-    @Singular
-    private final Map<String, String> outputs;
+    private final Map<String, JobJobsContext> inputs = new HashMap<>();
 
     private JobsContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
-        result = ContextUtilities.Text.ensure(root.get("result"));
-        outputs = root.get("outputs").properties().stream()
-                .map(sameKey(ContextUtilities.Text::ensure))
-                .collect(toMap());
+        inputs.putAll(ContextUtilities.validateIsObjectNode(root).properties().stream()
+                .map(sameKey(e -> ContextUtilities.ensure(e, JobJobsContext::new)))
+                .collect(toMap()));
     }
 
-    public static Map<String, JobsContext> ensure(JsonNode jobs) {
-        return ContextUtilities.validateIsObjectNode(jobs).properties().stream()
-                .map(sameKey(e -> ContextUtilities.ensure(e, JobsContext::new)))
-                .collect(toMap());
+    public static JobsContext ensure(JsonNode jobs) {
+        return ContextUtilities.ensure(jobs, JobsContext::new);
+    }
+
+    @Getter
+    @ToString
+    @EqualsAndHashCode
+    @SuperBuilder
+    public static class JobJobsContext {
+        /**
+         * The result of a job in the reusable workflow. Possible values are success, failure, cancelled, or skipped.
+         */
+        private final String result;
+
+        /**
+         * The set of outputs of a job in a reusable workflow.
+         */
+        @Singular
+        private final Map<String, String> outputs;
+
+        private JobJobsContext(JsonNode _root) {
+            ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
+
+            result = ContextUtilities.Text.ensure(root.get("result"));
+            outputs = root.get("outputs").properties().stream()
+                    .map(sameKey(ContextUtilities.Text::ensure))
+                    .collect(toMap());
+        }
     }
 }

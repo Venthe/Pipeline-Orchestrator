@@ -3,13 +3,10 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Singular;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
-import lombok.experimental.UtilityClass;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.sameKey;
@@ -22,12 +19,20 @@ import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMa
  * This context changes for each step in a job. You can access this context from any step in a job. This object contains
  * all the properties listed below.
  */
-@UtilityClass
+@Getter
+@EqualsAndHashCode
+@RequiredArgsConstructor
 public class StepsContext {
-    public static Map<String, StepContext> ensure(JsonNode steps) {
-        return ContextUtilities.validateIsObjectNode(steps).properties().stream()
+    private final Map<String, StepContext> steps = new HashMap<>();
+
+    private StepsContext(JsonNode _root) {
+        steps.putAll(ContextUtilities.validateIsObjectNode(_root).properties().stream()
                 .map(sameKey(e -> ContextUtilities.ensure(e, StepContext::new)))
-                .collect(toMap());
+                .collect(toMap()));
+    }
+
+    public static StepsContext ensure(JsonNode steps) {
+        return ContextUtilities.ensure(steps, StepsContext::new);
     }
 
     @Getter

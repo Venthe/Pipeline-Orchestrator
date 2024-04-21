@@ -1,10 +1,18 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.sameKey;
+import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMap;
 
 /**
  * The inputs context contains input properties passed to an action, to a reusable workflow, or to a manually triggered
@@ -16,7 +24,9 @@ import java.util.Optional;
  * The properties in the inputs context are defined in the workflow file. They are only available in a reusable workflow
  * or in a workflow triggered by the workflow_dispatch event
  */
-@AllArgsConstructor
+@Getter
+@EqualsAndHashCode
+@RequiredArgsConstructor
 public class InputsContext {
     /**
      * This context is only available in a reusable workflow or in a workflow triggered by the workflow_dispatch event.
@@ -25,9 +35,25 @@ public class InputsContext {
      * <p>
      * string or number or boolean or choice
      */
-    private final Map<String, ?> inputs;
+    private final Map<String, JsonNode> inputs = new HashMap<>();
+
+    private InputsContext(JsonNode _root) {
+        ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
+
+        inputs.putAll(ContextUtilities.validateIsObjectNode(root).properties().stream()
+                .map(sameKey(e -> ContextUtilities.ensure(e, InputsContext::getJsonNodeTFunction)))
+                .collect(toMap()));
+    }
 
     public static Optional<InputsContext> create(JsonNode inputs) {
+        return ContextUtilities.create(inputs, InputsContext::new);
+    }
+
+    private static JsonNode getJsonNodeTFunction(JsonNode c) {
+        if (c.isBoolean() || c.isTextual() || c.isNumber()) {
+            return c;
+        }
+
         throw new UnsupportedOperationException();
     }
 }
