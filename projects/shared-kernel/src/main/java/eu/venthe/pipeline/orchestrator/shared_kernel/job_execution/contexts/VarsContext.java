@@ -7,6 +7,10 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.cont
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The vars context contains custom configuration variables set at the organization, repository, and environment levels.
+ * For more information about defining configuration variables for use in multiple workflows, see "Variables".
+ */
 public class VarsContext {
     private final Map<String, String> customConfigurationVariables = new HashMap<>();
 

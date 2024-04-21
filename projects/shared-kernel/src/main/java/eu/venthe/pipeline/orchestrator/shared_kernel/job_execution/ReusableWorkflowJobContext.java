@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 
+import java.util.Map;
+
 public class ReusableWorkflowJobContext implements JobContext_ {
     private final ObjectNode root;
 
@@ -12,8 +14,15 @@ public class ReusableWorkflowJobContext implements JobContext_ {
     private final EnvContext env;
     private final VarsContext vars;
     private final JobContext job;
-    private final JobsContext jobs;
-    private final StepsContext steps;
+    /**
+     * The jobs context is only available in reusable workflows, and can only be used to set outputs for a reusable
+     * workflow. For more information, see "Reusing workflows."
+     * <p>
+     * This is only available in reusable workflows, and can only be used to set outputs for a reusable workflow. This
+     * object contains all the properties listed below.
+     */
+    private final Map<String, JobsContext> jobs;
+    private final Map<String, StepsContext.StepContext> steps;
     private final RunnerContext runner;
     private final SecretsContext secrets;
     private final StrategyContext strategy;
@@ -28,7 +37,7 @@ public class ReusableWorkflowJobContext implements JobContext_ {
         env = EnvContext.ensure(root.get("env"));
         vars = VarsContext.ensure(root.get("vars"));
         job = JobContext.ensure(root.get("job"));
-        jobs = JobsContext.create(root.get("jobs"));
+        jobs = JobsContext.ensure(root.get("jobs"));
         steps = StepsContext.ensure(root.get("steps"));
         runner = RunnerContext.ensure(root.get("runner"));
         secrets = SecretsContext.ensure(root.get("secrets"));

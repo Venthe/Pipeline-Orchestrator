@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 
+import java.util.Map;
+
 public class NormalJobExecutionContext implements JobContext_ {
     private final ObjectNode root;
 
@@ -12,7 +14,7 @@ public class NormalJobExecutionContext implements JobContext_ {
     private final EnvContext env;
     private final VarsContext vars;
     private final JobContext job;
-    private final StepsContext steps;
+    private final Map<String, StepsContext.StepContext> steps;
     private final RunnerContext runner;
     private final SecretsContext secrets;
     private final StrategyContext strategy;
