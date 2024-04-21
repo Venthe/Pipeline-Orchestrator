@@ -1,5 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
@@ -20,8 +22,10 @@ import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMa
 @EqualsAndHashCode
 @SuperBuilder
 public class JobsContext {
+    @JsonAnyGetter
     private final Map<String, JobJobsContext> inputs = new HashMap<>();
 
+    @JsonCreator
     private JobsContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 

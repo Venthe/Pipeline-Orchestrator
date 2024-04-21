@@ -1,5 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 import lombok.EqualsAndHashCode;
@@ -38,6 +40,7 @@ public class SecretsContext {
      * authentication."
      */
     @Singular
+    @JsonAnyGetter
     private final Map<String, String> secrets = new HashMap<>();
 
     public SecretsContext(Map<String, String> secrets) {
@@ -48,6 +51,7 @@ public class SecretsContext {
         this.secrets.putAll(secrets);
     }
 
+    @JsonCreator
     public SecretsContext(JsonNode _root) {
         this(ContextUtilities.validateIsObjectNode(_root).properties().stream()
                 .map(sameKey(ContextUtilities.Text::ensure))

@@ -91,5 +91,20 @@ public class ContextUtilities {
         public static String ensure(JsonNode root) {
             return create(root).orElseThrow();
         }
+
+        public static String ensure(JsonNode root, Supplier<RuntimeException> exception) {
+            return create(root).orElseThrow(exception);
+        }
+    }
+
+    @UtilityClass
+    public static class BooleanTextualNumber {
+        public static JsonNode ensure(JsonNode c) {
+            if (c.isBoolean() || c.isTextual() || c.isNumber()) {
+                return c;
+            }
+
+            throw new UnsupportedOperationException();
+        }
     }
 }

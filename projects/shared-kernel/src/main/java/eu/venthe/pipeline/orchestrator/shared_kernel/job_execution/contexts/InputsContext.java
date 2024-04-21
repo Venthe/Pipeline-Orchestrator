@@ -1,5 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
@@ -35,25 +37,19 @@ public class InputsContext {
      * <p>
      * string or number or boolean or choice
      */
+    @JsonAnyGetter
     private final Map<String, JsonNode> inputs = new HashMap<>();
 
+    @JsonCreator
     private InputsContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
         inputs.putAll(ContextUtilities.validateIsObjectNode(root).properties().stream()
-                .map(sameKey(e -> ContextUtilities.ensure(e, InputsContext::getJsonNodeTFunction)))
+                .map(sameKey(e -> ContextUtilities.ensure(e, ContextUtilities.BooleanTextualNumber::ensure)))
                 .collect(toMap()));
     }
 
     public static Optional<InputsContext> create(JsonNode inputs) {
         return ContextUtilities.create(inputs, InputsContext::new);
-    }
-
-    private static JsonNode getJsonNodeTFunction(JsonNode c) {
-        if (c.isBoolean() || c.isTextual() || c.isNumber()) {
-            return c;
-        }
-
-        throw new UnsupportedOperationException();
     }
 }

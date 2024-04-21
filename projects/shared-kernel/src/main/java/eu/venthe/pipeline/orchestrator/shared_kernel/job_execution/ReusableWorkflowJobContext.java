@@ -17,8 +17,6 @@ import java.util.Optional;
 @SuperBuilder
 @SuppressWarnings("ALL")
 public class ReusableWorkflowJobContext implements JobContext_ {
-    private final ObjectNode root;
-
     private final GithubContext github;
     private final EnvContext env;
     private final VarsContext vars;
@@ -40,7 +38,7 @@ public class ReusableWorkflowJobContext implements JobContext_ {
     private final Optional<InputsContext> inputs;
 
     public ReusableWorkflowJobContext(JsonNode _root) {
-        this.root = ContextUtilities.validateIsObjectNode(_root);
+        ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
         github = GithubContext.ensure(root.get("github"));
         env = EnvContext.ensure(root.get("env"));

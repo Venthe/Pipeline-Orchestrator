@@ -19,7 +19,7 @@ enum class DependencyVersion(val version: String) {
     ASSERTJ("3.25.3"),
     AWAITILITY("4.2.0"),
     COMMONS_TEXT("1.11.0"),
-    JACKSON("2.16.2"),
+    JACKSON("2.17.0"),
     JUNIT("5.10.2"),
     GUAVA("33.0.0-jre"),
     JUNIT_PLATFORM_LAUNCHER("1.9.1"),
@@ -46,6 +46,7 @@ dependencies {
         implementation("com.fasterxml.jackson.core:jackson-databind:${DependencyVersion.JACKSON.version}")
         implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${DependencyVersion.JACKSON.version}")
         implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${DependencyVersion.JACKSON.version}")
+        implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${DependencyVersion.JACKSON.version}")
         implementation("com.github.docker-java:docker-java-transport-zerodep:${DependencyVersion.DOCKER_JAVA.version}")
         implementation("com.github.docker-java:docker-java:${DependencyVersion.DOCKER_JAVA.version}")
         implementation("com.google.guava:guava:${DependencyVersion.GUAVA.version}")

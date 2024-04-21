@@ -1,11 +1,16 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Singular;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,12 +36,16 @@ import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMa
 @Getter
 @ToString
 @EqualsAndHashCode
+@SuperBuilder
 public class EnvContext {
     /**
      * The value of a specific environment variable.
      */
+    @JsonAnyGetter
+    @Singular
     private final Map<String, String> environmentVariables = new HashMap<>();
 
+    @JsonCreator
     public EnvContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 

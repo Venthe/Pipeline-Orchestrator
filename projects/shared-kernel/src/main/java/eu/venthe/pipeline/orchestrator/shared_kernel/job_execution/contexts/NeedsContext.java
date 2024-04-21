@@ -1,5 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
@@ -26,8 +28,10 @@ public class NeedsContext {
      * run. You can access this context from any job or step in a workflow. This object contains all the properties
      * listed below.
      */
+    @JsonAnyGetter
     private final Map<String, JobNeed> jobs = new HashMap<>();
 
+    @JsonCreator
     private NeedsContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 

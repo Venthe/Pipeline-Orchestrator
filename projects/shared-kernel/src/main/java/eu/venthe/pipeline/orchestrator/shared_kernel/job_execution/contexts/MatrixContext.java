@@ -1,9 +1,20 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+
+import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.sameKey;
+import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMap;
 
 /**
  * For workflows with a matrix, the matrix context contains the matrix properties defined in the workflow file that
@@ -15,13 +26,24 @@ import java.util.Optional;
  * This context is only available for jobs in a matrix, and changes for each job in a workflow run. You can access this
  * context from any job or step in a workflow. This object contains the properties listed below.
  */
+@Getter
+@EqualsAndHashCode
+@RequiredArgsConstructor
 public class MatrixContext {
-    /**
-     * { "os": "ubuntu-latest", "node": 16 }
-     */
-    ObjectNode values;
 
-    public static Optional<MatrixContext> create(JsonNode matrix) {
-        throw new UnsupportedOperationException();
+    @JsonAnyGetter
+    private final Map<String, JsonNode> matrix = new HashMap<>();
+
+    @JsonCreator
+    private MatrixContext(JsonNode _root) {
+        ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
+
+        matrix.putAll(ContextUtilities.validateIsObjectNode(root).properties().stream()
+                .map(sameKey(e -> ContextUtilities.ensure(e, ContextUtilities.BooleanTextualNumber::ensure)))
+                .collect(toMap()));
+    }
+
+    public static Optional<MatrixContext> create(JsonNode inputs) {
+        return ContextUtilities.create(inputs, MatrixContext::new);
     }
 }

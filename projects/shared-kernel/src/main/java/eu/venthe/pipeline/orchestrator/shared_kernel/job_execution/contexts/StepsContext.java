@@ -1,5 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
@@ -23,8 +25,10 @@ import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMa
 @EqualsAndHashCode
 @RequiredArgsConstructor
 public class StepsContext {
+    @JsonAnyGetter
     private final Map<String, StepContext> steps = new HashMap<>();
 
+    @JsonCreator
     private StepsContext(JsonNode _root) {
         steps.putAll(ContextUtilities.validateIsObjectNode(_root).properties().stream()
                 .map(sameKey(e -> ContextUtilities.ensure(e, StepContext::new)))

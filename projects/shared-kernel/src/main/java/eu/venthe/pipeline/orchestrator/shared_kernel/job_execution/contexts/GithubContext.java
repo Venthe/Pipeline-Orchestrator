@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
@@ -14,6 +15,7 @@ import java.util.Optional;
  * read most of the github context data in environment variables. For more information about environment variables, see
  * "Variables."
  */
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @Getter
 @ToString
 @EqualsAndHashCode
@@ -223,51 +225,52 @@ public class GithubContext {
      */
     private final String workspace;
 
+    @JsonCreator
     public GithubContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
-        action = ContextUtilities.Text.ensure(root.get("action"));
+        action = ContextUtilities.Text.ensure(root.get("action"), () -> new IllegalArgumentException("Missing github.action"));
         actionPath = ContextUtilities.Text.create(root.get("action_path"));
-        actionRef = ContextUtilities.Text.ensure(root.get("action_ref"));
-        actionRepository = ContextUtilities.Text.ensure(root.get("action_repository"));
+        actionRef = ContextUtilities.Text.ensure(root.get("action_ref"), () -> new IllegalArgumentException("Missing github.action_ref"));
+        actionRepository = ContextUtilities.Text.ensure(root.get("action_repository"), () -> new IllegalArgumentException("Missing github.action_repository"));
         actionStatus = ContextUtilities.Text.create(root.get("action_status"));
-        actor = ContextUtilities.Text.ensure(root.get("actor"));
+        actor = ContextUtilities.Text.ensure(root.get("actor"), () -> new IllegalArgumentException("Missing github.actor"));
         actorId = ContextUtilities.Text.create(root.get("actor_id"));
-        apiUrl = ContextUtilities.Text.ensure(root.get("api_url"));
-        baseRef = ContextUtilities.Text.ensure(root.get("base_ref"));
-        env = ContextUtilities.Text.ensure(root.get("env"));
+        apiUrl = ContextUtilities.Text.ensure(root.get("api_url"), () -> new IllegalArgumentException("Missing github.api_url"));
+        baseRef = ContextUtilities.Text.ensure(root.get("base_ref"), () -> new IllegalArgumentException("Missing github.base_ref"));
+        env = ContextUtilities.Text.ensure(root.get("env"), () -> new IllegalArgumentException("Missing github.env"));
         event = ContextUtilities.validateIsObjectNode(root.get("event"));
-        eventName = ContextUtilities.Text.ensure(root.get("event_name"));
-        eventPath = ContextUtilities.Text.ensure(root.get("event_path"));
-        graphqlUrl = ContextUtilities.Text.ensure(root.get("graphql_url"));
-        headRef = ContextUtilities.Text.ensure(root.get("head_ref"));
-        job = ContextUtilities.Text.ensure(root.get("job"));
-        path = ContextUtilities.Text.ensure(root.get("path"));
-        ref = ContextUtilities.Text.ensure(root.get("ref"));
-        refName = ContextUtilities.Text.ensure(root.get("ref_name"));
-        refProtected = ContextUtilities.ensure(root.get("ref_protected"), ContextUtilities.toBoolean());
-        refType = ContextUtilities.Text.ensure(root.get("ref_type"));
-        repository = ContextUtilities.Text.ensure(root.get("repository"));
+        eventName = ContextUtilities.Text.ensure(root.get("event_name"), () -> new IllegalArgumentException("Missing github.event_name"));
+        eventPath = ContextUtilities.Text.ensure(root.get("event_path"), () -> new IllegalArgumentException("Missing github.event_path"));
+        graphqlUrl = ContextUtilities.Text.ensure(root.get("graphql_url"), () -> new IllegalArgumentException("Missing github.graphql_url"));
+        headRef = ContextUtilities.Text.ensure(root.get("head_ref"), () -> new IllegalArgumentException("Missing github.head_ref"));
+        job = ContextUtilities.Text.ensure(root.get("job"), () -> new IllegalArgumentException("Missing github.job"));
+        path = ContextUtilities.Text.ensure(root.get("path"), () -> new IllegalArgumentException("Missing github.path"));
+        ref = ContextUtilities.Text.ensure(root.get("ref"), () -> new IllegalArgumentException("Missing github.ref"));
+        refName = ContextUtilities.Text.ensure(root.get("ref_name"), () -> new IllegalArgumentException("Missing github.ref_name"));
+        refProtected = ContextUtilities.ensure(root.get("ref_protected"), ContextUtilities.toBoolean(), () -> new IllegalArgumentException("Missing github.ref_protected"));
+        refType = ContextUtilities.Text.ensure(root.get("ref_type"), () -> new IllegalArgumentException("Missing github.ref_type"));
+        repository = ContextUtilities.Text.ensure(root.get("repository"), () -> new IllegalArgumentException("Missing github.repository"));
         repositoryId = ContextUtilities.Text.create(root.get("repository_id"));
-        repositoryOwner = ContextUtilities.Text.ensure(root.get("repository_owner"));
+        repositoryOwner = ContextUtilities.Text.ensure(root.get("repository_owner"), () -> new IllegalArgumentException("Missing github.repository_owner"));
         repositoryOwnerId = ContextUtilities.Text.create(root.get("repository_owner_id"));
-        repositoryUrl = ContextUtilities.Text.ensure(root.get("repository_url"));
-        retentionDays = ContextUtilities.Text.ensure(root.get("retention_days"));
-        runId = ContextUtilities.Text.ensure(root.get("run_id"));
-        runNumber = ContextUtilities.Text.ensure(root.get("run_number"));
-        runAttempt = ContextUtilities.Text.ensure(root.get("run_attempt"));
-        secretSource = ContextUtilities.Text.ensure(root.get("secret_source"));
-        serverUrl = ContextUtilities.Text.ensure(root.get("server_url"));
-        sha = ContextUtilities.Text.ensure(root.get("sha"));
-        token = ContextUtilities.Text.ensure(root.get("token"));
+        repositoryUrl = ContextUtilities.Text.ensure(root.get("repository_url"), () -> new IllegalArgumentException("Missing github.repository_url"));
+        retentionDays = ContextUtilities.Text.ensure(root.get("retention_days"), () -> new IllegalArgumentException("Missing github.retention_days"));
+        runId = ContextUtilities.Text.ensure(root.get("run_id"), () -> new IllegalArgumentException("Missing github.run_id"));
+        runNumber = ContextUtilities.Text.ensure(root.get("run_number"), () -> new IllegalArgumentException("Missing github.run_number"));
+        runAttempt = ContextUtilities.Text.ensure(root.get("run_attempt"), () -> new IllegalArgumentException("Missing github.run_attempt"));
+        secretSource = ContextUtilities.Text.ensure(root.get("secret_source"), () -> new IllegalArgumentException("Missing github.secret_source"));
+        serverUrl = ContextUtilities.Text.ensure(root.get("server_url"), () -> new IllegalArgumentException("Missing github.server_url"));
+        sha = ContextUtilities.Text.ensure(root.get("sha"), () -> new IllegalArgumentException("Missing github.sha"));
+        token = ContextUtilities.Text.ensure(root.get("token"), () -> new IllegalArgumentException("Missing github.token"));
         triggeringActor = ContextUtilities.Text.create(root.get("triggering_actor"));
-        workflow = ContextUtilities.Text.ensure(root.get("workflow"));
+        workflow = ContextUtilities.Text.ensure(root.get("workflow"), () -> new IllegalArgumentException("Missing github.workflow"));
         workflowRef = ContextUtilities.Text.create(root.get("workflow_ref"));
         workflowSha = ContextUtilities.Text.create(root.get("workflow_sha"));
-        workspace = ContextUtilities.Text.ensure(root.get("workspace"));
+        workspace = ContextUtilities.Text.ensure(root.get("workspace"), () -> new IllegalArgumentException("Missing github.workspace"));
     }
 
     public static GithubContext ensure(JsonNode github) {
-        return ContextUtilities.ensure(github, GithubContext::new);
+        return ContextUtilities.ensure(github, GithubContext::new, () -> new IllegalArgumentException("Missing github"));
     }
 }
