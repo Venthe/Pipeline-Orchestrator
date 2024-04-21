@@ -3,12 +3,16 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
+import lombok.Getter;
+
+import java.util.Optional;
 
 /**
  * The github context contains information about the workflow run and the event that triggered the run. You can also
  * read most of the github context data in environment variables. For more information about environment variables, see
  * "Variables."
  */
+@Getter
 public class GithubContext {
     /**
      * The name of the action currently running, or the id of a step. GitHub removes special characters, and uses the
@@ -23,7 +27,7 @@ public class GithubContext {
      * to access files located in the same repository as the action, for example by changing directories to the path: cd
      * ${{ github.action_path }} .
      */
-    private final String actionPath;
+    private final Optional<String> actionPath;
     /**
      * For a step executing an action, this is the ref of the action being executed. For example, v2.
      * <p>
@@ -42,7 +46,7 @@ public class GithubContext {
     /**
      * For a composite action, the current result of the composite action.
      */
-    private final String actionStatus;
+    private final Optional<String> actionStatus;
     /**
      * The username of the user that triggered the initial workflow run. If the workflow run is a re-run, this value may
      * differ from github.triggering_actor. Any workflow re-runs will use the privileges of github.actor, even if the
@@ -53,7 +57,7 @@ public class GithubContext {
      * The account ID of the person or app that triggered the initial workflow run. For example, 1234567. Note that this
      * is different from the actor username.
      */
-    private final String actorId;
+    private final Optional<String> actorId;
     /**
      * The URL of the GitHub REST API.
      */
@@ -136,7 +140,7 @@ public class GithubContext {
     /**
      * The ID of the repository. For example, 123456789. Note that this is different from the repository name.
      */
-    private final String repositoryId;
+    private final Optional<String> repositoryId;
     /**
      * The repository owner's username. For example, octocat.
      */
@@ -144,7 +148,7 @@ public class GithubContext {
     /**
      * The repository owner's account ID. For example, 1234567. Note that this is different from the owner's name.
      */
-    private final String repositoryOwnerId;
+    private final Optional<String> repositoryOwnerId;
     /**
      * The Git URL to the repository. For example, git://github.com/octocat/hello-world.git.
      */
@@ -194,7 +198,7 @@ public class GithubContext {
      * from github.actor. Any workflow re-runs will use the privileges of github.actor, even if the actor initiating the
      * re-run (github.triggering_actor) has different privileges.
      */
-    private final String triggeringActor;
+    private final Optional<String> triggeringActor;
     /**
      * The name of the workflow. If the workflow file doesn't specify a name, the value of this property is the full
      * path of the workflow file in the repository.
@@ -204,11 +208,11 @@ public class GithubContext {
      * The ref path to the workflow. For example,
      * octocat/hello-world/.github/workflows/my-workflow.yml@refs/heads/my_branch.
      */
-    private final String workflowRef;
+    private final Optional<String> workflowRef;
     /**
      * The commit SHA for the workflow file.
      */
-    private final String workflowSha;
+    private final Optional<String> workflowSha;
     /**
      * The default working directory on the runner for steps, and the default location of your repository when using the
      * checkout action.
@@ -219,47 +223,47 @@ public class GithubContext {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
         action = ContextUtilities.Text.ensure(root.get("action"));
-        actionPath = ContextUtilities.Text.ensure(root.get("actionPath"));
-        actionRef = ContextUtilities.Text.ensure(root.get("actionRef"));
-        actionRepository = ContextUtilities.Text.ensure(root.get("actionRepository"));
-        actionStatus = ContextUtilities.Text.ensure(root.get("actionStatus"));
+        actionPath = ContextUtilities.Text.create(root.get("action_path"));
+        actionRef = ContextUtilities.Text.ensure(root.get("action_ref"));
+        actionRepository = ContextUtilities.Text.ensure(root.get("action_repository"));
+        actionStatus = ContextUtilities.Text.create(root.get("action_status"));
         actor = ContextUtilities.Text.ensure(root.get("actor"));
-        actorId = ContextUtilities.Text.ensure(root.get("actorId"));
-        apiUrl = ContextUtilities.Text.ensure(root.get("apiUrl"));
-        baseRef = ContextUtilities.Text.ensure(root.get("baseRef"));
+        actorId = ContextUtilities.Text.create(root.get("actor_id"));
+        apiUrl = ContextUtilities.Text.ensure(root.get("api_url"));
+        baseRef = ContextUtilities.Text.ensure(root.get("base_ref"));
         env = ContextUtilities.Text.ensure(root.get("env"));
         event = ContextUtilities.validateIsObjectNode(root.get("event"));
-        eventName = ContextUtilities.Text.ensure(root.get("eventName"));
-        eventPath = ContextUtilities.Text.ensure(root.get("eventPath"));
-        graphqlUrl = ContextUtilities.Text.ensure(root.get("graphqlUrl"));
-        headRef = ContextUtilities.Text.ensure(root.get("headRef"));
+        eventName = ContextUtilities.Text.ensure(root.get("event_name"));
+        eventPath = ContextUtilities.Text.ensure(root.get("event_path"));
+        graphqlUrl = ContextUtilities.Text.ensure(root.get("graphql_url"));
+        headRef = ContextUtilities.Text.ensure(root.get("head_ref"));
         job = ContextUtilities.Text.ensure(root.get("job"));
         path = ContextUtilities.Text.ensure(root.get("path"));
         ref = ContextUtilities.Text.ensure(root.get("ref"));
-        refName = ContextUtilities.Text.ensure(root.get("refName"));
-        refProtected = ContextUtilities.ensure(root.get("refProtected"), ContextUtilities.toBoolean());
-        refType = ContextUtilities.Text.ensure(root.get("refType"));
+        refName = ContextUtilities.Text.ensure(root.get("ref_name"));
+        refProtected = ContextUtilities.ensure(root.get("ref_protected"), ContextUtilities.toBoolean());
+        refType = ContextUtilities.Text.ensure(root.get("ref_type"));
         repository = ContextUtilities.Text.ensure(root.get("repository"));
-        repositoryId = ContextUtilities.Text.ensure(root.get("repositoryId"));
-        repositoryOwner = ContextUtilities.Text.ensure(root.get("repositoryOwner"));
-        repositoryOwnerId = ContextUtilities.Text.ensure(root.get("repositoryOwnerId"));
-        repositoryUrl = ContextUtilities.Text.ensure(root.get("repositoryUrl"));
-        retentionDays = ContextUtilities.Text.ensure(root.get("retentionDays"));
-        runId = ContextUtilities.Text.ensure(root.get("runId"));
-        runNumber = ContextUtilities.Text.ensure(root.get("runNumber"));
-        runAttempt = ContextUtilities.Text.ensure(root.get("runAttempt"));
-        secretSource = ContextUtilities.Text.ensure(root.get("secretSource"));
-        serverUrl = ContextUtilities.Text.ensure(root.get("serverUrl"));
+        repositoryId = ContextUtilities.Text.create(root.get("repository_id"));
+        repositoryOwner = ContextUtilities.Text.ensure(root.get("repository_owner"));
+        repositoryOwnerId = ContextUtilities.Text.create(root.get("repository_owner_id"));
+        repositoryUrl = ContextUtilities.Text.ensure(root.get("repository_url"));
+        retentionDays = ContextUtilities.Text.ensure(root.get("retention_days"));
+        runId = ContextUtilities.Text.ensure(root.get("run_id"));
+        runNumber = ContextUtilities.Text.ensure(root.get("run_number"));
+        runAttempt = ContextUtilities.Text.ensure(root.get("run_attempt"));
+        secretSource = ContextUtilities.Text.ensure(root.get("secret_source"));
+        serverUrl = ContextUtilities.Text.ensure(root.get("server_url"));
         sha = ContextUtilities.Text.ensure(root.get("sha"));
         token = ContextUtilities.Text.ensure(root.get("token"));
-        triggeringActor = ContextUtilities.Text.ensure(root.get("triggeringActor"));
+        triggeringActor = ContextUtilities.Text.create(root.get("triggering_actor"));
         workflow = ContextUtilities.Text.ensure(root.get("workflow"));
-        workflowRef = ContextUtilities.Text.ensure(root.get("workflowRef"));
-        workflowSha = ContextUtilities.Text.ensure(root.get("workflowSha"));
+        workflowRef = ContextUtilities.Text.create(root.get("workflow_ref"));
+        workflowSha = ContextUtilities.Text.create(root.get("workflow_sha"));
         workspace = ContextUtilities.Text.ensure(root.get("workspace"));
     }
 
     public static GithubContext ensure(JsonNode github) {
-        throw new UnsupportedOperationException();
+        return ContextUtilities.ensure(github, GithubContext::new);
     }
 }
