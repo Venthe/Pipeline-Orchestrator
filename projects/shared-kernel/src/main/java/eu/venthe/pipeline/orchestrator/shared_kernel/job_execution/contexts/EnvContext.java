@@ -3,6 +3,9 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +25,9 @@ import java.util.Map;
  * This context changes for each step in a job. You can access this context from any step in a job. This object contains
  * the properties listed below.
  */
+@Getter
+@ToString
+@EqualsAndHashCode
 public class EnvContext {
     /**
      * The value of a specific environment variable.
@@ -35,6 +41,8 @@ public class EnvContext {
     }
 
     public static EnvContext ensure(JsonNode env) {
-        throw new UnsupportedOperationException();
+        return ContextUtilities.ensure(env, EnvContext::new);
     }
 }
+
+

@@ -40,7 +40,7 @@ public class GerritProjectProvider implements ProjectProvider {
                     var collect = config.get("download").get("schemes").properties().stream()
                             .filter(k -> k.getKey().equals("http") || k.getKey().equals("ssh"))
                             .map(e -> Map.entry(e.getKey(), e.getValue().get("url").textValue().replace("${project}", "%s")))
-                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                            .collect(toMap());
 
                     var project = StreamSupport.stream(gerritApi.getProjects().getProjects(configuration, headers).spliterator(), false)
                             .map(node -> {

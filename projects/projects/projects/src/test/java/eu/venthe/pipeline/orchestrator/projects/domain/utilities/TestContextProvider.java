@@ -41,6 +41,6 @@ public class TestContextProvider {
                         repository.entrySet()
                 )
                 .flatMap(Collection::stream)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(toMap());
     }
 }

@@ -8,6 +8,8 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.cont
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMap;
+
 public class WorkflowDispatchInputsContext {
     private final Map<String, InputUtilities.InputValue<?>> inputs;
 
@@ -33,6 +35,6 @@ public class WorkflowDispatchInputsContext {
     public Map<String, String> getSimple() {
         return inputs.entrySet().stream()
                 .map(e -> Map.entry(e.getKey(), e.getValue().serialize()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(toMap());
     }
 }
