@@ -10,6 +10,9 @@ import lombok.ToString;
 import java.util.HashMap;
 import java.util.Map;
 
+import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.sameKey;
+import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMap;
+
 /**
  * The env context contains variables that have been set in a workflow, job, or step. It does not contain variables
  * inherited by the runner process. For more information about setting variables in your workflow, see "Workflow syntax
@@ -37,7 +40,7 @@ public class EnvContext {
     public EnvContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
-        root.properties().forEach(e -> environmentVariables.put(e.getKey(), ContextUtilities.Text.ensure(e.getValue())));
+        environmentVariables.putAll(root.properties().stream().map(sameKey(ContextUtilities.Text::ensure)).collect(toMap()));
     }
 
     public static EnvContext ensure(JsonNode env) {

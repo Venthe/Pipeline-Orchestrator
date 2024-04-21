@@ -29,7 +29,7 @@ public class ReusableWorkflowJobContext implements JobContext_ {
     private final SecretsContext secrets;
     private final StrategyContext strategy;
     private final Optional<MatrixContext> matrix;
-    private final NeedsContext needs;
+    private final Map<String, NeedsContext.JobNeed> needs;
     private final Optional<InputsContext> inputs;
 
     public ReusableWorkflowJobContext(JsonNode _root) {
