@@ -5,14 +5,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 
-public class NormalJobExecutionContext {
+public class NormalJobExecutionContext implements JobContext_ {
     private final ObjectNode root;
 
     private final GithubContext github;
     private final EnvContext env;
     private final VarsContext vars;
     private final JobContext job;
-    private final JobsContext jobs;
     private final StepsContext steps;
     private final RunnerContext runner;
     private final SecretsContext secrets;
@@ -28,7 +27,6 @@ public class NormalJobExecutionContext {
         env = EnvContext.ensure(root.get("env"));
         vars = VarsContext.ensure(root.get("vars"));
         job = JobContext.ensure(root.get("job"));
-        jobs = JobsContext.create(root.get("jobs"));
         steps = StepsContext.ensure(root.get("steps"));
         runner = RunnerContext.ensure(root.get("runner"));
         secrets = SecretsContext.ensure(root.get("secrets"));
