@@ -1,6 +1,5 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts.AbstractContextTest;
 import lombok.SneakyThrows;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonPatch;
-import javax.json.JsonValue;
 import java.io.StringReader;
 
 class ReusableWorkflowJobContextTest extends AbstractContextTest {

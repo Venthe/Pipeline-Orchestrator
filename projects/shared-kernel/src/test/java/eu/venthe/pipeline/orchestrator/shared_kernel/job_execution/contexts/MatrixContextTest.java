@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class MatrixContextTest extends AbstractContextTest {
     @Test
     void name() {

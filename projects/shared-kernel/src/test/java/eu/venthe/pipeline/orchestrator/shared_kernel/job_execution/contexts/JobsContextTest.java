@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
-
 class JobsContextTest extends AbstractContextTest {
     // Given
     @Test
