@@ -6,7 +6,9 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
 
 import java.util.Map;
+import java.util.Optional;
 
+@SuppressWarnings("ALL")
 public class ReusableWorkflowJobContext implements JobContext_ {
     private final ObjectNode root;
 
@@ -26,9 +28,9 @@ public class ReusableWorkflowJobContext implements JobContext_ {
     private final RunnerContext runner;
     private final SecretsContext secrets;
     private final StrategyContext strategy;
-    private final MatrixContext matrix;
+    private final Optional<MatrixContext> matrix;
     private final NeedsContext needs;
-    private final InputsContext inputs;
+    private final Optional<InputsContext> inputs;
 
     public ReusableWorkflowJobContext(JsonNode _root) {
         this.root = ContextUtilities.validateIsObjectNode(_root);
@@ -42,8 +44,8 @@ public class ReusableWorkflowJobContext implements JobContext_ {
         runner = RunnerContext.ensure(root.get("runner"));
         secrets = SecretsContext.ensure(root.get("secrets"));
         strategy = StrategyContext.ensure(root.get("strategy"));
-        matrix = MatrixContext.ensure(root.get("matrix"));
+        matrix = MatrixContext.create(root.get("matrix"));
         needs = NeedsContext.ensure(root.get("needs"));
-        inputs = InputsContext.ensure(root.get("inputs"));
+        inputs = InputsContext.create(root.get("inputs"));
     }
 }

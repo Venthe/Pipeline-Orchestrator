@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * The inputs context contains input properties passed to an action, to a reusable workflow, or to a manually triggered
@@ -26,7 +27,7 @@ public class InputsContext {
      */
     private final Map<String, ?> inputs;
 
-    public static InputsContext ensure(JsonNode inputs) {
+    public static Optional<InputsContext> create(JsonNode inputs) {
         throw new UnsupportedOperationException();
     }
 }
