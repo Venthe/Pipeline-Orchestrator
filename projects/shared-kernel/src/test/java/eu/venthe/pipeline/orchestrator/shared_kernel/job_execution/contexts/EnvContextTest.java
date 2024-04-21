@@ -17,10 +17,10 @@ class EnvContextTest extends AbstractContextTest {
                 """);
 
         // When
-        EnvContext ensure = EnvContext.ensure(jsonNode);
+        EnvContext envContext = EnvContext.ensure(jsonNode);
 
         // Then
-        assertThat(ensure.getEnvironmentVariables())
+        assertThat(envContext.getEnvironmentVariables())
                 .hasEntrySatisfying("first_name", v -> assertThat(v).isEqualTo("Mona"))
                 .hasEntrySatisfying("super_duper_var", v -> assertThat(v).isEqualTo("totally_awesome"));
     }

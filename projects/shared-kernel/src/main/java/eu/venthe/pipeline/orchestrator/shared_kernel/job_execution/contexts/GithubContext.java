@@ -3,7 +3,9 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.Optional;
 
@@ -13,6 +15,8 @@ import java.util.Optional;
  * "Variables."
  */
 @Getter
+@ToString
+@EqualsAndHashCode
 public class GithubContext {
     /**
      * The name of the action currently running, or the id of a step. GitHub removes special characters, and uses the

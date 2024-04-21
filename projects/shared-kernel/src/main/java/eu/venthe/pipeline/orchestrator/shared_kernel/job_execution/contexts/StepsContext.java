@@ -1,9 +1,15 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Map;
+
+import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.sameKey;
+import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMap;
 
 /**
  * The steps context contains information about the steps in the current job that have an id specified and have already
@@ -12,17 +18,25 @@ import java.util.Map;
  * This context changes for each step in a job. You can access this context from any step in a job. This object contains
  * all the properties listed below.
  */
-@AllArgsConstructor
+@Getter
+@ToString
+@EqualsAndHashCode
 public class StepsContext {
     public static Map<String, StepContext> ensure(JsonNode steps) {
-        throw new UnsupportedOperationException();
+        return ContextUtilities.validateIsObjectNode(steps).properties().stream()
+                .map(sameKey(e -> ContextUtilities.ensure(e, StepContext::new)))
+                .collect(toMap());
     }
 
-    @AllArgsConstructor
+    @Getter
+    @ToString
+    @EqualsAndHashCode
+    @SuperBuilder
     public static class StepContext {
         /**
          * The set of outputs defined for the step. For more information, see "Metadata syntax for GitHub Actions."
          */
+        @Singular
         private final Map<String, String> outputs;
         /**
          * The result of a completed step after continue-on-error is applied. Possible values are success, failure,
@@ -36,5 +50,15 @@ public class StepsContext {
          * is success.
          */
         private final String outcome;
+
+        protected StepContext(JsonNode _root) {
+            ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
+
+            conclusion = ContextUtilities.Text.ensure(root.get("conclusion"));
+            outcome = ContextUtilities.Text.ensure(root.get("outcome"));
+            outputs = root.get("outputs").properties().stream()
+                    .map(sameKey(ContextUtilities.Text::ensure))
+                    .collect(toMap());
+        }
     }
 }
