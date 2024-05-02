@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.plugins.docker;
 
 import com.github.dockerjava.api.DockerClient;
@@ -37,3 +38,4 @@ public class DockerJobExecutorPlugin implements JobExecutorPlugin {
         }
     }
 }
+*/
