@@ -1,6 +1,7 @@
 package eu.venthe.pipeline.orchestrator.plugins.controlled_provider;
 
-import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects_source.adapter.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects_source.adapter.controlled_provider.ControlledTestProjectProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;

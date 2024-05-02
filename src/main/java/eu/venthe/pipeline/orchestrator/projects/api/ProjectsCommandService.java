@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.projects.api;
 import eu.venthe.pipeline.orchestrator.projects.api.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.api.dto.UpdateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectStatus;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 
 public interface ProjectsCommandService {
 
@@ -23,7 +23,7 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default void handleVersionControlEvent(String projectId, ProjectEvent event) {
+    default void handleVersionControlEvent(String projectId, SystemEvent event) {
         throw new UnsupportedOperationException();
     }
 

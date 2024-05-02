@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.OnBranches;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.OnPaths;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.PushEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.PushEvent;
 
 import java.nio.file.Path;
 import java.util.Collection;

@@ -2,13 +2,17 @@ package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.project_event.events.*;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.PullRequestEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.PushEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.WorkflowDispatchEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.utilities.TestContextProvider;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
+import eu.venthe.pipeline.orchestrator.projects.shared_kernel.system_events.*;
 import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
+import eu.venthe.pipeline.orchestrator.projects_source.adapter.events.*;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.*;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
@@ -668,7 +672,7 @@ class OnContextTest {
     }
 
     @SneakyThrows
-    private <T extends ProjectEvent> EventWrapper<?> getEvent(String value) {
+    private <T extends SystemEvent> EventWrapper<?> getEvent(String value) {
         ObjectNode eventTree = (ObjectNode) objectMapper.readTree(value);
 
         deepSetIfNotPresent(objectMapper, eventTree, "id", objectMapper.getNodeFactory().textNode(UUID.randomUUID().toString()));

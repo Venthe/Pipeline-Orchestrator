@@ -1,12 +1,12 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.handlers;
 
-import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
+import eu.venthe.pipeline.orchestrator.projects_source.adapter.RepositoryReader;
 import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.WorkflowFactory;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.WorkflowDispatchEventWrapper;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.WorkflowDispatchEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.WorkflowDispatchEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @Slf4j
 public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowDispatchEvent> {
-    private final VersionControlSystemProvider versionControlSystemProvider;
+    private final RepositoryReader versionControlSystemProvider;
     private final WorkflowFactory workflowFactory;
 
     @Override
@@ -46,7 +46,7 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
         throw new UnsupportedOperationException();
     }
 
-    public boolean canHandle(ProjectEvent event) {
+    public boolean canHandle(SystemEvent event) {
         return event instanceof WorkflowDispatchEvent;
     }
 }

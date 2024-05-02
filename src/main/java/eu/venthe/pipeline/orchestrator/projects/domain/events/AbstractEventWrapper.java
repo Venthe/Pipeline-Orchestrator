@@ -1,13 +1,13 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.events;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.model.EventType;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public abstract class AbstractEventWrapper<T extends ProjectEvent> implements EventWrapper<T> {
+public abstract class AbstractEventWrapper<T extends SystemEvent> implements EventWrapper<T> {
     private final T event;
 
     @Override

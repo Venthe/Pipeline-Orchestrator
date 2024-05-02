@@ -9,7 +9,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.ConcurrencyC
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.DefaultsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.EnvironmentContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.PermissionsContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -57,7 +57,7 @@ public class Workflow {
         jobs = JobsContext.ensure(root.get("jobs"));
     }
 
-    public <T extends ProjectEvent> Boolean on(EventWrapper<T> event) {
+    public <T extends SystemEvent> Boolean on(EventWrapper<T> event) {
         Boolean result = on.on(event);
         log.info("[id:{}][type:{}] Event match: {}", event.getId(), event.getType(), result);
 

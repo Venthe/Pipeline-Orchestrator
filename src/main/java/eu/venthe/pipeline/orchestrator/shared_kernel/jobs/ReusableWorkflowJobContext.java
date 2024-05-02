@@ -6,7 +6,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.jobs.context.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.ConcurrencyContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.DefaultsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.PermissionsContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 
 import java.util.Optional;
 

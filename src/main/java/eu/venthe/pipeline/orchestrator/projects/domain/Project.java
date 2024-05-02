@@ -1,12 +1,12 @@
 package eu.venthe.pipeline.orchestrator.projects.domain;
 
-import eu.venthe.pipeline.orchestrator.plugins.projects.VersionControlSystemProvider;
+import eu.venthe.pipeline.orchestrator.projects_source.adapter.RepositoryReader;
 import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +28,11 @@ public class Project implements Aggregate<ProjectId> {
 
     private ProjectStatus status;
 
-    public Function<EventHandlerProvider, Collection<DomainEvent>> handleEvent(ProjectEvent event) {
+    public Function<EventHandlerProvider, Collection<DomainEvent>> handleEvent(SystemEvent event) {
         return eventHandlerProvider -> eventHandlerProvider.handle(this, event);
     }
 
-    public BiFunction<VersionControlSystemProvider, WorkflowFactory, Optional<eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow>> getWorkflow(String ref, String workflow) {
+    public BiFunction<RepositoryReader, WorkflowFactory, Optional<eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow>> getWorkflow(String ref, String workflow) {
         return (versionControlSystemProvider, workflowFactory) -> versionControlSystemProvider.getFile(id.getId(), ref, resolveFromOrchestratorDirectory(workflow), workflowFactory::fromBytes);
     }
 

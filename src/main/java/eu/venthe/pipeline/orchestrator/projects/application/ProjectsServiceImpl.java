@@ -12,7 +12,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.EventHandl
 import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +52,7 @@ public class ProjectsServiceImpl implements ProjectsQueryService, ProjectsComman
 
     @Override
     // FIXME: change project ID to repository from event
-    public void handleVersionControlEvent(String projectId, ProjectEvent event) {
+    public void handleVersionControlEvent(String projectId, SystemEvent event) {
         Project project = projectRepository.find(ProjectId.from(projectId)).orElseThrow();
 
         Collection<DomainEvent> domainEvents = project.handleEvent(event).apply(eventHandlerProvider);

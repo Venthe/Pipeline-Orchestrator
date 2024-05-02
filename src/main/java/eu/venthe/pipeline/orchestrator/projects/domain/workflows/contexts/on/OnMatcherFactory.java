@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.*;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.experimental.UtilityClass;
 
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import java.util.function.BooleanSupplier;
 
 @UtilityClass
 public class OnMatcherFactory {
-    public static <T extends ProjectEvent> Boolean map(String key, JsonNode _root, EventWrapper<T> event) {
+    public static <T extends SystemEvent> Boolean map(String key, JsonNode _root, EventWrapper<T> event) {
         ObjectNode configuration = ContextUtilities.validateIsObjectNode(ContextUtilities.ensure(_root));
 
         if (EventTypeMatcher.matchType(key, "pull_request")) {

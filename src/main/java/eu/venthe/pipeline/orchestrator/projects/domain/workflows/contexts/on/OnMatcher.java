@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 
 public interface OnMatcher {
-    <T extends ProjectEvent> Boolean on(EventWrapper<T> event);
+    <T extends SystemEvent> Boolean on(EventWrapper<T> event);
 }

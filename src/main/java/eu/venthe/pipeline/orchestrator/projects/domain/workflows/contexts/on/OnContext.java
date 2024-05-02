@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on;
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.on.matchers.EventTypeMatcher;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +24,7 @@ public class OnContext implements OnMatcher {
     }
 
     @Override
-    public <T extends ProjectEvent> Boolean on(EventWrapper<T> event) {
+    public <T extends SystemEvent> Boolean on(EventWrapper<T> event) {
         if (event == null) {
             throw new IllegalArgumentException("Eevent should not be null");
         }
