@@ -4,7 +4,7 @@ import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.MessageList
 import eu.venthe.pipeline.orchestrator.projects.api.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.api.dto.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.api.dto.UpdateProjectSpecificationDto;
-import eu.venthe.pipeline.orchestrator.projects_provider.api.events.ProjectDiscoveredEvent;
+import eu.venthe.pipeline.orchestrator.projects_source._archive.api.events.ProjectDiscoveredEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

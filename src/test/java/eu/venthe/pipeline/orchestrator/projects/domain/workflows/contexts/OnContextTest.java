@@ -11,7 +11,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.utilities.TestContextProv
 import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
 import eu.venthe.pipeline.orchestrator.projects.shared_kernel.system_events.*;
 import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
-import eu.venthe.pipeline.orchestrator.projects_source.adapter.events.*;
+import eu.venthe.pipeline.orchestrator.projects_source._archive.adapter.events.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.*;
 import lombok.SneakyThrows;

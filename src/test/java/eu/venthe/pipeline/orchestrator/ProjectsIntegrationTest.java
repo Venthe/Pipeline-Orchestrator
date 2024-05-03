@@ -2,9 +2,9 @@ package eu.venthe.pipeline.orchestrator;
 
 import eu.venthe.pipeline.orchestrator.projects.api.dto.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.api.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects_provider.api.ProjectsSourceConfigurationCommandService;
-import eu.venthe.pipeline.orchestrator.projects_provider.api.ProjectsSourceConfigurationQueryService;
-import eu.venthe.pipeline.orchestrator.projects_provider.api.ReadProjectSourceConfigurationDto;
+import eu.venthe.pipeline.orchestrator.projects_source._archive.api.ProjectsSourceConfigurationCommandService;
+import eu.venthe.pipeline.orchestrator.projects_source._archive.api.ProjectsSourceConfigurationQueryService;
+import eu.venthe.pipeline.orchestrator.projects_source._archive.api.ReadProjectSourceConfigurationDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

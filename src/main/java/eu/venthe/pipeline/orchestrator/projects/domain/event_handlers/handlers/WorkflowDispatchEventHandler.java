@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.handlers;
 
-import eu.venthe.pipeline.orchestrator.projects_source.adapter.RepositoryReader;
+import eu.venthe.pipeline.orchestrator.projects_source.adapter.template.ProjectDataAccessService;
 import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.WorkflowFactory;
 import eu.venthe.pipeline.orchestrator.projects.domain.events.WorkflowDispatchEventWrapper;
@@ -18,7 +18,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @Slf4j
 public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowDispatchEvent> {
-    private final RepositoryReader versionControlSystemProvider;
+    private final ProjectDataAccessService versionControlSystemProvider;
     private final WorkflowFactory workflowFactory;
 
     @Override

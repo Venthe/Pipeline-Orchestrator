@@ -1,12 +1,12 @@
 package eu.venthe.pipeline.orchestrator.projects_source.domain;
 
-import eu.venthe.pipeline.orchestrator.projects_source.adapter.controlled_provider.ControlledTestProjectProvider;
-import eu.venthe.pipeline.orchestrator.projects_source.adapter.controlled_provider.ControlledTestProviderPlugin;
-import eu.venthe.pipeline.orchestrator.projects_source.adapter.controlled_provider.ControlledTestVersionControlSystem;
-import eu.venthe.pipeline.orchestrator.projects_source.adapter.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects_provider.api.events.ProjectDiscoveredEvent;
-import eu.venthe.pipeline.orchestrator.projects_provider.api.events.ProjectSourceConfigurationAddedEvent;
-import eu.venthe.pipeline.orchestrator.projects_provider.domain.*;
+import eu.venthe.pipeline.orchestrator.projects_source.adapter.plugin.controlled_provider.ControlledTestProjectProvider;
+import eu.venthe.pipeline.orchestrator.projects_source.adapter.plugin.controlled_provider.ControlledTestProviderPlugin;
+import eu.venthe.pipeline.orchestrator.projects_source.adapter.plugin.controlled_provider.ControlledTestVersionControlSystem;
+import eu.venthe.pipeline.orchestrator.projects_source.adapter.template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects_source._archive.api.events.ProjectDiscoveredEvent;
+import eu.venthe.pipeline.orchestrator.projects_source._archive.api.events.ProjectSourceConfigurationAddedEvent;
+import eu.venthe.pipeline.orchestrator.projects_source._archive.domain.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -20,8 +20,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
-import static eu.venthe.pipeline.orchestrator.projects_source.adapter.controlled_provider.ControlledTestProviderPlugin.SOURCE_TYPE;
-import static eu.venthe.pipeline.orchestrator.projects_source.adapter.controlled_provider.ControlledTestProviderPlugin.generateId;
+import static eu.venthe.pipeline.orchestrator.projects_source.adapter.plugin.controlled_provider.ControlledTestProviderPlugin.SOURCE_TYPE;
+import static eu.venthe.pipeline.orchestrator.projects_source.adapter.plugin.controlled_provider.ControlledTestProviderPlugin.generateId;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SoftAssertionsExtension.class)

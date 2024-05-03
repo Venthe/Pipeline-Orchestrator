@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.domain;
 
-import eu.venthe.pipeline.orchestrator.projects_source.adapter.RepositoryReader;
+import eu.venthe.pipeline.orchestrator.projects_source.adapter.template.ProjectDataAccessService;
 import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectStatus;
@@ -32,7 +32,7 @@ public class Project implements Aggregate<ProjectId> {
         return eventHandlerProvider -> eventHandlerProvider.handle(this, event);
     }
 
-    public BiFunction<RepositoryReader, WorkflowFactory, Optional<eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow>> getWorkflow(String ref, String workflow) {
+    public BiFunction<ProjectDataAccessService, WorkflowFactory, Optional<eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow>> getWorkflow(String ref, String workflow) {
         return (versionControlSystemProvider, workflowFactory) -> versionControlSystemProvider.getFile(id.getId(), ref, resolveFromOrchestratorDirectory(workflow), workflowFactory::fromBytes);
     }
 
