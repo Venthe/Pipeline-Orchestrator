@@ -6,12 +6,13 @@ import eu.venthe.pipeline.orchestrator.projects_source.adapter.template.model.Co
 import java.util.Map;
 
 public interface ProjectSourcePlugin {
+    String getSourceType();
+
     ProjectSourcePlugin.Definition instantiate(Map<String, ConfigurationProperty> properties, Api api);
 
     Map<String, ConfigurationPropertyDefinition> getConfigurationProperties();
 
     interface Definition {
-        String getSourceType();
 
         ProjectsProvider getProjectsProvider();
 
