@@ -33,7 +33,6 @@ dependencies {
     implementation("org.springframework:spring-web")
     testImplementation("javax.json:javax.json-api:1.1.4")
     testImplementation("org.glassfish:javax.json:1.1.4")
-    testImplementation("org.slf4j:slf4j-simple")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.testcontainers:testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")

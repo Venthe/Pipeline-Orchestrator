@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects.api;
 
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.MessageListenerRegistry;
@@ -34,3 +35,4 @@ public class ProjectEventListener {
         }
     }
 }
+*/

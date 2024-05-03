@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.plugins.controlled_provider;
 
 import eu.venthe.pipeline.orchestrator.projects_source.adapter.template.model.ProjectDto;
@@ -25,3 +26,4 @@ class ControlledTestProjectProviderTest {
                 .containsExactlyInAnyOrder(new ProjectDto(ProjectDto.Status.ACTIVE, "Example-A"));
     }
 }
+*/

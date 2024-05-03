@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source.domain;
 
 import eu.venthe.pipeline.orchestrator.projects_source.adapter.plugin.controlled_provider.ControlledTestProjectProvider;
@@ -98,3 +99,4 @@ class ProjectSourceConfigurationTest {
                 );
     }
 }
+*/

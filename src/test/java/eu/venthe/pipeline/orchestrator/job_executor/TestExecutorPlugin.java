@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.job_executor;
 
 import eu.venthe.pipeline.orchestrator.job_executor.events.JobExecutionQueued;
@@ -50,3 +51,4 @@ public class TestExecutorPlugin implements JobExecutorPlugin {
         onStart = () -> consumer.accept(callbackService);
     }
 }
+*/

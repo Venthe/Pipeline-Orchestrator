@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects.application;
 
 import eu.venthe.pipeline.orchestrator.projects.api.dto.CreateProjectSpecificationDto;
@@ -69,3 +70,4 @@ public class ProjectsServiceImpl implements ProjectsQueryService, ProjectsComman
         projectRepository.save(new Project(ProjectId.of(newProjectDto.getSystemId(), newProjectDto.getSystemId())));
     }
 }
+*/

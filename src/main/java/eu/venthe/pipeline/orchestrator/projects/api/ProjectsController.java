@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects.api;
 
 import lombok.RequiredArgsConstructor;
@@ -17,3 +18,4 @@ public class ProjectsController {
         return ResponseEntity.ok(queryService.listProjects());
     }
 }
+*/

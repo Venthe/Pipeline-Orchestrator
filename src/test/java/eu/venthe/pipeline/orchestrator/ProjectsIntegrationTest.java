@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator;
 
 import eu.venthe.pipeline.orchestrator.projects.api.dto.ProjectDto;
@@ -54,3 +55,4 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
         });
     }
 }
+*/

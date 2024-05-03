@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.handlers;
 
 import eu.venthe.pipeline.orchestrator.projects_source.adapter.template.ProjectDataAccessService;
@@ -50,3 +51,4 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
         return event instanceof WorkflowDispatchEvent;
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects.domain.utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -43,3 +44,4 @@ public class TestContextProvider {
                 .collect(toMap());
     }
 }
+*/
