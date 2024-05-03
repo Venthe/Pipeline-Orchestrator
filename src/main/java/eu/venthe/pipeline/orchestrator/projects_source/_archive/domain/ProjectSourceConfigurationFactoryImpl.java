@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source._archive.domain;
 
 import eu.venthe.pipeline.orchestrator.projects_source.adapter._archive.ProjectSourceAdapter;
@@ -57,3 +58,4 @@ public class ProjectSourceConfigurationFactoryImpl implements ProjectSourcePlugi
         return plugins.keySet();
     }
 }
+*/

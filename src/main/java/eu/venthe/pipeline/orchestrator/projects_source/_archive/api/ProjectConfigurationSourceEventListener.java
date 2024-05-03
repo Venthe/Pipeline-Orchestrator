@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source._archive.api;
 
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.MessageListenerRegistry;
@@ -21,3 +22,4 @@ public class ProjectConfigurationSourceEventListener {
         projectsSourceConfigurationService.synchronizeProject(event.getSourceId());
     }
 }
+*/

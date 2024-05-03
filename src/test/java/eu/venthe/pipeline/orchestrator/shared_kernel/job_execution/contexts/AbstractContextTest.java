@@ -12,7 +12,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeAll;
 
-abstract public class AbstractContextTest {
+public abstract class AbstractContextTest {
     protected static ObjectMapper objectMapper;
 
     @BeforeAll

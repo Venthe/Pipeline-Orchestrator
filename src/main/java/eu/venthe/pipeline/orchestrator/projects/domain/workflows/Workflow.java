@@ -37,7 +37,7 @@ public class Workflow {
     private final Optional<EnvironmentContext> environment;
     private final Optional<DefaultsContext> defaults;
     private final Optional<ConcurrencyContext> concurrency;
-    private final JobsContext jobs;
+    //private final JobsContext jobs;
 
     public Workflow(JsonNode _root, WorkflowRef workflowRef) {
         if (_root == null) throw new IllegalArgumentException("Workflow should not be null");
@@ -54,7 +54,7 @@ public class Workflow {
         environment = EnvironmentContext.create(root.get("env"));
         defaults = DefaultsContext.create(root.get("defaults"));
         concurrency = ConcurrencyContext.create(root.get("concurrency"));
-        jobs = JobsContext.ensure(root.get("jobs"));
+        //jobs = JobsContext.ensure(root.get("jobs"));
     }
 
     public <T extends SystemEvent> Boolean on(EventWrapper<T> event) {

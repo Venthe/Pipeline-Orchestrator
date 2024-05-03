@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source._archive;
 
 import lombok.Value;
@@ -12,3 +13,4 @@ public class CreateProjectSourceConfigurationDto {
     String sourceType;
     Map<String, String> properties;
 }
+*/

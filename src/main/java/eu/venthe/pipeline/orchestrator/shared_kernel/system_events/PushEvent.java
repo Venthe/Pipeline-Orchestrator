@@ -9,7 +9,6 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.comm
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.GitHashContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.ReferenceContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;

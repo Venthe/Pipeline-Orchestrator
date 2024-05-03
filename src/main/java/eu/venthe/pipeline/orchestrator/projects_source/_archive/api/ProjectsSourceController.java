@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source._archive.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -69,3 +70,4 @@ public class ProjectsSourceController {
                 .map(objectMapper::valueToTree));
     }
 }
+*/

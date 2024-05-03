@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.job_executor.application;
 
 import eu.venthe.pipeline.orchestrator.job_executor.JobExecutorCallbackService;
@@ -28,3 +29,4 @@ public class JobExecutorCallbackServiceImpl implements JobExecutorCallbackServic
         messageBroker.publish(new JobExecutionCompletedEvent());
     }
 }
+*/

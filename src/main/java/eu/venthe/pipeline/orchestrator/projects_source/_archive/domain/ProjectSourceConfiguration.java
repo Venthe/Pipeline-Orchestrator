@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source._archive.domain;
 
 import eu.venthe.pipeline.orchestrator.plugins.projects.ProjectProvider;
@@ -60,3 +61,4 @@ public class ProjectSourceConfiguration implements Aggregate<ProjectSourceConfig
         return new HashSet<>(knownProjects.values());
     }
 }
+*/

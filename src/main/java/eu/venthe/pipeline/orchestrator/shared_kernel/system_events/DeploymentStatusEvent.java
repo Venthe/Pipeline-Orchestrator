@@ -8,7 +8,6 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.Work
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.model.DeploymentStatusActionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.DeploymentStatusAction;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
-import eu.venthe.pipeline.orchestrator.shared_kernel.version_control_events.contexts.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;

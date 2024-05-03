@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.job_executor.application;
 
 import eu.venthe.pipeline.orchestrator.job_executor.JobExecutorCommandService;
@@ -27,3 +28,4 @@ public class JobExecutorApplicationServiceImpl implements JobExecutorCommandServ
         log.info("Job execution triggered");
     }
 }
+*/

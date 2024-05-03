@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source._archive.api;
 
 import java.util.Map;
@@ -12,3 +13,4 @@ public interface ProjectsSourceConfigurationCommandService {
 
     void synchronizeProjects();
 }
+*/

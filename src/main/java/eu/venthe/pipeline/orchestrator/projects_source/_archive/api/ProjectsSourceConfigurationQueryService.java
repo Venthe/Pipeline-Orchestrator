@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source._archive.api;
 
 import eu.venthe.pipeline.orchestrator.projects_source.adapter._archive.ProjectSourceAdapter;
@@ -15,3 +16,4 @@ public interface ProjectsSourceConfigurationQueryService {
 
     Optional<ProjectSourceAdapter> getPluginDefinition(String systemType);
 }
+*/

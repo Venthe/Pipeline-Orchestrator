@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source._archive.domain;
 
 import eu.venthe.pipeline.orchestrator.shared_kernel.projects.ProjectStatus;
@@ -9,3 +10,4 @@ public class KnownProject {
     String systemId;
     ProjectStatus status;
 }
+*/

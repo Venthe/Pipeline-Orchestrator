@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source.adapter.plugin.controlled_provider;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -82,3 +83,4 @@ public class ControlledTestProjectProvider implements ProjectProvider {
         projects.removeIf(project -> project.getId().equals(id));
     }
 }
+*/

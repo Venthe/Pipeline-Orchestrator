@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source.adapter.plugin.controlled_provider;
 
 import eu.venthe.pipeline.orchestrator.projects_source.adapter._archive.ProjectSourceAdapter;
@@ -48,3 +49,4 @@ public class ControlledTestProviderPlugin implements ProjectSourceAdapter {
         return UUID.randomUUID().toString();
     }
 }
+*/

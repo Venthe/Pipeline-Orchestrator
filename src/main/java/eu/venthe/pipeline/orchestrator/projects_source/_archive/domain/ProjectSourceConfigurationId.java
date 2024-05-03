@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects_source._archive.domain;
 
 import lombok.Value;
@@ -6,3 +7,4 @@ import lombok.Value;
 public class ProjectSourceConfigurationId {
     String value;
 }
+*/
