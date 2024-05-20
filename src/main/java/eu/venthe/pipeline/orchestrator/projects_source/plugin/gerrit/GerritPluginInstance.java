@@ -7,6 +7,7 @@ import eu.venthe.pipeline.orchestrator.projects_source.plugin.template.ProjectSo
 import eu.venthe.pipeline.orchestrator.projects_source.plugin.template.model.FileDto;
 import eu.venthe.pipeline.orchestrator.projects_source.plugin.template.model.ProjectDto;
 import jakarta.ws.rs.core.UriBuilder;
+import lombok.SneakyThrows;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +40,15 @@ public class GerritPluginInstance implements ProjectSourcePlugin.PluginInstance 
 
     @Override
     public Optional<byte[]> getFile(String projectIdentifier, String revision, Path path) {
-        throw new UnsupportedOperationException();
+        String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(projectIdentifier).toString();
+        return GitUtilities.onRepository(string, revision, rootDirectory -> {
+            return Optional.of(rootDirectory.toPath().resolve(path).toFile()).filter(File::exists).map(GerritPluginInstance::getBytes);
+        });
+    }
+
+    @SneakyThrows
+    private static byte[] getBytes(File e) {
+        return Files.readAllBytes(e.toPath());
     }
 
     @Override
@@ -48,11 +57,9 @@ public class GerritPluginInstance implements ProjectSourcePlugin.PluginInstance 
         return GitUtilities.onRepository(string, revision, rootDirectory -> {
             File relativeDirectory = rootDirectory.toPath().resolve(path).toFile();
             File[] files = Optional.ofNullable(relativeDirectory.listFiles()).orElseThrow();
-            Collection<FileDto> collect = Stream.of(files)
+            return Stream.of(files)
                     .map(toFileDto(rootDirectory.toPath()))
                     .collect(Collectors.toSet());
-            log.info("{}", collect);
-            return collect;
         });
     }
 
