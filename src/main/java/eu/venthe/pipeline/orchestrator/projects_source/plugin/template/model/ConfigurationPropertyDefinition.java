@@ -5,7 +5,7 @@ import lombok.Value;
 
 import java.util.Optional;
 
-@Builder()
+@Builder
 @Value
 public class ConfigurationPropertyDefinition {
     @Builder.Default
@@ -31,7 +31,7 @@ public class ConfigurationPropertyDefinition {
         return builder().asBoolean().build();
     }
 
-    public abstract static class ConfigurationPropertyDefinitionBuilder {
+    public static class ConfigurationPropertyDefinitionBuilder {
 
         public ConfigurationPropertyDefinitionBuilder asText() {
             this.type = ConfigurationPropertyType.TEXT;

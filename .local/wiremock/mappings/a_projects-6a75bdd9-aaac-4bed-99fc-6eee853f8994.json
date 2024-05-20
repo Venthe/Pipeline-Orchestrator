@@ -1,0 +1,28 @@
+{
+  "id" : "6a75bdd9-aaac-4bed-99fc-6eee853f8994",
+  "name" : "a_projects",
+  "request" : {
+    "url" : "/a/projects/",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : ")]}'\n{\"All-Projects\":{\"id\":\"All-Projects\",\"state\":\"ACTIVE\",\"web_links\":[{\"name\":\"browse\",\"url\":\"/plugins/gitiles/All-Projects\"}]},\"All-Users\":{\"id\":\"All-Users\",\"state\":\"ACTIVE\",\"web_links\":[{\"name\":\"browse\",\"url\":\"/plugins/gitiles/All-Users\"}]}}\n",
+    "headers" : {
+      "X-Frame-Options" : "DENY",
+      "Cache-Control" : "no-cache, no-store, max-age=0, must-revalidate",
+      "X-Content-Type-Options" : "nosniff",
+      "Content-Disposition" : "attachment",
+      "X-Gerrit-Trace" : "a0b98ae6-5651-4ee3-bbb2-1fa2e85037e2",
+      "Expires" : "Mon, 01 Jan 1990 00:00:00 GMT",
+      "Pragma" : "no-cache",
+      "Date" : "Mon, 20 May 2024 11:05:06 GMT",
+      "Content-Type" : "application/json;charset=utf-8"
+    }
+  },
+  "uuid" : "6a75bdd9-aaac-4bed-99fc-6eee853f8994",
+  "persistent" : true,
+  "scenarioName" : "scenario-1-a-projects",
+  "requiredScenarioState" : "scenario-1-a-projects-2",
+  "insertionIndex" : 9
+}

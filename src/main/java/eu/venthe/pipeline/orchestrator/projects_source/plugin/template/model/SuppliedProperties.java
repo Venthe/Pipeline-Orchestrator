@@ -1,12 +1,15 @@
 package eu.venthe.pipeline.orchestrator.projects_source.plugin.template.model;
 
-import lombok.Value;
+import lombok.*;
 
 import java.util.Map;
 import java.util.Optional;
 
+@Builder
 @Value
+@AllArgsConstructor
 public class SuppliedProperties {
+    @Singular
     Map<PropertyName, SuppliedConfigurationProperty> properties;
 
     public Optional<SuppliedConfigurationProperty> get(String key) {

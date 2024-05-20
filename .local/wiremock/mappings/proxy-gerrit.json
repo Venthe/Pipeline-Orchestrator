@@ -1,0 +1,10 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPattern": "/proxy/.*"
+    },
+    "response": {
+        "proxyBaseUrl": "http://gerrit:8080",
+        "proxyUrlPrefixToRemove": "/proxy"
+    }
+}

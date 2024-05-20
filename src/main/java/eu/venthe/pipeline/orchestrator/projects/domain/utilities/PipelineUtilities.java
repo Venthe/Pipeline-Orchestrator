@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 @UtilityClass
 public class PipelineUtilities {
-    public static String resolveFromOrchestratorDirectory(String filename) {
-        return Path.of(".mantle", "workflows", filename).toString();
+    public static Path resolveFromOrchestratorDirectory(String filename) {
+        return Path.of(".mantle", "workflows", filename);
     }
 }

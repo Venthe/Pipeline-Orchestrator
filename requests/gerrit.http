@@ -1,97 +1,128 @@
-
+### SETUP:
 
 ### List Projects
 
+// @no-log
 GET {{gerritUrl}}/a/config/server/info
 X-Gerrit-Trace: 9a1a0008-d727-4da2-a017-8a760eaadd18
 Authorization: Basic {{username}} {{password}}
 
 ### Get Project
 
+// @no-log
 GET {{gerritUrl}}/a/projects/{{project-name}}
 Authorization: Basic {{username}} {{password}}
 
 ### List Branches
 
+< {%
+    request.variables.set("project-name", "orokamono")
+%}
+
 GET {{gerritUrl}}/a/projects/{{project-name}}/branches
 Authorization: Basic {{username}} {{password}}
 
+> {%
+    console.log(JSON.parse(response.body.substring(4, response.body.length)))
+%}
+
 ### Get Branch
 
+// @no-log
 GET {{gerritUrl}}/a/projects/{{project-name}}/branches/HEAD
 Authorization: Basic {{username}} {{password}}
 
 ### Get Branch
 
+// @no-log
+GET {{gerritUrl}}/a/projects/{{project-name}}/branches/{{branch-name}}
+Authorization: Basic {{username}} {{password}}
+
+### Get Branch
+
+// @no-log
 GET {{gerritUrl}}/a/projects/{{project-name}}/branches/{{ commit-id }}
 Authorization: Basic {{username}} {{password}}
 
 ### Get file from branch
 
-GET {{gerritUrl}}/a/projects/Example-Project/branches/refs%2Fheads%2Fmain/files/.pipeline%2Fworkflows%2Fexample.yaml/content
+// @no-log
+GET {{gerritUrl}}/a/projects/{{project-name}}/branches/{{branch-name}}/files/project.config/content
 Authorization: Basic {{username}} {{password}}
 
 ### List Tags
 ### TODO: Use with versioning
 
+// @no-log
 GET {{gerritUrl}}/a/projects/{{project-name}}/tags
 Authorization: Basic {{username}} {{password}}
 
 ### Limit(n)
 
+// @no-log
 GET {{gerritUrl}}/a/projects/{{project-name}}/tags?n=2
 Authorization: Basic {{username}} {{password}}
 
 ### Substring(m)
 
+// @no-log
 GET {{gerritUrl}}/a/projects/{{project-name}}/tags?m=v
 Authorization: Basic {{username}} {{password}}
 
 ### Regex(r)
 
+// @no-log
 GET {{gerritUrl}}/a/projects/{{project-name}}/tags?r=v.*
 Authorization: Basic {{username}} {{password}}
 
 ### Get Commit
 
+// @no-log
 GET {{gerritUrl}}/a/projects/{{project-name}}/commits/{{commit-id}}
 Authorization: Basic {{username}} {{password}}
 
 ### List Files
 
+// @no-log
 GET {{gerritUrl}}/a/projects/{{project-name}}/commits/{{commit-id}}/files/
 Authorization: Basic {{username}} {{password}}
 
 ### Query Changes
 
+// @no-log
 GET {{gerritUrl}}/a/changes/
 Authorization: Basic {{username}} {{password}}
 
 ### Get Change
 ### TODO: !SSH
 
+// @no-log
 GET {{gerritUrl}}/a/changes/{{change-id}}?o=ALL_REVISIONS
 Authorization: Basic {{username}} {{password}}
 
 ### Get Change Detail
 
+// @no-log
 GET {{gerritUrl}}/a/changes/{{change-id}}/detail?o=ALL_REVISIONS
 Authorization: Basic {{username}} {{password}}
 
 ### Get Commit
 ### TODO: !Author, commiter
 
+// @no-log
 GET {{gerritUrl}}/a/changes/{{change-id}}/revisions/{{revision-id}}/commit
 Authorization: Basic {{username}} {{password}}
 
 ### List Files
 ### TODO: !Use with events
 
+// @no-log
 GET {{gerritUrl}}/a/changes/{{change-id}}/revisions/{{revision-id}}/files
 Authorization: Basic {{username}} {{password}}
 
 ### List Robot Comments
 
+// @no-log
 GET {{gerritUrl}}/a/changes/{{change-id}}/revisions/{{revision-id}}/robotcomments
 Authorization: Basic {{username}} {{password}}
 Content-Type: application/json; charset=UTF-8
@@ -161,5 +192,6 @@ Content-Type: application/json; charset=UTF-8
 
 ### Get OAuth Access Token
 
+// @no-log
 GET {{gerritUrl}}/a/accounts/self/oauthtoken
 Authorization: Basic {{username}} {{password}}

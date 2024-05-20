@@ -7,7 +7,7 @@ services:
     container_name: wiremock
     ports:
       - ":8443"
-      - "${WIREMOCK_PORT_HTTP}:8080"
+      - "${WIREMOCK_PORT_HTTP:-8080}:8080"
     volumes:
       - ./wiremock/__files:/home/wiremock/__files
       - ./wiremock/mappings:/home/wiremock/mappings

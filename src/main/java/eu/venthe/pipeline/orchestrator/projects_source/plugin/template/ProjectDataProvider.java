@@ -1,6 +1,9 @@
 package eu.venthe.pipeline.orchestrator.projects_source.plugin.template;
 
+import eu.venthe.pipeline.orchestrator.projects_source.plugin.template.model.FileDto;
+
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -9,9 +12,16 @@ import java.util.Optional;
 public interface ProjectDataProvider {
     /**
      * @param projectIdentifier Unique identifier of the project
-     * @param revision Revision identifier for the versioned file
-     * @param path Path of the file to access
+     * @param revision          Revision identifier for the versioned file
+     * @param path              Path of the file to access
      * @return Either {@code Optional} or bytes for a file
      */
-    Optional<byte[]> getFile(String projectIdentifier, String revision, Path path);
+    default Optional<byte[]> getFile(String projectIdentifier, String revision, Path path) {
+        throw new UnsupportedOperationException();
+    }
+
+    default Collection<FileDto> getFileList(String projectIdentifier, String revision, Path path) {
+        throw new UnsupportedOperationException();
+    }
+
 }

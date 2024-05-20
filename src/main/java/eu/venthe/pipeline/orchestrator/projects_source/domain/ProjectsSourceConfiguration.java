@@ -10,7 +10,8 @@ import java.util.UUID;
 
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class ProjectsSourceConfiguration implements Aggregate<SourceType> {
+@RequiredArgsConstructor
+public class ProjectsSourceConfiguration implements Aggregate<String> {
     // TODO: Make ID stable
     //  Derive ID either from configuration or assign random
     //  Hash of configuration values?
@@ -18,7 +19,7 @@ public class ProjectsSourceConfiguration implements Aggregate<SourceType> {
     @Getter
     private String id = UUID.randomUUID().toString();
     @EqualsAndHashCode.Include
-    private SourceType sourceType;
-    private ProjectSourcePlugin.PluginInstance pluginInstance;
+    private final SourceType sourceType;
+    private final ProjectSourcePlugin.PluginInstance pluginInstance;
     private Collection<KnownProject> knownProjects = new ArrayList<>();
 }

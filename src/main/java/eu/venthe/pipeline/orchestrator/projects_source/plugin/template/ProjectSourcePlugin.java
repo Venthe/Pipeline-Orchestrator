@@ -14,11 +14,7 @@ public interface ProjectSourcePlugin {
 
     Map<PropertyName, ConfigurationPropertyDefinition> getConfigurationPropertiesDefinitions();
 
-    interface PluginInstance {
-
-        ProjectsProvider getProjectsProvider();
-
-        ProjectDataProvider getProjectDataProvider();
+    interface PluginInstance extends ProjectsProvider, ProjectDataProvider {
     }
 
 }

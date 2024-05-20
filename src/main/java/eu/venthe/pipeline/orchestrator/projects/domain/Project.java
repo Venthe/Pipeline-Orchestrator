@@ -33,7 +33,7 @@ public class Project implements Aggregate<ProjectId> {
     }
 
     public BiFunction<ProjectDataProvider, WorkflowFactory, Optional<eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow>> getWorkflow(String ref, String workflow) {
-        return (versionControlSystemProvider, workflowFactory) -> versionControlSystemProvider.getFile(id.getId(), ref, resolveFromOrchestratorDirectory(workflow), workflowFactory::fromBytes);
+        return (versionControlSystemProvider, workflowFactory) -> versionControlSystemProvider.getFile(id.getId(), ref, resolveFromOrchestratorDirectory(workflow)).map(WorkflowFactory::fromBytes);
     }
 
     public Collection<DomainEvent> registerManualWorkflow(String path) {

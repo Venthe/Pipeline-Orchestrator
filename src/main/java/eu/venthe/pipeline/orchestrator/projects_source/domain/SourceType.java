@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects_source.domain;
 
 import lombok.Value;
 
-import java.util.UUID;
+import java.util.Locale;
 
 /**
  * Unique identifier/name for the plugin matching the source system it supports
@@ -10,4 +10,8 @@ import java.util.UUID;
 @Value
 public class SourceType {
     String value;
+
+    public SourceType(String value) {
+        this.value = value.toLowerCase(Locale.ROOT);
+    }
 }

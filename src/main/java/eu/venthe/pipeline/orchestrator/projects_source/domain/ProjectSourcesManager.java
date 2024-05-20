@@ -3,27 +3,29 @@ package eu.venthe.pipeline.orchestrator.projects_source.domain;
 import eu.venthe.pipeline.orchestrator.projects_source.global.events.ProjectSourceConfigurationAddedEvent;
 import eu.venthe.pipeline.orchestrator.projects_source.global.events.ProjectSourceConfigurationRemovedEvent;
 import eu.venthe.pipeline.orchestrator.projects_source.plugin.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects_source.plugin.template.SystemApi;
-import eu.venthe.pipeline.orchestrator.projects_source.plugin.template.model.SuppliedConfigurationProperty;
+import eu.venthe.pipeline.orchestrator.projects_source.plugin.template.model.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Either;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.*;
+import java.util.List;
+
+import static java.util.Collections.emptyMap;
 
 @RequiredArgsConstructor
 public class ProjectSourcesManager {
     private final ProjectsSourceConfigurationRepository sources;
-    private final SystemApi systemApi;
 
     public Either<Void, Pair<String, List<DomainEvent>>> register(ProjectSourcePlugin plugin) {
         // TODO: Load configuration from repository/file
-        Map<String, SuppliedConfigurationProperty> properties = Collections.emptyMap();
+        SuppliedProperties properties = new SuppliedProperties(emptyMap());
 
-        sources.save(new ProjectsSourceConfiguration(configurationId, plugin.getSourceType(), plugin.instantiate(properties, systemApi)));
+        ProjectsSourceConfiguration configuration = new ProjectsSourceConfiguration(plugin.getSourceType(), plugin.instantiate(properties));
+        sources.save(configuration);
 
-        return Either.success(Pair.of(configurationId, List.of(new ProjectSourceConfigurationAddedEvent(configurationId, plugin.getSourceType()))));
+        List<DomainEvent> events = List.of(new ProjectSourceConfigurationAddedEvent(configuration.getId(), plugin.getSourceType().getValue()));
+        return Either.success(Pair.of(configuration.getId(), events));
     }
 
     public Either<Void, Pair<Boolean, List<DomainEvent>>> unregister(String configurationId) {

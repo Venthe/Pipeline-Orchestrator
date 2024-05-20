@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.infrastructure.git;
 
 import eu.venthe.pipeline.orchestrator.projects_source.adapter.plugin.controlled_test_source.GitTester;
@@ -13,3 +14,4 @@ class GitTesterTest {
         GitTester.cloneRemoteRepository("https://gerrit.home.arpa/a/actions");
     }
 }
+*/

@@ -1,0 +1,27 @@
+{
+  "id" : "96939308-94b0-4cbc-be3b-593d86e1759c",
+  "name" : "a_all-projects_git-upload-pack",
+  "request" : {
+    "url" : "/a/All-Projects/git-upload-pack",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "binaryEqualTo" : "MDAxMWNvbW1hbmQ9ZmV0Y2gwMDAxMDAwZm5vLXByb2dyZXNzMDAwZG9mcy1kZWx0YTAwMGR0aGluLXBhY2swMDMyd2FudCBkMDcwZDgxYTMzN2M0NjcyOTQyNTQ2NWI3NDM0MGY4ODI2OTM3YjEwCjAwMDlkb25lCjAwMDA="
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "base64Body" : "MDAwZHBhY2tmaWxlCjAwMTEBUEFDSwAAAAIAAAAEMDQ2MwGYDXicpYy7CgIxEAD7+4rthSObXB4LIoKF2PoHeezpgmcgRAW/3sPazilnYHpjhmn2TBQyB0zWKGacyGTCUqw1zgaVnF4rDvHRr7XBkVuTDodaGM78FH7B9vJ1+znqrHNM0aawA/TokLxSATZqZch1WaR3/ucxnO7SJd7kzeXXxow04gfQhUG/rAR4nDM0MDAzMVFIL8ovLShmuPhlbtiRydPbpO9ylR5/Z+GfKBb83xCioqAoPys1uUQvOT8vLTOd4eDTpUtdxXSPcuRxircXfTvyz8F0LwCA3h84sBV4nIWOwQqCQBRF1+NXDLQW5o2mY7sgiDYVhR8wM17DSCdGLfr7pKw2RW99zjt3wvN8teB/jy296898rWsEk0AUUggy0wiaSksqhZakskxDGWkNMjG1SEiyPfylsuB5C98GZAtSkUg0aJCskKmhWJUJSopjpEkWGQFEJZsXddVUbed15wbvcHJGn2bzxjW32vVt+Hj3ZeSbGIOjuPXuCNuFm2vz1eNsJPiTeHk7HIYR8Ch+FNmHGIt3ySddIb+KAXictVVLb9swDD4nv4LocV36yLFAD25QdAHaJEiy7hAMhSzTtlZb9CQ5bf79KDvLw43TAusAHwzx+z6KD5GLwtAvlO5ntxOhlUYVTpGGawikRGtB6RSNchhBuAKRZUCOD2DNsmfdhUGJaoksYPB3qQwOSDujwtKRCRKDmKN2LBiLzOIGNFOJxmgcxzerN7ZBKnSCw4gNzpR8jlqE2ZoyKW26YSxsGebKXz5Hk1Sea2cVbyFFIUKVKbdihIhypZV1RjicoVlyFNeQGCoLCLYmMrbbKYwiDtrfLBROpmuYZymJ8N2iRzEeRX67ZI92I7WPWYg6iycGY3v+5aRKkojaHO/DYzI1RUTRxF9jhm7DnGLCPDRcmEOuPHfrs6hz1sKszA8+fx9VTzmGtbTkeBy2ZrJhntRtA+MXXXnGSLk5FUqORO5Rp3xvTt5hraPgpjLbEgxKl5I5EnmFGlDOPeSO9EMLrOkzEyFmvQFF2JviUuELI3v9s7PTfovuu4QPebhkwuXR4rY3+q6x6Wy/UzXpVU6l/atrkF/QkX7s1E+z1XXD3HC+3285OnEuSccq8T2HrzIrLc+cO0+doMmVtTy1/Cv0l/7Xrvz/dfysojSYe8Ym87PrweX3SX870xqdsk91IvmUyVGb65UwF8k7Mm9xh/XeVzqisajaAE52+sDHGZdarnfqg3j9oVx6k5F89vs2FmXmHkVW+jgvup3l+rfXh3mqLNjUb1xNDkKEukC8iXdwlzCEFyqziBcyxjyanKfx5zkbAgh/tqVdwIjASjK4PeMJck/0bCEhisAR5PgVeIeDpRxJIyDvW8hL60AUvP2Xu9z+Ae4a5R8jFSvezDy96yzIar0/Kx1djcZPg2/B6O4WxtPd8/l0+DgM7p+mtzfBrDIqe/UwHHX/AHXQBEfRkBjmXRrSTjTbXrCrz6GoQVxkLDAwMDA=",
+    "headers" : {
+      "X-Frame-Options" : "DENY",
+      "Cache-Control" : "no-cache, max-age=0, must-revalidate",
+      "X-git-command-status" : "-1",
+      "Pragma" : "no-cache",
+      "Expires" : "Fri, 01 Jan 1980 00:00:00 GMT",
+      "Date" : "Mon, 20 May 2024 13:41:16 GMT",
+      "Content-Type" : "application/x-git-upload-pack-result"
+    }
+  },
+  "uuid" : "96939308-94b0-4cbc-be3b-593d86e1759c",
+  "persistent" : true,
+  "insertionIndex" : 12
+}
