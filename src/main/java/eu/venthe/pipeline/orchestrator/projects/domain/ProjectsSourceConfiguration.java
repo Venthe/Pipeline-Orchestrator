@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.projects.domain;
 import com.google.common.collect.Sets;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectFactory;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.plugin.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.plugin.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
@@ -25,7 +25,7 @@ public class ProjectsSourceConfiguration implements Aggregate<ProjectsSourceConf
     @Getter
     private Id id = new Id();
     private final ProjectSourcePlugin.PluginInstance pluginInstance;
-    private Collection<Project> knownProjects = new ArrayList<>();
+    private Map<ProjectId, Project> projects = new HashMap<>();
 
     List<DomainEvent> synchronize() {
         Map<String, ProjectDto> foundProjects = pluginInstance.getProjects().stream()
@@ -35,7 +35,7 @@ public class ProjectsSourceConfiguration implements Aggregate<ProjectsSourceConf
                 ));
 
         Set<ProjectId> foundProjectIds = foundProjects.values().stream().map(ProjectDto::getId).map(id -> ProjectId.of(pluginInstance.getSourceType(), id)).collect(Collectors.toSet());
-        Set<ProjectId> knownProjectIds = knownProjects.stream().map(Project::getId).collect(Collectors.toSet());
+        Set<ProjectId> knownProjectIds = projects.values().stream().map(Project::getId).collect(Collectors.toSet());
 
         Set<ProjectId> projectsToPotentiallyUpdate = Sets.intersection(foundProjectIds, knownProjectIds);
         Set<ProjectId> projectsThatNoLongerExistInSource = Sets.difference(knownProjectIds, foundProjectIds);

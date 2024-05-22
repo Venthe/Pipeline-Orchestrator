@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.api.dto;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
 import lombok.Value;
 
 @Value

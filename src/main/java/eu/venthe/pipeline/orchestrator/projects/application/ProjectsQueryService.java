@@ -1,5 +1,9 @@
 package eu.venthe.pipeline.orchestrator.projects.application;
 
+import eu.venthe.pipeline.orchestrator.projects.api.dto.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.WorkflowDetailDto;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.WorkflowTaskDto;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;

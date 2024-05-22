@@ -1,6 +1,10 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.projects;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.events.handlers.EventHandlerProvider;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.Workflow;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.WorkflowFactory;
 import eu.venthe.pipeline.orchestrator.projects.plugin.template.ProjectDataProvider;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;

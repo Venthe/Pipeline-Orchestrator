@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.projects.application;
 
-import eu.venthe.pipeline.orchestrator.projects._projects.api.dto.CreateProjectSpecificationDto;
-import eu.venthe.pipeline.orchestrator.projects._projects.api.dto.UpdateProjectSpecificationDto;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.CreateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.projects.api.dto.UpdateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 
 public interface ProjectsCommandService {

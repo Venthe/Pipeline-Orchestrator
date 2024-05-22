@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.projects.events;
 
-import eu.venthe.pipeline.orchestrator.projects._projects.domain.workflows.contexts.on.matchers.*;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.contexts.on.matchers.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
 
@@ -11,7 +11,7 @@ public interface EventWrapper<T extends SystemEvent> {
         return true;
     }
 
-    default Boolean matches(OnWorkflowDispatchInputs onWorkflowDispatchInputs) {
+    default Boolean matches(eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.contexts.on.matchers.OnWorkflowDispatchInputs onWorkflowDispatchInputs) {
         return true;
     }
 

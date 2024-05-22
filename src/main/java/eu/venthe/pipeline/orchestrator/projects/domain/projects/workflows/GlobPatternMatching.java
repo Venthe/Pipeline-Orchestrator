@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.projects.utilities;
+package eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.io.FilenameUtils;

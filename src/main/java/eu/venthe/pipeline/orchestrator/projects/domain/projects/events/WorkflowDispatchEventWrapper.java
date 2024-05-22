@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.projects.events;
 
-import eu.venthe.pipeline.orchestrator.projects._projects.domain.workflows.contexts.on.matchers.OnBranches;
-import eu.venthe.pipeline.orchestrator.projects._projects.domain.workflows.contexts.on.matchers.OnWorkflowDispatchInputs;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.contexts.on.matchers.OnBranches;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.contexts.on.matchers.OnWorkflowDispatchInputs;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.WorkflowDispatchEvent;
 
 public class WorkflowDispatchEventWrapper extends AbstractEventWrapper<WorkflowDispatchEvent> {

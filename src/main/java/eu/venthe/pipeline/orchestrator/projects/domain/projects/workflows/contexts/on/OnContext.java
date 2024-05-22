@@ -1,8 +1,8 @@
-package eu.venthe.pipeline.orchestrator.projects._projects.domain.workflows.contexts.on;
+package eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.contexts.on;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.events.EventWrapper;
-import eu.venthe.pipeline.orchestrator.projects._projects.domain.workflows.contexts.on.matchers.EventTypeMatcher;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.contexts.on.matchers.EventTypeMatcher;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

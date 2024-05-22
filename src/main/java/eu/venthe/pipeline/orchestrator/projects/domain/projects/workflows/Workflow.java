@@ -1,11 +1,11 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.projects;
+package eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.events.EventWrapper;
-import eu.venthe.pipeline.orchestrator.projects._projects.domain.workflows.contexts.NameContext;
-import eu.venthe.pipeline.orchestrator.projects._projects.domain.workflows.contexts.RunNameContext;
-import eu.venthe.pipeline.orchestrator.projects._projects.domain.workflows.contexts.on.OnContext;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.contexts.NameContext;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.contexts.RunNameContext;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.contexts.on.OnContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.ConcurrencyContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.DefaultsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.EnvironmentContext;

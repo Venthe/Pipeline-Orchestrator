@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions.api;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.api.dto.*;
 import eu.venthe.pipeline.orchestrator.workflow_executions.api.model.JobId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.api.model.StepExecutionStatus;
