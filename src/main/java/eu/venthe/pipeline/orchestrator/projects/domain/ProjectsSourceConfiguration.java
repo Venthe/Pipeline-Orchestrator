@@ -1,8 +1,9 @@
 package eu.venthe.pipeline.orchestrator.projects.domain;
 
 import com.google.common.collect.Sets;
-import eu.venthe.pipeline.orchestrator.projects.domain.model.KnownProject;
-import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.Project;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectFactory;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.plugin.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.plugin.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
@@ -24,7 +25,7 @@ public class ProjectsSourceConfiguration implements Aggregate<ProjectsSourceConf
     @Getter
     private Id id = new Id();
     private final ProjectSourcePlugin.PluginInstance pluginInstance;
-    private Collection<KnownProject> knownProjects = new ArrayList<>();
+    private Collection<Project> knownProjects = new ArrayList<>();
 
     List<DomainEvent> synchronize() {
         Map<String, ProjectDto> foundProjects = pluginInstance.getProjects().stream()
@@ -33,12 +34,12 @@ public class ProjectsSourceConfiguration implements Aggregate<ProjectsSourceConf
                         Function.identity()
                 ));
 
-        Set<ProjectId> foundProjectIds = foundProjects.values().stream().map(ProjectDto::getId).map(ProjectId::new).collect(Collectors.toSet());
-        Set<ProjectId> knownProjectIds = knownProjects.stream().map(KnownProject::getProjectId).collect(Collectors.toSet());
+        Set<ProjectId> foundProjectIds = foundProjects.values().stream().map(ProjectDto::getId).map(id -> ProjectId.of(pluginInstance.getSourceType(), id)).collect(Collectors.toSet());
+        Set<ProjectId> knownProjectIds = knownProjects.stream().map(Project::getId).collect(Collectors.toSet());
 
         Set<ProjectId> projectsToPotentiallyUpdate = Sets.intersection(foundProjectIds, knownProjectIds);
         Set<ProjectId> projectsThatNoLongerExistInSource = Sets.difference(knownProjectIds, foundProjectIds);
-        Set<KnownProject> newProjects = Sets.difference(foundProjectIds, knownProjectIds).stream().map(p -> KnownProject.create(p, foundProjects.get(p).getStatus())).collect(Collectors.toSet());
+        Set<Project> newProjects = Sets.difference(foundProjectIds, knownProjectIds).stream().map(p -> ProjectFactory.create(p, foundProjects.get(p).getStatus())).collect(Collectors.toSet());
 
         List<DomainEvent> events = new ArrayList<>();
 

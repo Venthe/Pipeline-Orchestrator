@@ -1,14 +1,15 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.projects;
 
+import eu.venthe.pipeline.orchestrator.projects.domain.model.SourceType;
 import lombok.Value;
 
 @Value(staticConstructor = "of")
 public class ProjectId {
-    String systemId;
+    SourceType sourceType;
     String id;
 
     public String serialize() {
-        return "%s/%s".formatted(systemId, id);
+        return "%s/%s".formatted(sourceType, id);
     }
 
     public static ProjectId from(String projectId) {
@@ -19,9 +20,9 @@ public class ProjectId {
             throw new IllegalArgumentException("Project name is required");
         }
 
-        String systemId = projectId.substring(0, indexOfProject);
+        var systemId = new SourceType(projectId.substring(0, indexOfProject));
 
-        String project = projectId.substring(indexOfProjectName);
+        var project = projectId.substring(indexOfProjectName);
         return ProjectId.of(systemId, project);
     }
 }
