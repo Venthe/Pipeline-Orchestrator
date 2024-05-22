@@ -7,9 +7,9 @@ import eu.venthe.pipeline.orchestrator.infrastructure.in_memory_message_broker.M
 import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectRepository;
 import eu.venthe.pipeline.orchestrator.projects.shared_kernel.ProjectId;
-import eu.venthe.pipeline.orchestrator.projects_source._archive.domain.ProjectSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.projects_source._archive.domain.ProjectSourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.projects_source._archive.domain.ProjectsSourceRepository;
+import eu.venthe.pipeline.orchestrator.projects._archive.domain.ProjectSourceConfiguration;
+import eu.venthe.pipeline.orchestrator.projects._archive.domain.ProjectSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects._archive.domain.ProjectsSourceRepository;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
