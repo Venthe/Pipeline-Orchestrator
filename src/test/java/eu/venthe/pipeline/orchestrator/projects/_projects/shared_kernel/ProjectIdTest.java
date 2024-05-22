@@ -2,8 +2,8 @@ package eu.venthe.pipeline.orchestrator.projects.shared_kernel;
 
 import org.junit.jupiter.api.Test;
 
-import static eu.venthe.pipeline.orchestrator.projects._projects.shared_kernel.ProjectId.from;
-import static eu.venthe.pipeline.orchestrator.projects._projects.shared_kernel.ProjectId.of;
+import static eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId.from;
+import static eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId.of;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

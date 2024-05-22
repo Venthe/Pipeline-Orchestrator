@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.projects.domain.utilities;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
-import eu.venthe.pipeline.orchestrator.projects._projects.domain.utilities.GraphUtility;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.utilities.GraphUtility;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

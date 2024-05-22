@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator.projects.application;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectsSourceConfigurationRepository;
-import eu.venthe.pipeline.orchestrator.projects.global.events.ProjectSourceConfigurationAddedEvent;
-import eu.venthe.pipeline.orchestrator.projects.global.events.ProjectSourceConfigurationRemovedEvent;
+import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.ProjectsSourceConfigurationRepository;
+import eu.venthe.pipeline.orchestrator.projects.events.ProjectSourceConfigurationAddedEvent;
+import eu.venthe.pipeline.orchestrator.projects.events.ProjectSourceConfigurationRemovedEvent;
 import eu.venthe.pipeline.orchestrator.projects.plugin.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.plugin.template.model.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Either;
