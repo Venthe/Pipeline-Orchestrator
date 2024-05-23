@@ -6,10 +6,10 @@ import lombok.Value;
 @Value(staticConstructor = "of")
 public class ProjectId {
     SourceType sourceType;
-    String id;
+    String name;
 
     public String serialize() {
-        return "%s/%s".formatted(sourceType, id);
+        return "%s/%s".formatted(sourceType, name);
     }
 
     public static ProjectId from(String projectId) {

@@ -39,12 +39,16 @@ public class ProjectsSourceConfiguration implements Aggregate<ProjectsSourceConf
 
         Set<ProjectId> projectsToPotentiallyUpdate = Sets.intersection(foundProjectIds, knownProjectIds);
         Set<ProjectId> projectsThatNoLongerExistInSource = Sets.difference(knownProjectIds, foundProjectIds);
-        Set<Project> newProjects = Sets.difference(foundProjectIds, knownProjectIds).stream().map(p -> ProjectFactory.create(p, foundProjects.get(p).getStatus())).collect(Collectors.toSet());
+        var newProjects = Sets.difference(foundProjectIds, knownProjectIds).stream().map(p -> new ProjectFactory().create(p, foundProjects.get(p).getStatus(), this)).collect(Collectors.toSet());
 
         List<DomainEvent> events = new ArrayList<>();
 
 
         return List.of();
+    }
+
+    public Optional<ProjectDto> getProject(ProjectId id) {
+        throw new UnsupportedOperationException();
     }
 
     @Value

@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.shared_kernel;
 
+import eu.venthe.pipeline.orchestrator.projects.domain.model.SourceType;
 import org.junit.jupiter.api.Test;
 
 import static eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectId.from;
@@ -11,12 +12,12 @@ class ProjectIdTest {
     @Test
     void deserialize() {
         assertThat(from("test/project/internal-name"))
-                .isEqualTo(of("test", "project/internal-name"));
+                .isEqualTo(of(new SourceType("test"), "project/internal-name"));
     }
 
     @Test
     void serialize() {
-        assertThat(of("test", "project/internal-name").serialize())
+        assertThat(of(new SourceType("test"), "project/internal-name").serialize())
                 .isEqualTo("test/project/internal-name");
     }
 
