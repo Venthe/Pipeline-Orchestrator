@@ -23,7 +23,7 @@ import java.util.Optional;
 @SuppressWarnings("ALL")
 @Slf4j
 @Getter
-public class Workflow {
+public class WorkflowDefinition {
     @Getter(AccessLevel.NONE)
     private final ObjectNode root;
     private final WorkflowRef ref;
@@ -40,7 +40,7 @@ public class Workflow {
     private final Optional<ConcurrencyContext> concurrency;
     //private final JobsContext jobs;
 
-    public Workflow(JsonNode _root, WorkflowRef workflowRef) {
+    public WorkflowDefinition(JsonNode _root, WorkflowRef workflowRef) {
         if (_root == null) throw new IllegalArgumentException("Workflow should not be null");
         if (workflowRef == null) throw new IllegalArgumentException("WorkflowRef should not be null");
         if (!_root.isObject()) throw new IllegalArgumentException("Root should be an object");

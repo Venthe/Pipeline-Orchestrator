@@ -11,7 +11,7 @@ import javax.json.JsonObject;
 import javax.json.JsonPatch;
 import java.io.StringReader;
 
-class ReusableWorkflowJobContextTest extends AbstractContextTest {
+class ReusableWorkflowDefinitionJobContextTest extends AbstractContextTest {
 
     @Test
     void test() {
