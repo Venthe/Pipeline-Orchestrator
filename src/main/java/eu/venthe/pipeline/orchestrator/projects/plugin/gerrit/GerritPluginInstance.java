@@ -116,17 +116,22 @@ public class GerritPluginInstance implements ProjectSourcePlugin.PluginInstance 
     }
 
     @Override
-    public Collection<ProjectDto> getProjects() {
+    public Stream<ProjectDto> getProjects() {
         return getListProjects().entrySet().stream()
                 .filter(project -> !Objects.equals(project.getValue().getState(), ProjectInfo.StateEnum.HIDDEN))
                 .map(project -> new ProjectDto(project.getKey(), statusMapper(project.getValue().getState())))
-                .collect(toSet());
+                .distinct();
+    }
+
+    @Override
+    public Stream<ProjectDto.Id> getProjectIds() {
+        return getProjects().map(ProjectDto::getId);
     }
 
     @Override
     public Optional<ProjectDto> getProject(String id) {
         // FIXME: Don't ask for all projects
-        return getProjects().stream()
+        return getProjects()
                 .filter(p->p.getId().equals(id))
                 .collect(MoreCollectors.toOptional());
     }

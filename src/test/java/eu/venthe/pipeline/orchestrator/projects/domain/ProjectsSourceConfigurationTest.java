@@ -3,7 +3,6 @@ package eu.venthe.pipeline.orchestrator.projects.domain;
 import eu.venthe.pipeline.orchestrator.projects.api.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects.domain.model.SourceType;
 import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
@@ -23,7 +22,7 @@ import java.util.stream.Stream;
 class ProjectsSourceConfigurationTest {
     @Mock
     ProjectSourcePlugin.PluginInstance pluginInstance;
-    @Spy
+    @Mock
     ProjectsCommandService projectCommands;
     @Spy
     ProjectsQueryService projectQueries;
@@ -32,17 +31,18 @@ class ProjectsSourceConfigurationTest {
 
     @BeforeEach
     void beforeEach() {
-        projectsSourceConfiguration = new ProjectsSourceConfiguration(new ProjectsSourceConfigurationId("Test"), pluginInstance);
+        projectsSourceConfiguration = new ProjectsSourceConfiguration(new ProjectsSourceConfigurationId("TestName"), pluginInstance);
     }
 
     @Test
     void name() {
-        Mockito.when(pluginInstance.getProjects()).thenReturn(Stream.of(new ProjectDto("123", ProjectStatus.ACTIVE)));
+        Mockito.when(pluginInstance.getProjectIds()).thenReturn(Stream.of(new ProjectDto.Id("123")));
         Mockito.when(projectQueries.getProjectIds(new ProjectsSourceConfigurationId("TestName"))).thenReturn(Stream.empty());
+        Mockito.when(pluginInstance.getProject("123")).thenReturn(Optional.of(new ProjectDto("123", ProjectStatus.ACTIVE)));
 
         projectsSourceConfiguration.synchronize(projectCommands, projectQueries);
 
-        Mockito.verify(projectCommands).add(new CreateProjectSpecificationDto(ProjectId.of(new ProjectsSourceConfigurationId("TestName"), "123"), ProjectStatus.ACTIVE, null));
+        Mockito.verify(projectCommands).add(new CreateProjectSpecificationDto(ProjectId.of(new ProjectsSourceConfigurationId("TestName"), "123"), ProjectStatus.ACTIVE));
     }
 
     @Test

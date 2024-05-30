@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects.domain.projects;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.Project;
@@ -19,3 +20,4 @@ public class ProjectFactory {
         );
     }
 }
+*/

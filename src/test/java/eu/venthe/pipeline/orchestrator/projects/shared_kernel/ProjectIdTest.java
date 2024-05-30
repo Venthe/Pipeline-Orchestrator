@@ -1,10 +1,10 @@
 package eu.venthe.pipeline.orchestrator.projects.shared_kernel;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.model.SourceType;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectsSourceConfigurationId;
 import org.junit.jupiter.api.Test;
 
 import static eu.venthe.pipeline.orchestrator.projects.domain.ProjectId.from;
-import static eu.venthe.pipeline.orchestrator.projects.domain.ProjectId.of;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -12,12 +12,12 @@ class ProjectIdTest {
     @Test
     void deserialize() {
         assertThat(from("test/project/internal-name"))
-                .isEqualTo(of(new SourceType("test"), "project/internal-name"));
+                .isEqualTo(ProjectId.of(new ProjectsSourceConfigurationId("test"), "project/internal-name"));
     }
 
     @Test
     void serialize() {
-        assertThat(of(new SourceType("test"), "project/internal-name").serialize())
+        assertThat(ProjectId.of(new ProjectsSourceConfigurationId("test"), "project/internal-name").serialize())
                 .isEqualTo("test/project/internal-name");
     }
 

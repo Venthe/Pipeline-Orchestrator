@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.projects.application;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectsSourceConfiguration;
@@ -43,3 +44,4 @@ public class ProjectSourcesManager {
     }
 
 }
+*/

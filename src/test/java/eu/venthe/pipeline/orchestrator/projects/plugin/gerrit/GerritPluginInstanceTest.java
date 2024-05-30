@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 class GerritPluginInstanceTest {
     static GerritConfiguration CONFIGURATION = GerritConfiguration.builder()
@@ -24,7 +25,7 @@ class GerritPluginInstanceTest {
 
     @Test
     void listProjects() {
-        Collection<ProjectDto> projects = plugin.getProjects();
+        Collection<ProjectDto> projects = plugin.getProjects().collect(Collectors.toSet());
 
         Assertions.assertThat(projects).hasSize(2)
                 .containsExactlyInAnyOrder(

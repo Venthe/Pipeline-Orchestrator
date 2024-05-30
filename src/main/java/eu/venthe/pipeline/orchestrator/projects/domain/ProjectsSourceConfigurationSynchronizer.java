@@ -14,8 +14,8 @@ import java.util.stream.Stream;
 import static eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus.ARCHIVED;
 import static java.util.stream.Collectors.toSet;
 
-public record ProjectsSourceConfigurationSynchronizer(ProjectsSourceConfiguration configuration,
-                                                      ProjectSourcePlugin.PluginInstance pluginInstance) {
+record ProjectsSourceConfigurationSynchronizer(ProjectsSourceConfiguration configuration,
+                                               ProjectSourcePlugin.PluginInstance pluginInstance) {
     public void synchronize(ProjectsCommandService projectsCommandService, ProjectsQueryService projectsQueryService) {
         final Set<String> allProjectsFromSource = getAllProjectsFromSource();
         final Set<String> registeredProjects = getRegisteredProjects(projectsQueryService);
@@ -45,7 +45,7 @@ public record ProjectsSourceConfigurationSynchronizer(ProjectsSourceConfiguratio
     }
 
     private Stream<ProjectId> getProjectsToUpdate(Set<String> allProjectsFromSource, Set<String> registeredProjects) {
-        return Sets.union(allProjectsFromSource, registeredProjects).stream()
+        return Sets.intersection(allProjectsFromSource, registeredProjects).stream()
                 .map(this::buildProjectId);
     }
 
