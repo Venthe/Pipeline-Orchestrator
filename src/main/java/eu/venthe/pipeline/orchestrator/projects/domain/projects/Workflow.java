@@ -1,9 +1,10 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.projects;
 
+import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.WorkflowDefinitionFactory;
-import eu.venthe.pipeline.orchestrator.projects.plugin.template.ProjectDataProvider;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.ProjectDataProvider;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Collection;
@@ -21,15 +22,15 @@ class Workflow {
         return (versionControlSystemProvider, workflowDefinitionFactory) -> versionControlSystemProvider.getFile(project.getId().serialize(), ref, resolveFromOrchestratorDirectory(workflow)).map(WorkflowDefinitionFactory::fromBytes);
     }
 
-    public Collection<DomainEvent> registerManualWorkflow(String path) {
+    public Collection<DomainTrigger> registerManualWorkflow(String path) {
         throw new UnsupportedOperationException();
     }
 
-    public Collection<DomainEvent> unregisterManualWorkflow(String path) {
+    public Collection<DomainTrigger> unregisterManualWorkflow(String path) {
         throw new UnsupportedOperationException();
     }
 
-    public Collection<DomainEvent> executeManualWorkflow(String path) {
+    public Collection<DomainTrigger> executeManualWorkflow(String path) {
         throw new UnsupportedOperationException();
     }
 }

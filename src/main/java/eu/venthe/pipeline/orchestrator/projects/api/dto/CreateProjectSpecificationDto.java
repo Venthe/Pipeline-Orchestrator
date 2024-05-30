@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator.projects.api.dto;
 
-import lombok.Value;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
 
-@Value
-public class CreateProjectSpecificationDto {
-    String id;
-    String systemId;
+import java.util.Optional;
+
+public record CreateProjectSpecificationDto(ProjectId projectId, ProjectStatus status, Optional<String> description) {
 }

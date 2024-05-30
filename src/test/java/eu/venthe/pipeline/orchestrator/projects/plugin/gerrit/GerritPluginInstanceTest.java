@@ -2,9 +2,9 @@ package eu.venthe.pipeline.orchestrator.projects.plugin.gerrit;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.plugin.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.plugin.template.model.FileDto;
-import eu.venthe.pipeline.orchestrator.projects.plugin.template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.ProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.FileDto;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.ProjectDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

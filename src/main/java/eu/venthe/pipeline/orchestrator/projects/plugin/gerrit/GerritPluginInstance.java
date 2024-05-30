@@ -1,12 +1,13 @@
 package eu.venthe.pipeline.orchestrator.projects.plugin.gerrit;
 
+import com.google.common.collect.MoreCollectors;
 import eu.venthe.pipeline.gerrit.api.ProjectsApi;
 import eu.venthe.pipeline.gerrit.model.ProjectInfo;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.plugin.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.plugin.template.model.FileDto;
-import eu.venthe.pipeline.orchestrator.projects.plugin.template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.ProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.FileDto;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.ProjectDto;
 import jakarta.ws.rs.core.UriBuilder;
 import lombok.SneakyThrows;
 import lombok.Value;
@@ -120,6 +121,14 @@ public class GerritPluginInstance implements ProjectSourcePlugin.PluginInstance 
                 .filter(project -> !Objects.equals(project.getValue().getState(), ProjectInfo.StateEnum.HIDDEN))
                 .map(project -> new ProjectDto(project.getKey(), statusMapper(project.getValue().getState())))
                 .collect(toSet());
+    }
+
+    @Override
+    public Optional<ProjectDto> getProject(String id) {
+        // FIXME: Don't ask for all projects
+        return getProjects().stream()
+                .filter(p->p.getId().equals(id))
+                .collect(MoreCollectors.toOptional());
     }
 
     private Map<String, ProjectInfo> getListProjects() {

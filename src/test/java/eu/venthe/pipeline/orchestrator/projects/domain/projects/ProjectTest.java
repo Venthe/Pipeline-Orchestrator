@@ -1,11 +1,12 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.projects;
 
+import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.projects.domain.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
-import eu.venthe.pipeline.orchestrator.projects.events.ProjectAddedEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
+import eu.venthe.pipeline.orchestrator.projects.shared_kernel.events.ProjectAddedEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ class ProjectTest {
     void name() {
         ProjectStatus status = EXAMPLE_PROJECT_STATUS;
 
-        List<DomainEvent> events = factory.create(EXAMPLE_PROJECT_ID, status, EMPTY_CONFIGURATION).getValue();
+        List<DomainTrigger> events = factory.create(EXAMPLE_PROJECT_ID, status, EMPTY_CONFIGURATION).getValue();
 
         Assertions.assertThat(events).containsExactly(new ProjectAddedEvent(EXAMPLE_PROJECT_ID, status));
     }

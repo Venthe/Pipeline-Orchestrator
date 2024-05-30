@@ -1,11 +1,11 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 
 import java.util.Collection;
 
 public interface DomainMessageBroker {
-    void publish(Collection<DomainEvent> events);
+    void publish(Collection<DomainTrigger> events);
 
-    void publish(DomainEvent event);
+    void publish(DomainTrigger event);
 }

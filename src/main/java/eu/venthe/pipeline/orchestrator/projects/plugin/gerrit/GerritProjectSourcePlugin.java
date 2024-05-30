@@ -1,10 +1,10 @@
 package eu.venthe.pipeline.orchestrator.projects.plugin.gerrit;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.plugin.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.plugin.template.model.ConfigurationPropertyDefinition;
-import eu.venthe.pipeline.orchestrator.projects.plugin.template.model.PropertyName;
-import eu.venthe.pipeline.orchestrator.projects.plugin.template.model.SuppliedProperties;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.ProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.ConfigurationPropertyDefinition;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.PropertyName;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.SuppliedProperties;
 
 import java.util.Map;
 

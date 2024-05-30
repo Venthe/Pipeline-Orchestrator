@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.projects.events.handlers;
 
 import com.google.common.collect.MoreCollectors;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.Project;
+import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.events.handlers.handlers.DefaultEventHandler;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class EventHandlerProvider {
 
     private final Set<EventHandler> eventHandlers;
 
-    public Collection<DomainEvent> handle(Project project, SystemEvent event) {
+    public Collection<DomainTrigger> handle(Project project, SystemEvent event) {
         return eventHandlers.stream()
                 .filter(e -> e.canHandle(event))
                 .map(EventHandler.class::cast)

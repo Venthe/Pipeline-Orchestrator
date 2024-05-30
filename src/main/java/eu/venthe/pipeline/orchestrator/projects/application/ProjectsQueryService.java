@@ -3,10 +3,13 @@ package eu.venthe.pipeline.orchestrator.projects.application;
 import eu.venthe.pipeline.orchestrator.projects.api.dto.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.api.dto.WorkflowDetailDto;
 import eu.venthe.pipeline.orchestrator.projects.api.dto.WorkflowTaskDto;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectsSourceConfigurationId;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public interface ProjectsQueryService {
     Collection<ProjectDto> listProjects();
@@ -16,4 +19,6 @@ public interface ProjectsQueryService {
     Optional<WorkflowDetailDto> showWorkflowDetail(String systemId);
 
     List<WorkflowTaskDto> showAllTasks();
+
+    Stream<ProjectId> getProjectIds(ProjectsSourceConfigurationId configurationId);
 }
