@@ -1,6 +1,5 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.projects;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.WorkflowDefinitionFactory;
 import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.ProjectDataProvider;

@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.infrastructure;
+package eu.venthe.pipeline.orchestrator.projects.domain.projects;
 
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 

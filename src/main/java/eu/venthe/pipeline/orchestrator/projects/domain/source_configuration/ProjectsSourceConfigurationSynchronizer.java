@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain;
+package eu.venthe.pipeline.orchestrator.projects.domain.source_configuration;
 
 import com.google.common.collect.Sets;
 import eu.venthe.pipeline.orchestrator.projects.api.dto.CreateProjectSpecificationDto;
@@ -6,6 +6,7 @@ import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandServi
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId;
 import org.jgrapht.alg.util.Pair;
 
 import java.util.Set;

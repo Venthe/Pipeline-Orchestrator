@@ -4,7 +4,7 @@ import com.google.common.collect.MoreCollectors;
 import eu.venthe.pipeline.gerrit.api.ProjectsApi;
 import eu.venthe.pipeline.gerrit.model.ProjectInfo;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
-import eu.venthe.pipeline.orchestrator.projects.domain.model.SourceType;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.FileDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.ProjectDto;
@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static eu.venthe.pipeline.orchestrator.projects.plugin.gerrit.GerritHeaders.getTraceId;
-import static java.util.stream.Collectors.toSet;
 
 @Slf4j
 @Value

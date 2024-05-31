@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.plugin_template;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.model.SourceType;
 import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.ConfigurationPropertyDefinition;
 import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.PropertyName;
+import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.SuppliedProperties;
 
 import java.util.Map;

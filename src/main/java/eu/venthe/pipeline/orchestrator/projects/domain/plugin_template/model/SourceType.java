@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.model;
+package eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model;
 
 import lombok.Value;
 
