@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.domain;
 
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;

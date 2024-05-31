@@ -1,6 +1,6 @@
-package eu.venthe.pipeline.orchestrator.projects.plugins.template;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template;
 
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ProjectDto;
 
 import java.util.Optional;
 import java.util.stream.Stream;

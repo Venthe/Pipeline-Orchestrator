@@ -1,8 +1,8 @@
-package eu.venthe.pipeline.orchestrator.projects.plugins.template;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template;
 
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.SuppliedProperties;
-import eu.venthe.pipeline.orchestrator.projects.plugins.gerrit.GerritProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.gerrit.GerritProjectSourcePlugin;
 
 public class PluginFactory {
     public ProjectSourcePlugin.PluginInstance instantiate(SourceType sourceType, SuppliedProperties suppliedProperties) {

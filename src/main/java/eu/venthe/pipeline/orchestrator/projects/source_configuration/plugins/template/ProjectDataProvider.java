@@ -1,6 +1,6 @@
-package eu.venthe.pipeline.orchestrator.projects.plugins.template;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template;
 
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.FileDto;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.FileDto;
 
 import java.nio.file.Path;
 import java.util.Collection;

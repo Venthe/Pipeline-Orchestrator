@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects.projects.domain;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.workflows.WorkflowDefinitionFactory;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.ProjectDataProvider;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectDataProvider;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 import lombok.RequiredArgsConstructor;
 

@@ -1,13 +1,13 @@
-package eu.venthe.pipeline.orchestrator.projects.plugins.gerrit;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.gerrit;
 
 import com.google.common.collect.MoreCollectors;
 import eu.venthe.pipeline.gerrit.api.ProjectsApi;
 import eu.venthe.pipeline.gerrit.model.ProjectInfo;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.FileDto;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.FileDto;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ProjectDto;
 import jakarta.ws.rs.core.UriBuilder;
 import lombok.SneakyThrows;
 import lombok.Value;
@@ -25,7 +25,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static eu.venthe.pipeline.orchestrator.projects.plugins.gerrit.GerritHeaders.getTraceId;
+import static eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.gerrit.GerritHeaders.getTraceId;
 
 @Slf4j
 @Value

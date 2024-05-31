@@ -1,24 +1,22 @@
-package eu.venthe.pipeline.orchestrator.projects.plugins.gerrit;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.gerrit;
 
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.ConfigurationPropertyDefinition;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.PropertyName;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.SuppliedConfigurationProperty;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.SuppliedProperties;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ConfigurationPropertyDefinition;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.PropertyName;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedConfigurationProperty;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
 import lombok.Builder;
 import lombok.Value;
 
 import java.util.Map;
-
-import static eu.venthe.pipeline.orchestrator.projects.plugins.template.model.ConfigurationPropertyDefinition.simpleText;
 
 @Builder
 @Value
 public class GerritConfiguration {
 
     public static Map<PropertyName, ConfigurationPropertyDefinition> DEFINITIONS = Map.ofEntries(
-            Map.entry(new PropertyName("basePath"), simpleText()),
+            Map.entry(new PropertyName("basePath"), ConfigurationPropertyDefinition.simpleText()),
             Map.entry(new PropertyName("password"), ConfigurationPropertyDefinition.builder().masked(true).asText().build()),
-            Map.entry(new PropertyName("username"), simpleText())
+            Map.entry(new PropertyName("username"), ConfigurationPropertyDefinition.simpleText())
     );
 
     String basePath;

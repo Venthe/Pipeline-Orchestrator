@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.plugins.template.model;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model;
 
 public record TextSuppliedConfigurationProperty(String value) implements SuppliedConfigurationProperty {
     @Override

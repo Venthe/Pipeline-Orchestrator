@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.plugins.gerrit;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.gerrit;
 
 import eu.venthe.pipeline.gerrit.invoker.ApiClient;
 

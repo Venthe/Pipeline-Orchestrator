@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.plugins.gerrit;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.gerrit;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;

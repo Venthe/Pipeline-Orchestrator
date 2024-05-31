@@ -4,8 +4,8 @@ import com.google.common.collect.Sets;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId;
 import org.jgrapht.alg.util.Pair;
 

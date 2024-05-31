@@ -2,11 +2,11 @@ package eu.venthe.pipeline.orchestrator.projects.source_configuration.domain;
 
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.PluginFactory;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.SuppliedProperties;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.PluginFactory;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

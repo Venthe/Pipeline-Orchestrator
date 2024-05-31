@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.plugins.template.model;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model;
 
 public interface SuppliedConfigurationProperty {
     default boolean isText() {
