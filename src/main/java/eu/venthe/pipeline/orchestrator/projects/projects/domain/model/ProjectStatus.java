@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.projects.model;
+package eu.venthe.pipeline.orchestrator.projects.projects.domain.model;
 
 public enum ProjectStatus {
     ACTIVE,

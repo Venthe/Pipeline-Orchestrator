@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.domain;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.events.handlers.EventHandlerProvider;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.events.handlers.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.RequiredArgsConstructor;

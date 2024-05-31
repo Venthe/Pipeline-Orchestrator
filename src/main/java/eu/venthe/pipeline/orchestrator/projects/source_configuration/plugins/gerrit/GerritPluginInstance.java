@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.ge
 import com.google.common.collect.MoreCollectors;
 import eu.venthe.pipeline.gerrit.api.ProjectsApi;
 import eu.venthe.pipeline.gerrit.model.ProjectInfo;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.FileDto;

@@ -1,10 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.api;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
-import lombok.Value;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus;
 
-@Value
-public class UpdateProjectSpecificationDto {
-    ProjectStatus status;
-    String projectName;
+public record UpdateProjectSpecificationDto(ProjectStatus status, String projectName) {
 }

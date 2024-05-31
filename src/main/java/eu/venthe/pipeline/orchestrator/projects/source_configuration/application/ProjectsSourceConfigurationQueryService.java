@@ -1,7 +1,6 @@
-/*
-package eu.venthe.pipeline.orchestrator.projects._archive.api;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.application;
 
-import eu.venthe.pipeline.orchestrator.projects.adapter._archive.ProjectSourceAdapter;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.api.ReadProjectSourceConfigurationDto;
 
 import java.util.Optional;
 import java.util.Set;
@@ -14,6 +13,5 @@ public interface ProjectsSourceConfigurationQueryService {
 
     Set<String> listSystemTypes();
 
-    Optional<ProjectSourceAdapter> getPluginDefinition(String systemType);
+//    Optional<ProjectSourceAdapter> getPluginDefinition(String systemType);
 }
-*/

@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.projects.projects.application;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.WorkflowDetailDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.WorkflowTaskDto;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfigurationId;
 
 import java.util.Collection;

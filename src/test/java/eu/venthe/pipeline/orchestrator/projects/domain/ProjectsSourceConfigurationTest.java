@@ -3,12 +3,12 @@ package eu.venthe.pipeline.orchestrator.projects.domain;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ class ProjectsSourceConfigurationTest {
 
     @BeforeEach
     void beforeEach() {
-        projectsSourceConfiguration = new ProjectsSourceConfiguration(new ProjectsSourceConfigurationId("TestName"), pluginInstance);
+        projectsSourceConfiguration = ProjectsSourceConfiguration.reconstitute(new ProjectsSourceConfigurationId("TestName"), pluginInstance);
     }
 
     @Test

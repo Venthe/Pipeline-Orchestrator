@@ -1,7 +1,7 @@
-package eu.venthe.pipeline.orchestrator.projects.domain.projects.events.handlers.handlers;
+package eu.venthe.pipeline.orchestrator.projects.projects.domain.events.handlers.handlers;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.Project;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.events.handlers.EventHandler;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.Project;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.events.handlers.EventHandler;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.extern.slf4j.Slf4j;

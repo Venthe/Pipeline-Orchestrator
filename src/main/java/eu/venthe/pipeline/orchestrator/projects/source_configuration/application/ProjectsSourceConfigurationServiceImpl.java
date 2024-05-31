@@ -1,15 +1,8 @@
 /*
-package eu.venthe.pipeline.orchestrator.projects._archive.application;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.application;
 
-import eu.venthe.pipeline.orchestrator.projects.adapter._archive.ProjectSourceAdapter;
-import eu.venthe.pipeline.orchestrator.projects._archive.domain.*;
-import eu.venthe.pipeline.orchestrator.projects._archive.api.ProjectsSourceConfigurationQueryService;
-import eu.venthe.pipeline.orchestrator.projects._archive.api.ReadProjectSourceConfigurationDto;
-import eu.venthe.pipeline.orchestrator.projects._archive.api.ProjectsSourceConfigurationCommandService;
-import eu.venthe.pipeline.orchestrator.projects.domain.*;
 import eu.venthe.pipeline.orchestrator.security.annotations.IsProjectManager;
 import eu.venthe.pipeline.orchestrator.security.annotations.IsSystemAdministrator;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

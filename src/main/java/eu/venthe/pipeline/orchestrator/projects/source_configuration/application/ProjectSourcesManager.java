@@ -1,47 +1,55 @@
-/*
-package eu.venthe.pipeline.orchestrator.projects.application;
+package eu.venthe.pipeline.orchestrator.projects.source_configuration.application;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.ProjectsSourceConfigurationRepository;
-import eu.venthe.pipeline.orchestrator.projects.shared_kernel.events.ProjectSourceConfigurationAddedEvent;
-import eu.venthe.pipeline.orchestrator.projects.shared_kernel.events.ProjectSourceConfigurationRemovedEvent;
-import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.SuppliedProperties;
-import eu.venthe.pipeline.orchestrator.shared_kernel.Either;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
+import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
+import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfiguration;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.infrastructure.ProjectsSourceConfigurationRepository;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.PluginProvider;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.tuple.Pair;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
-
-import static java.util.Collections.emptyMap;
-
+@Slf4j
+@Component
 @RequiredArgsConstructor
 public class ProjectSourcesManager {
     private final ProjectsSourceConfigurationRepository sources;
+    private final PluginProvider pluginProvider;
+    private final ProjectsCommandService projectsCommandService;
+    private final ProjectsQueryService projectsQueryService;
 
-    public Either<Void, Pair<String, List<DomainTrigger>>> register(ProjectSourcePlugin plugin) {
-        // TODO: Load configuration from repository/file
-        SuppliedProperties properties = new SuppliedProperties(emptyMap());
+    public void register(String _configurationId,
+                         String _sourceType,
+                         SuppliedProperties properties) {
+        var configurationId = new ProjectsSourceConfigurationId(_configurationId);
 
-        ProjectsSourceConfiguration configuration = new ProjectsSourceConfiguration(plugin.instantiate(properties));
+        if (sources.exists(configurationId)) {
+            log.warn("Project source configuration {} is already registered", configurationId);
+            throw new IllegalArgumentException();
+        }
+
+        var sourceType = new SourceType(_sourceType);
+        ProjectSourcePlugin.PluginInstance pluginInstance = pluginProvider.provide(sourceType, properties);
+
+        ProjectsSourceConfiguration configuration = ProjectsSourceConfiguration.createNew(configurationId, pluginInstance, projectsCommandService, projectsQueryService);
         sources.save(configuration);
-
-        List<DomainTrigger> events = List.of(new ProjectSourceConfigurationAddedEvent(configuration.getConfigurationId().id(), plugin.getSourceType().getValue()));
-        return Either.success(Pair.of(configuration.getConfigurationId().id(), events));
     }
 
-    public Either<Void, Pair<Boolean, List<DomainTrigger>>> unregister(String configurationId) {
-        return Either.success(Pair.of(true, List.of(new ProjectSourceConfigurationRemovedEvent(configurationId))));
-    }
+    public void unregister(String _configurationId) {
+        var configurationId = new ProjectsSourceConfigurationId(_configurationId);
 
-    public Either<Void, Pair<String, List<DomainTrigger>>> synchronize(String configurationId) {
+        // TODO: Remove sources from the system
+        //  remove all dependencies
         throw new UnsupportedOperationException();
     }
 
-    public Either<Void, Pair<String, List<DomainTrigger>>> synchronizeAll() {
-        throw new UnsupportedOperationException();
+    public void synchronize(String _configurationId) {
+        var configurationId = new ProjectsSourceConfigurationId(_configurationId);
+        ProjectsSourceConfiguration projectsSourceConfiguration = sources.find(configurationId).orElseThrow();
+        projectsSourceConfiguration.synchronize(projectsCommandService, projectsQueryService);
     }
-
 }
-*/

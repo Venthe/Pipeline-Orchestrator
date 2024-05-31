@@ -24,4 +24,8 @@ public class GerritProjectSourcePlugin implements ProjectSourcePlugin {
     public Map<PropertyName, ConfigurationPropertyDefinition> getConfigurationPropertiesDefinitions() {
         return GerritConfiguration.DEFINITIONS;
     }
+
+    public void validateProperties(SuppliedProperties properties) {
+        throw new UnsupportedOperationException();
+    }
 }

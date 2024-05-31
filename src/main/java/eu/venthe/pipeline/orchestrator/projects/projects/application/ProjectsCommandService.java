@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.application;
 
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 
 public interface ProjectsCommandService {

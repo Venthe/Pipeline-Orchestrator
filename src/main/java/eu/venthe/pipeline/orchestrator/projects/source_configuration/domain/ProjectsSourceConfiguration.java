@@ -2,11 +2,8 @@ package eu.venthe.pipeline.orchestrator.projects.source_configuration.domain;
 
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.PluginFactory;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,21 +22,16 @@ public class ProjectsSourceConfiguration implements Aggregate<ProjectsSourceConf
     private final ProjectsSourceConfigurationSynchronizer synchronizer;
 
     public static ProjectsSourceConfiguration createNew(ProjectsSourceConfigurationId configurationId,
-                                                        SourceType sourceType,
-                                                        SuppliedProperties properties,
-                                                        PluginFactory pluginFactory,
+                                                        ProjectSourcePlugin.PluginInstance instance,
                                                         ProjectsCommandService projectsCommandService,
                                                         ProjectsQueryService projectsQueryService) {
-        var projectsSourceConfiguration = reconstitute(configurationId, sourceType, properties, pluginFactory);
+        var projectsSourceConfiguration = reconstitute(configurationId, instance);
         projectsSourceConfiguration.synchronize(projectsCommandService, projectsQueryService);
         return projectsSourceConfiguration;
     }
 
     public static ProjectsSourceConfiguration reconstitute(ProjectsSourceConfigurationId configurationId,
-                                                           SourceType sourceType,
-                                                           SuppliedProperties properties,
-                                                           PluginFactory pluginFactory) {
-        ProjectSourcePlugin.PluginInstance instance = pluginFactory.instantiate(sourceType, properties);
+                                                           ProjectSourcePlugin.PluginInstance instance) {
         return new ProjectsSourceConfiguration(configurationId, instance);
     }
 

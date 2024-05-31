@@ -4,15 +4,15 @@ import com.google.common.collect.Sets;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId;
 import org.jgrapht.alg.util.Pair;
 
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus.ARCHIVED;
+import static eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus.ARCHIVED;
 import static java.util.stream.Collectors.toSet;
 
 record ProjectsSourceConfigurationSynchronizer(ProjectsSourceConfiguration configuration,

@@ -1,11 +1,11 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.api;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus;
 import lombok.Value;
 
 @Value
 public class ProjectDto {
     String name;
-    String sourceId;
+    String configurationId;
     ProjectStatus status;
 }
