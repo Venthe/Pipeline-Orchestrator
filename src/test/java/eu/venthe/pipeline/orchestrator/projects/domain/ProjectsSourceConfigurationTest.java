@@ -1,12 +1,12 @@
 package eu.venthe.pipeline.orchestrator.projects.domain;
 
-import eu.venthe.pipeline.orchestrator.projects.api.dto.CreateProjectSpecificationDto;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects.domain.source_configuration.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.projects.domain.source_configuration.ProjectsSourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.domain.plugin_template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
+import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfiguration;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.projects.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.projects.model.ProjectStatus;
 import org.assertj.core.api.Assertions;
