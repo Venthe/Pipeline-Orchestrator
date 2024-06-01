@@ -8,12 +8,12 @@ import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCom
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectId;
-import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectRepository;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.events.handlers.EventHandlerProvider;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.infrastructure.ProjectRepository;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.infrastructure.ProjectsSourceConfigurationRepository;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +27,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class ProjectsServiceImpl implements ProjectsQueryService, ProjectsCommandService {
     private final ProjectRepository projectRepository;
+    private final ProjectsSourceConfigurationRepository configurationRepository;
     private final DomainMessageBroker messageBroker;
     private final EventHandlerProvider eventHandlerProvider;
 
@@ -59,5 +60,19 @@ public class ProjectsServiceImpl implements ProjectsQueryService, ProjectsComman
 
     private static ProjectDto toProjectDto(Project p) {
         return new ProjectDto(p.getId().getName(), p.getId().getConfigurationId().id(), p.getStatus());
+    }
+
+    @Override
+    public void add(String _configurationId, CreateProjectSpecificationDto newProjectDto) {
+        if (projectRepository.exists(newProjectDto.projectId())) {
+            throw new IllegalArgumentException();
+        }
+
+        ProjectsSourceConfigurationId configurationId = new ProjectsSourceConfigurationId(_configurationId);
+        ProjectsSourceConfiguration configuration = configurationRepository.find(configurationId).orElseThrow();
+
+        Project project = new Project(newProjectDto.projectId(), configuration, newProjectDto.description(), newProjectDto.status());
+
+        projectRepository.save(project);
     }
 }

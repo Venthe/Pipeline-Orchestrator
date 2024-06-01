@@ -21,19 +21,24 @@ public class InMemoryDomainRepository<OBJECT extends Aggregate<ID>, ID> implemen
 
     @Override
     public Collection<OBJECT> findAll() {
-        return List.of();
+        return getAll();
+    }
+
+    @Override
+    public boolean exists(ID id) {
+        return repository.getById(id).isPresent();
     }
 
     public void update(OBJECT object) {
         repository.update(object.getId(), object);
     }
 
-    public void save(OBJECT object) {
-        repository.save(object.getId(), object);
+    public void save(OBJECT aggregate) {
+        repository.save(aggregate.getId(), aggregate);
     }
 
     @Override
-    public Optional<OBJECT> find(ID projectSourceConfigurationId) {
-        return Optional.empty();
+    public Optional<OBJECT> find(ID id) {
+        return repository.getById(id);
     }
 }

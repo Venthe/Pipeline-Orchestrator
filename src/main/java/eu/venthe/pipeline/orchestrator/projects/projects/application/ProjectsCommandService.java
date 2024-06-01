@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 
 public interface ProjectsCommandService {
 
-    default void add(CreateProjectSpecificationDto newProjectDto) {
+    default void add(String configurationId, CreateProjectSpecificationDto newProjectDto) {
         throw new UnsupportedOperationException();
     }
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class ProjectsSourceConfigurationRepositoryImpl extends InMemoryDomainRepository<ProjectsSourceConfiguration, ProjectsSourceConfigurationId>
         implements ProjectsSourceConfigurationRepository {
     @Override
-    public boolean exists(ProjectsSourceConfigurationId configurationId) {
-        return findAll().stream().anyMatch(e -> e.getConfigurationId().equals(configurationId));
+    public boolean exists(ProjectsSourceConfigurationId id) {
+        return findAll().stream().anyMatch(e -> e.getConfigurationId().equals(id));
     }
 }

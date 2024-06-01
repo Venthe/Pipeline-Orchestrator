@@ -64,7 +64,7 @@ record ProjectsSourceConfigurationSynchronizer(ProjectsSourceConfiguration confi
         getProjectsToCreate(allProjectsFromSource, registeredProjects)
                 .map(projectId -> Pair.of(projectId, projectIdToProjectDto(projectId)))
                 .map(entry -> new CreateProjectSpecificationDto(entry.getFirst(), entry.getSecond().getStatus(), entry.getSecond().getDescription()))
-                .forEach(projectsCommandService::add);
+                .forEach(newProjectDto -> projectsCommandService.add(configuration.getConfigurationId().id(), newProjectDto));
     }
 
     private Stream<ProjectId> getProjectsToCreate(Set<String> allProjectsFromSource, Set<String> registeredProjects) {

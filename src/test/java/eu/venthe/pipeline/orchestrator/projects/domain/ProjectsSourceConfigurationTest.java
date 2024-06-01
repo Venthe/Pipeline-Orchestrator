@@ -34,7 +34,7 @@ class ProjectsSourceConfigurationTest {
 
     @BeforeEach
     void beforeEach() {
-        projectsSourceConfiguration = ProjectsSourceConfiguration.reconstitute(new ProjectsSourceConfigurationId("TestName"), pluginInstance);
+        projectsSourceConfiguration = ProjectsSourceConfiguration.reconstitute(new ProjectsSourceConfigurationId("TestName"), pluginInstance, projectCommands, projectQueries);
     }
 
     @Test
@@ -43,9 +43,9 @@ class ProjectsSourceConfigurationTest {
         Mockito.when(projectQueries.getProjectIds(new ProjectsSourceConfigurationId("TestName"))).thenReturn(Stream.empty());
         Mockito.when(pluginInstance.getProject("123")).thenReturn(Optional.of(new ProjectDto("123", ProjectStatus.ACTIVE)));
 
-        projectsSourceConfiguration.synchronize(projectCommands, projectQueries);
+        projectsSourceConfiguration.synchronize();
 
-        Mockito.verify(projectCommands).add(new CreateProjectSpecificationDto(ProjectId.of(new ProjectsSourceConfigurationId("TestName"), "123"), ProjectStatus.ACTIVE));
+        Mockito.verify(projectCommands).add("TestName", new CreateProjectSpecificationDto(ProjectId.of(new ProjectsSourceConfigurationId("TestName"), "123"), ProjectStatus.ACTIVE));
     }
 
     @Test

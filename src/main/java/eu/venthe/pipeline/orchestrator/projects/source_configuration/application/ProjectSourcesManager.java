@@ -22,7 +22,7 @@ public class ProjectSourcesManager {
     private final ProjectsCommandService projectsCommandService;
     private final ProjectsQueryService projectsQueryService;
 
-    public void register(String _configurationId,
+    public ProjectsSourceConfiguration register(String _configurationId,
                          String _sourceType,
                          SuppliedProperties properties) {
         var configurationId = new ProjectsSourceConfigurationId(_configurationId);
@@ -37,6 +37,7 @@ public class ProjectSourcesManager {
 
         ProjectsSourceConfiguration configuration = ProjectsSourceConfiguration.createNew(configurationId, pluginInstance, projectsCommandService, projectsQueryService);
         sources.save(configuration);
+        return configuration;
     }
 
     public void unregister(String _configurationId) {
@@ -50,6 +51,6 @@ public class ProjectSourcesManager {
     public void synchronize(String _configurationId) {
         var configurationId = new ProjectsSourceConfigurationId(_configurationId);
         ProjectsSourceConfiguration projectsSourceConfiguration = sources.find(configurationId).orElseThrow();
-        projectsSourceConfiguration.synchronize(projectsCommandService, projectsQueryService);
+        projectsSourceConfiguration.synchronize();
     }
 }

@@ -4,12 +4,18 @@ import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.ger
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.togglz.core.manager.FeatureManager;
+import org.togglz.core.util.NamedFeature;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class PluginProvider {
+    private final FeatureManager featureManager;
+
     public ProjectSourcePlugin.PluginInstance provide(SourceType sourceType, SuppliedProperties properties) {
         GerritProjectSourcePlugin gerritProjectSourcePlugin = new GerritProjectSourcePlugin();
 
@@ -20,7 +26,9 @@ public class PluginProvider {
 
         log.info("Instantiating source plugin {}", sourceType);
 
-        gerritProjectSourcePlugin.validateProperties(properties);
+        if (featureManager.isActive(new NamedFeature("VALIDATE_PROJECT_PLUGIN_PROPERTIES"))) {
+            gerritProjectSourcePlugin.validateProperties(properties);
+        }
 
         return gerritProjectSourcePlugin.instantiate(properties);
     }

@@ -5,6 +5,6 @@ import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.Proj
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainRepository;
 
 public interface ProjectsSourceConfigurationRepository extends DomainRepository<ProjectsSourceConfiguration, ProjectsSourceConfigurationId> {
-    boolean exists(ProjectsSourceConfigurationId configurationId);
+    boolean exists(ProjectsSourceConfigurationId id);
 
 }
