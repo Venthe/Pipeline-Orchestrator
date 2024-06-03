@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model;
+package eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties;
 
 public record IntegerSuppliedConfigurationProperty(Integer value) implements SuppliedConfigurationProperty {
     @Override

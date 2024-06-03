@@ -2,9 +2,9 @@ package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.ge
 
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ConfigurationPropertyDefinition;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.PropertyName;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
+import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.ConfigurationPropertyDefinition;
+import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.PropertyName;
+import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 
 import java.util.Map;
 
@@ -23,9 +23,5 @@ public class GerritProjectSourcePlugin implements ProjectSourcePlugin {
     @Override
     public Map<PropertyName, ConfigurationPropertyDefinition> getConfigurationPropertiesDefinitions() {
         return GerritConfiguration.DEFINITIONS;
-    }
-
-    public void validateProperties(SuppliedProperties properties) {
-        throw new UnsupportedOperationException();
     }
 }

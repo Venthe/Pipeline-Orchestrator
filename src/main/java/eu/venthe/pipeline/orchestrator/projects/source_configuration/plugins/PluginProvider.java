@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.gerrit.GerritProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
+import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,11 +24,11 @@ public class PluginProvider {
             throw new UnsupportedOperationException();
         }
 
-        log.info("Instantiating source plugin {}", sourceType);
-
         if (featureManager.isActive(new NamedFeature("VALIDATE_PROJECT_PLUGIN_PROPERTIES"))) {
             gerritProjectSourcePlugin.validateProperties(properties);
         }
+
+        log.info("Instantiating source plugin {}", sourceType);
 
         return gerritProjectSourcePlugin.instantiate(properties);
     }

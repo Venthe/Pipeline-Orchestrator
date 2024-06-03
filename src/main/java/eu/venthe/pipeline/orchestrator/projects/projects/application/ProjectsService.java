@@ -2,7 +2,6 @@ package eu.venthe.pipeline.orchestrator.projects.projects.application;
 
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects.projects.api.WorkflowDetailDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.WorkflowTaskDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.events.handlers.EventHandlerProvider;
@@ -74,7 +73,7 @@ public class ProjectsService implements ProjectsQueryService, ProjectsCommandSer
     }
 
     @Override
-    public String executeManualWorkflow(ProjectId projectId, String workflowName, String ref) {
+    public String executeManualWorkflow(ProjectId projectId, String ref, String workflowName) {
         throw new UnsupportedOperationException();
     }
 }

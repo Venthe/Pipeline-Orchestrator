@@ -8,7 +8,7 @@ import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.mode
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.PluginProvider;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
+import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

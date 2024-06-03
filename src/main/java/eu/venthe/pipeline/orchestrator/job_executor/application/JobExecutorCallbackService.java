@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.job_executor;
+package eu.venthe.pipeline.orchestrator.job_executor.application;
 
 public interface JobExecutorCallbackService {
     void jobExecutionProgressed();

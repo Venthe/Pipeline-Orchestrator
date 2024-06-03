@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects.source_configuration.applicatio
 
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.model.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
+import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 
 public interface ProjectsSourceConfigurationCommandService {
 

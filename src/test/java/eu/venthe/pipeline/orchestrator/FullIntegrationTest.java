@@ -5,10 +5,10 @@ import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQue
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.application.ProjectSourcesManager;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.model.ProjectsSourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.PropertyName;
+import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.PropertyName;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.TextSuppliedConfigurationProperty;
+import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
+import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.TextSuppliedConfigurationProperty;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,6 +44,6 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
 
-        String executionId = projectsCommandService.executeManualWorkflow(projectId, "example.yaml", "main");
+        String executionId = projectsCommandService.executeManualWorkflow(projectId, "main", "example.yaml");
     }
 }

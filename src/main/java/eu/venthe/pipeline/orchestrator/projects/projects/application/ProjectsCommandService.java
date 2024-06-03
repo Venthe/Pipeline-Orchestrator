@@ -20,7 +20,7 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default String executeManualWorkflow(ProjectId projectId, String workflowName, String ref) {
+    default String executeManualWorkflow(ProjectId projectId, String ref, String workflowName) {
         throw new UnsupportedOperationException();
     }
 
