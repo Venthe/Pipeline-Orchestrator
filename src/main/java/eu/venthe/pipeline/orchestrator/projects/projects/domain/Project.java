@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Optional;
@@ -59,7 +60,7 @@ public class Project implements Aggregate<ProjectId> {
         throw new UnsupportedOperationException();
     }
 
-    public void executeManualWorkflow(Path workflowFilename) {
+    public void executeManualWorkflow(String ref, File workflowFile) {
         throw new UnsupportedOperationException();
     }
 

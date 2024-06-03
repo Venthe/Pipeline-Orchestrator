@@ -14,6 +14,8 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -73,7 +75,11 @@ public class ProjectsService implements ProjectsQueryService, ProjectsCommandSer
     }
 
     @Override
-    public String executeManualWorkflow(ProjectId projectId, String ref, String workflowName) {
+    public String executeManualWorkflow(ProjectId projectId, String ref, File workflowFile) {
+        Project project = projectRepository.find(projectId).orElseThrow();
+
+        project.executeManualWorkflow(ref, workflowFile);
+
         throw new UnsupportedOperationException();
     }
 }

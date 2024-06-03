@@ -6,6 +6,9 @@ import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectSta
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.model.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 
+import java.io.File;
+import java.nio.file.Path;
+
 public interface ProjectsCommandService {
 
     default void add(ProjectsSourceConfigurationId configurationId, CreateProjectSpecificationDto newProjectDto) {
@@ -20,7 +23,7 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default String executeManualWorkflow(ProjectId projectId, String ref, String workflowName) {
+    default String executeManualWorkflow(ProjectId projectId, String ref, File workflowFile) {
         throw new UnsupportedOperationException();
     }
 

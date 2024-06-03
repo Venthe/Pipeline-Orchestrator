@@ -1,5 +1,8 @@
 package eu.venthe.pipeline.orchestrator;
 
+import eu.venthe.pipeline.orchestrator.job_executor.adapters.template.model.AdapterId;
+import eu.venthe.pipeline.orchestrator.job_executor.adapters.template.model.AdapterType;
+import eu.venthe.pipeline.orchestrator.job_executor.application.JobExecutorAdapterManager;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
@@ -12,13 +15,18 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.Te
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.File;
+
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 class FullIntegrationTest extends AbstractIntegrationTest {
     private static final ProjectsSourceConfigurationId EXAMPLE_CONFIGURATION_ID = new ProjectsSourceConfigurationId("Test");
+    private static final AdapterId EXAMPLE_ADAPTER_ID = new AdapterId("docker-executor");
 
+    @Autowired
+    JobExecutorAdapterManager jobExecutorAdapterManager;
     @Autowired
     ProjectSourcesManager projectSourcesManager;
     @Autowired
@@ -28,6 +36,10 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void name() {
+        AdapterId executorId = jobExecutorAdapterManager.registerGlobal(EXAMPLE_ADAPTER_ID, new AdapterType("docker"), SuppliedProperties.none());
+
+        var executorDefinitionId = jobExecutorAdapterManager.registerRunner(executorId, "docker.home.arpa/venthe/ubuntu-runner:23.10");
+
         ProjectsSourceConfigurationId configurationId = projectSourcesManager.register(EXAMPLE_CONFIGURATION_ID, new SourceType("Gerrit"),
                 SuppliedProperties.builder()
                         .property(new PropertyName("basePath"), new TextSuppliedConfigurationProperty("http://localhost:15480"))
@@ -44,6 +56,6 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
 
-        String executionId = projectsCommandService.executeManualWorkflow(projectId, "main", "example.yaml");
+        String executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));
     }
 }

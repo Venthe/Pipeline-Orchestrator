@@ -21,7 +21,7 @@ public class RegisterPluginEndpoints {
         Arrays.stream(plugins)
                 .forEach(pluginInstance -> pluginInstance.provideEndpointMappings()
                         .forEach(mapping -> requestMappingHandlerMapping.registerMapping(
-                                        appendPathPrefix(mapping, pluginInstance.getSourceType().getValue()),
+                                        appendPathPrefix(mapping, pluginInstance.getSourceType().value()),
                                         mapping.handler(),
                                         mapping.method()
                                 )

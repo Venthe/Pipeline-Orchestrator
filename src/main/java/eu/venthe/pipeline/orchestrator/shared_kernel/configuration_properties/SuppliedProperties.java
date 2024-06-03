@@ -12,6 +12,10 @@ public class SuppliedProperties {
     @Singular
     Map<PropertyName, SuppliedConfigurationProperty> properties;
 
+    public static SuppliedProperties none() {
+        return SuppliedProperties.builder().build();
+    }
+
     public Optional<SuppliedConfigurationProperty> get(String key) {
         return Optional.ofNullable(properties.get(new PropertyName(key)));
     }
