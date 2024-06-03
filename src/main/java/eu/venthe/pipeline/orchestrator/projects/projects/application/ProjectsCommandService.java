@@ -1,13 +1,14 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.application;
 
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
-import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.model.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 
 public interface ProjectsCommandService {
 
-    default void add(String configurationId, CreateProjectSpecificationDto newProjectDto) {
+    default void add(ProjectsSourceConfigurationId configurationId, CreateProjectSpecificationDto newProjectDto) {
         throw new UnsupportedOperationException();
     }
 
@@ -19,7 +20,7 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default void executeManualWorkflow(ProjectId projectId, String workflowName) {
+    default String executeManualWorkflow(ProjectId projectId, String workflowName, String ref) {
         throw new UnsupportedOperationException();
     }
 

@@ -5,7 +5,7 @@ set -o errexit
 GERRIT_URL="localhost:15480"
 GERRIT_PROTOCOL="http"
 GERRIT_USERNAME="admin"
-GERRIT_PASSWORD="vcVjeRAPTjKVi9FGbXaFl+kCPZGt49vp19+dSVK4hA"
+GERRIT_PASSWORD="secret"
 
 function gerrit_allow_force_update() {
   echo "Resetting permissions for All-Projects"
@@ -36,14 +36,17 @@ function load_project() {
   echo "Deleting gerrit project"
   curl "${GERRIT_PROTOCOL}://${GERRIT_URL}/a/projects/${PROJECT_NAME}" \
     -u "${GERRIT_USERNAME}:${GERRIT_PASSWORD}" \
-    -X DELETE
+    -X DELETE \
+    -v || true
 
   echo "Creating gerrit project"
   curl "${GERRIT_PROTOCOL}://${GERRIT_URL}/a/projects/${PROJECT_NAME}" \
     -u "${GERRIT_USERNAME}:${GERRIT_PASSWORD}" \
     -X PUT \
     -H "Content-Type: application/json; charset=UTF-8" \
-    -d '{}'
+    -d '{}' \
+    -v \
+    --fail
 
   local WORK_DIR=$(mktemp -d)
 

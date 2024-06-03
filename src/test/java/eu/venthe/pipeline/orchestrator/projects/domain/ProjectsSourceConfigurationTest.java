@@ -3,10 +3,10 @@ package eu.venthe.pipeline.orchestrator.projects.domain;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.model.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ProjectDto;
 import org.assertj.core.api.Assertions;
@@ -45,7 +45,7 @@ class ProjectsSourceConfigurationTest {
 
         projectsSourceConfiguration.synchronize();
 
-        Mockito.verify(projectCommands).add("TestName", new CreateProjectSpecificationDto(ProjectId.of(new ProjectsSourceConfigurationId("TestName"), "123"), ProjectStatus.ACTIVE));
+        Mockito.verify(projectCommands).add(new ProjectsSourceConfigurationId("TestName"), new CreateProjectSpecificationDto(ProjectId.of(new ProjectsSourceConfigurationId("TestName"), "123"), ProjectStatus.ACTIVE));
     }
 
     @Test

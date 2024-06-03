@@ -1,18 +1,16 @@
-package eu.venthe.pipeline.orchestrator.projects.application;
+package eu.venthe.pipeline.orchestrator.projects.projects.application;
 
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.WorkflowDetailDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.WorkflowTaskDto;
-import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
-import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.Project;
-import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.events.handlers.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.infrastructure.ProjectRepository;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.infrastructure.ProjectsSourceConfigurationRepository;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.model.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +23,7 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-public class ProjectsServiceImpl implements ProjectsQueryService, ProjectsCommandService {
+public class ProjectsService implements ProjectsQueryService, ProjectsCommandService {
     private final ProjectRepository projectRepository;
     private final ProjectsSourceConfigurationRepository configurationRepository;
     private final DomainMessageBroker messageBroker;
@@ -34,18 +32,13 @@ public class ProjectsServiceImpl implements ProjectsQueryService, ProjectsComman
     @Override
     public Collection<ProjectDto> listProjects() {
         return projectRepository.findAll().stream()
-                .map(ProjectsServiceImpl::toProjectDto)
+                .map(ProjectsService::toProjectDto)
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Optional<ProjectDto> find(String configurationid, String projectName) {
-        return projectRepository.find(ProjectId.of(new ProjectsSourceConfigurationId(configurationid), projectName)).map(ProjectsServiceImpl::toProjectDto);
-    }
-
-    @Override
-    public Optional<WorkflowDetailDto> showWorkflowDetail(String systemId) {
-        throw new UnsupportedOperationException();
+    public Optional<ProjectDto> find(ProjectId projectId) {
+        return projectRepository.find(projectId).map(ProjectsService::toProjectDto);
     }
 
     @Override
@@ -55,7 +48,12 @@ public class ProjectsServiceImpl implements ProjectsQueryService, ProjectsComman
 
     @Override
     public Stream<ProjectId> getProjectIds(ProjectsSourceConfigurationId configurationId) {
-        return Stream.empty();
+        return projectRepository.findAll().stream()
+                .filter(e -> e.getOwningConfiguration()
+                        .getConfigurationId()
+                        .equals(configurationId)
+                )
+                .map(Project::getId);
     }
 
     private static ProjectDto toProjectDto(Project p) {
@@ -63,16 +61,20 @@ public class ProjectsServiceImpl implements ProjectsQueryService, ProjectsComman
     }
 
     @Override
-    public void add(String _configurationId, CreateProjectSpecificationDto newProjectDto) {
+    public void add(ProjectsSourceConfigurationId configurationId, CreateProjectSpecificationDto newProjectDto) {
         if (projectRepository.exists(newProjectDto.projectId())) {
             throw new IllegalArgumentException();
         }
 
-        ProjectsSourceConfigurationId configurationId = new ProjectsSourceConfigurationId(_configurationId);
         ProjectsSourceConfiguration configuration = configurationRepository.find(configurationId).orElseThrow();
 
         Project project = new Project(newProjectDto.projectId(), configuration, newProjectDto.description(), newProjectDto.status());
 
         projectRepository.save(project);
+    }
+
+    @Override
+    public String executeManualWorkflow(ProjectId projectId, String workflowName, String ref) {
+        throw new UnsupportedOperationException();
     }
 }

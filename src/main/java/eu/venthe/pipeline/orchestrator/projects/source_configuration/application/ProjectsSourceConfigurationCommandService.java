@@ -1,14 +1,16 @@
 package eu.venthe.pipeline.orchestrator.projects.source_configuration.application;
 
-import java.util.Map;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.model.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SuppliedProperties;
 
 public interface ProjectsSourceConfigurationCommandService {
 
-    String addProjectSourceConfiguration(String id, String sourceType, Map<String, String> properties);
+    ProjectsSourceConfigurationId register(ProjectsSourceConfigurationId configurationId, SourceType sourceType, SuppliedProperties properties);
 
-    void synchronizeProject(String projectSourceConfigurationId);
+    void synchronize(ProjectsSourceConfigurationId configurationId);
 
-    void removeProjectSourceConfiguration(String projectSourceConfigurationId);
+    void unregister(ProjectsSourceConfigurationId configurationId);
 
-    void synchronizeProjects();
+    void synchronizeAll();
 }

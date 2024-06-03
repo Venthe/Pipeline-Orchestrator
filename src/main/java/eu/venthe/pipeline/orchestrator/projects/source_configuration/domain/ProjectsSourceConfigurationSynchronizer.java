@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ProjectDto;
 import org.jgrapht.alg.util.Pair;
@@ -64,7 +64,7 @@ record ProjectsSourceConfigurationSynchronizer(ProjectsSourceConfiguration confi
         getProjectsToCreate(allProjectsFromSource, registeredProjects)
                 .map(projectId -> Pair.of(projectId, projectIdToProjectDto(projectId)))
                 .map(entry -> new CreateProjectSpecificationDto(entry.getFirst(), entry.getSecond().getStatus(), entry.getSecond().getDescription()))
-                .forEach(newProjectDto -> projectsCommandService.add(configuration.getConfigurationId().id(), newProjectDto));
+                .forEach(newProjectDto -> projectsCommandService.add(configuration.getConfigurationId(), newProjectDto));
     }
 
     private Stream<ProjectId> getProjectsToCreate(Set<String> allProjectsFromSource, Set<String> registeredProjects) {

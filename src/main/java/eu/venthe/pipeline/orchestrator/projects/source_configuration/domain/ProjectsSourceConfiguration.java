@@ -2,6 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects.source_configuration.domain;
 
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.model.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
@@ -30,7 +31,7 @@ public class ProjectsSourceConfiguration implements Aggregate<ProjectsSourceConf
                                                         ProjectsCommandService projectsCommandService,
                                                         ProjectsQueryService projectsQueryService) {
         var projectsSourceConfiguration = reconstitute(configurationId, instance, projectsCommandService, projectsQueryService);
-        // FIXME
+        // FIXME: Chicken and egg
         // projectsSourceConfiguration.synchronize(projectsCommandService, projectsQueryService);
         return projectsSourceConfiguration;
     }

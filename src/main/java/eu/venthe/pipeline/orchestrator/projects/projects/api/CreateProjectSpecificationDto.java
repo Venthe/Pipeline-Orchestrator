@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.api;
 
-import eu.venthe.pipeline.orchestrator.projects.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus;
 
 import java.util.Optional;

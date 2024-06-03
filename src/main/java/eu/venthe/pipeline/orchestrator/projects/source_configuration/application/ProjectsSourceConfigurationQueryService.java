@@ -1,17 +1,23 @@
 package eu.venthe.pipeline.orchestrator.projects.source_configuration.application;
 
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.api.ReadProjectSourceConfigurationDto;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.model.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects.source_configuration.plugins.template.model.SourceType;
 
 import java.util.Optional;
 import java.util.Set;
 
 public interface ProjectsSourceConfigurationQueryService {
 
-    Set<ReadProjectSourceConfigurationDto> listConfigurations();
+    default Set<ReadProjectSourceConfigurationDto> listConfigurations() {
+        throw new UnsupportedOperationException();
+    }
 
-    Optional<ReadProjectSourceConfigurationDto> getConfiguration(String projectSourceConfigurationId);
+    default Optional<ReadProjectSourceConfigurationDto> getConfiguration(ProjectsSourceConfigurationId configurationId) {
+        throw new UnsupportedOperationException();
+    }
 
-    Set<String> listSystemTypes();
-
-//    Optional<ProjectSourceAdapter> getPluginDefinition(String systemType);
+    default Set<SourceType> listHandledSourceTypes() {
+        throw new UnsupportedOperationException();
+    }
 }
