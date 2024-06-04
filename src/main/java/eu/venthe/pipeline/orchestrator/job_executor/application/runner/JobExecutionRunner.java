@@ -1,8 +1,6 @@
-package eu.venthe.pipeline.orchestrator.job_executor._archive._unsorted;
+package eu.venthe.pipeline.orchestrator.job_executor.application.runner;
 
-public interface ExecutorManager {
-
-    void registerExecutor(String executorProviderId);
+public interface JobExecutionRunner {
 
     enum OperatingSystem {
         WINDOWS,

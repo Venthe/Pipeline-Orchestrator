@@ -7,7 +7,6 @@ import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.mode
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 
 import java.io.File;
-import java.nio.file.Path;
 
 public interface ProjectsCommandService {
 
