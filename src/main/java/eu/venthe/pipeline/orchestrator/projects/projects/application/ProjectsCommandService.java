@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.application;
 
+import eu.venthe.pipeline.orchestrator.job_executor.domain.model.ExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus;
@@ -22,7 +23,7 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default String executeManualWorkflow(ProjectId projectId, String ref, File workflowFile) {
+    default ExecutionId executeManualWorkflow(ProjectId projectId, String ref, File workflowFile) {
         throw new UnsupportedOperationException();
     }
 

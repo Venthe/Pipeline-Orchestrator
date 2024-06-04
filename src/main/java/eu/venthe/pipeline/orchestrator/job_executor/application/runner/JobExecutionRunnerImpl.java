@@ -9,12 +9,12 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 public class JobExecutionRunnerImpl implements JobExecutionRunner {
-    private final String runnerId;
-    private final String containerTag;
+    private final RunnerId runnerId;
+    private final ContainerId containerTag;
     private final Map<String, String> dimensions = new HashMap<>();
 
-    public JobExecutionRunnerImpl(String runnerId,
-                                  String containerTag,
+    public JobExecutionRunnerImpl(RunnerId runnerId,
+                                  ContainerId containerTag,
                                   OperatingSystem operatingSystem,
                                   Architecture architecture,
                                   Map.Entry<String, String>... _dimensions) {
