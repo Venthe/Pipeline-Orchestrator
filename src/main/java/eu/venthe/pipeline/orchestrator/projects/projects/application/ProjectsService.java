@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.application;
 
+import eu.venthe.pipeline.orchestrator.job_executor.domain.model.ExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.WorkflowTaskDto;
@@ -75,11 +76,9 @@ public class ProjectsService implements ProjectsQueryService, ProjectsCommandSer
     }
 
     @Override
-    public String executeManualWorkflow(ProjectId projectId, String ref, File workflowFile) {
+    public ExecutionId executeManualWorkflow(ProjectId projectId, String ref, File workflowFile) {
         Project project = projectRepository.find(projectId).orElseThrow();
 
-        project.executeManualWorkflow(ref, workflowFile);
-
-        throw new UnsupportedOperationException();
+        return project.executeManualWorkflow(ref, workflowFile);
     }
 }

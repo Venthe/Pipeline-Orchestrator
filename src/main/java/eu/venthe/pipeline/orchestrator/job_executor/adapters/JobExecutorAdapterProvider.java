@@ -20,6 +20,10 @@ public class JobExecutorAdapterProvider {
     private final FeatureManager featureManager;
 
     public JobExecutorAdapter.AdapterInstance provide(AdapterType adapterType, SuppliedProperties properties) {
+        if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
+            throw new UnsupportedOperationException();
+        }
+
         var dockerJobExecutorAdapter = new DockerJobExecutorAdapter();
 
         if (!adapterType.equals(dockerJobExecutorAdapter.getAdapterType())) {

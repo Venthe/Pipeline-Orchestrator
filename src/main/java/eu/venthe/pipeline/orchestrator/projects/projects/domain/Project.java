@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.domain;
 
+import eu.venthe.pipeline.orchestrator.job_executor.domain.model.ExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.source_configuration.domain.ProjectsSourceConfiguration;
@@ -60,7 +61,7 @@ public class Project implements Aggregate<ProjectId> {
         throw new UnsupportedOperationException();
     }
 
-    public void executeManualWorkflow(String ref, File workflowFile) {
+    public ExecutionId executeManualWorkflow(String ref, File workflowFile) {
         throw new UnsupportedOperationException();
     }
 

@@ -17,6 +17,10 @@ public class PluginProvider {
     private final FeatureManager featureManager;
 
     public ProjectSourcePlugin.PluginInstance provide(SourceType sourceType, SuppliedProperties properties) {
+        if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
+            throw new UnsupportedOperationException();
+        }
+
         GerritProjectSourcePlugin gerritProjectSourcePlugin = new GerritProjectSourcePlugin();
 
         if (!sourceType.equals(gerritProjectSourcePlugin.getSourceType())) {
