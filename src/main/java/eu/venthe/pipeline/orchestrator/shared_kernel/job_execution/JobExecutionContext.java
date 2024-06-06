@@ -11,7 +11,7 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution;
  * <p>
  * ${{ <context> }}
  */
-public interface JobContext_ {
+public interface JobExecutionContext {
   /*
   | Workflow key                                     | Context                                                                         | Special functions                              |
   | ------------------------------------------------ | ------------------------------------------------------------------------------- | ---------------------------------------------- |

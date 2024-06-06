@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode
 @SuperBuilder
 @SuppressWarnings("ALL")
-public class ReusableWorkflowJobContext extends CommonJobContext implements JobContext_ {
+public class ReusableWorkflowJobContext extends CommonJobContext implements JobExecutionContext {
     /**
      * Outputs for a reusable workflow
      */

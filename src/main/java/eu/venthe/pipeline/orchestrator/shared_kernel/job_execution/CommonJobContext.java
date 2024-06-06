@@ -6,7 +6,6 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
@@ -16,7 +15,7 @@ import java.util.Optional;
 @ToString
 @EqualsAndHashCode
 @SuperBuilder
-abstract class CommonJobContext implements JobContext_ {
+abstract class CommonJobContext implements JobExecutionContext {
     private final GithubContext github;
     private final EnvContext env;
     private final VarsContext vars;
