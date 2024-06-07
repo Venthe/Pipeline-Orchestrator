@@ -21,6 +21,9 @@ public interface JobExecutorAdapter {
     Map<PropertyName, ConfigurationPropertyDefinition> getConfigurationPropertiesDefinitions();
 
     interface AdapterInstance {
-        void queueJobExecution(ProjectId projectId, ExecutionId executionId);
+        void queueJobExecution(ProjectId projectId, ExecutionId executionId, JobExecutorAdapter.CallbackToken callbackToken);
+    }
+
+    record CallbackToken(String value) {
     }
 }

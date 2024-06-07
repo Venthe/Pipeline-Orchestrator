@@ -13,7 +13,7 @@ public class DockerJobExecutorAdapterInstance implements JobExecutorAdapter.Adap
     DockerClient dockerClient;
 
     @Override
-    public void queueJobExecution(ProjectId projectId, ExecutionId executionId) {
+    public void queueJobExecution(ProjectId projectId, ExecutionId executionId, JobExecutorAdapter.CallbackToken callbackToken) {
         // try (CreateContainerCmd containerCmd = dockerClient.createContainerCmd("docker.home.arpa/venthe/ubuntu-runner:23.10")) {
         //     CreateContainerResponse exec = containerCmd
         //             .withEnv(
