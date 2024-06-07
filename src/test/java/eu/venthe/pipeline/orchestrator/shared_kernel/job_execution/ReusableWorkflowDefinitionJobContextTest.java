@@ -139,7 +139,7 @@ class ReusableWorkflowDefinitionJobContextTest extends AbstractContextTest {
                 """);
 
         // When
-        JsonNode result = objectMapper.valueToTree(new ReusableWorkflowJobContext(expected));
+        JsonNode result = objectMapper.valueToTree(new ReusableWorkflowJobExecutionContext(expected));
 
         // Then
         Assertions.assertEquals(expected, result);

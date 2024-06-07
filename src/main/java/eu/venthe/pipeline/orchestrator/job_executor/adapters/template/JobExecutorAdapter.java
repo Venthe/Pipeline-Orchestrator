@@ -1,6 +1,8 @@
 package eu.venthe.pipeline.orchestrator.job_executor.adapters.template;
 
 import eu.venthe.pipeline.orchestrator.job_executor.adapters.template.model.AdapterType;
+import eu.venthe.pipeline.orchestrator.job_executor.domain.model.ExecutionId;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.ConfigurationPropertyDefinition;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.PropertyName;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
@@ -19,6 +21,6 @@ public interface JobExecutorAdapter {
     Map<PropertyName, ConfigurationPropertyDefinition> getConfigurationPropertiesDefinitions();
 
     interface AdapterInstance {
-        void queueJobExecution();
+        void queueJobExecution(ProjectId projectId, ExecutionId executionId);
     }
 }

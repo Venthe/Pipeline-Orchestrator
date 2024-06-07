@@ -2,6 +2,8 @@ package eu.venthe.pipeline.orchestrator.job_executor.adapters.docker;
 
 import com.github.dockerjava.api.DockerClient;
 import eu.venthe.pipeline.orchestrator.job_executor.adapters.template.JobExecutorAdapter;
+import eu.venthe.pipeline.orchestrator.job_executor.domain.model.ExecutionId;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
@@ -11,7 +13,7 @@ public class DockerJobExecutorAdapterInstance implements JobExecutorAdapter.Adap
     DockerClient dockerClient;
 
     @Override
-    public void queueJobExecution() {
+    public void queueJobExecution(ProjectId projectId, ExecutionId executionId) {
         // try (CreateContainerCmd containerCmd = dockerClient.createContainerCmd("docker.home.arpa/venthe/ubuntu-runner:23.10")) {
         //     CreateContainerResponse exec = containerCmd
         //             .withEnv(

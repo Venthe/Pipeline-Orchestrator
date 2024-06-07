@@ -11,9 +11,9 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode
 @SuperBuilder
 @SuppressWarnings("ALL")
-public class NormalJobExecutionContext extends CommonJobContext implements JobExecutionContext {
+public class NormalJobExecutionExecutionContext extends CommonJobExecutionContext implements JobExecutionContext {
 
-    public NormalJobExecutionContext(JsonNode _root) {
+    public NormalJobExecutionExecutionContext(JsonNode _root) {
         super(_root);
     }
 }

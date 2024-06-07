@@ -14,13 +14,13 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode
 @SuperBuilder
 @SuppressWarnings("ALL")
-public class ReusableWorkflowJobContext extends CommonJobContext implements JobExecutionContext {
+public class ReusableWorkflowJobExecutionContext extends CommonJobExecutionContext implements JobExecutionContext {
     /**
      * Outputs for a reusable workflow
      */
     private final JobsContext jobs;
 
-    public ReusableWorkflowJobContext(JsonNode _root) {
+    public ReusableWorkflowJobExecutionContext(JsonNode _root) {
         super(_root);
 
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);

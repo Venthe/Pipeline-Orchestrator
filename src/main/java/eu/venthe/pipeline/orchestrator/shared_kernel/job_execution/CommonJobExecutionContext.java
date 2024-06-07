@@ -15,7 +15,7 @@ import java.util.Optional;
 @ToString
 @EqualsAndHashCode
 @SuperBuilder
-abstract class CommonJobContext implements JobExecutionContext {
+abstract class CommonJobExecutionContext implements JobExecutionContext {
     private final GithubContext github;
     private final EnvContext env;
     private final VarsContext vars;
@@ -28,7 +28,7 @@ abstract class CommonJobContext implements JobExecutionContext {
     private final StepsContext steps;
     private final StrategyContext strategy;
 
-    protected CommonJobContext(JsonNode _root) {
+    protected CommonJobExecutionContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
         github = GithubContext.ensure(root.get("github"));
