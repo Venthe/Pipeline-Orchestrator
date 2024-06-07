@@ -1,12 +1,11 @@
 package eu.venthe.pipeline.orchestrator.job_executor.application;
 
-import eu.venthe.pipeline.orchestrator.job_executor.adapters.template.model.AdapterId;
-
-import java.util.Map;
+import eu.venthe.pipeline.orchestrator.job_executor.application.runner.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.job_executor.domain.model.ExecutionId;
+import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 
 public interface JobExecutorCommandService {
-    default void triggerJobExecution(AdapterId adapterId,
-                             Map.Entry<String, String>... dimensions) {
+    default ExecutionId triggerJobExecution(ProjectId projectId, RunnerDimensions.Dimension... dimensions) {
         throw new UnsupportedOperationException();
     }
 }

@@ -4,13 +4,24 @@ import lombok.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @Value
 public class RunnerDimensions {
     Map<String, String> dimensions = new HashMap<>();
 
+    public RunnerDimensions(Dimension[] dimensions) {
+        for (Dimension dimension : dimensions) {
+            put(dimension.getKey(), dimension.getValue());
+        }
+    }
+
     public String put(String key, String value) {
         return dimensions.put(key, value);
+    }
+
+    public Stream<Map.Entry<String, String>> stream() {
+        return dimensions.entrySet().stream();
     }
 
     @RequiredArgsConstructor
@@ -20,6 +31,11 @@ public class RunnerDimensions {
     public static class Dimension implements Map.Entry<String, String> {
         private final String key;
         private final String value;
+
+        public Dimension(Map.Entry<String, String> e) {
+            this.key = e.getKey();
+            this.value = e.getValue();
+        }
 
         @Override
         public String setValue(String value) {

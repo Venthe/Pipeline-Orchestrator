@@ -42,7 +42,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void name() {
-        AdapterId executorId = jobExecutorAdapterManager.registerExecutorAdapter(new AdapterId("docker-executor"), new AdapterType("docker"), SuppliedProperties.none());
+        AdapterId executorId = jobExecutorAdapterManager.registerExecutorAdapter(new AdapterId("docker-test"), new AdapterType("docker"), SuppliedProperties.none());
         var runnerId = jobExecutorAdapterManager.registerRunner(executorId, new RunnerDimensions.ContainerImage("docker.home.arpa/venthe/ubuntu-runner:23.10"), RunnerDimensions.OperatingSystem.LINUX.getValue(), RunnerDimensions.Architecture.X64.getValue());
 
         ProjectsSourceConfigurationId configurationId = projectSourcesManager.register(EXAMPLE_CONFIGURATION_ID, new SourceType("Gerrit"),

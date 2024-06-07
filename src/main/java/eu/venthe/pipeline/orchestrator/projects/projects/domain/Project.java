@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.domain;
 
+import eu.venthe.pipeline.orchestrator.job_executor.application.JobExecutorCommandService;
 import eu.venthe.pipeline.orchestrator.job_executor.domain.model.ExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectStatus;
@@ -27,6 +28,8 @@ public class Project implements Aggregate<ProjectId> {
     @EqualsAndHashCode.Include
     private final ProjectId id;
     private final ProjectsSourceConfiguration owningConfiguration;
+
+    private final JobExecutorCommandService jobExecutorCommandService;
 
     private Optional<String> description;
     private ProjectStatus status;
@@ -62,7 +65,7 @@ public class Project implements Aggregate<ProjectId> {
     }
 
     public ExecutionId executeManualWorkflow(String ref, File workflowFile) {
-        throw new UnsupportedOperationException();
+        return jobExecutorCommandService.triggerJobExecution(id);
     }
 
     public void registerTrackedRef(String ref) {

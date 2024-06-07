@@ -26,9 +26,9 @@ public interface JobExecutorAdapter {
     interface AdapterInstance {
         void queueJobExecution(ProjectId projectId,
                                ExecutionId executionId,
-                               RunnerDimensions dimensions,
                                URL systemApiUrl,
-                               JobExecutorAdapter.CallbackToken callbackToken);
+                               JobExecutorAdapter.CallbackToken callbackToken,
+                               RunnerDimensions dimensions);
 
         RunnerId registerRunner(RunnerDimensions.Dimension... dimensions);
     }

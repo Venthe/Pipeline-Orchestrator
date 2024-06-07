@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.projects.application;
 
+import eu.venthe.pipeline.orchestrator.job_executor.application.JobExecutorCommandService;
 import eu.venthe.pipeline.orchestrator.job_executor.domain.model.ExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.projects.api.ProjectDto;
@@ -16,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +30,7 @@ public class ProjectsService implements ProjectsQueryService, ProjectsCommandSer
     private final ProjectsSourceConfigurationRepository configurationRepository;
     private final DomainMessageBroker messageBroker;
     private final EventHandlerProvider eventHandlerProvider;
+    private final JobExecutorCommandService jobExecutorCommandService;
 
     @Override
     public Collection<ProjectDto> listProjects() {
@@ -70,7 +71,7 @@ public class ProjectsService implements ProjectsQueryService, ProjectsCommandSer
 
         ProjectsSourceConfiguration configuration = configurationRepository.find(configurationId).orElseThrow();
 
-        Project project = new Project(newProjectDto.projectId(), configuration, newProjectDto.description(), newProjectDto.status());
+        Project project = new Project(newProjectDto.projectId(), configuration, jobExecutorCommandService, newProjectDto.description(), newProjectDto.status());
 
         projectRepository.save(project);
     }
