@@ -2,10 +2,14 @@ package eu.venthe.pipeline.orchestrator.job_executor.adapters.docker;
 
 import com.github.dockerjava.api.DockerClient;
 import eu.venthe.pipeline.orchestrator.job_executor.adapters.template.JobExecutorAdapter;
+import eu.venthe.pipeline.orchestrator.job_executor.application.runner.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.job_executor.application.runner.RunnerId;
 import eu.venthe.pipeline.orchestrator.job_executor.domain.model.ExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.projects.domain.model.ProjectId;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+
+import java.net.URL;
 
 @Value
 @RequiredArgsConstructor
@@ -13,7 +17,7 @@ public class DockerJobExecutorAdapterInstance implements JobExecutorAdapter.Adap
     DockerClient dockerClient;
 
     @Override
-    public void queueJobExecution(ProjectId projectId, ExecutionId executionId, JobExecutorAdapter.CallbackToken callbackToken) {
+    public void queueJobExecution(ProjectId projectId, ExecutionId executionId, RunnerDimensions dimensions, URL systemApiUrl, JobExecutorAdapter.CallbackToken callbackToken) {
         // try (CreateContainerCmd containerCmd = dockerClient.createContainerCmd("docker.home.arpa/venthe/ubuntu-runner:23.10")) {
         //     CreateContainerResponse exec = containerCmd
         //             .withEnv(
@@ -33,6 +37,11 @@ public class DockerJobExecutorAdapterInstance implements JobExecutorAdapter.Adap
         //             .exec();
         //     dockerClient.startContainerCmd(exec.getId()).exec();
         // }
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public RunnerId registerRunner(RunnerDimensions.Dimension... dimensions) {
         throw new UnsupportedOperationException();
     }
 }

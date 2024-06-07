@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.job_executor.domain.jobs.context.IfContext;
 import eu.venthe.pipeline.orchestrator.job_executor.domain.jobs.context.JobNameContext;
 import eu.venthe.pipeline.orchestrator.job_executor.domain.jobs.context.NeedsContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.jobs.context.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.ConcurrencyContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.DefaultsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.PermissionsContext;

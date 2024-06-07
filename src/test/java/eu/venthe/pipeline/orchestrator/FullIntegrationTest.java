@@ -5,8 +5,7 @@ import eu.venthe.pipeline.orchestrator.job_executor.adapters.template.model.Adap
 import eu.venthe.pipeline.orchestrator.job_executor.application.ExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.job_executor.application.JobExecutorAdapterManager;
 import eu.venthe.pipeline.orchestrator.job_executor.application.JobExecutorQueryService;
-import eu.venthe.pipeline.orchestrator.job_executor.application.runner.ContainerId;
-import eu.venthe.pipeline.orchestrator.job_executor.application.runner.JobExecutionRunner;
+import eu.venthe.pipeline.orchestrator.job_executor.application.runner.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.job_executor.domain.model.ExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.projects.application.ProjectsQueryService;
@@ -44,9 +43,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Test
     void name() {
         AdapterId executorId = jobExecutorAdapterManager.registerExecutorAdapter(new AdapterId("docker-executor"), new AdapterType("docker"), SuppliedProperties.none());
-        jobExecutorAdapterManager.setDefault(executorId);
-        var runnerId = jobExecutorAdapterManager.registerRunnerForAdapter(executorId, new ContainerId("docker.home.arpa/venthe/ubuntu-runner:23.10"), JobExecutionRunner.OperatingSystem.LINUX, JobExecutionRunner.Architecture.X64);
-        jobExecutorAdapterManager.setDefault(runnerId);
+        var runnerId = jobExecutorAdapterManager.registerRunner(executorId, new RunnerDimensions.ContainerImage("docker.home.arpa/venthe/ubuntu-runner:23.10"), RunnerDimensions.OperatingSystem.LINUX.getValue(), RunnerDimensions.Architecture.X64.getValue());
 
         ProjectsSourceConfigurationId configurationId = projectSourcesManager.register(EXAMPLE_CONFIGURATION_ID, new SourceType("Gerrit"),
                 SuppliedProperties.builder()

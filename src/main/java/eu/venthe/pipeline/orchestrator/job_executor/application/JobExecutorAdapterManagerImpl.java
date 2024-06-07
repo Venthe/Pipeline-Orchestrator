@@ -4,8 +4,6 @@ import eu.venthe.pipeline.orchestrator.job_executor.adapters.JobExecutorAdapterP
 import eu.venthe.pipeline.orchestrator.job_executor.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.job_executor.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.job_executor.adapters.template.model.AdapterType;
-import eu.venthe.pipeline.orchestrator.job_executor.application.runner.ContainerId;
-import eu.venthe.pipeline.orchestrator.job_executor.application.runner.JobExecutionRunner;
 import eu.venthe.pipeline.orchestrator.job_executor.application.runner.RunnerId;
 import eu.venthe.pipeline.orchestrator.job_executor.domain.infrastructure.JobExecutorAdapterRepository;
 import eu.venthe.pipeline.orchestrator.job_executor.domain.model.AdapterInstanceAggregate;
@@ -27,6 +25,7 @@ public class JobExecutorAdapterManagerImpl implements JobExecutorAdapterManager,
 
     @Override
     public AdapterId registerExecutorAdapter(AdapterId adapterId, AdapterType adapterType, SuppliedProperties properties) {
+
         JobExecutorAdapter.AdapterInstance adapterInstance = jobExecutorAdapterProvider.provide(adapterType, properties);
 
         jobExecutorAdapterRepository.save(new AdapterInstanceAggregate(adapterId, adapterInstance));
@@ -35,37 +34,11 @@ public class JobExecutorAdapterManagerImpl implements JobExecutorAdapterManager,
     }
 
     @Override
-    public RunnerId registerRunnerForAdapter(AdapterId adapterId,
-                                             ContainerId containerTag,
-                                             JobExecutionRunner.OperatingSystem operatingSystem,
-                                             JobExecutionRunner.Architecture architecture,
-                                             Map.Entry<String, String>... dimensions) {
+    public RunnerId registerRunner(AdapterId adapterId,
+                                   Map.Entry<String, String>... dimensions) {
         if (featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             return new RunnerId("0xDEADBEEF");
         }
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setDefault(AdapterId executorId) {
-        if (featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
-            return;
-        }
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setDefault(RunnerId runnerId) {
-        if (featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
-            return;
-        }
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void triggerJobExecution(AdapterId adapterId,
-                                    ContainerId containerId,
-                                    Map.Entry<String, String>... dimensions) {
         throw new UnsupportedOperationException();
     }
 
