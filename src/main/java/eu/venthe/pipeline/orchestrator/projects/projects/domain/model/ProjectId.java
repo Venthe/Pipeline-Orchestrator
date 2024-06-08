@@ -9,7 +9,7 @@ public class ProjectId {
     String name;
 
     public String serialize() {
-        return "%s/%s".formatted(configurationId, name);
+        return "%s/%s".formatted(configurationId.id(), name);
     }
 
     public static ProjectId from(String projectId) {

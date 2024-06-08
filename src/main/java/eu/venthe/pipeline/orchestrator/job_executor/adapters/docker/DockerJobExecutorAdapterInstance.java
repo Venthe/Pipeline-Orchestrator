@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 import java.net.URL;
-import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -29,17 +28,15 @@ public class DockerJobExecutorAdapterInstance implements JobExecutorAdapter.Adap
                                   JobExecutorAdapter.CallbackToken callbackToken,
                                   RunnerDimensions dimensions) {
         try (CreateContainerCmd containerCmd = dockerClient.createContainerCmd("docker.home.arpa/venthe/ubuntu-runner:23.10")) {
-
             CreateContainerResponse exec = containerCmd
-                    .withEnv(Stream.concat(
-                            dimensions.stream().map(e -> String.format("__SETUP_%s=%s", e.getKey().toUpperCase(Locale.ROOT), e.getValue())),
-                            Stream.<String>builder()
-                                    .add("__SETUP_CALLBACK_TOKEN=" + projectId.serialize())
-                                    .add("__SETUP_SYSTEM_API_URL=" + systemApiUrl.toString())
-                                    .add("__SETUP_EXECUTION_ID=" + executionId.value())
-                                    .add("__SETUP_PROJECT_ID=" + projectId.serialize())
-                                    .build()
-                    ).toArray(String[]::new))
+                    .withEnv(Stream.<String>builder()
+                            .add("__SETUP_CALLBACK_TOKEN=" + callbackToken.value())
+                            .add("__SETUP_SYSTEM_API_URL=" + systemApiUrl.toString())
+                            .add("__SETUP_EXECUTION_ID=" + executionId.value())
+                            .add("__SETUP_PROJECT_ID=" + projectId.serialize())
+                            .build()
+                            .toArray(String[]::new)
+                    )
                     .withTty(true)
                     .withLabels(Map.of("project_id", projectId.serialize()))
                     .withLabels(Map.of("execution_id", executionId.value()))
