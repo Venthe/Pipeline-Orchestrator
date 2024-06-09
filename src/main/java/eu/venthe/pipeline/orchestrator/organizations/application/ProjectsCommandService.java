@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.organizations.application;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.projects._archive.api.CreateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;

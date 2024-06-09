@@ -1,7 +1,8 @@
-package eu.venthe.pipeline.orchestrator.organizations.domain.domain.infrastructure;
+package eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.OrganizationId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.Organization;
+
+import eu.venthe.pipeline.orchestrator.organizations.domain.Organization;
+import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
 
 public interface OrganizationRepository {
     void save(Organization organization);

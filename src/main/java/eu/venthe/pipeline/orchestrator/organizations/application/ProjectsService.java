@@ -1,18 +1,18 @@
 package eu.venthe.pipeline.orchestrator.organizations.application;
 
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.ProjectDto;
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.WorkflowTaskDto;
+import eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure.ProjectRepository;
+import eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure.SourceConfigurationRepository;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.Project;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.projects._archive.api.CreateProjectSpecificationDto;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.projects._archive.api.ProjectDto;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.projects._archive.api.WorkflowTaskDto;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.handlers.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.handlers.EventHandlerProvider;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorCommandService;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure.ProjectRepository;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.source_configurations.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.infrastructure.SourceConfigurationRepository;
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -69,7 +69,7 @@ public class ProjectsService implements ProjectsQueryService, ProjectsCommandSer
             throw new IllegalArgumentException();
         }
 
-        ProjectsSourceConfiguration configuration = configurationRepository.find(configurationId).orElseThrow();
+        var configuration = configurationRepository.find(configurationId).orElseThrow();
 
         Project project = new Project(newProjectDto.projectId(), configuration, jobExecutorCommandService, newProjectDto.description(), newProjectDto.status());
 

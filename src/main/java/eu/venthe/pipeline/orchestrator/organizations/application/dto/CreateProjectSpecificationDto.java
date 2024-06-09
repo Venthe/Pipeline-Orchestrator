@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.organizations._archive;
+package eu.venthe.pipeline.orchestrator.organizations.application.dto;
 
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;

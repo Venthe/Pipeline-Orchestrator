@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.organizations.application;
 
+import eu.venthe.pipeline.orchestrator.organizations._archive.ReadProjectSourceConfigurationDto;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.api.ReadProjectSourceConfigurationDto;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.SourceType;
 
 import java.util.Optional;

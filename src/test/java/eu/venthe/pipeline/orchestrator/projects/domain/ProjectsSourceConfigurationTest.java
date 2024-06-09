@@ -1,11 +1,11 @@
 package eu.venthe.pipeline.orchestrator.projects.domain;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.projects._archive.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.organizations.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.organizations.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectStatus;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.source_configurations.ProjectsSourceConfiguration;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.ProjectDto;

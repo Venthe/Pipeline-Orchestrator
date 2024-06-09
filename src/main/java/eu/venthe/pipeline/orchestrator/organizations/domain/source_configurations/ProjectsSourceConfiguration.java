@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.organizations.domain.domain.source_configurations;
+package eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations;
 
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.ProjectSourcePlugin;

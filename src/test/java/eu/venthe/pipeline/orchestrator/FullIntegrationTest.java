@@ -1,13 +1,9 @@
 package eu.venthe.pipeline.orchestrator;
 
-import eu.venthe.pipeline.orchestrator.organizations.application.CreateOrganizationSpecification;
-import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationCommandService;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.OrganizationId;
-import eu.venthe.pipeline.orchestrator.organizations.application.ProjectSourcesManager;
+import eu.venthe.pipeline.orchestrator.organizations.application.*;
+import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.organizations.application.ProjectsCommandService;
-import eu.venthe.pipeline.orchestrator.organizations.application.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
@@ -19,9 +15,6 @@ import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
 
 class FullIntegrationTest extends AbstractIntegrationTest {
 

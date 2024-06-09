@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator.organizations.application;
 
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.WorkflowTaskDto;
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.ProjectDto;
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.WorkflowDetailDto;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.projects._archive.api.ProjectDto;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.projects._archive.api.WorkflowDetailDto;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.projects._archive.api.WorkflowTaskDto;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 
 import java.util.Collection;

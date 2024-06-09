@@ -1,8 +1,6 @@
 package eu.venthe.pipeline.orchestrator.organizations.domain.projects.events;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.projects.domain.workflows.contexts.on.matchers.*;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.domain.workflows.contexts.on.matchers.*;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.workflows.contexts.on.matchers.OnWorkflowDispatchInputs;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.workflows.contexts.on.matchers.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
 

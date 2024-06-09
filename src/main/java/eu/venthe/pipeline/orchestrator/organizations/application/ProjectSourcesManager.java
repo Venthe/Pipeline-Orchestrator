@@ -1,11 +1,11 @@
 package eu.venthe.pipeline.orchestrator.organizations.application;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.infrastructure.SourceConfigurationRepository;
+import eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure.SourceConfigurationRepository;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.PluginProvider;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.source_configurations.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +27,9 @@ public class ProjectSourcesManager implements ProjectsSourceConfigurationCommand
             throw new IllegalArgumentException();
         }
 
-        ProjectSourcePlugin.PluginInstance pluginInstance = pluginProvider.provide(sourceType, properties);
+        var pluginInstance = pluginProvider.provide(sourceType, properties);
 
-        ProjectsSourceConfiguration configuration = ProjectsSourceConfiguration.createNew(configurationId, pluginInstance, projectsCommandService, projectsQueryService);
+        var configuration = ProjectsSourceConfiguration.createNew(configurationId, pluginInstance, projectsCommandService, projectsQueryService);
         sources.save(configuration);
         return configuration.getId();
     }
@@ -41,7 +41,7 @@ public class ProjectSourcesManager implements ProjectsSourceConfigurationCommand
 
     @Override
     public void synchronize(ProjectsSourceConfigurationId configurationId) {
-        ProjectsSourceConfiguration projectsSourceConfiguration = sources.find(configurationId).orElseThrow();
+        var projectsSourceConfiguration = sources.find(configurationId).orElseThrow();
         projectsSourceConfiguration.synchronize();
     }
 

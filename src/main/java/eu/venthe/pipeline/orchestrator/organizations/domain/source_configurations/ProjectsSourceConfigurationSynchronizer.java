@@ -1,11 +1,11 @@
-package eu.venthe.pipeline.orchestrator.organizations.domain.domain.source_configurations;
+package eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations;
 
 import com.google.common.collect.Sets;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.projects._archive.api.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.organizations.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.organizations.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.ProjectDto;
 import org.jgrapht.alg.util.Pair;
 
@@ -15,8 +15,9 @@ import java.util.stream.Stream;
 import static eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectStatus.ARCHIVED;
 import static java.util.stream.Collectors.toSet;
 
-record ProjectsSourceConfigurationSynchronizer(ProjectsSourceConfiguration configuration,
-                                               ProjectSourcePlugin.PluginInstance pluginInstance) {
+record ProjectsSourceConfigurationSynchronizer(
+        ProjectsSourceConfiguration configuration,
+        ProjectSourcePlugin.PluginInstance pluginInstance) {
     public void synchronize(ProjectsCommandService projectsCommandService, ProjectsQueryService projectsQueryService) {
         final Set<String> allProjectsFromSource = getAllProjectsFromSource();
         final Set<String> registeredProjects = getRegisteredProjects(projectsQueryService);
