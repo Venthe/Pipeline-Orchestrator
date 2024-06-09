@@ -1,6 +1,7 @@
 package eu.venthe.pipeline.orchestrator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.NonNull;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
@@ -33,6 +34,10 @@ public abstract class AbstractIntegrationTest {
 
     @BeforeEach
     void setup() {
-        restClient = RestClient.builder().baseUrl("http://localhost:" + port).build();
+        restClient = RestClient.builder().baseUrl(getBaseUrl()).build();
+    }
+
+    @NonNull String getBaseUrl() {
+        return "http://localhost:" + port;
     }
 }

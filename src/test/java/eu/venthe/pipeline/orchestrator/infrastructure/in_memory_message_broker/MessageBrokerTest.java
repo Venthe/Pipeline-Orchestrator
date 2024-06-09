@@ -1,6 +1,9 @@
 package eu.venthe.pipeline.orchestrator.infrastructure.in_memory_message_broker;
 
-import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.Envelope;
+import eu.venthe.pipeline.orchestrator.config.infrastructure.in_memory_message_broker.EnvelopeImpl;
+import eu.venthe.pipeline.orchestrator.config.infrastructure.in_memory_message_broker.MessageBroker;
+import eu.venthe.pipeline.orchestrator.config.infrastructure.in_memory_message_broker.MessageListener;
+import eu.venthe.pipeline.orchestrator.config.infrastructure.message_broker.Envelope;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.awaitility.Awaitility;
@@ -10,8 +13,6 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 class MessageBrokerTest {

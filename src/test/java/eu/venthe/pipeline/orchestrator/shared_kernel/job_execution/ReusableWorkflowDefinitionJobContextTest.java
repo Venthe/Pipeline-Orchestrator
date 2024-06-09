@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.venthe.pipeline.orchestrator.job_executor.domain.job_execution.ReusableWorkflowJobExecutionContext;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.job_execution.ReusableWorkflowJobExecutionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts.AbstractContextTest;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
