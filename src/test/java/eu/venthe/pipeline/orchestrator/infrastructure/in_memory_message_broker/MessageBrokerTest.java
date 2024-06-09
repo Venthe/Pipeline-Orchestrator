@@ -1,9 +1,8 @@
 package eu.venthe.pipeline.orchestrator.infrastructure.in_memory_message_broker;
 
-import eu.venthe.pipeline.orchestrator.config.infrastructure.in_memory_message_broker.EnvelopeImpl;
-import eu.venthe.pipeline.orchestrator.config.infrastructure.in_memory_message_broker.MessageBroker;
-import eu.venthe.pipeline.orchestrator.config.infrastructure.in_memory_message_broker.MessageListener;
-import eu.venthe.pipeline.orchestrator.config.infrastructure.message_broker.Envelope;
+import eu.venthe.pipeline.orchestrator.shared_kernel.message_broker.Envelope;
+import eu.venthe.pipeline.orchestrator.shared_kernel.message_broker.MessageBroker;
+import eu.venthe.pipeline.orchestrator.shared_kernel.message_broker.MessageListenerRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.awaitility.Awaitility;
@@ -16,25 +15,26 @@ import java.util.function.BiConsumer;
 
 @Slf4j
 class MessageBrokerTest {
-    private MessageListener messageListener;
-    private MessageBroker messageBroker;
+    private MessageBroker broker;
+    private MessageListenerRegistry registry;
     private Map<String, Boolean> results;
 
     @BeforeEach
     public void setup() {
-        messageListener = new MessageListener();
-        messageBroker = new MessageBroker(messageListener);
+        var broker = new InMemoryMessageBroker();
+        this.broker = broker;
+        registry = broker;
         results = new HashMap<>();
     }
 
     @Test
     void name() {
-        registerListener("1", (id, envelope) -> log.info("Observer {}: {}", id, envelope));
-        registerListener("2", (id, envelope) -> log.info("Observer {}: {}", id, envelope));
-        registerListener("3", (id, envelope) -> log.info("Observer {}: {}", id, envelope));
+        registerListener("1", (id, envelope) -> log.info("Observer 1 - {}: {}", id, envelope));
+        registerListener("2", (id, envelope) -> log.info("Observer 2 - {}: {}", id, envelope));
+        registerListener("3", (id, envelope) -> log.info("Observer 3 - {}: {}", id, envelope));
         log.info("{}", results);
 
-        messageBroker.publish(new EnvelopeImpl<>("Example data"));
+        broker.exchange(new Envelope<>("Example data"));
 
         Awaitility.await().untilAsserted(() -> {
                     log.info("{}", results);
@@ -48,7 +48,7 @@ class MessageBrokerTest {
 
     private void registerListener(String id, BiConsumer<String, Envelope<?>> listener) {
         results.put(id, false);
-        messageListener.observe(String.class, message -> {
+        registry.register(String.class, message -> {
             listener.accept(id, message);
             results.put(id, true);
         });

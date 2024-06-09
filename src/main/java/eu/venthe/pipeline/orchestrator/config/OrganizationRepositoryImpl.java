@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.config;
 
 import com.google.common.collect.MoreCollectors;
-import eu.venthe.pipeline.orchestrator.config.infrastructure.in_memory_repositroy.InMemoryRepository;
+import eu.venthe.pipeline.orchestrator.infrastructure.in_memory_repository.InMemoryRepository;
 import eu.venthe.pipeline.orchestrator.organizations.domain.Organization;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure.OrganizationRepository;

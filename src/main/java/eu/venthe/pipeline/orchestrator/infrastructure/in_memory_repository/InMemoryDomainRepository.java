@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.config.infrastructure.in_memory_repositroy;
+package eu.venthe.pipeline.orchestrator.infrastructure.in_memory_repository;
 
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainRepository;

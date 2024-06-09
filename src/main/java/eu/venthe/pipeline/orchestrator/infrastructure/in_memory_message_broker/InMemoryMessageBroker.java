@@ -1,7 +1,8 @@
-package eu.venthe.pipeline.orchestrator.config.infrastructure.in_memory_message_broker;
+package eu.venthe.pipeline.orchestrator.infrastructure.in_memory_message_broker;
 
-import eu.venthe.pipeline.orchestrator.config.infrastructure.message_broker.Envelope;
-import eu.venthe.pipeline.orchestrator.config.infrastructure.message_broker.MessageListenerRegistry;
+import eu.venthe.pipeline.orchestrator.shared_kernel.message_broker.Envelope;
+import eu.venthe.pipeline.orchestrator.shared_kernel.message_broker.MessageBroker;
+import eu.venthe.pipeline.orchestrator.shared_kernel.message_broker.MessageListenerRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +16,11 @@ import java.util.function.Consumer;
 
 @Slf4j
 @Service
-public class MessageListener implements MessageListenerRegistry {
+public class InMemoryMessageBroker implements MessageListenerRegistry, MessageBroker {
     private final Map<Class<?>, Collection<Consumer<Envelope<?>>>> observers = new HashMap<>();
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    public void exchange(Envelope<?> envelope) {
-        log.info("Exchanging envelope. {}", envelope);
-        Class<?> aClass = envelope.getData().getClass();
-        observers.get(aClass).forEach(observer -> executorService.execute(() -> {
-            log.info("Envelope exchanged to {}", observer);
-            observer.accept(envelope);
-        }));
-    }
-
-    public <T> void observe(Class<T> clazz, Consumer<Envelope<T>> observer) {
+    public <T> void register(Class<T> clazz, Consumer<Envelope<T>> observer) {
         log.info("Registering observer {} for class {}", observer, clazz);
         Collection<Consumer<Envelope<?>>> consumers = observers.get(clazz);
         Consumer<Envelope<?>> var = (Consumer<Envelope<?>>) (Consumer<?>) observer;
@@ -39,5 +31,18 @@ public class MessageListener implements MessageListenerRegistry {
         } else {
             consumers.add(var);
         }
+    }
+
+    public void exchange(Envelope<?> envelope) {
+        log.info("Exchanging envelope. {}", envelope);
+        Class<?> aClass = envelope.getData().getClass();
+        observers.get(aClass).forEach(observer -> executorService.execute(() -> {
+            log.info("Envelope exchanged to {}", observer);
+            observer.accept(envelope);
+        }));
+    }
+
+    public void exchange(Collection<Envelope<?>> envelopes) {
+        envelopes.forEach(this::exchange);
     }
 }

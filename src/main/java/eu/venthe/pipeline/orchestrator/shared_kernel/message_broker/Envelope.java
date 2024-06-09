@@ -1,6 +1,5 @@
-package eu.venthe.pipeline.orchestrator.config.infrastructure.in_memory_message_broker;
+package eu.venthe.pipeline.orchestrator.shared_kernel.message_broker;
 
-import eu.venthe.pipeline.orchestrator.config.infrastructure.message_broker.Envelope;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,7 @@ import java.time.ZonedDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @RequiredArgsConstructor
 @Getter
-public class EnvelopeImpl<T> implements Envelope<T> {
+public class Envelope<T> {
     private final ZonedDateTime time = ZonedDateTime.now();
     @EqualsAndHashCode.Include
     private final T data;
