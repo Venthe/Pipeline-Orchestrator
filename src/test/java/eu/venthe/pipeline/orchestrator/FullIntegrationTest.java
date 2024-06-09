@@ -1,35 +1,41 @@
 package eu.venthe.pipeline.orchestrator;
 
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorAdapterManager;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorQueryService;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
+import eu.venthe.pipeline.orchestrator.organizations.application.CreateOrganizationSpecification;
+import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationManager;
+import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.application.ProjectSourcesManager;
+import eu.venthe.pipeline.orchestrator.organizations.domain.domain.model.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration.application.ProjectSourcesManager;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration.domain.model.ProjectsSourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.PropertyName;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.TextSuppliedConfigurationProperty;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.ExecutorManager;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorQueryService;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.Architecture;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.ContainerImage;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.OperatingSystem;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.time.Duration;
 
+import static eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties.*;
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 class FullIntegrationTest extends AbstractIntegrationTest {
-    private static final ProjectsSourceConfigurationId EXAMPLE_CONFIGURATION_ID = new ProjectsSourceConfigurationId("Test");
 
     @Autowired
-    JobExecutorAdapterManager jobExecutorAdapterManager;
+    ExecutorManager executorManager;
     @Autowired
     ProjectSourcesManager projectSourcesManager;
     @Autowired
@@ -38,25 +44,35 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     ProjectsQueryService projectsQueryService;
     @Autowired
     JobExecutorQueryService jobExecutorQueryService;
+    @Autowired
+    OrganizationManager organizationManager;
 
     @Test
     void name() {
-        AdapterId executorId = jobExecutorAdapterManager.registerExecutorAdapter(new AdapterId("docker-test"), new AdapterType("docker"), SuppliedProperties.none());
-        var runnerId = jobExecutorAdapterManager.registerRunner(executorId, new RunnerDimensions.ContainerImage("docker.home.arpa/venthe/ubuntu-runner:23.10"), RunnerDimensions.OperatingSystem.LINUX.getValue(), RunnerDimensions.Architecture.X64.getValue());
-
-        ProjectsSourceConfigurationId configurationId = projectSourcesManager.register(EXAMPLE_CONFIGURATION_ID, new SourceType("Gerrit"),
+        var createOrganizationSpecification = CreateOrganizationSpecification.builder()
+                .organizationId(new OrganizationId("default"))
+                .build();
+        var defaultOrganization = organizationManager.create(createOrganizationSpecification);
+        organizationManager.addSourceConfiguration(defaultOrganization, new ProjectsSourceConfigurationId("default"), new SourceType("gerrit"),
                 SuppliedProperties.builder()
-                        .property(new PropertyName("basePath"), new TextSuppliedConfigurationProperty("http://localhost:15480"))
-                        .property(new PropertyName("username"), new TextSuppliedConfigurationProperty("admin"))
-                        .property(new PropertyName("password"), new TextSuppliedConfigurationProperty("secret"))
+                        .property("basePath", "http://localhost:15480")
+                        .property("username", "admin")
+                        .property("password", "secret")
                         .build());
-        projectSourcesManager.synchronize(configurationId);
+
+        var defaultExecutor = executorManager.registerAdapter(defaultOrganization, new AdapterId("default"), new AdapterType("docker"));
+        var defaultRunner = executorManager.registerRunner(defaultExecutor,
+                RunnerDimensions.builder()
+                        .dimension(OperatingSystem.LINUX)
+                        .dimension(Architecture.X64)
+                        .dimension(new ContainerImage("docker.home.arpa/venthe/ubuntu-runner:23.10"))
+                        .build());
 
         // At this point, auto synchronization should happen. Let's wait for it.
         await("Synchronization done")
-                .until(() -> !projectsQueryService.getProjectIds(EXAMPLE_CONFIGURATION_ID).collect(toSet()).isEmpty());
+                .until(() -> !projectsQueryService.getProjectIds(new ProjectsSourceConfigurationId("Test")).collect(toSet()).isEmpty());
 
-        final var projectId = ProjectId.of(EXAMPLE_CONFIGURATION_ID, "Example-Project");
+        final var projectId = ProjectId.of(new ProjectsSourceConfigurationId("Test"), "Example-Project");
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
 

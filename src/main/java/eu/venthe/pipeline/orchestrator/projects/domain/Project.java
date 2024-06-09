@@ -1,11 +1,11 @@
 package eu.venthe.pipeline.orchestrator.projects.domain;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration.plugins.template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorCommandService;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectStatus;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration.domain.ProjectsSourceConfiguration;
+import eu.venthe.pipeline.orchestrator.organizations.domain.domain.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.AllArgsConstructor;

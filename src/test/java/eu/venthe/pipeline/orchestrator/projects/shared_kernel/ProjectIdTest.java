@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.shared_kernel;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration.domain.model.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.domain.model.ProjectsSourceConfigurationId;
 import org.junit.jupiter.api.Test;
 
 import static eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId.from;

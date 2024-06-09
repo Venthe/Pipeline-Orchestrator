@@ -21,4 +21,4 @@ public interface ProjectsQueryService {
 
     List<WorkflowTaskDto> showAllTasks();
 
-    Stream<ProjectId> getProjectIds(ProjectsSour
+}

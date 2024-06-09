@@ -1,19 +1,16 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Singular;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-@Value
-public class RunnerDimensions {
-    Map<String, String> dimensions = new HashMap<>();
-
-    public RunnerDimensions(Dimension[] dimensions) {
-        for (Dimension dimension : dimensions) {
-            put(dimension.getKey(), dimension.getValue());
-        }
+@Builder
+public record RunnerDimensions(@Singular Map<String, String> dimensions) {
+    public RunnerDimensions {
+        dimensions = new HashMap<>();
     }
 
     public String put(String key, String value) {
@@ -24,57 +21,15 @@ public class RunnerDimensions {
         return dimensions.entrySet().stream();
     }
 
-    @RequiredArgsConstructor
-    @ToString
-    @EqualsAndHashCode
-    @Getter
-    public static class Dimension implements Map.Entry<String, String> {
-        private final String key;
-        private final String value;
-
-        public Dimension(Map.Entry<String, String> e) {
-            this.key = e.getKey();
-            this.value = e.getValue();
+    public static class RunnerDimensionsBuilder {
+        public RunnerDimensionsBuilder dimension(Dimension.Value dimensionValue) {
+            this.dimension(dimensionValue.getValue().getKey(), dimensionValue.getValue().getValue());
+            return this;
         }
 
-        @Override
-        public String setValue(String value) {
-            throw new UnsupportedOperationException();
-        }
-    }
-
-    @Getter
-    public enum OperatingSystem {
-        WINDOWS("operating_system", "windows"),
-        LINUX("operating_system", "linux"),
-        MACOS("operating_system", "macos");
-
-        OperatingSystem(String key, String value) {
-            this.value = new Dimension(key, value);
-        }
-
-        Dimension value;
-    }
-
-    @Getter
-    public enum Architecture {
-        X64("architecture", "x64"),
-        ARM64("architecture", "arm64"),
-        ARM32("architecture", "arm32");
-
-        Architecture(String key, String value) {
-            this.value = new Dimension(key, value);
-        }
-
-        Dimension value;
-    }
-
-    @Value
-    @EqualsAndHashCode(callSuper = true)
-    @ToString(callSuper = true)
-    public static class ContainerImage extends Dimension {
-        public ContainerImage(String value) {
-            super("container_image", value);
+        public RunnerDimensionsBuilder dimension(Dimension dimension) {
+            this.dimension(dimension.getKey(), dimension.getValue());
+            return this;
         }
     }
 }

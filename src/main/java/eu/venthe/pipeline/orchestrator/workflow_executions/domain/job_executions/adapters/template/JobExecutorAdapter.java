@@ -1,6 +1,7 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template;
 
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.Dimension;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
@@ -30,7 +31,7 @@ public interface JobExecutorAdapter {
                                JobExecutorAdapter.CallbackToken callbackToken,
                                RunnerDimensions dimensions);
 
-        RunnerId registerRunner(RunnerDimensions.Dimension... dimensions);
+        RunnerId registerRunner(Dimension... dimensions);
     }
 
     record CallbackToken(String value) {

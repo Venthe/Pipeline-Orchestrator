@@ -2,6 +2,7 @@ package eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_execution
 
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.JobExecutorAdapter;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.Dimension;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerId;
 import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
@@ -17,11 +18,11 @@ public class AdapterInstanceAggregate implements Aggregate<AdapterId> {
     AdapterId id;
     JobExecutorAdapter.AdapterInstance adapterInstance;
 
-    public void queueJobExecution(ProjectId projectId, ExecutionId executionId, URL systemApiUrl, JobExecutorAdapter.CallbackToken callbackToken, RunnerDimensions.Dimension... dimensions) {
+    public void queueJobExecution(ProjectId projectId, ExecutionId executionId, URL systemApiUrl, JobExecutorAdapter.CallbackToken callbackToken, Dimension... dimensions) {
         adapterInstance.queueJobExecution(projectId, executionId, systemApiUrl, callbackToken, new RunnerDimensions(dimensions));
     }
 
-    public RunnerId registerRunner(RunnerDimensions.Dimension... dimensions) {
+    public RunnerId registerRunner(Dimension... dimensions) {
         return adapterInstance.registerRunner(dimensions);
     }
 }

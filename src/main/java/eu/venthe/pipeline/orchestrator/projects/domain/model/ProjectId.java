@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.model;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration.domain.model.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.domain.model.ProjectsSourceConfigurationId;
 import lombok.Value;
 
 @Value(staticConstructor = "of")

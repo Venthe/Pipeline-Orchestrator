@@ -5,10 +5,10 @@ import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandServi
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectStatus;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration.domain.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration.domain.model.ProjectsSourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration.plugins.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration.plugins.template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.organizations.domain.domain.ProjectsSourceConfiguration;
+import eu.venthe.pipeline.orchestrator.organizations.domain.domain.model.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.model.ProjectDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

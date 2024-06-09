@@ -4,7 +4,7 @@ import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.Dimension;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.AdapterInstanceAggregate;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
@@ -24,14 +24,14 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class JobExecutorAdapterManagerImpl implements JobExecutorAdapterManager, JobExecutorCommandService, JobExecutorQueryService {
+public class JobExecutorAdapterManagerImpl implements ExecutorManager, JobExecutorCommandService, JobExecutorQueryService {
     private final JobExecutorAdapterRepository repository;
     private final JobExecutorAdapterProvider jobExecutorAdapterProvider;
     private final FeatureManager featureManager;
     private final EnvUtil envUtil;
 
     @Override
-    public AdapterId registerExecutorAdapter(AdapterId adapterId, AdapterType adapterType, SuppliedProperties properties) {
+    public AdapterId registerAdapter(AdapterId adapterId, AdapterType adapterType, SuppliedProperties properties) {
 
         JobExecutorAdapter.AdapterInstance adapterInstance = jobExecutorAdapterProvider.provide(adapterType, properties);
 
@@ -48,7 +48,7 @@ public class JobExecutorAdapterManagerImpl implements JobExecutorAdapterManager,
         }
 
         AdapterInstanceAggregate docker = repository.find(new AdapterId("docker-test")).orElseThrow();
-        return docker.registerRunner(Arrays.stream(dimensions).map(RunnerDimensions.Dimension::new).toArray(RunnerDimensions.Dimension[]::new));
+        return docker.registerRunner(Arrays.stream(dimensions).map(Dimension::new).toArray(Dimension[]::new));
     }
 
     @Override
@@ -58,7 +58,7 @@ public class JobExecutorAdapterManagerImpl implements JobExecutorAdapterManager,
 
     @SneakyThrows
     @Override
-    public ExecutionId triggerJobExecution(ProjectId projectId, RunnerDimensions.Dimension... dimensions) {
+    public ExecutionId triggerJobExecution(ProjectId projectId, Dimension... dimensions) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             throw new UnsupportedOperationException();
         }

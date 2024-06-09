@@ -4,6 +4,7 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerCmd;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.JobExecutorAdapter;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.Dimension;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
@@ -47,7 +48,7 @@ public class DockerJobExecutorAdapterInstance implements JobExecutorAdapter.Adap
     }
 
     @Override
-    public RunnerId registerRunner(RunnerDimensions.Dimension... dimensions) {
+    public RunnerId registerRunner(Dimension... dimensions) {
         // FIXME: !!!
         return new RunnerId(UUID.randomUUID().toString());
     }
