@@ -19,10 +19,10 @@ public class AdapterInstanceAggregate implements Aggregate<AdapterId> {
     JobExecutorAdapter.AdapterInstance adapterInstance;
 
     public void queueJobExecution(ProjectId projectId, ExecutionId executionId, URL systemApiUrl, JobExecutorAdapter.CallbackToken callbackToken, Dimension... dimensions) {
-        adapterInstance.queueJobExecution(projectId, executionId, systemApiUrl, callbackToken, new RunnerDimensions(dimensions));
+        adapterInstance.queueJobExecution(projectId, executionId, systemApiUrl, callbackToken, RunnerDimensions.builder().from(dimensions).build());
     }
 
-    public RunnerId registerRunner(Dimension... dimensions) {
-        return adapterInstance.registerRunner(dimensions);
+    public RunnerId registerRunner(RunnerDimensions runnerDimensions) {
+        return adapterInstance.registerRunner(runnerDimensions.stream().map(Dimension::new).toArray(Dimension[]::new));
     }
 }

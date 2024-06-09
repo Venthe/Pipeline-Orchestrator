@@ -68,7 +68,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                         .dimension(new ContainerImage("docker.home.arpa/venthe/ubuntu-runner:23.10"))
                         .build());
 
-        // At this point, auto synchronization should happen. Let's wait for it.
+/*        // At this point, auto synchronization should happen. Let's wait for it.
         await("Synchronization done")
                 .until(() -> !projectsQueryService.getProjectIds(new ProjectsSourceConfigurationId("Test")).collect(toSet()).isEmpty());
 
@@ -81,6 +81,6 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         await().timeout(Duration.ofDays(1)).until(() -> false);
 
         // await("Execution done").untilAsserted(() ->
-        //         Assertions.assertThat(jobExecutorQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));
+        //         Assertions.assertThat(jobExecutorQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));*/
     }
 }

@@ -10,8 +10,8 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@ToString
-@EqualsAndHashCode
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @SuppressWarnings("ALL")
 public class ReusableWorkflowJobExecutionContext extends CommonJobExecutionContext implements JobExecutionContext {

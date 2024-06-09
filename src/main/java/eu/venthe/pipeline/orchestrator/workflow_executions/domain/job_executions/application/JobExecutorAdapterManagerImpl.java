@@ -1,25 +1,25 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application;
 
+import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
+import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
+import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
+import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.JobExecutorAdapterProvider;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.Dimension;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.infrastructure.JobExecutorAdapterRepository;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.AdapterInstanceAggregate;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.infrastructure.JobExecutorAdapterRepository;
-import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
-import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import org.togglz.core.manager.FeatureManager;
 import org.togglz.core.util.NamedFeature;
 
-import java.util.Arrays;
-import java.util.Map;
 import java.util.UUID;
 
 @Component
@@ -31,7 +31,7 @@ public class JobExecutorAdapterManagerImpl implements ExecutorManager, JobExecut
     private final EnvUtil envUtil;
 
     @Override
-    public AdapterId registerAdapter(AdapterId adapterId, AdapterType adapterType, SuppliedProperties properties) {
+    public AdapterId registerAdapter(OrganizationId organizationId, AdapterId adapterId, AdapterType adapterType, SuppliedProperties properties) {
 
         JobExecutorAdapter.AdapterInstance adapterInstance = jobExecutorAdapterProvider.provide(adapterType, properties);
 
@@ -41,14 +41,19 @@ public class JobExecutorAdapterManagerImpl implements ExecutorManager, JobExecut
     }
 
     @Override
+    public AdapterId registerAdapter(OrganizationId organizationId, AdapterId adapterId, AdapterType adapterType) {
+        return registerAdapter(organizationId, adapterId, adapterType, SuppliedProperties.none());
+    }
+
+    @Override
     public RunnerId registerRunner(AdapterId adapterId,
-                                   Map.Entry<String, String>... dimensions) {
+                                   RunnerDimensions dimensions) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             throw new UnsupportedOperationException();
         }
 
         AdapterInstanceAggregate docker = repository.find(new AdapterId("docker-test")).orElseThrow();
-        return docker.registerRunner(Arrays.stream(dimensions).map(Dimension::new).toArray(Dimension[]::new));
+        return docker.registerRunner(dimensions);
     }
 
     @Override

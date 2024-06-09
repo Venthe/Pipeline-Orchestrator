@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.application;
 
+import eu.venthe.pipeline.orchestrator.organizations.domain.domain.model.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.projects.api.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.api.WorkflowDetailDto;
 import eu.venthe.pipeline.orchestrator.projects.api.WorkflowTaskDto;
@@ -21,4 +22,5 @@ public interface ProjectsQueryService {
 
     List<WorkflowTaskDto> showAllTasks();
 
+    Stream<ProjectId> getProjectIds(ProjectsSourceConfigurationId id);
 }

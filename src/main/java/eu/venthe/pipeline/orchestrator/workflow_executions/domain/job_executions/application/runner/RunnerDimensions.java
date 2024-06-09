@@ -1,5 +1,7 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.TSFBuilder;
 import lombok.Builder;
 import lombok.Singular;
 
@@ -8,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 @Builder
-public record RunnerDimensions(@Singular Map<String, String> dimensions) {
+public record RunnerDimensions(Map<String, String> dimensions) {
     public RunnerDimensions {
         dimensions = new HashMap<>();
     }
@@ -22,13 +24,19 @@ public record RunnerDimensions(@Singular Map<String, String> dimensions) {
     }
 
     public static class RunnerDimensionsBuilder {
+        public RunnerDimensionsBuilder dimension(Dimension dimension) {
+            this.dimensions.put(dimension.getKey(), dimension.getValue());
+            return this;
+        }
         public RunnerDimensionsBuilder dimension(Dimension.Value dimensionValue) {
-            this.dimension(dimensionValue.getValue().getKey(), dimensionValue.getValue().getValue());
+            dimension(dimensionValue.getValue());
             return this;
         }
 
-        public RunnerDimensionsBuilder dimension(Dimension dimension) {
-            this.dimension(dimension.getKey(), dimension.getValue());
+        public RunnerDimensionsBuilder from(Dimension[] dimensions) {
+            for (Dimension _dimension : dimensions) {
+                dimension(_dimension);
+            }
             return this;
         }
     }
