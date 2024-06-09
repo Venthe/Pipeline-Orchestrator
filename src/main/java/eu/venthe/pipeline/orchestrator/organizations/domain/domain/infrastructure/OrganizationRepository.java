@@ -10,4 +10,6 @@ public interface OrganizationRepository {
      * Organization exists and it is not archived.
      */
     boolean isAvailable(OrganizationId organizationId);
+
+    boolean exists(OrganizationId organizationId);
 }

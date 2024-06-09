@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrganizationFactory {
     public Organization create(CreateOrganizationSpecification specification) {
-        throw new UnsupportedOperationException("Organization creation not yet supported.");
+        return new Organization(specification.organizationId());
     }
 }

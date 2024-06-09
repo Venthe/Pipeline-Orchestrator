@@ -6,7 +6,7 @@ import eu.venthe.pipeline.orchestrator.workflow_executions.api.model.JobId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.api.model.StepExecutionStatus;
 import eu.venthe.pipeline.orchestrator.workflow_executions.api.model.StepId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.api.model.WorkflowExecutionId;
-import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.domain.model.ProjectId;
 
 import java.util.Map;
 

@@ -16,4 +16,9 @@ public class OrganizationRepositoryImpl implements OrganizationRepository {
     public boolean isAvailable(OrganizationId organizationId) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean exists(OrganizationId organizationId) {
+        throw new UnsupportedOperationException();
+    }
 }

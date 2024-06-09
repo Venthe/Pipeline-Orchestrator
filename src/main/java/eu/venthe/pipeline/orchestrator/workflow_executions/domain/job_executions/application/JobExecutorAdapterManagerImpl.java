@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application;
 
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
-import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.JobExecutorAdapterProvider;

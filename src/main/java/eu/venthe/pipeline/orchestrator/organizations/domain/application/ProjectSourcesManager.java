@@ -5,8 +5,8 @@ import eu.venthe.pipeline.orchestrator.organizations.domain.domain.model.Project
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.PluginProvider;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.application.ProjectsCommandService;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.application.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.organizations.domain.domain.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import lombok.RequiredArgsConstructor;

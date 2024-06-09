@@ -2,17 +2,17 @@ package eu.venthe.pipeline.orchestrator.organizations.domain.domain;
 
 import com.google.common.collect.Sets;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.api.CreateProjectSpecificationDto;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.api.CreateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.application.ProjectsCommandService;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.domain.model.ProjectId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.model.ProjectDto;
 import org.jgrapht.alg.util.Pair;
 
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectStatus.ARCHIVED;
+import static eu.venthe.pipeline.orchestrator.organizations.domain.projects.domain.model.ProjectStatus.ARCHIVED;
 import static java.util.stream.Collectors.toSet;
 
 record ProjectsSourceConfigurationSynchronizer(ProjectsSourceConfiguration configuration,

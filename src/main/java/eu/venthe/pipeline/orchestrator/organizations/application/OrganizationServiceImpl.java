@@ -29,6 +29,10 @@ public class OrganizationServiceImpl implements OrganizationCommandService {
             throw new UnsupportedOperationException("Organization creation is not enabled.");
         }
 
+        if (organizationRepository.exists(specification.organizationId())) {
+            throw new UnsupportedOperationException("Organization of id \"%s\" already exists".formatted(specification.organizationId().value()));
+        }
+
         log.info("Creating organization. {}", specification);
         Organization organization = organizationFactory.create(specification);
         organizationRepository.save(organization);

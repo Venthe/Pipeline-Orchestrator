@@ -2,8 +2,8 @@ package eu.venthe.pipeline.orchestrator.organizations.domain.domain;
 
 import eu.venthe.pipeline.orchestrator.organizations.domain.domain.model.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.application.ProjectsCommandService;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.application.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import lombok.EqualsAndHashCode;

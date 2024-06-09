@@ -6,7 +6,7 @@ import eu.venthe.pipeline.gerrit.model.ProjectInfo;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.model.FileDto;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.model.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.domain.model.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.model.SourceType;
 import jakarta.ws.rs.core.UriBuilder;
 import lombok.SneakyThrows;
