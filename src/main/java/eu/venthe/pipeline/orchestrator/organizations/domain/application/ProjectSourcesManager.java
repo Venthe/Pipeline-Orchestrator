@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.organizations.domain.application;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.infrastructure.ProjectsSourceConfigurationRepository;
+import eu.venthe.pipeline.orchestrator.organizations.domain.domain.infrastructure.SourceConfigurationRepository;
 import eu.venthe.pipeline.orchestrator.organizations.domain.domain.model.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.PluginProvider;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.ProjectSourcePlugin;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ProjectSourcesManager implements ProjectsSourceConfigurationCommandService, ProjectsSourceConfigurationQueryService {
-    private final ProjectsSourceConfigurationRepository sources;
+    private final SourceConfigurationRepository sources;
     private final PluginProvider pluginProvider;
     private final ProjectsCommandService projectsCommandService;
     private final ProjectsQueryService projectsQueryService;

@@ -11,7 +11,7 @@ import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.ProjectRepository;
 import eu.venthe.pipeline.orchestrator.organizations.domain.domain.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.infrastructure.ProjectsSourceConfigurationRepository;
+import eu.venthe.pipeline.orchestrator.organizations.domain.domain.infrastructure.SourceConfigurationRepository;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class ProjectsService implements ProjectsQueryService, ProjectsCommandService {
     private final ProjectRepository projectRepository;
-    private final ProjectsSourceConfigurationRepository configurationRepository;
+    private final SourceConfigurationRepository configurationRepository;
     private final DomainMessageBroker messageBroker;
     private final EventHandlerProvider eventHandlerProvider;
     private final JobExecutorCommandService jobExecutorCommandService;

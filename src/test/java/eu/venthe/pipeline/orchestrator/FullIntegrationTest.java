@@ -1,17 +1,14 @@
 package eu.venthe.pipeline.orchestrator;
 
 import eu.venthe.pipeline.orchestrator.organizations.application.CreateOrganizationSpecification;
-import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationManager;
+import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationCommandService;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.application.ProjectSourcesManager;
 import eu.venthe.pipeline.orchestrator.organizations.domain.domain.model.ProjectsSourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects.domain.model.ProjectId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.PropertyName;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
-import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.TextSuppliedConfigurationProperty;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.ExecutorManager;
@@ -20,15 +17,9 @@ import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.ContainerImage;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.OperatingSystem;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.File;
-import java.time.Duration;
-
-import static eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties.*;
-import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
@@ -45,15 +36,15 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     JobExecutorQueryService jobExecutorQueryService;
     @Autowired
-    OrganizationManager organizationManager;
+    OrganizationCommandService organizationCommandService;
 
     @Test
     void name() {
         var createOrganizationSpecification = CreateOrganizationSpecification.builder()
                 .organizationId(new OrganizationId("default"))
                 .build();
-        var defaultOrganization = organizationManager.create(createOrganizationSpecification);
-        organizationManager.addSourceConfiguration(defaultOrganization, new ProjectsSourceConfigurationId("default"), new SourceType("gerrit"),
+        var defaultOrganization = organizationCommandService.create(createOrganizationSpecification);
+        organizationCommandService.addSourceConfiguration(defaultOrganization, new ProjectsSourceConfigurationId("default"), new SourceType("gerrit"),
                 SuppliedProperties.builder()
                         .property("basePath", "http://localhost:15480")
                         .property("username", "admin")

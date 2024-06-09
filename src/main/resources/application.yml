@@ -29,6 +29,8 @@ plugins:
         password: secret
 togglz:
   features:
+    ORGANIZATION_CREATE:
+      enabled: true
     GENERAL_WIP:
       enabled: true
     VALIDATE_PROJECT_PLUGIN_PROPERTIES:

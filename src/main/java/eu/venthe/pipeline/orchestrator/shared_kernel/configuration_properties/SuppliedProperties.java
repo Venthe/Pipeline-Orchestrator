@@ -1,13 +1,17 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties;
 
 import lombok.Builder;
-import lombok.Singular;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @Builder
 public record SuppliedProperties(Map<PropertyName, SuppliedConfigurationProperty> properties) {
+    public SuppliedProperties {
+        if (properties == null) properties = new HashMap<>();
+    }
+
     public static SuppliedProperties none() {
         return SuppliedProperties.builder().build();
     }
@@ -17,6 +21,8 @@ public record SuppliedProperties(Map<PropertyName, SuppliedConfigurationProperty
     }
 
     public static class SuppliedPropertiesBuilder {
+        private Map<PropertyName, SuppliedConfigurationProperty> properties = new HashMap<>();
+
         public SuppliedPropertiesBuilder property(String key, String value) {
             var entry = Map.entry(new PropertyName(key), new TextSuppliedConfigurationProperty(value));
             properties.put(entry.getKey(), entry.getValue());
