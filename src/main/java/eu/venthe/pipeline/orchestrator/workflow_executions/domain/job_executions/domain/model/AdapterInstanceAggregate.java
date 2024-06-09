@@ -5,7 +5,7 @@ import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.Dimension;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.domain.model.ProjectId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;

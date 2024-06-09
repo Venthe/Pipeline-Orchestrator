@@ -1,24 +1,38 @@
 package eu.venthe.pipeline.orchestrator.config;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
+import com.google.common.collect.MoreCollectors;
+import eu.venthe.pipeline.orchestrator.config.infrastructure.in_memory_repositroy.InMemoryRepository;
+import eu.venthe.pipeline.orchestrator.organizations.domain.domain.OrganizationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.domain.Organization;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.infrastructure.OrganizationRepository;
+import eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure.OrganizationRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
+@RequiredArgsConstructor
 public class OrganizationRepositoryImpl implements OrganizationRepository {
+    private final InMemoryRepository<Organization, OrganizationId> repository = new InMemoryRepository<>();
+
     @Override
     public void save(Organization organization) {
-        throw new UnsupportedOperationException();
+        repository.save(organization.getOrganizationId(), organization);
     }
 
     @Override
     public boolean isAvailable(OrganizationId organizationId) {
-        throw new UnsupportedOperationException();
+        return find(organizationId).orElseThrow().isActive();
     }
 
     @Override
     public boolean exists(OrganizationId organizationId) {
-        throw new UnsupportedOperationException();
+        return find(organizationId).isPresent();
+    }
+
+    private Optional<Organization> find(OrganizationId organizationId) {
+        return repository.getAll().stream()
+                .filter(o -> o.getOrganizationId().equals(organizationId))
+                .collect(MoreCollectors.toOptional());
     }
 }

@@ -1,12 +1,12 @@
 package eu.venthe.pipeline.orchestrator.organizations.application;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.domain.OrganizationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.domain.Organization;
 import eu.venthe.pipeline.orchestrator.organizations.domain.domain.OrganizationFactory;
 import eu.venthe.pipeline.orchestrator.organizations.domain.domain.infrastructure.OrganizationRepository;
 import eu.venthe.pipeline.orchestrator.organizations.domain.domain.infrastructure.SourceConfigurationRepository;
-import eu.venthe.pipeline.orchestrator.organizations.domain.domain.model.ProjectsSourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.plugins.template.model.SourceType;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
