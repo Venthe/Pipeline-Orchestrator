@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.organizations.application;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.WorkflowTaskDto;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.ProjectDto;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.WorkflowDetailDto;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 
 import java.util.Collection;
@@ -22,5 +22,5 @@ public interface ProjectsQueryService {
 
     List<WorkflowTaskDto> showAllTasks();
 
-    Stream<ProjectId> getProjectIds(ProjectsSourceConfigurationId id);
+    Stream<ProjectId> getProjectIds(SourceConfigurationId id);
 }

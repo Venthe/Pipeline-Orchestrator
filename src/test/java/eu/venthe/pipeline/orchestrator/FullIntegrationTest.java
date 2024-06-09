@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator;
 
 import eu.venthe.pipeline.orchestrator.organizations.application.*;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
@@ -37,7 +37,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                 .organizationId(new OrganizationId("default"))
                 .build();
         var defaultOrganization = organizationCommandService.create(createOrganizationSpecification);
-        organizationCommandService.addSourceConfiguration(defaultOrganization, new ProjectsSourceConfigurationId("default"), new SourceType("gerrit"),
+        organizationCommandService.addSourceConfiguration(defaultOrganization, new SourceConfigurationId("default"), new SourceType("gerrit"),
                 SuppliedProperties.builder()
                         .property("basePath", "http://localhost:15480")
                         .property("username", "admin")

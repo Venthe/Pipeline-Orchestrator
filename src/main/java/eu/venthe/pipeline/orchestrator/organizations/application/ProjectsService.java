@@ -8,8 +8,7 @@ import eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure.Sourc
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.Project;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.handlers.EventHandlerProvider;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorCommandService;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
@@ -50,7 +49,7 @@ public class ProjectsService implements ProjectsQueryService, ProjectsCommandSer
     }
 
     @Override
-    public Stream<ProjectId> getProjectIds(ProjectsSourceConfigurationId configurationId) {
+    public Stream<ProjectId> getProjectIds(SourceConfigurationId configurationId) {
         return projectRepository.findAll().stream()
                 .filter(e -> e.getOwningConfiguration()
                         .getConfigurationId()
@@ -64,7 +63,7 @@ public class ProjectsService implements ProjectsQueryService, ProjectsCommandSer
     }
 
     @Override
-    public void add(ProjectsSourceConfigurationId configurationId, CreateProjectSpecificationDto newProjectDto) {
+    public void add(SourceConfigurationId configurationId, CreateProjectSpecificationDto newProjectDto) {
         if (projectRepository.exists(newProjectDto.projectId())) {
             throw new IllegalArgumentException();
         }

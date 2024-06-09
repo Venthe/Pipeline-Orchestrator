@@ -1,11 +1,11 @@
 package eu.venthe.pipeline.orchestrator.organizations.domain.projects;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.SourceConfigurationId;
 import lombok.Value;
 
 @Value(staticConstructor = "of")
 public class ProjectId {
-    ProjectsSourceConfigurationId configurationId;
+    SourceConfigurationId configurationId;
     String name;
 
     public String serialize() {
@@ -20,7 +20,7 @@ public class ProjectId {
             throw new IllegalArgumentException("Project name is required");
         }
 
-        var systemId = new ProjectsSourceConfigurationId(projectId.substring(0, indexOfProject));
+        var systemId = new SourceConfigurationId(projectId.substring(0, indexOfProject));
 
         var project = projectId.substring(indexOfProjectName);
         return ProjectId.of(systemId, project);

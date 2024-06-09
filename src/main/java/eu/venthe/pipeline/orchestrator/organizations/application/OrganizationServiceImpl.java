@@ -6,7 +6,9 @@ import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationFactory;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure.OrganizationRepository;
 import eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure.SourceConfigurationRepository;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfiguration;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.SourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.PluginProvider;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +22,10 @@ import org.togglz.core.util.NamedFeature;
 @RequiredArgsConstructor
 public class OrganizationServiceImpl implements OrganizationCommandService {
     private final FeatureManager featureManager;
-    private final SourceConfigurationRepository sourceConfigurationRepository;
+    private final SourceConfigurationRepository configurationRepository;
     private final OrganizationRepository organizationRepository;
     private final OrganizationFactory organizationFactory;
+    private final PluginProvider pluginProvider;
 
     @Override
     public OrganizationId create(CreateOrganizationSpecification specification) {
@@ -43,13 +46,22 @@ public class OrganizationServiceImpl implements OrganizationCommandService {
 
     @Override
     public boolean addSourceConfiguration(OrganizationId organizationId,
-                                          ProjectsSourceConfigurationId configurationId,
+                                          SourceConfigurationId configurationId,
                                           SourceType sourceType,
                                           SuppliedProperties properties) {
         log.info("Adding source configuration to organization {}.", organizationId.value());
         if (!organizationRepository.isAvailable(organizationId)) {
             throw new IllegalArgumentException("Organization of ID \"%s\" does not exist or is archived.".formatted(organizationId.value()));
         }
+
+        if (configurationRepository.exists(configurationId)) {
+            throw new IllegalArgumentException("Configuration \"%s\" for organization \"%s\" already exists.".formatted(configurationId.id(), organizationId.value()));
+        }
+
+        var pluginInstance = pluginProvider.provide(sourceType, properties);
+
+        var configuration = ProjectsSourceConfiguration.createNew(configurationId, pluginInstance);
+        configurationRepository.save(configuration);
 
         throw new UnsupportedOperationException("Adding source configuration to organization is not yet supported.");
     }

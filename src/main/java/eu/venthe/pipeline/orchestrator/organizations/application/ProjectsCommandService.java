@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.organizations.application;
 
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
@@ -11,7 +11,7 @@ import java.io.File;
 
 public interface ProjectsCommandService {
 
-    default void add(ProjectsSourceConfigurationId configurationId, CreateProjectSpecificationDto newProjectDto) {
+    default void add(SourceConfigurationId configurationId, CreateProjectSpecificationDto newProjectDto) {
         throw new UnsupportedOperationException();
     }
 
