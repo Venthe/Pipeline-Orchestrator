@@ -37,7 +37,7 @@ public class OrganizationServiceImpl implements OrganizationCommandService {
             throw new UnsupportedOperationException("Organization of id \"%s\" already exists".formatted(specification.organizationId().value()));
         }
 
-        log.info("Creating organization. {}", specification);
+        log.trace("Creating organization. {}", specification);
         Organization organization = organizationFactory.create(specification);
         organizationRepository.save(organization);
         log.info("Organization \"{}\" created.", specification.organizationId().value());
@@ -45,11 +45,11 @@ public class OrganizationServiceImpl implements OrganizationCommandService {
     }
 
     @Override
-    public boolean addSourceConfiguration(OrganizationId organizationId,
-                                          SourceConfigurationId configurationId,
-                                          SourceType sourceType,
-                                          SuppliedProperties properties) {
-        log.info("Adding source configuration to organization {}.", organizationId.value());
+    public SourceConfigurationId addSourceConfiguration(OrganizationId organizationId,
+                                                        SourceConfigurationId configurationId,
+                                                        SourceType sourceType,
+                                                        SuppliedProperties properties) {
+        log.trace("Adding source configuration to organization {}.", organizationId.value());
         if (!organizationRepository.isAvailable(organizationId)) {
             throw new IllegalArgumentException("Organization of ID \"%s\" does not exist or is archived.".formatted(organizationId.value()));
         }
@@ -63,6 +63,7 @@ public class OrganizationServiceImpl implements OrganizationCommandService {
         var configuration = ProjectsSourceConfiguration.createNew(configurationId, pluginInstance);
         configurationRepository.save(configuration);
 
-        throw new UnsupportedOperationException("Adding source configuration to organization is not yet supported.");
+        log.info("Source configuration {} added to organization {}.", configuration.getConfigurationId(),  organizationId.value());
+        return configuration.getConfigurationId();
     }
 }

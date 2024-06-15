@@ -8,8 +8,8 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.Su
 public interface OrganizationCommandService {
     OrganizationId create(CreateOrganizationSpecification specification);
 
-    boolean addSourceConfiguration(OrganizationId organizationId,
-                                   SourceConfigurationId configurationId,
-                                   SourceType sourceType,
-                                   SuppliedProperties properties);
+    SourceConfigurationId addSourceConfiguration(OrganizationId organizationId,
+                                                 SourceConfigurationId configurationId,
+                                                 SourceType sourceType,
+                                                 SuppliedProperties properties);
 }

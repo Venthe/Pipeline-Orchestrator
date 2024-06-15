@@ -52,7 +52,7 @@ public class JobExecutorAdapterManagerImpl implements ExecutorManager, JobExecut
             throw new UnsupportedOperationException();
         }
 
-        AdapterInstanceAggregate docker = repository.find(new AdapterId("docker-test")).orElseThrow();
+        AdapterInstanceAggregate docker = repository.find(adapterId).orElseThrow();
         return docker.registerRunner(dimensions);
     }
 

@@ -2,20 +2,35 @@ package eu.venthe.pipeline.orchestrator;
 
 import eu.venthe.pipeline.orchestrator.organizations.application.*;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.ExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.ExecutorManager;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorQueryService;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.Architecture;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.ContainerImage;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.OperatingSystem;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.TestPropertySource;
 
+import java.io.File;
+import java.time.Duration;
+
+import static java.util.stream.Collectors.toSet;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
+
+@TestPropertySource(properties = {
+        "logging.level.eu.venthe=TRACE"
+})
 class FullIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
@@ -37,7 +52,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                 .organizationId(new OrganizationId("default"))
                 .build();
         var defaultOrganization = organizationCommandService.create(createOrganizationSpecification);
-        organizationCommandService.addSourceConfiguration(defaultOrganization, new SourceConfigurationId("default"), new SourceType("gerrit"),
+        var sourceConfigurationId = organizationCommandService.addSourceConfiguration(defaultOrganization, new SourceConfigurationId("default"), new SourceType("gerrit"),
                 SuppliedProperties.builder()
                         .property("basePath", "http://localhost:15480")
                         .property("username", "admin")
@@ -52,11 +67,14 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                         .dimension(new ContainerImage("docker.home.arpa/venthe/ubuntu-runner:23.10"))
                         .build());
 
-/*        // At this point, auto synchronization should happen. Let's wait for it.
-        await("Synchronization done")
-                .until(() -> !projectsQueryService.getProjectIds(new ProjectsSourceConfigurationId("Test")).collect(toSet()).isEmpty());
+        // FIXME: This should be done scheduled & asynchronously
+        projectsCommandService.synchronize(sourceConfigurationId);
 
-        final var projectId = ProjectId.of(new ProjectsSourceConfigurationId("Test"), "Example-Project");
+        // At this point, auto synchronization should happen. Let's wait for it.
+        await("Synchronization done")
+                .until(() -> !projectsQueryService.getProjectIds(sourceConfigurationId).collect(toSet()).isEmpty());
+
+        final var projectId = ProjectId.of(sourceConfigurationId, "Example-Project");
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
 
@@ -64,7 +82,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
         await().timeout(Duration.ofDays(1)).until(() -> false);
 
-        // await("Execution done").untilAsserted(() ->
-        //         Assertions.assertThat(jobExecutorQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));*/
+         await("Execution done").untilAsserted(() ->
+                 Assertions.assertThat(jobExecutorQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));
     }
 }

@@ -32,8 +32,11 @@ public class JobExecutorAdapterProvider {
             dockerJobExecutorAdapter.validateProperties(properties);
         }
 
-        log.info("Instantiating job executor adapter {}", adapterType);
+        log.trace("Instantiating job executor adapter {}", adapterType);
 
-        return dockerJobExecutorAdapter.instantiate(properties);
+        var instantiate = dockerJobExecutorAdapter.instantiate(properties);
+
+        log.info("Job executor for adapter {} instantiated", adapterType);
+        return instantiate;
     }
 }

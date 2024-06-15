@@ -32,8 +32,11 @@ public class PluginProvider {
             gerritProjectSourcePlugin.validateProperties(properties);
         }
 
-        log.info("Instantiating source plugin {}", sourceType);
+        log.trace("Instantiating source plugin {}", sourceType);
 
-        return gerritProjectSourcePlugin.instantiate(properties);
+        var instantiate = gerritProjectSourcePlugin.instantiate(properties);
+
+        log.info("Plugin for source type {} instantiated.", instantiate.getSourceType());
+        return instantiate;
     }
 }
