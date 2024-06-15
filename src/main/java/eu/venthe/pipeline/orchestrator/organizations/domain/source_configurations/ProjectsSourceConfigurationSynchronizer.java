@@ -17,8 +17,9 @@ import static java.util.stream.Collectors.toSet;
 
 record ProjectsSourceConfigurationSynchronizer(
         ProjectsSourceConfiguration configuration,
-        ProjectSourcePlugin.PluginInstance pluginInstance) {
-    public void synchronize(ProjectsCommandService projectsCommandService, ProjectsQueryService projectsQueryService) {
+        ProjectSourcePlugin.PluginInstance pluginInstance, ProjectsCommandService projectsCommandService,
+        ProjectsQueryService projectsQueryService) {
+    public void synchronize() {
         final Set<String> allProjectsFromSource = getAllProjectsFromSource();
         final Set<String> registeredProjects = getRegisteredProjects(projectsQueryService);
 

@@ -34,7 +34,7 @@ class ProjectsSourceConfigurationTest {
 
     @BeforeEach
     void beforeEach() {
-        projectsSourceConfiguration = ProjectsSourceConfiguration.reconstitute(new SourceConfigurationId("TestName"), pluginInstance/*, projectCommands, projectQueries*/);
+        projectsSourceConfiguration = ProjectsSourceConfiguration.reconstitute(new SourceConfigurationId("TestName"), pluginInstance, projectCommands, projectQueries);
     }
 
     @Test

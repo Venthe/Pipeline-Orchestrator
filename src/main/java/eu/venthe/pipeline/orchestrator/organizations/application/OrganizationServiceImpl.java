@@ -26,6 +26,8 @@ public class OrganizationServiceImpl implements OrganizationCommandService {
     private final OrganizationRepository organizationRepository;
     private final OrganizationFactory organizationFactory;
     private final PluginProvider pluginProvider;
+    private final ProjectsCommandService projectsCommandService;
+    private final ProjectsQueryService projectsQueryService;
 
     @Override
     public OrganizationId create(CreateOrganizationSpecification specification) {
@@ -60,7 +62,7 @@ public class OrganizationServiceImpl implements OrganizationCommandService {
 
         var pluginInstance = pluginProvider.provide(sourceType, properties);
 
-        var configuration = ProjectsSourceConfiguration.createNew(configurationId, pluginInstance);
+        var configuration = ProjectsSourceConfiguration.createNew(configurationId, pluginInstance, projectsCommandService, projectsQueryService);
         configurationRepository.save(configuration);
 
         log.info("Source configuration {} added to organization {}.", configuration.getConfigurationId(),  organizationId.value());

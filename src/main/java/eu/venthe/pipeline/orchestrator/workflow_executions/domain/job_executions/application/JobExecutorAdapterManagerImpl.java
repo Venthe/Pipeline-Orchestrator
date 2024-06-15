@@ -68,7 +68,7 @@ public class JobExecutorAdapterManagerImpl implements ExecutorManager, JobExecut
             throw new UnsupportedOperationException();
         }
 
-        AdapterInstanceAggregate docker = repository.find(new AdapterId("docker-test")).orElseThrow();
+        AdapterInstanceAggregate docker = repository.find(new AdapterId("default")).orElseThrow();
 
         ExecutionId executionId = new ExecutionId(UUID.randomUUID().toString());
         docker.queueJobExecution(projectId, executionId, envUtil.getServerUrl(), new JobExecutorAdapter.CallbackToken("TEST_TOKEN"));

@@ -28,7 +28,7 @@ public class ProjectSourcesManager implements ProjectsSourceConfigurationCommand
 
         var pluginInstance = pluginProvider.provide(sourceType, properties);
 
-        var configuration = ProjectsSourceConfiguration.createNew(configurationId, pluginInstance/*, projectsCommandService, projectsQueryService*/);
+        var configuration = ProjectsSourceConfiguration.createNew(configurationId, pluginInstance, projectsCommandService, projectsQueryService);
         sources.save(configuration);
         return configuration.getId();
     }
@@ -41,7 +41,7 @@ public class ProjectSourcesManager implements ProjectsSourceConfigurationCommand
     @Override
     public void synchronize(SourceConfigurationId configurationId) {
         var projectsSourceConfiguration = sources.find(configurationId).orElseThrow();
-//        projectsSourceConfiguration.synchronize();
+        projectsSourceConfiguration.synchronize();
     }
 
     @Override

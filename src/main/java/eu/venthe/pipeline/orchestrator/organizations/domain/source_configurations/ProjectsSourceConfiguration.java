@@ -18,44 +18,38 @@ public class ProjectsSourceConfiguration implements Aggregate<SourceConfiguratio
     @Getter
     private final SourceConfigurationId configurationId;
     private final ProjectSourcePlugin.PluginInstance pluginInstance;
-//    @ToString.Exclude
-//    private final ProjectsCommandService projectsCommandService;
-//    @ToString.Exclude
-//    private final ProjectsQueryService projectsQueryService;
-//    @ToString.Exclude
-//    private final ProjectsSourceConfigurationSynchronizer synchronizer;
+    @ToString.Exclude
+    private final ProjectsSourceConfigurationSynchronizer synchronizer;
 
     public static ProjectsSourceConfiguration createNew(SourceConfigurationId configurationId,
-                                                        ProjectSourcePlugin.PluginInstance instance/*,
+                                                        ProjectSourcePlugin.PluginInstance instance,
                                                         ProjectsCommandService projectsCommandService,
-                                                        ProjectsQueryService projectsQueryService*/) {
-        var projectsSourceConfiguration = reconstitute(configurationId, instance/*, projectsCommandService, projectsQueryService*/);
+                                                        ProjectsQueryService projectsQueryService) {
+        var projectsSourceConfiguration = reconstitute(configurationId, instance, projectsCommandService, projectsQueryService);
         // FIXME: Chicken and egg
         // projectsSourceConfiguration.synchronize(projectsCommandService, projectsQueryService);
         return projectsSourceConfiguration;
     }
 
     public static ProjectsSourceConfiguration reconstitute(SourceConfigurationId configurationId,
-                                                           ProjectSourcePlugin.PluginInstance instance/*,
+                                                           ProjectSourcePlugin.PluginInstance instance,
                                                            ProjectsCommandService projectsCommandService,
-                                                           ProjectsQueryService projectsQueryService*/) {
-        return new ProjectsSourceConfiguration(configurationId, instance/*, projectsCommandService, projectsQueryService*/);
+                                                           ProjectsQueryService projectsQueryService) {
+        return new ProjectsSourceConfiguration(configurationId, instance, projectsCommandService, projectsQueryService);
     }
 
     private ProjectsSourceConfiguration(SourceConfigurationId configurationId,
-                                        ProjectSourcePlugin.PluginInstance pluginInstance/*,
+                                        ProjectSourcePlugin.PluginInstance pluginInstance,
                                         ProjectsCommandService projectsCommandService,
-                                        ProjectsQueryService projectsQueryService*/) {
+                                        ProjectsQueryService projectsQueryService) {
         this.configurationId = configurationId;
         this.pluginInstance = pluginInstance;
-//        synchronizer = new ProjectsSourceConfigurationSynchronizer(this, pluginInstance);
-//        this.projectsCommandService = projectsCommandService;
-//        this.projectsQueryService = projectsQueryService;
+        synchronizer = new ProjectsSourceConfigurationSynchronizer(this, pluginInstance, projectsCommandService, projectsQueryService);
     }
 
-//    public void synchronize() {
-//        synchronizer.synchronize(projectsCommandService, projectsQueryService);
-//    }
+    public void synchronize() {
+        synchronizer.synchronize();
+    }
 
     public Optional<ProjectDto> getProject(String id) {
         return pluginInstance.getProject(id);

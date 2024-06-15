@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
 
 import java.io.File;
-import java.time.Duration;
 
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -68,7 +67,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                         .build());
 
         // FIXME: This should be done scheduled & asynchronously
-        projectsCommandService.synchronize(sourceConfigurationId);
+        projectSourcesManager.synchronize(sourceConfigurationId);
 
         // At this point, auto synchronization should happen. Let's wait for it.
         await("Synchronization done")
@@ -80,9 +79,9 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
         ExecutionId executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));
 
-        await().timeout(Duration.ofDays(1)).until(() -> false);
+        // await().timeout(Duration.ofDays(1)).until(() -> false);
 
-         await("Execution done").untilAsserted(() ->
-                 Assertions.assertThat(jobExecutorQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));
+        await("Execution done").untilAsserted(() ->
+                Assertions.assertThat(jobExecutorQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));
     }
 }
