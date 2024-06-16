@@ -15,6 +15,7 @@ import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.ExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.ExecutorManager;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorCallbackService;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorQueryService;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.Architecture;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.ContainerImage;
@@ -31,6 +32,7 @@ import java.io.File;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static eu.venthe.pipeline.orchestrator.configuration.TestJobExecutorConfiguration.setupExecution;
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
@@ -52,6 +54,8 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     JobExecutorQueryService jobExecutorQueryService;
     @Autowired
     OrganizationCommandService organizationCommandService;
+    @Autowired
+    JobExecutorCallbackService callbackService;
 
     @Autowired
     TestProjectSourcePluginConfiguration.TestProjectSourcePluginPluginInstance projectSource;
@@ -67,16 +71,10 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                 .organizationId(new OrganizationId("default"))
                 .build();
         var defaultOrganization = organizationCommandService.create(createOrganizationSpecification);
-        var sourceConfigurationId = organizationCommandService.addSourceConfiguration(defaultOrganization, new SourceConfigurationId("default"), new SourceType("test"),
-                SuppliedProperties.none());
+        var sourceConfigurationId = organizationCommandService.addSourceConfiguration(defaultOrganization, new SourceConfigurationId("default"), new SourceType("test"), SuppliedProperties.none());
 
         var defaultExecutor = executorManager.registerAdapter(defaultOrganization, new AdapterId("default"), new AdapterType("test"));
-        var defaultRunner = executorManager.registerRunner(defaultExecutor,
-                RunnerDimensions.builder()
-                        .dimension(OperatingSystem.LINUX)
-                        .dimension(Architecture.X64)
-                        .dimension(new ContainerImage("docker.home.arpa/venthe/ubuntu-runner:23.10"))
-                        .build());
+        var defaultRunner = executorManager.registerRunner(defaultExecutor, RunnerDimensions.none());
 
         // FIXME: This should be done scheduled & asynchronously
         projectSourcesManager.synchronize(sourceConfigurationId);
@@ -88,6 +86,10 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         final var projectId = ProjectId.of(sourceConfigurationId, "Example-Project");
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
+
+        setupExecution(testJobExecutorAdapterAdapterInstance, metadata -> {
+            System.out.println(metadata);
+        });
 
         ExecutionId executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));
 

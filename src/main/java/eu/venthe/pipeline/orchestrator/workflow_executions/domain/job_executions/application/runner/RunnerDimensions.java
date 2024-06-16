@@ -12,6 +12,10 @@ public record RunnerDimensions(Map<String, String> dimensions) {
         dimensions = new HashMap<>();
     }
 
+    public static RunnerDimensions none() {
+        return new RunnerDimensions(new HashMap<>());
+    }
+
     public String put(String key, String value) {
         return dimensions.put(key, value);
     }

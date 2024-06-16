@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application;
 
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
@@ -10,23 +10,41 @@ import java.time.OffsetDateTime;
 import java.util.Map;
 
 public interface JobExecutorCallbackService {
-    InitialExecutionContext requestContext(CallMetadata callMetadata);
+    default InitialExecutionContext requestContext(CallMetadata callMetadata) {
+        throw new UnsupportedOperationException();
+    }
 
-    void jobExecutionProgressed(CallMetadata callMetadata);
+    default void jobExecutionProgressed(CallMetadata callMetadata) {
+        throw new UnsupportedOperationException();
+    }
 
-    void jobExecutionStarted(CallMetadata callMetadata);
+    default void jobExecutionStarted(CallMetadata callMetadata) {
+        throw new UnsupportedOperationException();
+    }
 
-    void jobExecutionCompleted(CallMetadata callMetadata);
+    default void jobExecutionCompleted(CallMetadata callMetadata) {
+        throw new UnsupportedOperationException();
+    }
 
-    void uploadLog(Log log, CallMetadata callMetadata);
+    default void uploadLog(Log log, CallMetadata callMetadata) {
+        throw new UnsupportedOperationException();
+    }
 
-    File downloadArtifact(CallMetadata callMetadata);
+    default File downloadArtifact(CallMetadata callMetadata) {
+        throw new UnsupportedOperationException();
+    }
 
-    void uploadArtifact(File file, CallMetadata callMetadata);
+    default void uploadArtifact(File file, CallMetadata callMetadata) {
+        throw new UnsupportedOperationException();
+    }
 
-    void uploadCache(File file, CallMetadata callMetadata);
+    default void uploadCache(File file, CallMetadata callMetadata) {
+        throw new UnsupportedOperationException();
+    }
 
-    File downloadCache(CallMetadata callMetadata);
+    default File downloadCache(CallMetadata callMetadata) {
+        throw new UnsupportedOperationException();
+    }
 
     record InitialExecutionContext() {
     }
@@ -36,7 +54,9 @@ public interface JobExecutorCallbackService {
                         JobExecutorAdapter.CallbackToken callbackToken) {
     }
 
-    record Log(Severity severity, OffsetDateTime timestamp, String message, Map.Entry<String, String>... structuredData) {}
+    record Log(Severity severity, OffsetDateTime timestamp, String message,
+               Map.Entry<String, String>... structuredData) {
+    }
 
     /**
      * RFC-5424
