@@ -1,6 +1,5 @@
 package eu.venthe.pipeline.orchestrator;
 
-import eu.venthe.pipeline.gerrit.model.ProjectInfo;
 import eu.venthe.pipeline.orchestrator.configuration.TestJobExecutorConfiguration;
 import eu.venthe.pipeline.orchestrator.configuration.TestProjectSourcePluginConfiguration;
 import eu.venthe.pipeline.orchestrator.organizations.application.*;
@@ -13,15 +12,12 @@ import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.ExecutionDetailsDto;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.ExecutorManager;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorCallbackService;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorQueryService;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.Architecture;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.ContainerImage;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.OperatingSystem;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.runner.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.ExecutionDetailsDto;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.ExecutorManager;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorCallbackService;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorQueryService;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.model.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.ExecutionId;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -92,8 +88,6 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         });
 
         ExecutionId executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));
-
-        // await().timeout(Duration.ofDays(1)).until(() -> false);
 
         await("Execution done").untilAsserted(() ->
                 Assertions.assertThat(jobExecutorQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));

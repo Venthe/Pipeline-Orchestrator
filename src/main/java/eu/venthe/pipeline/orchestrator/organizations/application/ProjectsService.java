@@ -10,8 +10,8 @@ import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.handlers.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.application.JobExecutorCommandService;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorCommandService;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.ExecutionId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

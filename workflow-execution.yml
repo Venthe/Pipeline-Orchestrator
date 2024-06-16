@@ -1,0 +1,24 @@
+---
+# Workflow Execution
+workflow_execution_id: f8a55ced-22f7-47fd-b1e8-a684bb32b52a
+metadata:
+  type: project_workflow
+  revision: b1aeece81d4005bec5ad700c6d6dbc9729046b67064d3b186604edbd33499311
+  workflow_file: workflow.yml
+  triggered_by:
+    type: event
+    payload: {}
+jobs:
+  job-1:
+    depends_on: ~
+    runs:
+      - run_id: c2b39b44-6a1d-4d04-ba9e-77223940b487
+        start_timestamp: 2024-06-16T18:19:40.859831Z
+        end_timestamp: 2024-06-17T18:19:40.859831Z
+        steps: []
+  job-2:
+    depends_on:
+      - job-1
+  job-3: ~
+  job-4: ~
+  job-5: ~
