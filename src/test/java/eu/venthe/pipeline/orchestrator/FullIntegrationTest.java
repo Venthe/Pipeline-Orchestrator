@@ -1,9 +1,14 @@
 package eu.venthe.pipeline.orchestrator;
 
+import eu.venthe.pipeline.gerrit.model.ProjectInfo;
+import eu.venthe.pipeline.orchestrator.configuration.TestJobExecutorConfiguration;
+import eu.venthe.pipeline.orchestrator.configuration.TestProjectSourcePluginConfiguration;
 import eu.venthe.pipeline.orchestrator.organizations.application.*;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.SourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
@@ -18,10 +23,13 @@ import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.model.ExecutionId;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
 
 import java.io.File;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,20 +53,24 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     OrganizationCommandService organizationCommandService;
 
+    @Autowired
+    TestProjectSourcePluginConfiguration.TestProjectSourcePluginPluginInstance projectSource;
+    @Autowired
+    TestJobExecutorConfiguration.TestJobExecutorAdapterAdapterInstance testJobExecutorAdapterAdapterInstance;
+
     @Test
     void name() {
+        Mockito.when(projectSource.getProjectIds()).thenReturn(Stream.of(new ProjectDto.Id("Example-Project")));
+        Mockito.when(projectSource.getProject("Example-Project")).thenReturn(Optional.of(new ProjectDto("Example-Project", ProjectStatus.ACTIVE)));
+
         var createOrganizationSpecification = CreateOrganizationSpecification.builder()
                 .organizationId(new OrganizationId("default"))
                 .build();
         var defaultOrganization = organizationCommandService.create(createOrganizationSpecification);
-        var sourceConfigurationId = organizationCommandService.addSourceConfiguration(defaultOrganization, new SourceConfigurationId("default"), new SourceType("gerrit"),
-                SuppliedProperties.builder()
-                        .property("basePath", "http://localhost:15480")
-                        .property("username", "admin")
-                        .property("password", "secret")
-                        .build());
+        var sourceConfigurationId = organizationCommandService.addSourceConfiguration(defaultOrganization, new SourceConfigurationId("default"), new SourceType("test"),
+                SuppliedProperties.none());
 
-        var defaultExecutor = executorManager.registerAdapter(defaultOrganization, new AdapterId("default"), new AdapterType("docker"));
+        var defaultExecutor = executorManager.registerAdapter(defaultOrganization, new AdapterId("default"), new AdapterType("test"));
         var defaultRunner = executorManager.registerRunner(defaultExecutor,
                 RunnerDimensions.builder()
                         .dimension(OperatingSystem.LINUX)

@@ -5,9 +5,11 @@ import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.ConfigurationPropertyDefinition;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.PropertyName;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+@Component
 public class GerritProjectSourcePlugin implements ProjectSourcePlugin {
 
     @Override

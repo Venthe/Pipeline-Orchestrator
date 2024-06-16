@@ -28,9 +28,6 @@ public interface JobExecutorCallbackService {
 
     File downloadCache(CallMetadata callMetadata);
 
-    void downloadAction(CallMetadata callMetadata);
-    // GIT LFS
-
     record InitialExecutionContext() {
     }
 
