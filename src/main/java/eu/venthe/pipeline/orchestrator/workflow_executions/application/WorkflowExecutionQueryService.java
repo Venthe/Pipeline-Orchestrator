@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions.application;
 
 import eu.venthe.pipeline.orchestrator.workflow_executions._archive.api.dto.WorkflowExecutionDto;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.WorkflowExecutionId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.WorkflowExecutionId;
 
 import java.util.List;
 import java.util.Optional;

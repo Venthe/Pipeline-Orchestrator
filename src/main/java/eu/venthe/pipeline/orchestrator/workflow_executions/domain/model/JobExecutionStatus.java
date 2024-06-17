@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions;
+package eu.venthe.pipeline.orchestrator.workflow_executions.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.common.collect.MoreCollectors;

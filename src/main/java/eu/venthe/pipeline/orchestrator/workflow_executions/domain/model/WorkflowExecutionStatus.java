@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.workflow_executions.domain;
+package eu.venthe.pipeline.orchestrator.workflow_executions.domain.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.workflow_executions.application;
 
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.JobExecutorAdapter;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.ExecutionId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.JobExecutionId;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
@@ -50,7 +50,7 @@ public interface JobExecutorCallbackService {
     }
 
     record CallMetadata(ProjectId projectId,
-                        ExecutionId executionId,
+                        JobExecutionId executionId,
                         JobExecutorAdapter.CallbackToken callbackToken) {
     }
 

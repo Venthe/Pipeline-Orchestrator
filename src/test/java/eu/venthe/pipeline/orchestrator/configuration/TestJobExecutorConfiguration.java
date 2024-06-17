@@ -4,7 +4,7 @@ import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.model.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.ExecutionId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.JobExecutionId;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -36,7 +36,7 @@ public class TestJobExecutorConfiguration {
     public static void setupExecution(TestJobExecutorAdapterAdapterInstance mock, Consumer<TestJobExecutorAdapterAdapterInstance.Metadata> consumer) {
         Mockito.doAnswer(invocation -> {
             var projectId = invocation.getArgument(0, ProjectId.class);
-            var executionId = invocation.getArgument(1, ExecutionId.class);
+            var executionId = invocation.getArgument(1, JobExecutionId.class);
             var systemApiUrl = invocation.getArgument(2, URL.class);
             var callbackToken = invocation.getArgument(3, JobExecutorAdapter.CallbackToken.class);
             var dimensions = invocation.getArgument(4, RunnerDimensions.class);
@@ -56,7 +56,7 @@ public class TestJobExecutorConfiguration {
     }
 
     public interface TestJobExecutorAdapterAdapterInstance extends JobExecutorAdapter.AdapterInstance {
-        record Metadata(ProjectId projectId, ExecutionId executionId, URL systemApiUrl,
+        record Metadata(ProjectId projectId, JobExecutionId executionId, URL systemApiUrl,
                         JobExecutorAdapter.CallbackToken callbackToken, RunnerDimensions dimensions) {
         }
     }

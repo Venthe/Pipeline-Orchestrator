@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.model.Dimension;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.model.RunnerId;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.ExecutionId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.JobExecutionId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -24,7 +24,7 @@ public class DockerJobExecutorAdapterInstance implements JobExecutorAdapter.Adap
 
     @Override
     public void queueJobExecution(ProjectId projectId,
-                                  ExecutionId executionId,
+                                  JobExecutionId executionId,
                                   URL systemApiUrl,
                                   JobExecutorAdapter.CallbackToken callbackToken,
                                   RunnerDimensions dimensions) {

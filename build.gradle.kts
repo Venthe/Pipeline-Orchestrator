@@ -31,6 +31,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-autoconfigure")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework:spring-web")
+    implementation("com.jayway.jsonpath:json-path:2.9.0")
     testImplementation("javax.json:javax.json-api:1.1.4")
     testImplementation("org.glassfish:javax.json:1.1.4")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

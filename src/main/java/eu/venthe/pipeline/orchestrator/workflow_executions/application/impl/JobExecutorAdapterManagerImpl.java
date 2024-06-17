@@ -1,9 +1,13 @@
-package eu.venthe.pipeline.orchestrator.workflow_executions.application;
+package eu.venthe.pipeline.orchestrator.workflow_executions.application.impl;
 
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.dto.ExecutionDetailsDto;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.ExecutorManager;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorCommandService;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorQueryService;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.JobExecutorAdapterProvider;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
@@ -12,8 +16,8 @@ import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.model.RunnerId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.infrastructure.JobExecutorAdapterRepository;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.AdapterInstanceAggregate;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.ExecutionId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.AdapterInstanceAggregate;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.JobExecutionId;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
@@ -57,20 +61,20 @@ public class JobExecutorAdapterManagerImpl implements ExecutorManager, JobExecut
     }
 
     @Override
-    public ExecutionDetailsDto getExecutionDetails(ExecutionId executionId) {
+    public ExecutionDetailsDto getExecutionDetails(JobExecutionId executionId) {
         throw new UnsupportedOperationException();
     }
 
     @SneakyThrows
     @Override
-    public ExecutionId triggerJobExecution(ProjectId projectId, Dimension... dimensions) {
+    public JobExecutionId triggerJobExecution(ProjectId projectId, Dimension... dimensions) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             throw new UnsupportedOperationException();
         }
 
         AdapterInstanceAggregate docker = repository.find(new AdapterId("default")).orElseThrow();
 
-        ExecutionId executionId = new ExecutionId(UUID.randomUUID().toString());
+        JobExecutionId executionId = new JobExecutionId(UUID.randomUUID().toString());
         docker.queueJobExecution(projectId, executionId, envUtil.getServerUrl(), new JobExecutorAdapter.CallbackToken("TEST_TOKEN"));
         return executionId;
     }

@@ -11,7 +11,7 @@ import eu.venthe.pipeline.orchestrator.organizations.domain.projects.handlers.Ev
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
 import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorCommandService;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.ExecutionId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.JobExecutionId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -76,7 +76,7 @@ public class ProjectsService implements ProjectsQueryService, ProjectsCommandSer
     }
 
     @Override
-    public ExecutionId executeManualWorkflow(ProjectId projectId, String ref, File workflowFile) {
+    public JobExecutionId executeManualWorkflow(ProjectId projectId, String ref, File workflowFile) {
         Project project = projectRepository.find(projectId).orElseThrow();
 
         return project.executeManualWorkflow(ref, workflowFile);

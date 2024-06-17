@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.EnvironmentContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.context.jobs.context.*;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.domain.jobs.context.*;
 
 import java.util.Optional;
 

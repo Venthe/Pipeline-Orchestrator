@@ -12,12 +12,12 @@ import eu.venthe.pipeline.orchestrator.organizations.domain.source_configuration
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
-import eu.venthe.pipeline.orchestrator.workflow_executions.application.ExecutionDetailsDto;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.dto.ExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.workflow_executions.application.ExecutorManager;
 import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorCallbackService;
 import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorQueryService;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.model.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.ExecutionId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.JobExecutionId;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -87,7 +87,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
             System.out.println(metadata);
         });
 
-        ExecutionId executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));
+        JobExecutionId executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));
 
         await("Execution done").untilAsserted(() ->
                 Assertions.assertThat(jobExecutorQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));
