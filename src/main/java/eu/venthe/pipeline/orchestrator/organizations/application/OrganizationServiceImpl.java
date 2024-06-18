@@ -1,15 +1,18 @@
 package eu.venthe.pipeline.orchestrator.organizations.application;
 
 
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;
 import eu.venthe.pipeline.orchestrator.organizations.domain.Organization;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationFactory;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure.OrganizationRepository;
-import eu.venthe.pipeline.orchestrator.organizations.domain.infrastructure.SourceConfigurationRepository;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.SourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.PluginProvider;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.SourceType;
+import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
+import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.SourceConfigurationRepository;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.ProjectsSourceConfiguration;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.PluginProvider;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.SourceType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

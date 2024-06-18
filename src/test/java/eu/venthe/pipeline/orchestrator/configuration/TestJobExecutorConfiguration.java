@@ -1,10 +1,10 @@
 package eu.venthe.pipeline.orchestrator.configuration;
 
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.JobExecutorAdapter;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterType;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.model.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.JobExecutorAdapter;
+import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterType;
+import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.JobExecutionId;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;

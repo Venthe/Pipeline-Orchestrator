@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.organizations.domain;
 
-import eu.venthe.pipeline.orchestrator.organizations.application.CreateOrganizationSpecification;
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;
 import org.springframework.stereotype.Component;
 
 @Component

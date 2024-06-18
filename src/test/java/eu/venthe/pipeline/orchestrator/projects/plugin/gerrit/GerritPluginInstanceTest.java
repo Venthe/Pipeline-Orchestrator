@@ -1,12 +1,12 @@
 package eu.venthe.pipeline.orchestrator.projects.plugin.gerrit;
 
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectStatus;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.gerrit.GerritConfiguration;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.gerrit.GerritPluginInstance;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.FileDto;
-import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.gerrit.GerritConfiguration;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.gerrit.GerritPluginInstance;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.SourceType;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.FileDto;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.ProjectDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
