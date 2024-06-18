@@ -4,7 +4,7 @@ import eu.venthe.pipeline.orchestrator.organizations.application.dto.WorkflowTas
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.ProjectDto;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.WorkflowDetailDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 
 import java.util.Collection;
 import java.util.List;

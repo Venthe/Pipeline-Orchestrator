@@ -1,10 +1,12 @@
 package eu.venthe.pipeline.orchestrator.configuration;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterType;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.SourceType;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -17,23 +19,37 @@ import java.util.function.Consumer;
 
 import static org.mockito.ArgumentMatchers.any;
 
-@TestConfiguration
 @Slf4j
-public class TestJobExecutorConfiguration {
+@TestConfiguration
+public class MockBeanConfiguration {
     @Bean
-    public TestJobExecutorAdapterAdapterInstance testJobExecutorAdapterAdapterInstance() {
-        return Mockito.mock(TestJobExecutorAdapterAdapterInstance.class);
+    public MockProjectSource testProjectSourcePluginPluginInstance() {
+        return Mockito.mock(MockProjectSource.class);
     }
 
     @Bean
-    public TestJobExecutorAdapter testJobExecutorAdapter(TestJobExecutorAdapterAdapterInstance adapterInstance) {
+    public TestProjectSourcePlugin testProjectSourcePlugin(MockProjectSource instance) {
+        var mock = Mockito.mock(TestProjectSourcePlugin.class);
+        Mockito.when(mock.getSourceType()).thenReturn(new SourceType("test"));
+        Mockito.when(mock.instantiate(any())).thenReturn(instance);
+        return mock;
+    }
+
+
+    @Bean
+    public MockAdapterInstance testJobExecutorAdapterAdapterInstance() {
+        return Mockito.mock(MockAdapterInstance.class);
+    }
+
+    @Bean
+    public TestJobExecutorAdapter testJobExecutorAdapter(MockAdapterInstance adapterInstance) {
         var mock = Mockito.mock(TestJobExecutorAdapter.class);
         Mockito.when(mock.getAdapterType()).thenReturn(new AdapterType("test"));
         Mockito.when(mock.instantiate(any())).thenReturn(adapterInstance);
         return mock;
     }
 
-    public static void setupExecution(TestJobExecutorAdapterAdapterInstance mock, Consumer<TestJobExecutorAdapterAdapterInstance.Metadata> consumer) {
+    public static void setupExecution(MockAdapterInstance mock, Consumer<MockAdapterInstance.Metadata> consumer) {
         Mockito.doAnswer(invocation -> {
             var projectId = invocation.getArgument(0, ProjectId.class);
             var executionId = invocation.getArgument(1, JobExecutionId.class);
@@ -44,7 +60,7 @@ public class TestJobExecutorConfiguration {
             try (ExecutorService threadExecutor = Executors.newSingleThreadExecutor()) {
                 threadExecutor.execute(() -> {
                     log.info("Executing {} for {}", executionId, projectId);
-                    consumer.accept(new TestJobExecutorAdapterAdapterInstance.Metadata(projectId, executionId, systemApiUrl, callbackToken, dimensions));
+                    consumer.accept(new MockAdapterInstance.Metadata(projectId, executionId, systemApiUrl, callbackToken, dimensions));
                     log.info("Execution {} complete.", executionId);
                 });
             }
@@ -55,9 +71,13 @@ public class TestJobExecutorConfiguration {
     public interface TestJobExecutorAdapter extends JobExecutorAdapter {
     }
 
-    public interface TestJobExecutorAdapterAdapterInstance extends JobExecutorAdapter.AdapterInstance {
+    public interface MockAdapterInstance extends JobExecutorAdapter.AdapterInstance {
         record Metadata(ProjectId projectId, JobExecutionId executionId, URL systemApiUrl,
                         JobExecutorAdapter.CallbackToken callbackToken, RunnerDimensions dimensions) {
         }
     }
+
+    public interface TestProjectSourcePlugin extends ProjectSourcePlugin {}
+
+    public interface MockProjectSource extends ProjectSourcePlugin.PluginInstance {}
 }

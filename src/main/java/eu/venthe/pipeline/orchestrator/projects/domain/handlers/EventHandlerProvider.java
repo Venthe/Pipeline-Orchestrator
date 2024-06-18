@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.organizations.domain.projects.handlers;
 
 import com.google.common.collect.MoreCollectors;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.Project;
+import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.organizations.domain.projects.handlers.handlers.DefaultEventHandler;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;

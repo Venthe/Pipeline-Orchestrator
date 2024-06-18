@@ -1,21 +1,18 @@
-package eu.venthe.pipeline.orchestrator.projects.application;
+package eu.venthe.pipeline.orchestrator.projects.application.impl;
 
+import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.ProjectDto;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.WorkflowTaskDto;
+import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.projects.domain.Project;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.ProjectRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.SourceConfigurationRepository;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.Project;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.handlers.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
-import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorCommandService;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.JobExecutionId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -24,23 +21,21 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-public class ProjectsService implements ProjectsQueryService, ProjectsCommandService {
+public class ProjectsQueryServiceImpl implements ProjectsQueryService {
     private final ProjectRepository projectRepository;
     private final SourceConfigurationRepository configurationRepository;
-    private final DomainMessageBroker messageBroker;
-    private final EventHandlerProvider eventHandlerProvider;
-    private final JobExecutorCommandService jobExecutorCommandService;
+    private final ProjectModuleMediator projectModuleMediator;
 
     @Override
     public Collection<ProjectDto> listProjects() {
         return projectRepository.findAll().stream()
-                .map(ProjectsService::toProjectDto)
+                .map(ProjectsQueryServiceImpl::toProjectDto)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Optional<ProjectDto> find(ProjectId projectId) {
-        return projectRepository.find(projectId).map(ProjectsService::toProjectDto);
+        return projectRepository.find(projectId).map(ProjectsQueryServiceImpl::toProjectDto);
     }
 
     @Override
@@ -70,15 +65,8 @@ public class ProjectsService implements ProjectsQueryService, ProjectsCommandSer
 
         var configuration = configurationRepository.find(configurationId).orElseThrow();
 
-        Project project = new Project(newProjectDto.projectId(), configuration, jobExecutorCommandService, newProjectDto.description(), newProjectDto.status());
+        Project project = new Project(newProjectDto.projectId(), configuration, projectModuleMediator, newProjectDto.description(), newProjectDto.status());
 
         projectRepository.save(project);
-    }
-
-    @Override
-    public JobExecutionId executeManualWorkflow(ProjectId projectId, String ref, File workflowFile) {
-        Project project = projectRepository.find(projectId).orElseThrow();
-
-        return project.executeManualWorkflow(ref, workflowFile);
     }
 }

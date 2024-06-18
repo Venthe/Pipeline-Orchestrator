@@ -5,7 +5,7 @@ import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.mo
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerId;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.JobExecutionId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.ConfigurationPropertyDefinition;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.PropertyName;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;

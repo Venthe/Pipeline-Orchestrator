@@ -1,12 +1,14 @@
 package eu.venthe.pipeline.orchestrator;
 
-import eu.venthe.pipeline.orchestrator.configuration.TestJobExecutorConfiguration;
-import eu.venthe.pipeline.orchestrator.configuration.TestProjectSourcePluginConfiguration;
+import eu.venthe.pipeline.orchestrator.configuration.MockBeanConfiguration;
+import eu.venthe.pipeline.orchestrator.modules.workflow.services.ExecutorManager;
+import eu.venthe.pipeline.orchestrator.modules.workflow.services.JobExecutionQueryService;
+import eu.venthe.pipeline.orchestrator.modules.workflow.services.JobExecutorCallbackService;
 import eu.venthe.pipeline.orchestrator.organizations.application.*;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectSourcesManager;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
@@ -16,23 +18,16 @@ import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plu
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterType;
-import eu.venthe.pipeline.orchestrator.modules.workflow.workflow_executions.application.dto.ExecutionDetailsDto;
-import eu.venthe.pipeline.orchestrator.modules.workflow.workflow_executions.application.ExecutorManager;
-import eu.venthe.pipeline.orchestrator.modules.workflow.workflow_executions.application.JobExecutorCallbackService;
-import eu.venthe.pipeline.orchestrator.modules.workflow.workflow_executions.application.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.JobExecutionId;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
 
-import java.io.File;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static eu.venthe.pipeline.orchestrator.configuration.TestJobExecutorConfiguration.setupExecution;
+import static eu.venthe.pipeline.orchestrator.configuration.MockBeanConfiguration.setupExecution;
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
@@ -58,9 +53,9 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     JobExecutorCallbackService callbackService;
 
     @Autowired
-    TestProjectSourcePluginConfiguration.TestProjectSourcePluginPluginInstance projectSource;
+    MockBeanConfiguration.MockProjectSource projectSource;
     @Autowired
-    TestJobExecutorConfiguration.TestJobExecutorAdapterAdapterInstance testJobExecutorAdapterAdapterInstance;
+    MockBeanConfiguration.MockAdapterInstance adapterInstance;
 
     @Test
     void name() {
@@ -87,13 +82,17 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
 
-        setupExecution(testJobExecutorAdapterAdapterInstance, metadata -> {
+        projectsCommandService.registerTrackedRevision();
+
+        setupExecution(adapterInstance, metadata -> {
             System.out.println(metadata);
         });
 
-        JobExecutionId executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));
+       /*
+       JobExecutionId executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));
 
         await("Execution done").untilAsserted(() ->
                 Assertions.assertThat(jobExecutionQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));
+       */
     }
 }

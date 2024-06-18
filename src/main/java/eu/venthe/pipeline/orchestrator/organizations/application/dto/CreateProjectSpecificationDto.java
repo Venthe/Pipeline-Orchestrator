@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.organizations.application.dto;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectStatus;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 
 import java.util.Optional;
 

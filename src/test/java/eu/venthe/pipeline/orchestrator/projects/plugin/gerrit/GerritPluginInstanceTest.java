@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.plugin.gerrit;
 
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectStatus;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.gerrit.GerritConfiguration;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.gerrit.GerritPluginInstance;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.SourceType;
