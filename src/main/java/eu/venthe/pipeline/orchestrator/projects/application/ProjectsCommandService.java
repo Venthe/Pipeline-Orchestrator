@@ -5,7 +5,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
 
 public interface ProjectsCommandService {
 
@@ -19,7 +19,7 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default void handleEvent(ProjectId projectId, SystemEvent event) {
+    default void handleEvent(ProjectId projectId, ProjectEvent event) {
         throw new UnsupportedOperationException();
     }
 

@@ -5,6 +5,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.Depl
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.WorkflowContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.WorkflowRunContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.model.DeploymentActionContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.DeploymentAction;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
 import lombok.EqualsAndHashCode;
@@ -29,8 +30,9 @@ public class DeploymentEvent extends AbstractProjectEvent {
     private final Optional<WorkflowContext> workflow;
     private final Optional<WorkflowRunContext> workflowRun;
 
-    public DeploymentEvent(ObjectNode root) {
-        super(root, EventType.DEPLOYMENT);
+    public DeploymentEvent(ObjectNode _root) {
+        super(_root, EventType.DEPLOYMENT);
+        var root = ContextUtilities.validateIsObjectNode(_root);
 
         action = DeploymentActionContext.ensure(root.get("action"));
         deployment = DeploymentContext.ensure(root.get("deployment"));

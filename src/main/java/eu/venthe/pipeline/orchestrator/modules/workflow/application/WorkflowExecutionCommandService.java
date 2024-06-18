@@ -7,6 +7,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 
 import java.io.File;
+import java.nio.file.Path;
 
 public interface WorkflowExecutionCommandService {
     default void triggerManualWorkflow(WorkflowDto workflow) {
@@ -29,5 +30,5 @@ public interface WorkflowExecutionCommandService {
         throw new UnsupportedOperationException();
     }
 
-    void triggerManualWorkflow(ProjectId id, Revision revision, File file);
+    WorkflowExecutionId triggerManualWorkflow(final ProjectId id, final Revision revision, final Path path);
 }

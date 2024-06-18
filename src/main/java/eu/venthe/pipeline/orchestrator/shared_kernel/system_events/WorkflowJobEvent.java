@@ -3,6 +3,7 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.system_events;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.DeploymentContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.WorkflowJobContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,8 +22,9 @@ public class WorkflowJobEvent extends AbstractProjectEvent {
     private final Optional<DeploymentContext> deployment;
     private final WorkflowJobContext workflowJob;
 
-    public WorkflowJobEvent(ObjectNode root) {
-        super(root, EventType.WORKFLOW_JOB);
+    public WorkflowJobEvent(ObjectNode _root) {
+        super(_root, EventType.WORKFLOW_JOB);
+        var root = ContextUtilities.validateIsObjectNode(_root);
 
         deployment = DeploymentContext.create(root.get("deployment"));
         workflowJob = WorkflowJobContext.ensure(root.get("workflowJob"));

@@ -5,6 +5,7 @@ import eu.venthe.pipeline.orchestrator.modules.workflow.application.ExecutionAda
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.JobExecutorCallbackService;
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.WorkflowExecutionCommandService;
+import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.WorkflowExecutionId;
 import eu.venthe.pipeline.orchestrator.organizations.application.*;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
@@ -27,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -87,7 +89,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
 
-        var revision = new Revision("main");
+        final var revision = new Revision("main");
 
         projectsCommandService.registerTrackedRevision(projectId, revision);
 
@@ -95,7 +97,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
             System.out.println(metadata);
         });
 
-        workflowExecutionCommandService.triggerManualWorkflow(projectId, revision, new File("test-workflow.yml"));
+        final var workflowExecutionId = workflowExecutionCommandService.triggerManualWorkflow(projectId, revision, Paths.get("test-workflow.yml"));
 
        /*
        JobExecutionId executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));

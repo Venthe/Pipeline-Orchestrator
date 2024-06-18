@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.PullRequestContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.PullRequestReviewCommentActionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.PullRequestReviewCommentContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.PullRequestReviewCommentAction;
 import lombok.EqualsAndHashCode;
@@ -25,8 +26,9 @@ public class PullRequestReviewCommentEvent extends AbstractProjectEvent {
     private final PullRequestContext pullRequest;
     private final PullRequestReviewCommentAction action;
 
-    public PullRequestReviewCommentEvent(ObjectNode root) {
-        super(root, EventType.PULL_REQUEST_REVIEW_COMMENT);
+    public PullRequestReviewCommentEvent(ObjectNode _root) {
+        super(_root, EventType.PULL_REQUEST_REVIEW_COMMENT);
+        var root = ContextUtilities.validateIsObjectNode(_root);
 
         comment = PullRequestReviewCommentContext.ensure(root.get("comment"));
         pullRequest = PullRequestContext.ensure(root.get("pullRequest"));

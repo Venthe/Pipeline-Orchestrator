@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.BooleanContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.DateTimeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.GitHashContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.ReferenceContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.RevisionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 
 import java.time.OffsetDateTime;
@@ -40,7 +40,7 @@ public class DeploymentContext {
 
         this.id = ContextUtilities.Text.ensure(root.get("id"));
         this.sha = GitHashContext.ensure(root.get("sha"));
-        this.ref = ReferenceContext.ensure(root.get("ref"));
+        this.ref = RevisionContext.ensure(root.get("ref"));
         this.task = ContextUtilities.Text.create(root.get("task"));
         this.createdAt = DateTimeContext.ensure(root.get("createdAt"));
         this.updatedAt = DateTimeContext.ensure(root.get("updatedAt"));

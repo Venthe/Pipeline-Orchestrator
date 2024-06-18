@@ -1,13 +1,16 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.system_events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.WorkflowDispatchInputsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.PathContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.ReferenceContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.RevisionContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.nio.file.Path;
 
@@ -20,16 +23,18 @@ import java.nio.file.Path;
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@SuperBuilder
 public class WorkflowDispatchEvent extends AbstractProjectEvent {
     private final WorkflowDispatchInputsContext inputs;
-    private final String ref;
+    private final Revision revision;
     private final Path workflow;
 
-    public WorkflowDispatchEvent(ObjectNode root) {
-        super(root, EventType.WORKFLOW_DISPATCH);
+    public WorkflowDispatchEvent(ObjectNode _root) {
+        super(_root, EventType.WORKFLOW_DISPATCH);
+        var root = ContextUtilities.validateIsObjectNode(_root);
 
         inputs = WorkflowDispatchInputsContext.create(root.get("inputs"));
-        ref = ReferenceContext.ensure(root.get("ref"));
+        revision = RevisionContext.ensure(root.get("revision"));
         workflow = PathContext.ensure(root.get("workflow"));
     }
 }

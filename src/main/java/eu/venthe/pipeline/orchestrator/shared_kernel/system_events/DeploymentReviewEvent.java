@@ -38,8 +38,9 @@ public class DeploymentReviewEvent extends AbstractProjectEvent {
     private final List<WorkflowJobRunContext> workflowJobRuns;
     private final List<ReviewersContext> reviewers;
 
-    public DeploymentReviewEvent(ObjectNode root) {
-        super(root, EventType.DEPLOYMENT_REVIEW);
+    public DeploymentReviewEvent(ObjectNode _root) {
+        super(_root, EventType.DEPLOYMENT_REVIEW);
+        var root = ContextUtilities.validateIsObjectNode(_root);
 
         action = DeploymentReviewActionContext.ensure(root.get("action"));
         since = DateTimeContext.ensure(root.get("since"));

@@ -3,6 +3,7 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.system_events;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.WorkflowContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.WorkflowRunContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,8 +23,10 @@ public class WorkflowRunEvent extends AbstractProjectEvent {
     private final WorkflowContext workflow;
     private final WorkflowRunContext workflowRun;
 
-    public WorkflowRunEvent(ObjectNode root) {
-        super(root, EventType.WORKFLOW_RUN);
+    public WorkflowRunEvent(ObjectNode _root) {
+        super(_root, EventType.WORKFLOW_RUN);
+
+        var root = ContextUtilities.validateIsObjectNode(_root);
 
         workflow = WorkflowContext.ensure(root.get("workflow"));
         workflowRun = WorkflowRunContext.ensure(root.get("workflowRun"));

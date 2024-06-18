@@ -2,7 +2,8 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.system_events;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.ReferenceContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.RevisionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.ReferenceTypeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
@@ -28,17 +29,19 @@ public class DeleteEvent extends AbstractProjectEvent {
     /**
      * The name of the repository's default branch (usually main).
      */
-    private final String mainBranch;
-    private final String ref;
+    private final Revision mainBranch;
+    private final Revision ref;
     private final String refType;
 
-    public DeleteEvent(ObjectNode root) {
-        super(root, EventType.DELETE);
+    public DeleteEvent(ObjectNode _root) {
+        super(_root, EventType.DELETE);
+
+        var root = ContextUtilities.validateIsObjectNode(_root);
 
         final JsonNode description1 = root.get("description");
         description = ContextUtilities.Text.create(description1);
-        mainBranch = ReferenceContext.ensure(root.get("mainBranch"));
-        ref = ReferenceContext.ensure(root.get("ref"));
+        mainBranch = RevisionContext.ensure(root.get("mainBranch"));
+        ref = RevisionContext.ensure(root.get("ref"));
         refType = ReferenceTypeContext.ensure(root.get("refType"));
     }
 }

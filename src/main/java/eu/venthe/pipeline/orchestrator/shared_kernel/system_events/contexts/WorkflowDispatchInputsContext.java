@@ -13,7 +13,6 @@ import static eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities.toMa
 public class WorkflowDispatchInputsContext {
     private final Map<String, InputUtilities.InputValue<?>> inputs;
 
-
     public WorkflowDispatchInputsContext(final JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 

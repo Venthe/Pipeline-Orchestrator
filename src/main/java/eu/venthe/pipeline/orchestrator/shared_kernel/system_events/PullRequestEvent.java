@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.model.PullRequestActionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.PullRequestContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.PullRequestNumberContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.PullRequestAction;
 import lombok.EqualsAndHashCode;
@@ -24,8 +25,10 @@ public class PullRequestEvent extends AbstractProjectEvent {
     private final PullRequestAction action;
     private final PullRequestContext pullRequest;
 
-    public PullRequestEvent(ObjectNode root) {
-        super(root, EventType.PULL_REQUEST);
+    public PullRequestEvent(ObjectNode _root) {
+        super(_root, EventType.PULL_REQUEST);
+
+        var root = ContextUtilities.validateIsObjectNode(_root);
 
         action = PullRequestActionContext.ensure(root.get("action"));
         number = PullRequestNumberContext.ensure(root.get("number"));

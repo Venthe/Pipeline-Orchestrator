@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.text.MessageFormat;
 import java.util.UUID;
@@ -23,14 +24,11 @@ import java.util.function.Function;
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
+@SuperBuilder
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-public class AbstractProjectEvent implements SystemEvent {
-    @ToString.Include
-    @Getter(AccessLevel.NONE)
-    protected final ObjectNode root;
-
+public class AbstractProjectEvent implements SystemEvent, ProjectEvent {
     @EqualsAndHashCode.Include
-    private final UUID id;
+    private final EventId id;
 
     private final EventType type;
     private final RepositoryContext repository;
@@ -48,21 +46,11 @@ public class AbstractProjectEvent implements SystemEvent {
     }
 
     public AbstractProjectEvent(JsonNode _root) {
-        this.root = ContextUtilities.validateIsObjectNode(_root);
+        var root = ContextUtilities.validateIsObjectNode(_root);
 
         this.type = EventTypeContext.ensure(root.get("type"));
         this.id = EventIdContext.ensure(root.get("id"));
         this.repository = RepositoryContext.ensure(root.get("repository"));
         this.sender = UserContext.ensure(root.get("sender"));
-    }
-
-    @Override
-    public ObjectNode getEvent() {
-        return root;
-    }
-
-    @Override
-    public <T extends SystemEvent> T specify(Function<ObjectNode, T> creator) {
-        return creator.apply(root);
     }
 }

@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.GitHashContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.ReferenceContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.RevisionContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.Getter;
 
@@ -22,7 +22,7 @@ public class ReferenceInfoContext {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
         label = ContextUtilities.Text.ensure(root.get("label"));
-        ref = ReferenceContext.ensure(root.get("ref"));
+        ref = RevisionContext.ensure(root.get("ref"));
         repo = RepositoryContext.create(root.get("repo"));
         sha = GitHashContext.ensure(root.get("sha"));
         user = UserContext.ensure(root.get("user"));
