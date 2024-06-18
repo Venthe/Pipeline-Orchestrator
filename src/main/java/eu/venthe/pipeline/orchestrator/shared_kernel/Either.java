@@ -22,11 +22,17 @@ public interface Either<FAILURE, SUCCESS> {
 
     boolean isSuccess();
 
-    default void orElseThrow() {
+    SUCCESS getSuccess();
+
+    FAILURE getFailure();
+
+    default SUCCESS orElseThrow() {
+        if (isSuccess()) return getSuccess();
         throw new IllegalArgumentException();
     }
 
-    default <T extends RuntimeException> void orElseThrow(Supplier<? extends T> exceptionSupplier) {
+    default <T extends RuntimeException> SUCCESS orElseThrow(Supplier<? extends T> exceptionSupplier) {
+        if (isSuccess()) return getSuccess();
         throw exceptionSupplier.get();
     }
 

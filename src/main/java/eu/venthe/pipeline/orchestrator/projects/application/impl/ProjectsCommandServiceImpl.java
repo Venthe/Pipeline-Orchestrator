@@ -9,6 +9,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.ProjectRep
 import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.SourceConfigurationRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,12 @@ public class ProjectsCommandServiceImpl implements ProjectsCommandService {
         Project project = new Project(newProjectDto.projectId(), configuration, projectModuleMediator, newProjectDto.description(), newProjectDto.status());
 
         repository.save(project);
+    }
+
+    @Override
+    public void handleEvent(final ProjectId projectId, final ProjectEvent event) {
+        var project = repository.find(projectId).orElseThrow();
+
+        project.handleEvent(event);
     }
 }

@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.EmailContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.model.UserTypeContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.UserType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.UserType;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.net.URL;
 import java.util.Optional;
@@ -16,6 +18,17 @@ import java.util.Optional;
 @Getter
 public class UserContext {
     private final String id;
+
+    @Builder
+    private UserContext(final @NonNull String id, final @NonNull String login, final @NonNull UserType userType, final String email, final String name, final URL url) {
+        this.id = id;
+        this.login = login;
+        this.email = Optional.ofNullable(email);
+        this.name = Optional.ofNullable(name);
+        this.url = Optional.ofNullable(url);
+        this.userType = userType;
+    }
+
     private final String login;
     private final Optional<String> email;
     private final Optional<String> name;

@@ -1,6 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.BooleanContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.DateTimeContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.GitHashContext;
@@ -18,7 +19,7 @@ public class DeploymentContext {
      */
     private final String id;
     private final String sha;
-    private final String ref;
+    private final Revision ref;
     /**
      * The name of the task for the deployment (e.g., deploy or deploy:migrations).
      */

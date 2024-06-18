@@ -19,9 +19,7 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default void handleEvent(ProjectId projectId, ProjectEvent event) {
-        throw new UnsupportedOperationException();
-    }
+    void handleEvent(ProjectId projectId, ProjectEvent event);
 
     void registerTrackedRevision(ProjectId projectId, Revision revision);
 

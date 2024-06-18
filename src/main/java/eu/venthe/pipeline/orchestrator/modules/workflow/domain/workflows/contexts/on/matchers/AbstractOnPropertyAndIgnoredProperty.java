@@ -2,10 +2,12 @@ package eu.venthe.pipeline.orchestrator.modules.workflow.domain.workflows.contex
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.workflows.GlobPatternMatching;
+import eu.venthe.pipeline.orchestrator.modules.workflow.domain.utilities.GlobPatternMatching;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.extern.slf4j.Slf4j;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -40,8 +42,8 @@ public class AbstractOnPropertyAndIgnoredProperty {
                         .toList());
     }
 
-    public boolean match(String property) {
-        return match(List.of(property));
+    public boolean match(Revision property) {
+        return match(List.of(property.value()));
     }
 
     public boolean match(Collection<String> properties) {
@@ -57,6 +59,6 @@ public class AbstractOnPropertyAndIgnoredProperty {
 
     private static boolean isMatching(Collection<String> properties, String pattern) {
         return properties.stream()
-                .anyMatch(path -> GlobPatternMatching.isMatching(pattern, path));
+                .anyMatch(path -> GlobPatternMatching.isMatching(new GlobPatternMatching.Glob(pattern), Path.of(path)));
     }
 }

@@ -2,6 +2,7 @@ package eu.venthe.pipeline.orchestrator.shared_kernel;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.newsclub.net.unix.InvalidArgumentSocketException;
 
 import java.util.function.Function;
 
@@ -32,5 +33,15 @@ class EitherSuccess<FAILURE, SUCCESS> implements Either<FAILURE, SUCCESS> {
     @Override
     public boolean isSuccess() {
         return true;
+    }
+
+    @Override
+    public SUCCESS getSuccess() {
+        return value;
+    }
+
+    @Override
+    public FAILURE getFailure() {
+        throw new RuntimeException();
     }
 }

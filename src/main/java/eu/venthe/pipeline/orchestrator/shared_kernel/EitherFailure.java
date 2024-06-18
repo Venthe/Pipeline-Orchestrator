@@ -33,4 +33,14 @@ class EitherFailure<FAILURE, SUCCESS> implements Either<FAILURE, SUCCESS> {
     public boolean isSuccess() {
         return false;
     }
+
+    @Override
+    public SUCCESS getSuccess() {
+        throw new RuntimeException();
+    }
+
+    @Override
+    public FAILURE getFailure() {
+        return value;
+    }
 }

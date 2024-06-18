@@ -1,4 +1,6 @@
 package eu.venthe.pipeline.orchestrator.modules.workflow._archive.api.dto;
 
-public class WorkflowExecutionDto {
+import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.WorkflowExecutionId;
+
+public record WorkflowExecutionDto(WorkflowExecutionId workflowExecutionId) {
 }

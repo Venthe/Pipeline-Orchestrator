@@ -85,6 +85,8 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         await("Synchronization done")
                 .until(() -> !projectsQueryService.getProjectIds(sourceConfigurationId).collect(toSet()).isEmpty());
 
+        // FIXME: Add organization to project ID
+        //  Project ID should have ORG in it (Or only org?)
         final var projectId = ProjectId.of(sourceConfigurationId, "Example-Project");
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
