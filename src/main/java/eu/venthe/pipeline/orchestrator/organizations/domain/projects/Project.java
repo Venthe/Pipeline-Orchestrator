@@ -2,10 +2,11 @@ package eu.venthe.pipeline.orchestrator.organizations.domain.projects;
 
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.organizations.domain.source_configurations.plugins.template.model.ProjectDto;
-import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorCommandService;
-import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.JobExecutionId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorCommandService;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.WorkflowExecutionCommandService;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.JobExecutionId;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,8 +25,6 @@ public class Project implements Aggregate<ProjectId> {
     @EqualsAndHashCode.Include
     private final ProjectId id;
     private final ProjectsSourceConfiguration owningConfiguration;
-
-    private final JobExecutorCommandService jobExecutorCommandService;
 
     private Optional<String> description;
     private ProjectStatus status;
@@ -52,18 +51,27 @@ public class Project implements Aggregate<ProjectId> {
         throw new UnsupportedOperationException();
     }
 
+    // TODO: Move to plugin
     public void registerManualWorkflow(Path workflowFilename) {
         throw new UnsupportedOperationException();
     }
 
+    // TODO: Move to plugin
     public void unregisterManualWorkflow(Path workflowFilename) {
         throw new UnsupportedOperationException();
     }
 
+    // TODO: Move to plugin
     public JobExecutionId executeManualWorkflow(String ref, File workflowFile) {
-        return jobExecutorCommandService.triggerJobExecution(id);
+        // return jobExecutorCommandService.triggerJobExecution(id);
+        throw new UnsupportedOperationException();
     }
 
+    /**
+     * Register ref to be presented
+     *
+     * @param ref
+     */
     public void registerTrackedRef(String ref) {
         throw new UnsupportedOperationException();
     }

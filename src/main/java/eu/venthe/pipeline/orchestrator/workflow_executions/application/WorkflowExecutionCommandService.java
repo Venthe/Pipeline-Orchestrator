@@ -1,23 +1,20 @@
 package eu.venthe.pipeline.orchestrator.workflow_executions.application;
 
-import eu.venthe.pipeline.orchestrator.workflow_executions._archive.api.dto.EventDto;
 import eu.venthe.pipeline.orchestrator.workflow_executions._archive.api.dto.WorkflowDto;
-import eu.venthe.pipeline.orchestrator.workflow_executions._archive.api.model.JobId;
-import eu.venthe.pipeline.orchestrator.workflow_executions._archive.api.model.StepExecutionStatus;
-import eu.venthe.pipeline.orchestrator.workflow_executions._archive.api.model.StepId;
+import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.JobExecutionId;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.WorkflowExecutionId;
-import eu.venthe.pipeline.orchestrator.organizations.domain.projects.ProjectId;
 
+import java.time.ZonedDateTime;
 import java.util.Map;
 
 public interface WorkflowExecutionCommandService {
-    void cancelRunningWorkflowExecutions(ProjectId projectId);
-
-    void cancelRunningWorkflowExecution(WorkflowExecutionId executionId);
-
-    WorkflowExecutionId triggerWorkflow(WorkflowDto workflow, EventDto eventDto);
-
+    void triggerWorkflow(WorkflowDto workflow);
     void retriggerWorkflow(WorkflowExecutionId executionId);
-
-    void updateJobState(WorkflowExecutionId executionId, JobId jobId, Map<StepId, StepExecutionStatus> statuses);
+    void retriggerJobExecution(WorkflowExecutionId executionId, JobExecutionId jobExecutionId);
+    void stopJobExecution(WorkflowExecutionId executionId, JobExecutionId jobExecutionId);
+    void stopJobExecutions(WorkflowExecutionId workflowExecutionId);
+    void notifyJobStarted(WorkflowExecutionId workflowExecutionId, JobExecutionId executionId, ZonedDateTime startDate);
+    void notifyJobCompleted(WorkflowExecutionId workflowExecutionId, JobExecutionId executionId, ZonedDateTime startDate, Map<String, String> outputs);
+    void notifyStepStarted(WorkflowExecutionId workflowExecutionId, JobExecutionId executionId, ZonedDateTime startDate);
+    void notifyStepCompleted(WorkflowExecutionId workflowExecutionId, JobExecutionId executionId, ZonedDateTime endDate);
 }

@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import eu.venthe.pipeline.orchestrator.workflow_executions.application.dto.ExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.workflow_executions.application.ExecutorManager;
 import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorCommandService;
-import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorQueryService;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.JobExecutorAdapterProvider;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.adapters.template.model.AdapterId;
@@ -28,7 +28,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class JobExecutorAdapterManagerImpl implements ExecutorManager, JobExecutorCommandService, JobExecutorQueryService {
+public class JobExecutionAdapterManagerImpl implements ExecutorManager, JobExecutorCommandService, JobExecutionQueryService {
     private final JobExecutorAdapterRepository repository;
     private final JobExecutorAdapterProvider jobExecutorAdapterProvider;
     private final FeatureManager featureManager;

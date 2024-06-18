@@ -15,7 +15,7 @@ import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions
 import eu.venthe.pipeline.orchestrator.workflow_executions.application.dto.ExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.workflow_executions.application.ExecutorManager;
 import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorCallbackService;
-import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutorQueryService;
+import eu.venthe.pipeline.orchestrator.workflow_executions.application.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.job_executions.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.workflow_executions.domain.model.JobExecutionId;
 import org.assertj.core.api.Assertions;
@@ -47,7 +47,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     ProjectsQueryService projectsQueryService;
     @Autowired
-    JobExecutorQueryService jobExecutorQueryService;
+    JobExecutionQueryService jobExecutionQueryService;
     @Autowired
     OrganizationCommandService organizationCommandService;
     @Autowired
@@ -90,6 +90,6 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         JobExecutionId executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));
 
         await("Execution done").untilAsserted(() ->
-                Assertions.assertThat(jobExecutorQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));
+                Assertions.assertThat(jobExecutionQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));
     }
 }
