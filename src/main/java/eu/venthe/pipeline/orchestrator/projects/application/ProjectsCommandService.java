@@ -9,9 +9,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 
 public interface ProjectsCommandService {
 
-    default void add(SourceConfigurationId configurationId, CreateProjectSpecificationDto newProjectDto) {
-        throw new UnsupportedOperationException();
-    }
+    void add(SourceConfigurationId configurationId, CreateProjectSpecificationDto newProjectDto);
 
     default void synchronize(ProjectId projectId) {
         throw new UnsupportedOperationException();
@@ -25,9 +23,7 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default void registerTrackedRevision(ProjectId projectId, Revision revision) {
-        throw new UnsupportedOperationException();
-    }
+    void registerTrackedRevision(ProjectId projectId, Revision revision);
 
     default void unregisterTrackedRevision(ProjectId projectId, Revision revision) {
         throw new UnsupportedOperationException();

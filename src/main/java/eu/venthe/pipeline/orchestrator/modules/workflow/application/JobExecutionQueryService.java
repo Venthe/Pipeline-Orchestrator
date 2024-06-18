@@ -1,6 +1,6 @@
-package eu.venthe.pipeline.orchestrator.modules.workflow.services;
+package eu.venthe.pipeline.orchestrator.modules.workflow.application;
 
-import eu.venthe.pipeline.orchestrator.modules.workflow.services.dto.ExecutionDetailsDto;
+import eu.venthe.pipeline.orchestrator.modules.workflow.application.dto.ExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.JobExecutionId;
 
 public interface JobExecutionQueryService {

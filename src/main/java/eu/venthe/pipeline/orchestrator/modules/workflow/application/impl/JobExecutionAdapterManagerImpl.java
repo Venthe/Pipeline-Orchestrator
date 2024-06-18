@@ -1,33 +1,28 @@
-package eu.venthe.pipeline.orchestrator.modules.workflow.services.impl;
+package eu.venthe.pipeline.orchestrator.modules.workflow.application.impl;
 
-import eu.venthe.pipeline.orchestrator.modules.workflow.services.ExecutorManager;
-import eu.venthe.pipeline.orchestrator.modules.workflow.services.JobExecutionQueryService;
-import eu.venthe.pipeline.orchestrator.modules.workflow.services.dto.ExecutionDetailsDto;
+import eu.venthe.pipeline.orchestrator.modules.workflow.application.ExecutionAdapterManager;
+import eu.venthe.pipeline.orchestrator.modules.workflow.application.JobExecutionQueryService;
+import eu.venthe.pipeline.orchestrator.modules.workflow.application.dto.ExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.AdapterInstanceAggregate;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.JobExecutorAdapterProvider;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterType;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.Dimension;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerId;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.JobExecutionId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
 import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.infrastructure.JobExecutorAdapterRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import org.togglz.core.manager.FeatureManager;
 import org.togglz.core.util.NamedFeature;
 
-import java.util.UUID;
-
 @Component
 @RequiredArgsConstructor
-public class JobExecutionAdapterManagerImpl implements ExecutorManager, JobExecutionQueryService {
+public class JobExecutionAdapterManagerImpl implements ExecutionAdapterManager, JobExecutionQueryService {
     private final JobExecutorAdapterRepository repository;
     private final JobExecutorAdapterProvider jobExecutorAdapterProvider;
     private final FeatureManager featureManager;

@@ -23,8 +23,6 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class ProjectsQueryServiceImpl implements ProjectsQueryService {
     private final ProjectRepository projectRepository;
-    private final SourceConfigurationRepository configurationRepository;
-    private final ProjectModuleMediator projectModuleMediator;
 
     @Override
     public Collection<ProjectDto> listProjects() {
@@ -55,18 +53,5 @@ public class ProjectsQueryServiceImpl implements ProjectsQueryService {
 
     private static ProjectDto toProjectDto(Project p) {
         return new ProjectDto(p.getId().getName(), p.getId().getConfigurationId().id(), p.getStatus());
-    }
-
-    @Override
-    public void add(SourceConfigurationId configurationId, CreateProjectSpecificationDto newProjectDto) {
-        if (projectRepository.exists(newProjectDto.projectId())) {
-            throw new IllegalArgumentException();
-        }
-
-        var configuration = configurationRepository.find(configurationId).orElseThrow();
-
-        Project project = new Project(newProjectDto.projectId(), configuration, projectModuleMediator, newProjectDto.description(), newProjectDto.status());
-
-        projectRepository.save(project);
     }
 }

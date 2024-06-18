@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.workflow.services;
+package eu.venthe.pipeline.orchestrator.modules.workflow.application;
 
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.ad
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerId;
 
-public interface ExecutorManager {
+public interface ExecutionAdapterManager {
 
     AdapterId registerAdapter(OrganizationId organizationId, AdapterId adapterId, AdapterType adapterType, SuppliedProperties properties);
 

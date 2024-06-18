@@ -1,5 +1,9 @@
-package eu.venthe.pipeline.orchestrator.projects.application;
+package eu.venthe.pipeline.orchestrator.projects.application.impl;
 
+import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
+import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.projects.application.ProjectsSourceConfigurationCommandService;
+import eu.venthe.pipeline.orchestrator.projects.application.ProjectsSourceConfigurationQueryService;
 import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.SourceConfigurationRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
