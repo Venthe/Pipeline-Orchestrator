@@ -1,7 +1,9 @@
 package eu.venthe.pipeline.orchestrator.modules.workflow.domain;
 
+import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.WorkflowCorrelationId;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.WorkflowExecutionId;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.WorkflowExecutionStatus;
+import eu.venthe.pipeline.orchestrator.modules.workflow.domain.workflows.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.JobExecutionId;
 import lombok.*;
@@ -16,18 +18,20 @@ public class WorkflowExecution implements Aggregate<WorkflowExecutionId> {
     @Getter
     @EqualsAndHashCode.Include
     private final WorkflowExecutionId id;
+    private final WorkflowCorrelationId workflowCorrelationId;
     private final ZonedDateTime startDate;
     private ZonedDateTime endDate;
     private WorkflowExecutionStatus status;
     private final WorkflowExecutionJobs jobs;
 
-    private final WorkflowTemplate workflow;
+    private final WorkflowDefinition workflow;
 
-    public WorkflowExecution(WorkflowTemplate workflow) {
+    public WorkflowExecution(WorkflowCorrelationId workflowCorrelationId, WorkflowDefinition workflow) {
         id = WorkflowExecutionId.generate();
         startDate = ZonedDateTime.now();
         status = WorkflowExecutionStatus.REQUESTED;
         this.workflow = workflow;
+        this.workflowCorrelationId = workflowCorrelationId;
 
         jobs = new WorkflowExecutionJobs();
     }

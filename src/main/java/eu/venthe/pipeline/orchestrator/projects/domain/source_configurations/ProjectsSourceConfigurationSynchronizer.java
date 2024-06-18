@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.source_configurations;
 
 import com.google.common.collect.Sets;
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.ProjectDto;
@@ -79,6 +79,7 @@ record ProjectsSourceConfigurationSynchronizer(
     }
 
     private ProjectId buildProjectId(String projectId) {
-        return ProjectId.of(configuration.getId(), projectId);
+        throw new UnsupportedOperationException();
+        // return ProjectId.of(configuration.getId(), null, projectId);
     }
 }

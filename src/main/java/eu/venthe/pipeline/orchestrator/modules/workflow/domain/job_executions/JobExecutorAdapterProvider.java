@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters;
+package eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions;
 
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;

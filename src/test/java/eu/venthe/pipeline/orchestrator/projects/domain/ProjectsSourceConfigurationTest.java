@@ -46,7 +46,7 @@ class ProjectsSourceConfigurationTest {
         // FIXME: Uncomment
         // projectsSourceConfiguration.synchronize();
 
-        Mockito.verify(projectCommands).add(new SourceConfigurationId("TestName"), new CreateProjectSpecificationDto(ProjectId.of(new SourceConfigurationId("TestName"), "123"), ProjectStatus.ACTIVE));
+        Mockito.verify(projectCommands).add(new SourceConfigurationId("TestName"), new CreateProjectSpecificationDto(ProjectId.of(new SourceConfigurationId("TestName"), null, "123"), ProjectStatus.ACTIVE));
     }
 
     @Test

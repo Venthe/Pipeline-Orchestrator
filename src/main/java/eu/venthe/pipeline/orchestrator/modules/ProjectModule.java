@@ -5,9 +5,9 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 
 public interface ProjectModule {
-    void handleEvent(final ProjectId id, SystemEvent event);
+    void handleEvent(final SystemEvent event);
 
-    void registerTrackedRevision(ProjectId id, Revision ref);
+    void registerTrackedRevision(final ProjectId id, final Revision ref);
 
-    void unregisterTrackedRevision(ProjectId id, Revision ref);
+    void unregisterTrackedRevision(final ProjectId id, final Revision ref);
 }

@@ -1,6 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.model.RepositoryVisibilityContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.RepositoryVisibility;
@@ -26,7 +27,7 @@ public class RepositoryContext {
     /**
      * Unique identifier of the repository
      */
-    private final String id;
+    private final ProjectId id;
     /**
      * The name of the repository.
      */
@@ -43,7 +44,7 @@ public class RepositoryContext {
     private RepositoryContext(final JsonNode _root) {
         final var root = ContextUtilities.validateIsObjectNode(_root);
 
-        this.id = ContextUtilities.ensure(root.get("id"), ContextUtilities.toTextMapper());
+        this.id = ContextUtilities.ensure(root.get("id"), ContextUtilities.fromTextMapper(ProjectId::from));
         this.name = ContextUtilities.ensure(root.get("name"), ContextUtilities.toTextMapper());
         this.fullName = ContextUtilities.ensure(root.get("fullName"), ContextUtilities.toTextMapper());
         this.description = ContextUtilities.create(root.get("description"), ContextUtilities.toTextMapper());

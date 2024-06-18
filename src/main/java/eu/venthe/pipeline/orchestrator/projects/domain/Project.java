@@ -51,7 +51,7 @@ public class Project implements Aggregate<ProjectId> {
 
     public void handleEvent(SystemEvent event) {
         log.debug("Passing event {} from project {} for the modules", event.getType(), id);
-        projectModules.onModule(module -> module.handleEvent(id, event));
+        projectModules.onModule(module -> module.handleEvent(event));
     }
 
     public void registerTrackedRevision(Revision revision) {

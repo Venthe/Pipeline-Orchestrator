@@ -87,7 +87,8 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
         // FIXME: Add organization to project ID
         //  Project ID should have ORG in it (Or only org?)
-        final var projectId = ProjectId.of(sourceConfigurationId, "Example-Project");
+        // FIXME: null
+        final var projectId = ProjectId.of(sourceConfigurationId, null, "Example-Project");
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
 

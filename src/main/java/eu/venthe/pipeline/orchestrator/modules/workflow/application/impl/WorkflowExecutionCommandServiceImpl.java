@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.modules.workflow.application.impl;
 
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.WorkflowExecutionQueryService;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.WorkflowCorrelationId;
+import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.WorkflowCorrelationId;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.WorkflowExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
