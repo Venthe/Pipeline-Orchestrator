@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.domain.source_configurations;
 
 import com.google.common.collect.Sets;
-import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.projects.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;

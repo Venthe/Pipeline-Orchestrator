@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.application;
 
-import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.projects.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;

@@ -1,16 +1,13 @@
 package eu.venthe.pipeline.orchestrator.projects.application.impl;
 
-import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.utilities.GlobPatternMatching;
-import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
-import eu.venthe.pipeline.orchestrator.organizations.application.dto.ProjectDto;
-import eu.venthe.pipeline.orchestrator.organizations.application.dto.WorkflowTaskDto;
+import eu.venthe.pipeline.orchestrator.projects.application.dto.ProjectDto;
+import eu.venthe.pipeline.orchestrator.projects.application.dto.WorkflowTaskDto;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
 import eu.venthe.pipeline.orchestrator.projects.application.dto.ProjectDetailsDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.ProjectRepository;
-import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.SourceConfigurationRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 import lombok.RequiredArgsConstructor;

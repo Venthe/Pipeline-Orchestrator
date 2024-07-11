@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.projects.application.impl;
 
 import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
-import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateProjectSpecificationDto;
+import eu.venthe.pipeline.orchestrator.projects.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;

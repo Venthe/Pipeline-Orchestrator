@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.organizations.application.dto;
+package eu.venthe.pipeline.orchestrator.projects.application.dto;
 
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 import lombok.Value;
