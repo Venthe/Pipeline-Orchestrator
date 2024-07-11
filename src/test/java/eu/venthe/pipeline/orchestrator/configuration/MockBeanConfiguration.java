@@ -1,83 +1,53 @@
 package eu.venthe.pipeline.orchestrator.configuration;
 
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.JobExecutorAdapter;
+import eu.venthe.pipeline.orchestrator.fixtures.MockAdapterFixture;
+import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterType;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.JobExecutionId;
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
-import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.SourceType;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
-import java.net.URL;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
-
 import static org.mockito.ArgumentMatchers.any;
 
 @Slf4j
 @TestConfiguration
 public class MockBeanConfiguration {
-    @Bean
-    public MockProjectSource testProjectSourcePluginPluginInstance() {
-        return Mockito.mock(MockProjectSource.class);
-    }
 
     @Bean
-    public TestProjectSourcePlugin testProjectSourcePlugin(MockProjectSource instance) {
-        var mock = Mockito.mock(TestProjectSourcePlugin.class);
-        Mockito.when(mock.getSourceType()).thenReturn(new SourceType("test"));
-        Mockito.when(mock.instantiate(any())).thenReturn(instance);
-        return mock;
-    }
-
-
-    @Bean
-    public MockAdapterInstance testJobExecutorAdapterAdapterInstance() {
-        return Mockito.mock(MockAdapterInstance.class);
+    MockAdapterFixture.MockAdapterInstance adapterInstance() {
+        return Mockito.mock(MockAdapterFixture.MockAdapterInstance.class);
     }
 
     @Bean
-    public TestJobExecutorAdapter testJobExecutorAdapter(MockAdapterInstance adapterInstance) {
-        var mock = Mockito.mock(TestJobExecutorAdapter.class);
-        Mockito.when(mock.getAdapterType()).thenReturn(new AdapterType("test"));
-        Mockito.when(mock.instantiate(any())).thenReturn(adapterInstance);
-        return mock;
+    MockAdapterFixture.TestJobExecutorAdapter executionAdapter(MockAdapterFixture.MockAdapterInstance adapterInstance) {
+        var executionAdapter = Mockito.mock(MockAdapterFixture.TestJobExecutorAdapter.class);
+        Mockito.when(executionAdapter.getAdapterType()).thenReturn(new AdapterType("default"));
+        Mockito.when(executionAdapter.instantiate(any())).thenReturn(adapterInstance);
+        return executionAdapter;
     }
 
-    public static void setupExecution(MockAdapterInstance mock, Consumer<MockAdapterInstance.Metadata> consumer) {
-        Mockito.doAnswer(invocation -> {
-            var projectId = invocation.getArgument(0, ProjectId.class);
-            var executionId = invocation.getArgument(1, JobExecutionId.class);
-            var systemApiUrl = invocation.getArgument(2, URL.class);
-            var callbackToken = invocation.getArgument(3, JobExecutorAdapter.CallbackToken.class);
-            var dimensions = invocation.getArgument(4, RunnerDimensions.class);
-
-            try (ExecutorService threadExecutor = Executors.newSingleThreadExecutor()) {
-                threadExecutor.execute(() -> {
-                    log.info("Executing {} for {}", executionId, projectId);
-                    consumer.accept(new MockAdapterInstance.Metadata(projectId, executionId, systemApiUrl, callbackToken, dimensions));
-                    log.info("Execution {} complete.", executionId);
-                });
-            }
-            return null;
-        }).when(mock).queueJobExecution(any(), any(), any(), any(), any());
+    @Bean
+    MockAdapterFixture mockAdapterFixture(MockAdapterFixture.MockAdapterInstance adapterInstance, MockAdapterFixture.TestJobExecutorAdapter adapter) {
+        return new MockAdapterFixture(adapterInstance, adapter);
     }
 
-    public interface TestJobExecutorAdapter extends JobExecutorAdapter {
+    @Bean
+    MockProjectSourceFixture.MockProjectSource mockProjectSource() {
+        return Mockito.mock(MockProjectSourceFixture.MockProjectSource.class);
     }
 
-    public interface MockAdapterInstance extends JobExecutorAdapter.AdapterInstance {
-        record Metadata(ProjectId projectId, JobExecutionId executionId, URL systemApiUrl,
-                        JobExecutorAdapter.CallbackToken callbackToken, RunnerDimensions dimensions) {
-        }
+    @Bean
+    MockProjectSourceFixture.TestProjectSourcePlugin testProjectSourcePlugin(MockProjectSourceFixture.MockProjectSource instance) {
+        var sourcePlugin = Mockito.mock(MockProjectSourceFixture.TestProjectSourcePlugin.class);
+        Mockito.when(sourcePlugin.getSourceType()).thenReturn(new SourceType("default"));
+        Mockito.when(sourcePlugin.instantiate(any())).thenReturn(instance);
+        return sourcePlugin;
     }
 
-    public interface TestProjectSourcePlugin extends ProjectSourcePlugin {}
-
-    public interface MockProjectSource extends ProjectSourcePlugin.PluginInstance {}
+    @Bean
+    MockProjectSourceFixture mockProjectSourceFixture(MockProjectSourceFixture.TestProjectSourcePlugin plugin, MockProjectSourceFixture.MockProjectSource instance) {
+        return new MockProjectSourceFixture(instance, plugin);
+    }
 }

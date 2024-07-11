@@ -25,9 +25,6 @@ import java.io.InputStreamReader;
 @RequiredArgsConstructor
 public class WorkflowProjectModule implements ProjectModule {
     private final FeatureManager featureManager;
-    private final WorkflowExecutionCommandService workflowExecutionCommandService;
-    private final ProjectsQueryService projectsQueryService;
-    private final YAMLMapper yamlMapper;
     private final EventHandlerProvider eventHandlerProvider;
 
     @Override

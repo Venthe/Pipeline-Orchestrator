@@ -2,15 +2,14 @@ package eu.venthe.pipeline.orchestrator.projects.domain;
 
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
+import lombok.Builder;
 import lombok.Value;
+import lombok.experimental.SuperBuilder;
 
-import javax.annotation.RegEx;
-import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
-@Value(staticConstructor = "of")
+@SuperBuilder
+@Value
 public class ProjectId {
     private static final Pattern PATTERN = Pattern.compile("/^(?:(?<configuration>.+):)?(?:(?<organization>.+?)/)?(?<name>.*\\w)$/", Pattern.CASE_INSENSITIVE);
 
@@ -23,14 +22,33 @@ public class ProjectId {
     }
 
     public static ProjectId from(String projectId) {
-        var matcher = PATTERN.matcher(projectId);
-        var collect = matcher.namedGroups()
-                .entrySet()
-                .stream()
-                .map(e -> Map.entry(e.getKey(), matcher.group(e.getValue())))
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey, Map.Entry::getValue
-                ));
-        throw new UnsupportedOperationException();
+        var sourceSeparator = projectId.indexOf(":");
+        var orgSeparator = projectId.indexOf("/");
+
+        var builder = ProjectId.builder();
+        builder.configurationId(new SourceConfigurationId(extracted(projectId, 0, sourceSeparator)));
+        builder.organizationId(new OrganizationId(extracted(projectId, Math.max(sourceSeparator, 0), orgSeparator)));
+
+        var projectSeparator = Math.max((Math.max(sourceSeparator, 0)), orgSeparator);
+
+        builder.name(projectId.substring(projectSeparator, projectId.length() - 1));
+
+        return builder.build();
+    }
+
+    private static String extracted(final String projectId,
+                                    final int start,
+                                    final int end) {
+        var hasElement = end < 0;
+        if (hasElement) {
+            var substring = projectId.substring(start, end);
+            if (substring.isEmpty()) {
+                throw new UnsupportedOperationException();
+            }
+
+            return substring;
+        } else {
+            return "default";
+        }
     }
 }

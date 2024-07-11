@@ -3,6 +3,7 @@ package eu.venthe.pipeline.orchestrator.modules.workflow.application.impl;
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.ExecutionAdapterManager;
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.dto.ExecutionDetailsDto;
+import eu.venthe.pipeline.orchestrator.modules.workflow.application.dto.RegisterAdapterSpecification;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.AdapterInstanceAggregate;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.JobExecutorAdapterProvider;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.JobExecutorAdapter;
@@ -29,18 +30,12 @@ public class JobExecutionAdapterManagerImpl implements ExecutionAdapterManager, 
     private final EnvUtil envUtil;
 
     @Override
-    public AdapterId registerAdapter(OrganizationId organizationId, AdapterId adapterId, AdapterType adapterType, SuppliedProperties properties) {
+    public AdapterId registerAdapter(RegisterAdapterSpecification specification) {
+        JobExecutorAdapter.AdapterInstance adapterInstance = jobExecutorAdapterProvider.provide(specification.adapterType(), specification.properties());
 
-        JobExecutorAdapter.AdapterInstance adapterInstance = jobExecutorAdapterProvider.provide(adapterType, properties);
+        repository.save(new AdapterInstanceAggregate(specification.adapterId(), adapterInstance));
 
-        repository.save(new AdapterInstanceAggregate(adapterId, adapterInstance));
-
-        return adapterId;
-    }
-
-    @Override
-    public AdapterId registerAdapter(OrganizationId organizationId, AdapterId adapterId, AdapterType adapterType) {
-        return registerAdapter(organizationId, adapterId, adapterType, SuppliedProperties.none());
+        return specification.adapterId();
     }
 
     @Override

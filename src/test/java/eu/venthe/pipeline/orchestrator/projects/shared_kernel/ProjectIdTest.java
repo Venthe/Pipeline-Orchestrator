@@ -12,12 +12,12 @@ class ProjectIdTest {
     @Test
     void deserialize() {
         assertThat(ProjectId.from("test/internal-name"))
-                .isEqualTo(ProjectId.of(new SourceConfigurationId("default"), new OrganizationId("default"), "test/internal-name"));
+                .isEqualTo(ProjectId.builder().configurationId(new SourceConfigurationId("default")).organizationId(new OrganizationId("default")).name("test/internal-name").build());
     }
 
     @Test
     void serialize() {
-        assertThat(ProjectId.of(new SourceConfigurationId("test1"), new OrganizationId("test2"), "project/internal-name").serialize())
+        assertThat(ProjectId.builder().configurationId(new SourceConfigurationId("test1")).organizationId(new OrganizationId("test2")).name("project/internal-name").build().serialize())
                 .isEqualTo("test1:test2/project/internal-name");
     }
 

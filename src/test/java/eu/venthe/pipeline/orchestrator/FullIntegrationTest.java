@@ -1,41 +1,39 @@
 package eu.venthe.pipeline.orchestrator;
 
-import eu.venthe.pipeline.orchestrator.configuration.MockBeanConfiguration;
+import eu.venthe.pipeline.orchestrator.fixtures.MockAdapterFixture;
+import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.ExecutionAdapterManager;
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.JobExecutorCallbackService;
 import eu.venthe.pipeline.orchestrator.modules.workflow.application.WorkflowExecutionCommandService;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.WorkflowExecutionId;
-import eu.venthe.pipeline.orchestrator.organizations.application.*;
+import eu.venthe.pipeline.orchestrator.modules.workflow.application.dto.RegisterAdapterSpecification;
+import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationCommandService;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;
-import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
-import eu.venthe.pipeline.orchestrator.projects.application.impl.ProjectSourcesManager;
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.SourceConfigurationSpecification;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsCommandService;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
+import eu.venthe.pipeline.orchestrator.projects.application.impl.ProjectSourcesManager;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterId;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterType;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import lombok.NonNull;
+import lombok.val;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
 
-import java.io.File;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-import static eu.venthe.pipeline.orchestrator.configuration.MockBeanConfiguration.setupExecution;
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
+import static org.mockito.Mockito.when;
 
 @TestPropertySource(properties = {
         "logging.level.eu.venthe=TRACE"
@@ -60,23 +58,45 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     WorkflowExecutionCommandService workflowExecutionCommandService;
 
     @Autowired
-    MockBeanConfiguration.MockProjectSource projectSource;
+    MockProjectSourceFixture projectSourceFixture;
     @Autowired
-    MockBeanConfiguration.MockAdapterInstance adapterInstance;
+    MockAdapterFixture adapterFixture;
+
+    @BeforeEach
+    void setup() {
+    }
 
     @Test
     void name() {
-        Mockito.when(projectSource.getProjectIds()).thenReturn(Stream.of(new ProjectDto.Id("Example-Project")));
-        Mockito.when(projectSource.getProject("Example-Project")).thenReturn(Optional.of(new ProjectDto("Example-Project", ProjectStatus.ACTIVE)));
+        val projectName = "Example-Project";
+        val requestedOrganizationId = "default";
+        val sourceType = "test";
+        val requestedSourceConfigurationId = "default";
+        val requestedAdapterId = "default";
+        val adapterType = "default";
 
-        final var createOrganizationSpecification = CreateOrganizationSpecification.builder()
-                .organizationId(new OrganizationId("default"))
+        projectSourceFixture.onSource(mockProject(projectName));
+
+        val organizationSpecification = CreateOrganizationSpecification.builder()
+                .organizationId(requestedOrganizationId)
                 .build();
-        final var defaultOrganization = organizationCommandService.create(createOrganizationSpecification);
-        final var sourceConfigurationId = organizationCommandService.addSourceConfiguration(defaultOrganization, new SourceConfigurationId("default"), new SourceType("test"), SuppliedProperties.none());
+        final var organizationId = organizationCommandService.create(organizationSpecification);
 
-        final var defaultExecutor = executionAdapterManager.registerAdapter(defaultOrganization, new AdapterId("default"), new AdapterType("test"));
-        final var defaultRunner = executionAdapterManager.registerRunner(defaultExecutor, RunnerDimensions.none());
+        val sourceSpecification = SourceConfigurationSpecification.builder()
+                .organizationId(organizationId)
+                .sourceType(sourceType)
+                .configurationId(requestedSourceConfigurationId)
+                .build();
+        val sourceConfigurationId = organizationCommandService.addSourceConfiguration(sourceSpecification);
+
+        val adapterSpecification = RegisterAdapterSpecification.builder()
+                .organizationId(organizationId)
+                .adapterId(requestedAdapterId)
+                .adapterType(adapterType)
+                .build();
+        val defaultExecutor = executionAdapterManager.registerAdapter(adapterSpecification);
+
+        val defaultRunner = executionAdapterManager.registerRunner(defaultExecutor, RunnerDimensions.none());
 
         // FIXME: This should be done scheduled & asynchronously
         projectSourcesManager.synchronize(sourceConfigurationId);
@@ -88,19 +108,19 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         // FIXME: Add organization to project ID
         //  Project ID should have ORG in it (Or only org?)
         // FIXME: null
-        final var projectId = ProjectId.of(sourceConfigurationId, null, "Example-Project");
+        val projectId = ProjectId.builder().configurationId(sourceConfigurationId).name("Example-Project").build();
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
 
-        final var revision = new Revision("main");
+        val revision = new Revision("main");
 
         projectsCommandService.registerTrackedRevision(projectId, revision);
 
-        setupExecution(adapterInstance, metadata -> {
+        adapterFixture.setupExecution(metadata -> {
             System.out.println(metadata);
         });
 
-        final var workflowExecutionId = workflowExecutionCommandService.triggerManualWorkflow(projectId, revision, Paths.get("test-workflow.yml"));
+        val workflowExecutionId = workflowExecutionCommandService.triggerManualWorkflow(projectId, revision, Paths.get("test-workflow.yml"));
 
        /*
        JobExecutionId executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));
@@ -108,5 +128,12 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         await("Execution done").untilAsserted(() ->
                 Assertions.assertThat(jobExecutionQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));
        */
+    }
+
+    private static @NonNull Consumer<MockProjectSourceFixture.MockProjectSource> mockProject(final String projectName) {
+        return projectSource -> {
+            when(projectSource.getProjectIds()).thenReturn(Stream.of(new ProjectDto.Id(projectName)));
+            when(projectSource.getProject(projectName)).thenReturn(Optional.of(new ProjectDto(projectName, ProjectStatus.ACTIVE)));
+        };
     }
 }

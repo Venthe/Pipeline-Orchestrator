@@ -2,6 +2,7 @@ package eu.venthe.pipeline.orchestrator.organizations.application;
 
 
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;
+import eu.venthe.pipeline.orchestrator.organizations.application.dto.SourceConfigurationSpecification;
 import eu.venthe.pipeline.orchestrator.organizations.domain.Organization;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationFactory;
 import eu.venthe.pipeline.orchestrator.organizations.domain.OrganizationId;
@@ -50,10 +51,12 @@ public class OrganizationServiceImpl implements OrganizationCommandService {
     }
 
     @Override
-    public SourceConfigurationId addSourceConfiguration(OrganizationId organizationId,
-                                                        SourceConfigurationId configurationId,
-                                                        SourceType sourceType,
-                                                        SuppliedProperties properties) {
+    public SourceConfigurationId addSourceConfiguration(SourceConfigurationSpecification specification) {
+        var organizationId = specification.organizationId();
+        var configurationId = specification.configurationId();
+        var sourceType = specification.sourceType();
+        var properties = specification.properties();
+
         log.trace("Adding source configuration to organization {}.", organizationId.value());
         if (!organizationRepository.isAvailable(organizationId)) {
             throw new IllegalArgumentException("Organization of ID \"%s\" does not exist or is archived.".formatted(organizationId.value()));
