@@ -17,6 +17,7 @@ public class ProjectsSourceConfiguration implements Aggregate<SourceConfiguratio
     @EqualsAndHashCode.Include
     @Getter
     private final SourceConfigurationId configurationId;
+    @Getter
     private final ProjectSourcePlugin.PluginInstance pluginInstance;
     @ToString.Exclude
     private final ProjectsSourceConfigurationSynchronizer synchronizer;

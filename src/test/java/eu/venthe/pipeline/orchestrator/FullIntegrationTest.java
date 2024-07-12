@@ -18,21 +18,22 @@ import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
-import lombok.NonNull;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @TestPropertySource(properties = {
@@ -75,7 +76,12 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         val requestedAdapterId = "default";
         val adapterType = "default";
 
-        projectSourceFixture.onSource(mockProject(projectName));
+        projectSourceFixture.onInstance(projectSource -> {
+            when(projectSource.getProjectIds()).thenReturn(Stream.of(new ProjectDto.Id(projectName)));
+            when(projectSource.getProject(projectName)).thenReturn(Optional.of(new ProjectDto(projectName, ProjectStatus.ACTIVE)));
+            when(projectSource.getFile(eq(projectName), eq("main"), eq(Path.of(".mantle", "workflows", "test-workflow.yml"))))
+                    .thenReturn(Optional.of("123".getBytes(StandardCharsets.UTF_8)));
+        });
 
         val organizationSpecification = CreateOrganizationSpecification.builder()
                 .organizationId(requestedOrganizationId)
@@ -130,10 +136,4 @@ class FullIntegrationTest extends AbstractIntegrationTest {
        */
     }
 
-    private static @NonNull Consumer<MockProjectSourceFixture.MockProjectSource> mockProject(final String projectName) {
-        return projectSource -> {
-            when(projectSource.getProjectIds()).thenReturn(Stream.of(new ProjectDto.Id(projectName)));
-            when(projectSource.getProject(projectName)).thenReturn(Optional.of(new ProjectDto(projectName, ProjectStatus.ACTIVE)));
-        };
-    }
 }

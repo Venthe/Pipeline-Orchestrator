@@ -38,7 +38,7 @@ public class ProjectsCommandServiceImpl implements ProjectsCommandService {
 
         var configuration = configurationRepository.find(configurationId).orElseThrow();
 
-        Project project = new Project(newProjectDto.projectId(), configuration, projectModuleMediator, newProjectDto.description(), newProjectDto.status());
+        Project project = new Project(newProjectDto.projectId(), configuration, projectModuleMediator);
 
         repository.save(project);
     }

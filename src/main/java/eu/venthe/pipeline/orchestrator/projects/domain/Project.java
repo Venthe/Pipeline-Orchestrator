@@ -9,13 +9,9 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Optional;
-
 @Slf4j
-@RequiredArgsConstructor
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
@@ -25,14 +21,22 @@ public class Project implements Aggregate<ProjectId> {
     private final ProjectId id;
     private final ProjectsSourceConfiguration owningConfiguration;
     private final ProjectModuleMediator projectModules;
+    private final ProjectSpecifiedDataProvider provider;
 
-    private Optional<String> description;
+    public Project(final ProjectId id,
+                    final ProjectsSourceConfiguration owningConfiguration,
+                    final ProjectModuleMediator projectModules) {
+        this.id = id;
+        this.owningConfiguration = owningConfiguration;
+        this.projectModules = projectModules;
+        this.provider = new ProjectSpecifiedDataProvider(this.id.getName(), owningConfiguration.getPluginInstance());
+    }
+
     private ProjectStatus status;
 
     public void synchronize() {
         log.debug("Initiating synchronization of project {}", id);
         ProjectDto projectDto = owningConfiguration.getProject(getId().getName()).orElseThrow();
-        description = projectDto.getDescription();
         status = projectDto.getStatus();
         log.info("Synchronization of project {} done", id);
     }
@@ -51,7 +55,7 @@ public class Project implements Aggregate<ProjectId> {
 
     public void handleEvent(SystemEvent event) {
         log.debug("Passing event {} from project {} for the modules", event.getType(), id);
-        projectModules.onModule(module -> module.handleEvent(event));
+        projectModules.onModule(module -> module.handleEvent(provider, event));
     }
 
     public void registerTrackedRevision(Revision revision) {
@@ -63,4 +67,5 @@ public class Project implements Aggregate<ProjectId> {
         log.debug("Notify about unregistered ref {} in the project {} for the modules", revision, id);
         projectModules.onModule(module -> module.unregisterTrackedRevision(id, revision));
     }
+
 }

@@ -11,6 +11,6 @@ public class PipelineUtilities {
     }
 
     public static Path resolveFromOrchestratorDirectory(Path filename) {
-        return Path.of(".mantle", "workflows").relativize(filename);
+        return Path.of(".mantle", "workflows").resolve(filename);
     }
 }

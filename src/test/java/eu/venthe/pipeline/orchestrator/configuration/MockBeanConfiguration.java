@@ -41,7 +41,7 @@ public class MockBeanConfiguration {
     @Bean
     MockProjectSourceFixture.TestProjectSourcePlugin testProjectSourcePlugin(MockProjectSourceFixture.MockProjectSource instance) {
         var sourcePlugin = Mockito.mock(MockProjectSourceFixture.TestProjectSourcePlugin.class);
-        Mockito.when(sourcePlugin.getSourceType()).thenReturn(new SourceType("default"));
+        Mockito.when(sourcePlugin.getSourceType()).thenReturn(new SourceType("test"));
         Mockito.when(sourcePlugin.instantiate(any())).thenReturn(instance);
         return sourcePlugin;
     }

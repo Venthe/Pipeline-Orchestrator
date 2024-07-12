@@ -65,7 +65,7 @@ record ProjectsSourceConfigurationSynchronizer(
     private void createProjects(ProjectsCommandService projectsCommandService, Set<String> allProjectsFromSource, Set<String> registeredProjects) {
         getProjectsToCreate(allProjectsFromSource, registeredProjects)
                 .map(projectId -> Pair.of(projectId, projectIdToProjectDto(projectId)))
-                .map(entry -> new CreateProjectSpecificationDto(entry.getFirst(), entry.getSecond().getStatus(), entry.getSecond().getDescription()))
+                .map(entry -> new CreateProjectSpecificationDto(entry.getFirst(), entry.getSecond().getStatus()))
                 .forEach(newProjectDto -> projectsCommandService.add(configuration.getConfigurationId(), newProjectDto));
     }
 
@@ -79,7 +79,6 @@ record ProjectsSourceConfigurationSynchronizer(
     }
 
     private ProjectId buildProjectId(String projectId) {
-        throw new UnsupportedOperationException();
-        // return ProjectId.of(configuration.getId(), null, projectId);
+         return ProjectId.builder().configurationId(configuration.getId()).name(projectId).build();
     }
 }

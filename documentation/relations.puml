@@ -1,0 +1,60 @@
+@startuml Entity relations
+skinparam linetype ortho
+skinparam separator none
+
+package core {
+    class "Organization" as organization {
+        * <u>organizationId</u>: String
+    }
+    class "Source\nconfiguration" as source_configuration {
+        * <u>sourceConfigurationId</u>: String
+        * <u>organizationId</u>: String <<FK>>
+    }
+    class "Project" as project {
+        * <u>name</u>: String
+        * <u>sourceConfigurationId</u>: String <<FK>>
+        * <u>organizationId</u>: String <<FK>>
+    }
+
+    class "Tracked\nbranch" as tracked_branch {
+        * <u>branchName</u>: String
+    }
+
+    organization "1" *-- "0..n" project
+    organization "1" *-- "0..n" source_configuration
+    source_configuration "1" --> "1" project
+    project "1" *-- "1..n" tracked_branch
+}
+
+package module::project_details {
+    class "Project\ndetails" as project_details {
+        ---
+        description: String
+        type: Enum
+        lifecycle: Enum
+    }
+    class "Branch\ndetails" as branch_details {
+        ---
+        description: String
+    }
+    project_details "1" *-- "1..n" branch_details
+}
+
+package module::workflows {
+
+}
+
+'package users {
+'    interface "Owner" as owner {}
+'    class "Group" as group {}
+'    class "User" as user {}
+'
+'    owner <|-- group
+'    owner <|-- user
+'    group "1..n" o-- "1..n" user
+'}
+
+project_details "0..1" -- "1" project
+branch_details "0..1" -- "1" tracked_branch
+
+@enduml

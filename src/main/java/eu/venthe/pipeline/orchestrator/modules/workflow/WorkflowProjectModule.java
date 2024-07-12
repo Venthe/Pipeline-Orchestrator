@@ -1,16 +1,12 @@
 package eu.venthe.pipeline.orchestrator.modules.workflow;
 
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import eu.venthe.pipeline.orchestrator.modules.ProjectModule;
-import eu.venthe.pipeline.orchestrator.modules.workflow.application.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.handlers.EventHandlerProvider;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectSpecifiedDataProvider;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.WorkflowDispatchEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.EventType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.togglz.core.manager.FeatureManager;
@@ -28,10 +24,10 @@ public class WorkflowProjectModule implements ProjectModule {
     private final EventHandlerProvider eventHandlerProvider;
 
     @Override
-    public void handleEvent(final SystemEvent event) {
+    public void handleEvent(final ProjectSpecifiedDataProvider provider, final SystemEvent event) {
         if (!(event instanceof ProjectEvent)) return;
 
-        eventHandlerProvider.handle((ProjectEvent) event);
+        eventHandlerProvider.handle(provider, (ProjectEvent) event);
     }
 
     @Override
