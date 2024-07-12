@@ -8,7 +8,6 @@ import lombok.experimental.UtilityClass;
 import java.util.Optional;
 
 import static eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities.fromTextMapper;
-import static eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities.toTextMapper;
 
 @UtilityClass
 public class RevisionContext {

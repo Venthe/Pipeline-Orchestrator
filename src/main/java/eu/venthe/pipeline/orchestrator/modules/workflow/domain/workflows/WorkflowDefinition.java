@@ -14,10 +14,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.DefaultsCont
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.EnvironmentContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.PermissionsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.file.Path;
@@ -27,9 +24,12 @@ import java.util.Optional;
 @SuppressWarnings("ALL")
 @Slf4j
 @Getter
+@ToString(onlyExplicitlyIncluded = true)
 public class WorkflowDefinition {
     @Getter(AccessLevel.NONE)
+    @ToString.Include
     private final ObjectNode root;
+    @ToString.Include
     private final WorkflowRef ref;
 
     /*
@@ -46,13 +46,14 @@ public class WorkflowDefinition {
 
     public WorkflowDefinition(JsonNode _root, WorkflowRef workflowRef) {
         if (_root == null) throw new IllegalArgumentException("Workflow should not be null");
-        if (workflowRef == null) throw new IllegalArgumentException("WorkflowRef should not be null");
+        // fixme
+        //if (workflowRef == null) throw new IllegalArgumentException("WorkflowRef should not be null");
         if (!_root.isObject()) throw new IllegalArgumentException("Root should be an object");
 
         this.root = (ObjectNode) _root;
         this.ref = workflowRef;
 
-        name = NameContext.create(root.get("name")).orElse(ref.getFilePath().toString());
+        name = NameContext.create(root.get("name")).orElseGet(() -> ref.getFilePath().toString());
         runName = RunNameContext.create(root.get("runName"));
         on = OnContext.ensure(root.get("on"));
         permissions = PermissionsContext.create(root.get("permissions"));

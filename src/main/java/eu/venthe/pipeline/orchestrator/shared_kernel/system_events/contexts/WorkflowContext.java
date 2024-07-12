@@ -5,8 +5,8 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.comm
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.PathContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.model.WorkflowStateContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.WorkflowState;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.WorkflowState;
 
 import java.net.URL;
 import java.nio.file.Path;

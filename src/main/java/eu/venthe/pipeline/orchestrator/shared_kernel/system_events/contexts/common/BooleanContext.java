@@ -15,7 +15,7 @@ public class BooleanContext {
     }
 
     private static boolean toBool(JsonNode e) {
-        if(e.isNull() || e.isMissingNode() || !e.isBoolean()) {
+        if (e.isNull() || e.isMissingNode() || !e.isBoolean()) {
             throw new IllegalArgumentException();
         }
 

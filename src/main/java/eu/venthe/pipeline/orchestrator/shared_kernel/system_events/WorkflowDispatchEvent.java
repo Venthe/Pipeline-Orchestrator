@@ -15,7 +15,8 @@ import lombok.experimental.SuperBuilder;
 import java.nio.file.Path;
 
 /**
- * This event occurs when a GitHub Actions workflow is manually triggered. For more information, see "Manually running a workflow."
+ * This event occurs when a GitHub Actions workflow is manually triggered. For more information, see "Manually running a
+ * workflow."
  * <p>
  * For activity relating to workflow runs, use the workflow_run event.
  */
@@ -30,11 +31,15 @@ public class WorkflowDispatchEvent extends AbstractProjectEvent {
     private final Path workflow;
 
     public WorkflowDispatchEvent(ObjectNode _root) {
-        super(_root, EventType.WORKFLOW_DISPATCH);
+        super(_root);
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         inputs = WorkflowDispatchInputsContext.create(root.get("inputs"));
         revision = RevisionContext.ensure(root.get("revision"));
         workflow = PathContext.ensure(root.get("workflow"));
+    }
+
+    public EventType getType() {
+        return EventType.WORKFLOW_DISPATCH;
     }
 }

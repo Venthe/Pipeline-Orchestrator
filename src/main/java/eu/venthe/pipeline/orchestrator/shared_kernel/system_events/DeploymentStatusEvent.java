@@ -16,7 +16,8 @@ import lombok.ToString;
 import java.util.Optional;
 
 /**
- * This event occurs when there is activity relating to deployment statuses. For more information, see "About deployments."
+ * This event occurs when there is activity relating to deployment statuses. For more information, see "About
+ * deployments."
  * <p>
  * For activity relating to deployment creation, use the deployment event.
  */
@@ -32,7 +33,7 @@ public class DeploymentStatusEvent extends AbstractProjectEvent {
     private final Optional<WorkflowRunContext> workflowRun;
 
     public DeploymentStatusEvent(ObjectNode _root) {
-        super(_root, EventType.DEPLOYMENT_STATUS);
+        super(_root);
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         action = DeploymentStatusActionContext.ensure(root.get("action"));
@@ -40,5 +41,9 @@ public class DeploymentStatusEvent extends AbstractProjectEvent {
         deploymentStatus = DeploymentStatusContext.ensure(root.get("deploymentStatus"));
         workflow = WorkflowContext.create(root.get("workflow"));
         workflowRun = WorkflowRunContext.create(root.get("workflowRun"));
+    }
+
+    public EventType getType() {
+        return EventType.DEPLOYMENT_STATUS;
     }
 }

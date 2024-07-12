@@ -2,12 +2,12 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.BooleanContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.DateTimeContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.PathContext;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.ActorContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.CommitMessageContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.DateTimeContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.GitHashContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.PathContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.Getter;
 
@@ -77,7 +77,7 @@ public class CommitDetailsContext {
     }
 
     public static List<CommitDetailsContext> list(JsonNode commits) {
-        return ContextUtilities.Collection.createCollection(commits, stream-> stream
+        return ContextUtilities.Collection.createCollection(commits, stream -> stream
                 .map(CommitDetailsContext::new)
                 .toList());
     }

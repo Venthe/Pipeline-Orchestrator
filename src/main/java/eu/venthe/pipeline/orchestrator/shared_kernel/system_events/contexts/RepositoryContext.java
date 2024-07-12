@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.UrlContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.model.RepositoryVisibilityContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.RepositoryVisibility;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.RepositoryVisibility;
 
 import java.net.URL;
 import java.util.Optional;
@@ -18,6 +18,7 @@ import java.util.Optional;
 // TODO: Add URL for the commits of the repository
 // TODO: Add URL for the blobs of the repository
 // TODO: Add URL for the deployments of the repository
+
 /**
  * The repository on GitHub where the event occurred. Webhook payloads contain the repository property when the event
  * occurs from activity in a repository.

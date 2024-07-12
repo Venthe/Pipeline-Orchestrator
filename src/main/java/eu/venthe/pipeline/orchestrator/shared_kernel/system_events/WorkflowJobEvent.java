@@ -23,10 +23,14 @@ public class WorkflowJobEvent extends AbstractProjectEvent {
     private final WorkflowJobContext workflowJob;
 
     public WorkflowJobEvent(ObjectNode _root) {
-        super(_root, EventType.WORKFLOW_JOB);
+        super(_root);
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         deployment = DeploymentContext.create(root.get("deployment"));
         workflowJob = WorkflowJobContext.ensure(root.get("workflowJob"));
+    }
+
+    public EventType getType() {
+        return EventType.WORKFLOW_JOB;
     }
 }

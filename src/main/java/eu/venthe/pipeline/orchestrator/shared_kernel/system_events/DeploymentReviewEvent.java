@@ -39,7 +39,7 @@ public class DeploymentReviewEvent extends AbstractProjectEvent {
     private final List<ReviewersContext> reviewers;
 
     public DeploymentReviewEvent(ObjectNode _root) {
-        super(_root, EventType.DEPLOYMENT_REVIEW);
+        super(_root);
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         action = DeploymentReviewActionContext.ensure(root.get("action"));
@@ -51,6 +51,10 @@ public class DeploymentReviewEvent extends AbstractProjectEvent {
         workflowJobRun = WorkflowJobRunContext.create(root.get("workflowJobRun"));
         workflowJobRuns = WorkflowJobRunContext.list(root.get("workflowJobRuns"));
         reviewers = ReviewersContext.list(root.get("reviewers"));
+    }
+
+    public EventType getType() {
+        return EventType.DEPLOYMENT_REVIEW;
     }
 
 }

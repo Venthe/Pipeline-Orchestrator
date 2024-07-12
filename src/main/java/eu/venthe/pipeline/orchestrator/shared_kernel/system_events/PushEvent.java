@@ -21,8 +21,8 @@ import java.util.Optional;
 
 /**
  * This event occurs when there is a push to a repository branch. This includes when a commit is pushed, when a commit
- * tag is pushed, when a branch is deleted, when a tag is deleted, or when a repository is created from a template.
- * To subscribe to only branch and tag deletions, use the delete webhook event.
+ * tag is pushed, when a branch is deleted, when a tag is deleted, or when a repository is created from a template. To
+ * subscribe to only branch and tag deletions, use the delete webhook event.
  */
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
@@ -40,7 +40,9 @@ public class PushEvent extends AbstractProjectEvent {
     private final Optional<Revision> baseRef;
     private final List<CommitDetailsContext> commits;
     /**
-     * URL that shows the changes in this ref update, from the before commit to the after commit. For a newly created ref that is directly based on the default branch, this is the comparison between the head of the default branch and the after commit. Otherwise, this shows all commits until the after commit.
+     * URL that shows the changes in this ref update, from the before commit to the after commit. For a newly created
+     * ref that is directly based on the default branch, this is the comparison between the head of the default branch
+     * and the after commit. Otherwise, this shows all commits until the after commit.
      */
     private final URL compare;
     /**
@@ -63,7 +65,7 @@ public class PushEvent extends AbstractProjectEvent {
     private final Revision ref;
 
     public PushEvent(ObjectNode _root) {
-        super(_root, EventType.PUSH);
+        super(_root);
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         after = GitHashContext.ensure(root.get("after"));
@@ -80,5 +82,9 @@ public class PushEvent extends AbstractProjectEvent {
         headCommit = CommitDetailsContext.create(root.get("headCommit"));
         pusher = UserContext.ensure(root.get("pusher"));
         ref = RevisionContext.ensure(root.get("ref"));
+    }
+
+    public EventType getType() {
+        return EventType.PUSH;
     }
 }

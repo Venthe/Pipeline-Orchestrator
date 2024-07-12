@@ -80,7 +80,10 @@ class FullIntegrationTest extends AbstractIntegrationTest {
             when(projectSource.getProjectIds()).thenReturn(Stream.of(new ProjectDto.Id(projectName)));
             when(projectSource.getProject(projectName)).thenReturn(Optional.of(new ProjectDto(projectName, ProjectStatus.ACTIVE)));
             when(projectSource.getFile(eq(projectName), eq("main"), eq(Path.of(".mantle", "workflows", "test-workflow.yml"))))
-                    .thenReturn(Optional.of("123".getBytes(StandardCharsets.UTF_8)));
+                    .thenReturn(Optional.of("""
+                            name: Test
+                            on: workflow_dispatch
+                            """.getBytes(StandardCharsets.UTF_8)));
         });
 
         val organizationSpecification = CreateOrganizationSpecification.builder()
