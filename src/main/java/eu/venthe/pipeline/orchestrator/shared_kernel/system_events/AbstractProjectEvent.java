@@ -26,7 +26,7 @@ public abstract class AbstractProjectEvent implements SystemEvent, ProjectEvent 
     @EqualsAndHashCode.Include
     private final EventId id;
 
-    @NonNull
+    // FIXME: Non-null
     private final RepositoryContext repository;
     /**
      * The user that triggered the event.
