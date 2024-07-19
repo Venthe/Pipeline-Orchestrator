@@ -1,0 +1,172 @@
+@startuml
+skinparam linetype ortho
+
+class Actions {
+    workflows: Workflows
+    runners: Runners
+    ...
+    ' caches: Cache[]
+    ' deployments: Deployment[]
+    ' attestations: Attestation[]
+    ' runners: Runners
+}
+Actions -right- Runners
+Actions -down- Workflows
+' Actions -right- Cache
+
+class Runners {
+    ...
+    ---
+    new_runner()
+}
+Runners *- Runner
+
+class Runner {
+    ...
+}
+
+' class Cache {
+'     id
+'     ref: string
+'     last_used
+'     time_created
+'     size
+'     ---
+'     delete()
+' }
+
+class Workflows {
+}
+Workflows *-down- Workflow
+
+class Workflow <<aggregate>> {
+    title: string
+    last_triggered: Offset_date_time
+    is_pinned: boolean
+    ---
+    pin(): void
+    unpin(): void
+    disable(): void
+    enable(): void
+    get_number_of_runs(): integer
+    list_workflow_runs: Workflow_run[]
+}
+Workflow *-down- Workflow_run
+
+class Workflow_run <<aggregate>> {
+    event_type: Event_type
+    ref: string
+    triggering_actor: Actor
+    run_number: integer
+    ' workflow_run_type
+    ---
+    delete_run(): void
+    view_workflow_file(): Workflow_file
+}
+Workflow_run - Actor
+Workflow_run *-down- Workflow_run_attempt
+Workflow_run -left- Event_type
+
+enum Event_type {
+    create
+    delete
+    deployment
+    deployment_review
+    deployment_status
+    pull_request
+    pull_request_review_comment
+    pull_request_review
+    push
+    workflow_dispatch
+    workflow_job
+    workflow_run
+}
+
+class Workflow_run_attempt {
+    title: string
+    status: Workflow_run_status
+    attempt_number: integer
+    completed_at: Offset_date_time
+    started_at: Offset_date_time
+    job_runs: Job_run[]
+    runner: Runner
+    ---
+    retrigger(): void
+    get_total_duration(): Duration
+    delete_all_logs(): void
+    get_artifacts(): Artifact[]
+    get_usages(): Job_usage[]
+    get_total_duration(): Duration
+}
+Workflow_run_attempt -left- Workflow_run_status
+Workflow_run_attempt - Job_usage
+Workflow_run_attempt - Runner
+
+enum Workflow_run_status {
+    queued
+    in_progress
+    waiting
+    completed
+    neutral
+    success
+    failure
+    cancelled
+    action_required
+    timed_out
+    skipped
+    stale
+}
+
+class Job_definition {
+    steps: Step_execution[] | undefined
+    uses: Workflow_run | undefined
+    depends_on: Job_id[]
+}
+Job_definition <|-- Remote_workflow
+Job_definition <|-- Job_steps
+
+class Remote_workflow {}
+Remote_workflow - Workflow_run
+
+class Job_steps {}
+
+class Job_run {
+    name: String
+    definition: Job_definition
+    type: Job_run_type
+    ---
+    get_total_duration()
+}
+Job_run - Job_definition
+
+class Step_execution {
+    name: String
+    log: Log
+    status:
+    started_at: Offset_date_time
+    completed_at: Offset_date_time
+    ---
+    get_duration(): Duration
+}
+
+class Actor {
+    ...
+}
+
+class Job_usage <<value object>> {
+    name: String
+    runtime: Duration
+    system_type: System_type
+}
+Job_usage - System_type
+
+enum System_type {
+    linux
+    osx
+    windows
+}
+
+enum Job_run_type {
+
+}
+@enduml
