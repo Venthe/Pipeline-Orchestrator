@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.context.jobs.context.IfContext;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.context.jobs.context.JobNameContext;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.context.jobs.context.NeedsContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.ConcurrencyContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.DefaultsContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.shared_context.PermissionsContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.ConcurrencyContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.DefaultsContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.PermissionsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.RequiredArgsConstructor;
 

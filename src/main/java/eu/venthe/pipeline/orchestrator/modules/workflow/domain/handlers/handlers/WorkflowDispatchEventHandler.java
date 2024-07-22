@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.modules.workflow.domain.handlers.handler
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.venthe.pipeline.orchestrator.modules.workflow.domain.events.WorkflowDispatchEventWrapper;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.workflows.WorkflowDefinition;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectSpecifiedDataProvider;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
