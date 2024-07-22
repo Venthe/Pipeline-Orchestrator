@@ -2,6 +2,7 @@ package eu.venthe.pipeline.orchestrator;
 
 import eu.venthe.pipeline.orchestrator.fixtures.MockAdapterFixture;
 import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
+import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.ExecutionAdapterManager;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutorCallbackService;
@@ -55,6 +56,8 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     OrganizationCommandService organizationCommandService;
     @Autowired
     JobExecutorCallbackService callbackService;
+    @Autowired
+    ProjectModuleMediator projectModuleMediator;
     @Autowired
     WorkflowExecutionCommandService workflowExecutionCommandService;
 
