@@ -24,10 +24,10 @@ public class WorkflowProjectModule implements ProjectModule {
     private final EventHandlerProvider eventHandlerProvider;
 
     @Override
-    public void handleEvent(final ProjectSpecifiedDataProvider provider, final SystemEvent event) {
+    public void handleEvent(final SystemEvent event) {
         if (!(event instanceof ProjectEvent)) return;
 
-        eventHandlerProvider.handle(provider, (ProjectEvent) event);
+        eventHandlerProvider.handle((ProjectEvent) event);
     }
 
     @Override

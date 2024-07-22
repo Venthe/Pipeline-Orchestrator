@@ -24,7 +24,7 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
     private final ObjectMapper mapper;
 
     @Override
-    public Collection<DomainTrigger> _handle(ProjectSpecifiedDataProvider provider, WorkflowDispatchEvent event) {
+    public Collection<DomainTrigger> _handle(WorkflowDispatchEvent event) {
         log.info("Event triggers single workflow on path {}", event.getWorkflow());
 
         var workflow = provider.getFile(event.getRevision().value(), event.getWorkflow())

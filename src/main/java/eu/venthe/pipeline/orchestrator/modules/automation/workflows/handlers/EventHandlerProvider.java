@@ -20,13 +20,13 @@ public class EventHandlerProvider {
     @SuppressWarnings("rawtypes")
     private final Set<EventHandler> eventHandlers;
 
-    public Collection<DomainTrigger> handle(final ProjectSpecifiedDataProvider provider, ProjectEvent event) {
+    public Collection<DomainTrigger> handle(ProjectEvent event) {
         //noinspection unchecked
         return eventHandlers.stream()
                 .filter(e -> e.canHandle(event))
                 .map(EventHandler.class::cast)
                 .collect(MoreCollectors.toOptional())
                 .orElse(DEFAULT_EVENT_HANDLER)
-                .handle(provider, event);
+                .handle(event);
     }
 }

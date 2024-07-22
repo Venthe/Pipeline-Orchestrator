@@ -53,11 +53,6 @@ public class Project implements Aggregate<ProjectId> {
         status = ProjectStatus.ARCHIVED;
     }
 
-    public void handleEvent(SystemEvent event) {
-        log.debug("Passing event {} from project {} for the modules", event.getType(), id);
-        projectModules.onModule(module -> module.handleEvent(provider, event));
-    }
-
     public void registerTrackedRevision(Revision revision) {
         log.debug("Notify about registered ref {} in the project {} for the modules", revision, id);
         projectModules.onModule(module -> module.registerTrackedRevision(id, revision));

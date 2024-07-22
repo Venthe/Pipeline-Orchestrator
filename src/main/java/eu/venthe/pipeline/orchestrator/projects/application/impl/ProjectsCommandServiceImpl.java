@@ -42,11 +42,4 @@ public class ProjectsCommandServiceImpl implements ProjectsCommandService {
 
         repository.save(project);
     }
-
-    @Override
-    public void handleEvent(final ProjectId projectId, final ProjectEvent event) {
-        var project = repository.find(projectId).orElseThrow();
-
-        project.handleEvent(event);
-    }
 }

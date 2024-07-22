@@ -11,14 +11,14 @@ import java.util.Collection;
 @Slf4j
 public abstract class AbstractEventHandler<T extends ProjectEvent> implements EventHandler {
     @Override
-    public final Collection<DomainTrigger> handle(final ProjectSpecifiedDataProvider provider, ProjectEvent event) {
+    public final Collection<DomainTrigger> handle(ProjectEvent event) {
         log.info("Handling event {} for project {}", event, event.getRepository());
         if (!canHandle(event)) {
             throw new UnsupportedOperationException();
         }
 
-        return _handle(provider, (T) event);
+        return _handle((T) event);
     }
 
-    protected abstract Collection<DomainTrigger> _handle(final ProjectSpecifiedDataProvider provider, T event);
+    protected abstract Collection<DomainTrigger> _handle(T event);
 }
