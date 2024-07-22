@@ -1,27 +1,27 @@
 @startuml
-skinparam linetype ortho
+skinparam linetype polyline
 
-class Actions {
-    workflows: Workflows
-    runners: Runners
-    ...
-    ' caches: Cache[]
-    ' deployments: Deployment[]
-    ' attestations: Attestation[]
-    ' runners: Runners
-}
-Actions -right- Runners
-Actions -down- Workflows
+'class Actions {
+'    workflows: Workflows
+'    runners: Runners
+'    ...
+'    ' caches: Cache[]
+'    ' deployments: Deployment[]
+'    ' attestations: Attestation[]
+'    ' runners: Runners
+'}
+'Actions -right- Runners
+'Actions -left- Workflows
 ' Actions -right- Cache
 
-class Runners {
-    ...
-    ---
-    new_runner()
-}
-Runners *- Runner
+'class Runners {
+'    ...
+'    ---
+'    new_runner()
+'}
+'Runners *- Runner
 
-class Runner {
+interface Runner {
     ...
 }
 
@@ -35,9 +35,9 @@ class Runner {
 '     delete()
 ' }
 
-class Workflows {
-}
-Workflows *-down- Workflow
+'class Workflows {
+'}
+'Workflows *-down- Workflow
 
 class Workflow <<aggregate>> {
     title: string
@@ -51,7 +51,7 @@ class Workflow <<aggregate>> {
     get_number_of_runs(): integer
     list_workflow_runs: Workflow_run[]
 }
-Workflow *-down- Workflow_run
+Workflow *.down. Workflow_run
 
 class Workflow_run <<aggregate>> {
     event_type: Event_type
@@ -68,18 +68,19 @@ Workflow_run *-down- Workflow_run_attempt
 Workflow_run -left- Event_type
 
 enum Event_type {
-    create
-    delete
-    deployment
-    deployment_review
-    deployment_status
-    pull_request
-    pull_request_review_comment
-    pull_request_review
-    push
-    workflow_dispatch
-    workflow_job
-    workflow_run
+    ...
+'    create
+'    delete
+'    deployment
+'    deployment_review
+'    deployment_status
+'    pull_request
+'    pull_request_review_comment
+'    pull_request_review
+'    push
+'    workflow_dispatch
+'    workflow_job
+'    workflow_run
 }
 
 class Workflow_run_attempt {
@@ -98,37 +99,37 @@ class Workflow_run_attempt {
     get_usages(): Job_usage[]
     get_total_duration(): Duration
 }
-Workflow_run_attempt -left- Workflow_run_status
+Workflow_run_attempt - Workflow_run_status
 Workflow_run_attempt - Job_usage
-Workflow_run_attempt - Runner
+Workflow_run_attempt -> Runner
+Workflow_run_attempt <-down- Job_run
 
 enum Workflow_run_status {
-    queued
-    in_progress
-    waiting
-    completed
-    neutral
-    success
-    failure
-    cancelled
-    action_required
-    timed_out
-    skipped
-    stale
+    ...
+'    queued
+'    in_progress
+'    waiting
+'    completed
+'    neutral
+'    success
+'    failure
+'    cancelled
+'    action_required
+'    timed_out
+'    skipped
+'    stale
 }
 
-class Job_definition {
-    steps: Step_execution[] | undefined
-    uses: Workflow_run | undefined
-    depends_on: Job_id[]
-}
-Job_definition <|-- Remote_workflow
-Job_definition <|-- Job_steps
+'class Job_definition {
+'    steps: Step_execution[] | undefined
+'    uses: Workflow_run | undefined
+'    depends_on: Job_id[]
+'}
+'Job_definition <|-- Remote_workflow
+'Job_definition <|-- Job_steps
 
-class Remote_workflow {}
-Remote_workflow - Workflow_run
-
-class Job_steps {}
+'class Remote_workflow {}
+'Remote_workflow <- Workflow_run
 
 class Job_run {
     name: String
@@ -137,7 +138,12 @@ class Job_run {
     ---
     get_total_duration()
 }
-Job_run - Job_definition
+Job_run -left-> Job_definition
+Job_run <- Job_steps
+
+class Job_steps {
+}
+Job_steps *- Step_execution
 
 class Step_execution {
     name: String
@@ -149,24 +155,25 @@ class Step_execution {
     get_duration(): Duration
 }
 
-class Actor {
+interface Actor {
     ...
 }
 
 class Job_usage <<value object>> {
-    name: String
-    runtime: Duration
-    system_type: System_type
+    ...
+'     name: String
+'     runtime: Duration
+'     system_type: System_type
 }
-Job_usage - System_type
+' Job_usage - System_type
 
-enum System_type {
-    linux
-    osx
-    windows
-}
-
-enum Job_run_type {
-
-}
+' enum System_type {
+'     linux
+'     osx
+'     windows
+' }
+'
+' enum Job_run_type {
+'
+' }
 @enduml

@@ -1,0 +1,9 @@
+on: push
+jobs:
+  build:
+    steps:
+      - command: echo "Hello world!"
+  test:
+    depends_on:
+      - build
+    uses: test.yml
