@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.job_execution.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.context.job_execution.contexts.VarsContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.context.job_execution.contexts.VarsContext;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

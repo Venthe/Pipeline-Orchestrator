@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.modules.automation;
 
 import eu.venthe.pipeline.orchestrator.modules.ProjectModule;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.handlers.EventHandlerProvider;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.handlers.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectSpecifiedDataProvider;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;

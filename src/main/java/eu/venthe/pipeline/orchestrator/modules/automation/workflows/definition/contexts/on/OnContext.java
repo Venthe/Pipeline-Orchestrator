@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.on.matchers.EventTypeMatcher;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.events.EventWrapper;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

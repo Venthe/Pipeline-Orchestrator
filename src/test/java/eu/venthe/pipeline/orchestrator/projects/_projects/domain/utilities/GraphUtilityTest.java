@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.projects.domain.utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.utilities.GraphUtility;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.GraphUtility;
 import eu.venthe.pipeline.orchestrator.projects.utilities.YamlUtility;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;

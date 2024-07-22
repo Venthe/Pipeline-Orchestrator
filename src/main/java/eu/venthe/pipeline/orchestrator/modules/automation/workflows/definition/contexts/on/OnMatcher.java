@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.on;
 
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.events.EventWrapper;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 
 public interface OnMatcher {

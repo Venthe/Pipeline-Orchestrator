@@ -6,7 +6,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.c
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.on.OnContext;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.NameContext;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.RunNameContext;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.events.EventWrapper;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.FileHash;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;

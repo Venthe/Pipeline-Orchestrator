@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator.config;
 
 import eu.venthe.pipeline.orchestrator.infrastructure.in_memory_repository.InMemoryDomainRepository;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterId;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.infrastructure.JobExecutorAdapterRepository;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.AdapterInstanceAggregate;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.model.AdapterId;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.infrastructure.JobExecutorAdapterRepository;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.AdapterInstanceAggregate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

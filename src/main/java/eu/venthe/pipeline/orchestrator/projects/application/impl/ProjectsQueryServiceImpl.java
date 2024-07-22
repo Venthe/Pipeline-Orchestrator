@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.projects.application.impl;
 
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.utilities.GlobPatternMatching;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.GlobPatternMatching;
 import eu.venthe.pipeline.orchestrator.projects.application.dto.ProjectDto;
 import eu.venthe.pipeline.orchestrator.projects.application.dto.WorkflowTaskDto;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;

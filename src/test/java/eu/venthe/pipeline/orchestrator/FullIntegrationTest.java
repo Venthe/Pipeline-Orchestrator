@@ -2,12 +2,12 @@ package eu.venthe.pipeline.orchestrator;
 
 import eu.venthe.pipeline.orchestrator.fixtures.MockAdapterFixture;
 import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
-import eu.venthe.pipeline.orchestrator.modules.workflow.application.ExecutionAdapterManager;
-import eu.venthe.pipeline.orchestrator.modules.workflow.application.JobExecutionQueryService;
-import eu.venthe.pipeline.orchestrator.modules.workflow.application.JobExecutorCallbackService;
-import eu.venthe.pipeline.orchestrator.modules.workflow.application.WorkflowExecutionCommandService;
-import eu.venthe.pipeline.orchestrator.modules.workflow.application.dto.RegisterAdapterSpecification;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.ExecutionAdapterManager;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutionQueryService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutorCallbackService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.RegisterAdapterSpecification;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationCommandService;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.SourceConfigurationSpecification;

@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.Workflow;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution._archive.Workflow;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

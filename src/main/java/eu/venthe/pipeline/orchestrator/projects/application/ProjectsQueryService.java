@@ -6,7 +6,7 @@ import eu.venthe.pipeline.orchestrator.projects.application.dto.WorkflowDetailDt
 import eu.venthe.pipeline.orchestrator.projects.application.dto.ProjectDetailsDto;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.utilities.GlobPatternMatching;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.GlobPatternMatching;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 
 import java.io.File;

@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.configuration;
 
 import eu.venthe.pipeline.orchestrator.fixtures.MockAdapterFixture;
 import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.model.AdapterType;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.model.AdapterType;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.SourceType;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;

@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.fixtures;
 
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.adapters.template.JobExecutorAdapter;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.job_executions.model.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.modules.workflow.domain.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.JobExecutorAdapter;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
