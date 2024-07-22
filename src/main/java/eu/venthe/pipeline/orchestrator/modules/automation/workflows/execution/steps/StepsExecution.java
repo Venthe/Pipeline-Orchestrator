@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Map;
@@ -70,6 +71,14 @@ public class StepsExecution {
         }
 
         return Status.SUCCESS;
+    }
+
+    public boolean isDone() {
+        return getStatus() == Status.PENDING;
+    }
+
+    public Duration getTotalDuration() {
+        return stepExecutions.values().stream().map(StepExecution::getTotalDuration).flatMap(Optional::stream).reduce(Duration.ZERO, Duration::plus);
     }
 
     public record StepExecutionSpecification(int order, String id, String name) {
