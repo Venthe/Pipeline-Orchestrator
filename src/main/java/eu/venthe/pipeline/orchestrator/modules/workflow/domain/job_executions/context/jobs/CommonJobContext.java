@@ -12,6 +12,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.util
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
+import java.util.Set;
 
 @RequiredArgsConstructor
 public class CommonJobContext {
@@ -27,7 +28,7 @@ public class CommonJobContext {
 
         name = JobNameContext.create(root.get("name")).orElse(jobId);
         needs = NeedsContext.create(root.get("needs"));
-        permissions = PermissionsContext.create(root.get("permissions"));
+        permissions = PermissionsContext.create(root.get("permissions"), Set.of());
         concurrency = ConcurrencyContext.create(root.get("concurrency"));
         defaults = DefaultsContext.create(root.get("defaults"));
         _if = IfContext.create(root.get("if"));

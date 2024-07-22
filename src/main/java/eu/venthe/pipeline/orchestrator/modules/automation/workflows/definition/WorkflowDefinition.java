@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.Set;
 
 @SuppressWarnings("ALL")
 @Slf4j
@@ -56,7 +57,7 @@ public class WorkflowDefinition {
         name = NameContext.create(root.get("name")).orElseGet(() -> ref.getFilePath().toString());
         runName = RunNameContext.create(root.get("runName"));
         on = OnContext.ensure(root.get("on"));
-        permissions = PermissionsContext.create(root.get("permissions"));
+        permissions = PermissionsContext.create(root.get("permissions"), Set.of());
         environment = EnvironmentContext.create(root.get("env"));
         defaults = DefaultsContext.create(root.get("defaults"));
         concurrency = ConcurrencyContext.create(root.get("concurrency"));

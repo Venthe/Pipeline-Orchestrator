@@ -11,7 +11,7 @@ import java.util.Set;
 import static eu.venthe.pipeline.orchestrator.modules.automation.workflows.Permissions.*;
 
 public class JobContext {
-    private final Optional<String> name;
+//    private final Optional<String> name;
     private final Optional<PermissionsContext> permissions;
 
 

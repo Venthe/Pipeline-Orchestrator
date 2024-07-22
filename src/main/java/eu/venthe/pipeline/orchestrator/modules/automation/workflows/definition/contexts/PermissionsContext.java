@@ -18,9 +18,6 @@ public class PermissionsContext {
     public static Optional<PermissionsContext> create(JsonNode root, final Set<Permissions> allowedPermissions) {
         return ContextUtilities.create(root, PermissionsContext::new);
     }
-
-    private static void create(final JsonNode root) {
-    }
     // read|write|none
     // read-all
     // write-all
