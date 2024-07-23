@@ -1,66 +1,54 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution;
 
-import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowCorrelationId;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.ExecutionAdapterManager;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.JobExecutorAdapter;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.model.AdapterId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.WorkflowExecutionCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.Dimension;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionId;
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
-import eu.venthe.pipeline.orchestrator.security.User;
-import eu.venthe.pipeline.orchestrator.security.UserService;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.EventId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.WorkflowDispatchEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.RepositoryContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.UserContext;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.UserType;
-import eu.venthe.pipeline.orchestrator.utilities.ExponentialBackOff;
+import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.togglz.core.manager.FeatureManager;
+import org.togglz.core.util.NamedFeature;
 
-import java.nio.file.Path;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import static eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.PipelineUtilities.resolveFromOrchestratorDirectory;
 
 @RequiredArgsConstructor
 @Service
 public class WorkflowExecutionCommandServiceImpl implements WorkflowExecutionCommandService {
-    private final ProjectModuleMediator moduleMediator;
-    private final WorkflowExecutionQueryService workflowExecutionQueryService;
-    private final UserService userService;
-    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
+    private final FeatureManager featureManager;
+    private final ExecutionAdapterManager adapterManager;
+    private final EnvUtil envUtil;
 
+    @Override
+    public WorkflowExecutionId executeWorkflow(final WorkflowDefinition workflowDefinition, final Context context) {
+        if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
+            throw new UnsupportedOperationException();
+        }
+
+        JobExecutorAdapter.AdapterInstance docker = adapterManager.queryAdapter(new AdapterId("default")).orElseThrow();
+
+        JobExecutionId executionId = new JobExecutionId(UUID.randomUUID().toString());
+        docker.queueJobExecution(
+                context.id(),
+                executionId,
+                envUtil.getServerUrl(),
+                new JobExecutorAdapter.CallbackToken("TEST_TOKEN"),
+                RunnerDimensions.builder().from(context.dimensions().toArray(Dimension[]::new)).build()
+        );
+        return executionId;
+    }
+
+
+
+/*
     @SneakyThrows
     @Override
-    public WorkflowExecutionId triggerManualWorkflow(final ProjectId projectId,
-                                                     final Revision revision,
-                                                     final Path path) {
-        var eventId = UUID.randomUUID();
-        ProjectEvent event = WorkflowDispatchEvent.builder()
-                .workflow(resolveFromOrchestratorDirectory(path))
-                .revision(revision)
-                .id(new EventId(eventId))
-                .repository(RepositoryContext.builder().id(projectId).build())
-                .sender(fromUser(userService.getCurrentUser()))
-                .build();
-        moduleMediator.listen(event);
+    public JobExecutionId triggerJobExecution(ProjectId projectId, Dimension... dimensions) {
 
-        var invoke = new ExponentialBackOff(executorService).invoke(() -> workflowExecutionQueryService.getExecutionDetails(new WorkflowCorrelationId(event.getId().toString())).orElseThrow());
-
-        return invoke.orElseThrow().workflowExecutionId();
-    }
-
-    private static UserContext fromUser(final User user) {
-        return UserContext.builder()
-                .userType(UserType.USER)
-                .login(user.commonName())
-                .id(user.commonName())
-                .name(user.commonName())
-                .build();
-    }
+    }*/
 }

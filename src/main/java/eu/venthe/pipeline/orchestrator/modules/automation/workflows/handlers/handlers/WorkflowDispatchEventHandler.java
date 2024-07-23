@@ -2,6 +2,7 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.handlers.ha
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.events.WorkflowDispatchEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
@@ -14,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -24,6 +24,7 @@ import java.util.Collections;
 public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowDispatchEvent> {
     private final ObjectMapper mapper;
     private final ProjectsQueryService projectsQueryService;
+    private final WorkflowExecutionCommandService commandService;
 
     @Override
     public Collection<DomainTrigger> _handle(WorkflowDispatchEvent event) {
@@ -32,8 +33,7 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
         var workflow = projectsQueryService.getFile(event.getRepository().getId(), event.getRevision(), event.getWorkflow())
                 .map(e -> new String(e.content(), StandardCharsets.UTF_8))
                 .map(this::getTree)
-                // FIXME
-                .map(e -> new WorkflowDefinition(e, null))
+                .map(WorkflowDefinition::new)
                 .orElseThrow();
 
         log.trace("Workflow loaded {}", workflow);
@@ -42,9 +42,9 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
             return Collections.emptyList();
         }
 
+        commandService.triggerWorkflow(event.getRepository().getId(), event.getRevision(), workflow);
 
-
-        throw new UnsupportedOperationException();
+        return Collections.emptyList();
     }
 
     @SneakyThrows

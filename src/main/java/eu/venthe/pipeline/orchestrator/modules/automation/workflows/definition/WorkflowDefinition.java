@@ -31,13 +31,11 @@ public class WorkflowDefinition {
     @Getter(AccessLevel.NONE)
     @ToString.Include
     private final ObjectNode root;
-    @ToString.Include
-    private final WorkflowRef ref;
 
     /*
      * The name of the workflow. If you omit name, System displays the workflow file path relative to the root of the repository.
      */
-    private final String name;
+    private final Optional<String> name;
     private final Optional<String> runName;
     private final OnContext on;
     private final Optional<PermissionsContext> permissions;
@@ -46,15 +44,13 @@ public class WorkflowDefinition {
     private final Optional<ConcurrencyContext> concurrency;
     private final JobsContext jobs;
 
-    public WorkflowDefinition(JsonNode _root, WorkflowRef workflowRef) {
+    public WorkflowDefinition(JsonNode _root) {
         if (_root == null) throw new IllegalArgumentException("Workflow should not be null");
-        if (workflowRef == null) throw new IllegalArgumentException("WorkflowRef should not be null");
         if (!_root.isObject()) throw new IllegalArgumentException("Root should be an object");
 
         this.root = (ObjectNode) _root;
-        this.ref = workflowRef;
 
-        name = NameContext.create(root.get("name")).orElseGet(() -> ref.getFilePath().toString());
+        name = NameContext.create(root.get("name"));
         runName = RunNameContext.create(root.get("runName"));
         on = OnContext.ensure(root.get("on"));
         permissions = PermissionsContext.create(root.get("permissions"), Set.of());
@@ -69,22 +65,5 @@ public class WorkflowDefinition {
         log.info("[id:{}][type:{}] Event match: {}", event.getId(), event.getType(), result);
 
         return result;
-    }
-
-    @RequiredArgsConstructor
-    @Getter
-    public static class WorkflowRef {
-        @NonNull
-        private final ProjectId projectId;
-        @NonNull
-        private final Revision revision;
-        @NonNull
-        private final Path filePath;
-        @NonNull
-        private final FileHash sha;
-
-        public String toRef() {
-            return MessageFormat.format("{0}@{1}:{2}", projectId.serialize(), revision.value(), filePath);
-        }
     }
 }

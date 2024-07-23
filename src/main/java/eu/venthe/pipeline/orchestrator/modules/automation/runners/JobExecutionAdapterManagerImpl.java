@@ -1,16 +1,12 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.runners.impl;
+package eu.venthe.pipeline.orchestrator.modules.automation.runners;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.ExecutionAdapterManager;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.JobExecutorAdapterProvider;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.JobExecutorAdapterProvider;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.model.AdapterInstanceAggregate;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.vo.RegisterAdapterSpecification;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.model.AdapterId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.ExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.RunnerId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
 import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.infrastructure.JobExecutorAdapterRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +16,7 @@ import org.togglz.core.util.NamedFeature;
 
 @Component
 @RequiredArgsConstructor
-public class JobExecutionAdapterManagerImpl implements ExecutionAdapterManager, JobExecutionQueryService {
+public class JobExecutionAdapterManagerImpl implements ExecutionAdapterManager {
     private final JobExecutorAdapterRepository repository;
     private final JobExecutorAdapterProvider jobExecutorAdapterProvider;
     private final FeatureManager featureManager;
@@ -45,23 +41,4 @@ public class JobExecutionAdapterManagerImpl implements ExecutionAdapterManager, 
         AdapterInstanceAggregate docker = repository.find(adapterId).orElseThrow();
         return docker.registerRunner(dimensions);
     }
-
-    @Override
-    public ExecutionDetailsDto getExecutionDetails(JobExecutionId executionId) {
-        throw new UnsupportedOperationException();
-    }
-/*
-    @SneakyThrows
-    @Override
-    public JobExecutionId triggerJobExecution(ProjectId projectId, Dimension... dimensions) {
-        if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
-            throw new UnsupportedOperationException();
-        }
-
-        AdapterInstanceAggregate docker = repository.find(new AdapterId("default")).orElseThrow();
-
-        JobExecutionId executionId = new JobExecutionId(UUID.randomUUID().toString());
-        docker.queueJobExecution(projectId, executionId, envUtil.getServerUrl(), new JobExecutorAdapter.CallbackToken("TEST_TOKEN"));
-        return executionId;
-    }*/
 }

@@ -2,12 +2,13 @@ package eu.venthe.pipeline.orchestrator;
 
 import eu.venthe.pipeline.orchestrator.fixtures.MockAdapterFixture;
 import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
-import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.ExecutionAdapterManager;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutionQueryService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutorCallbackService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.vo.RegisterAdapterSpecification;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutionQueryService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.JobExecutorCallbackService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.ProjectWorkflowCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.WorkflowExecutionQueryService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.dto.JobExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationCommandService;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;
@@ -20,6 +21,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 import lombok.val;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,17 +51,16 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     ProjectsCommandService projectsCommandService;
     @Autowired
-    ProjectsQueryService projectsQueryService;
-    @Autowired
-    JobExecutionQueryService jobExecutionQueryService;
-    @Autowired
-    OrganizationCommandService organizationCommandService;
+    ProjectWorkflowCommandService projectWorkflowCommandService;
     @Autowired
     JobExecutorCallbackService callbackService;
     @Autowired
-    ProjectModuleMediator projectModuleMediator;
+    OrganizationCommandService organizationCommandService;
+
     @Autowired
-    WorkflowExecutionCommandService workflowExecutionCommandService;
+    ProjectsQueryService projectsQueryService;
+    @Autowired
+    WorkflowExecutionQueryService workflowExecutionQueryService;
 
     @Autowired
     MockProjectSourceFixture projectSourceFixture;
@@ -132,14 +133,10 @@ class FullIntegrationTest extends AbstractIntegrationTest {
             System.out.println(metadata);
         });
 
-        val workflowExecutionId = workflowExecutionCommandService.triggerManualWorkflow(projectId, revision, Paths.get("test-workflow.yml"));
-
-       /*
-       JobExecutionId executionId = projectsCommandService.executeManualWorkflow(projectId, "main", new File("example.yaml"));
+        val workflowExecutionId = projectWorkflowCommandService.triggerWorkflowDispatch(projectId, revision, Paths.get("test-workflow.yml"));
 
         await("Execution done").untilAsserted(() ->
-                Assertions.assertThat(jobExecutionQueryService.getExecutionDetails(executionId)).isEqualTo(new ExecutionDetailsDto()));
-       */
+                Assertions.assertThat(workflowExecutionQueryService.getExecutionDetails(workflowExecutionId)).isEqualTo(new JobExecutionDetailsDto()));
     }
 
 }

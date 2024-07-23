@@ -1,6 +1,7 @@
 package eu.venthe.pipeline.orchestrator.utilities;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -44,13 +45,15 @@ public class EnvUtil {
      *
      * @return
      */
-    public String getHostname() throws UnknownHostException {
+    @SneakyThrows
+    public String getHostname() {
         // TODO ... would this cache cause issue, when network env change ???
         if (hostname == null) hostname = InetAddress.getLocalHost().getHostAddress();
         return hostname;
     }
 
-    public URL getServerUrl() throws UnknownHostException, MalformedURLException {
+    @SneakyThrows
+    public URL getServerUrl() {
         return new URL("http://" + getHostname() + ":" + getPort());
     }
 }

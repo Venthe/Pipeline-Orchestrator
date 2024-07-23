@@ -1,14 +1,18 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.api;
 
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.Dimension;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 
-import java.nio.file.Path;
-import java.util.Map;
+import java.util.Set;
 
 public interface WorkflowExecutionCommandService {
+
+    WorkflowExecutionId executeWorkflow(final WorkflowDefinition workflowDefinition, final Context context);
+
     default void retriggerWorkflow(WorkflowExecutionId executionId) {
         throw new UnsupportedOperationException();
     }
@@ -25,9 +29,5 @@ public interface WorkflowExecutionCommandService {
         throw new UnsupportedOperationException();
     }
 
-    WorkflowExecutionId triggerManualWorkflow(final ProjectId id, final Revision revision, final Path path);
-
-    default WorkflowExecutionId triggerManualWorkflow(final ProjectId id, final Revision revision, final Path path, final Map<String, String> inputs) {
-        throw new UnsupportedOperationException();
-    }
+    record Context(ProjectId id, Revision revision, Set<Dimension> dimensions) {}
 }

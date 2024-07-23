@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.api.dto;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.dto;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionId;
 

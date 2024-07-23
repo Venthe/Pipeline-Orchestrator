@@ -1,6 +1,7 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.api;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.api.dto.WorkflowExecutionDto;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.dto.WorkflowExecutionDto;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowCorrelationId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionId;
 
@@ -13,6 +14,10 @@ public interface WorkflowExecutionQueryService {
     }
 
     default Optional<WorkflowExecutionDto> getExecutionDetails(WorkflowExecutionId executionId) {
+        throw new UnsupportedOperationException();
+    }
+
+    default Optional<WorkflowExecutionDto> getExecutionDetails(WorkflowExecutionId executionId, JobExecutionId jobExecutionId) {
         throw new UnsupportedOperationException();
     }
 

@@ -36,4 +36,7 @@ public interface JobExecutorAdapter {
 
     record CallbackToken(String value) {
     }
+
+    record AdapterId(String value) {
+    }
 }
