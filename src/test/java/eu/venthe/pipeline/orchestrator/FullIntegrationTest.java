@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.runners.ExecutionAdapt
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutorCallbackService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.RegisterAdapterSpecification;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.vo.RegisterAdapterSpecification;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationCommandService;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;

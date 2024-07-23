@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.infrastructure;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainRepository;

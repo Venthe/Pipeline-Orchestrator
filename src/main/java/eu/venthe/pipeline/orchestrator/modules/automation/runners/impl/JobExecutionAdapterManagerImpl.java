@@ -1,11 +1,13 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution;
+package eu.venthe.pipeline.orchestrator.modules.automation.runners.impl;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.AdapterInstanceAggregate;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.ExecutionAdapterManager;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.RegisterAdapterSpecification;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.JobExecutorAdapterProvider;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.model.AdapterInstanceAggregate;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.vo.RegisterAdapterSpecification;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.model.AdapterId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.ExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.RunnerId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;

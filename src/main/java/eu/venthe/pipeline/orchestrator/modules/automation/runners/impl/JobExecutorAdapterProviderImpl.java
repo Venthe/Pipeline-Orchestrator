@@ -1,5 +1,6 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution;
+package eu.venthe.pipeline.orchestrator.modules.automation.runners.impl;
 
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.JobExecutorAdapterProvider;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.JobExecutorAdapter;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.model.AdapterType;
 import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.SuppliedProperties;
@@ -20,10 +21,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JobExecutorAdapterProvider {
+public class JobExecutorAdapterProviderImpl implements JobExecutorAdapterProvider {
     private final FeatureManager featureManager;
     private final AdapterProviders adapters;
 
+    @Override
     public JobExecutorAdapter.AdapterInstance provide(AdapterType adapterType, SuppliedProperties properties) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             throw new UnsupportedOperationException();

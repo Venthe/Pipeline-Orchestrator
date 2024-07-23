@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.model;
 
 public enum Permissions {
     /**

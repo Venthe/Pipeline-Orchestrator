@@ -8,7 +8,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.util
 import java.util.Optional;
 import java.util.Set;
 
-import static eu.venthe.pipeline.orchestrator.modules.automation.workflows.Permissions.*;
+import static eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.Permissions.*;
 
 public class JobContext {
 //    private final Optional<String> name;

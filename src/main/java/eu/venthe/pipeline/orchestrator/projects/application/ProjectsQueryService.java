@@ -8,8 +8,8 @@ import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.Sou
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.GlobPatternMatching;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.io.File;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;

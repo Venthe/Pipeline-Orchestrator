@@ -6,6 +6,8 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.comm
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.model.RepositoryVisibilityContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.RepositoryVisibility;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.net.URL;
 import java.util.Optional;
@@ -19,6 +21,8 @@ import java.util.Optional;
 // TODO: Add URL for the blobs of the repository
 // TODO: Add URL for the deployments of the repository
 
+@Getter
+@SuperBuilder
 /**
  * The repository on GitHub where the event occurred. Webhook payloads contain the repository property when the event
  * occurs from activity in a repository.
@@ -53,7 +57,6 @@ public class RepositoryContext {
         this.url = UrlContext.ensure(root.get("url"));
         this.visibility = RepositoryVisibilityContext.ensure(root.get("visibility"));
     }
-
 
     public static RepositoryContext ensure(final JsonNode root) {
         return ContextUtilities.ensure(root, RepositoryContext::new);

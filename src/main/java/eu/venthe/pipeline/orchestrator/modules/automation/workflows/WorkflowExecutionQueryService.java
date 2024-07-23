@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows;
 
-import eu.venthe.pipeline.orchestrator.modules.automation._archive.api.dto.WorkflowExecutionDto;
+import eu.venthe.pipeline.orchestrator.modules.automation.api.dto.WorkflowExecutionDto;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowCorrelationId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionId;
 

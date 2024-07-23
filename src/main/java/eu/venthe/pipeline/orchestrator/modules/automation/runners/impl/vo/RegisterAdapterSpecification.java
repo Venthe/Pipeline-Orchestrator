@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.runners;
+package eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.vo;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.model.AdapterId;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.model.AdapterType;
