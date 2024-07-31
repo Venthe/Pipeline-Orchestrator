@@ -2,14 +2,14 @@ package eu.venthe.pipeline.orchestrator;
 
 import eu.venthe.pipeline.orchestrator.fixtures.MockAdapterFixture;
 import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.ExecutionAdapterManager;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.vo.RegisterAdapterSpecification;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerManager;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RegisterRunnerImplementationSpecification;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutionQueryService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.JobExecutorCallbackService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.ProjectWorkflowCommandService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.WorkflowExecutionQueryService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.dto.JobExecutionDetailsDto;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.JobExecutorCallbackService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.ProjectWorkflowCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.WorkflowExecutionQueryService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.JobExecutionDetailsDto;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationCommandService;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.SourceConfigurationSpecification;
@@ -45,7 +45,7 @@ import static org.mockito.Mockito.when;
 class FullIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
-    ExecutionAdapterManager executionAdapterManager;
+    RunnerManager runnerManager;
     @Autowired
     ProjectSourcesManager projectSourcesManager;
     @Autowired
@@ -102,14 +102,14 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                 .build();
         val sourceConfigurationId = organizationCommandService.addSourceConfiguration(sourceSpecification);
 
-        val adapterSpecification = RegisterAdapterSpecification.builder()
+        val adapterSpecification = RegisterRunnerImplementationSpecification.builder()
                 .organizationId(organizationId)
                 .adapterId(requestedAdapterId)
                 .adapterType(adapterType)
                 .build();
-        val defaultExecutor = executionAdapterManager.registerAdapter(adapterSpecification);
+        val defaultExecutor = runnerManager.registerRunnerImplementation(adapterSpecification);
 
-        val defaultRunner = executionAdapterManager.registerRunner(defaultExecutor, RunnerDimensions.none());
+        val defaultRunner = runnerManager.registerRunner(defaultExecutor, RunnerDimensions.none());
 
         // FIXME: This should be done scheduled & asynchronously
         projectSourcesManager.synchronize(sourceConfigurationId);

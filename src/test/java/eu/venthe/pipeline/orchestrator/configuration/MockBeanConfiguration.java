@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.configuration;
 
 import eu.venthe.pipeline.orchestrator.fixtures.MockAdapterFixture;
 import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.model.AdapterType;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerEngineType;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.SourceType;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;
@@ -16,20 +16,20 @@ import static org.mockito.ArgumentMatchers.any;
 public class MockBeanConfiguration {
 
     @Bean
-    MockAdapterFixture.MockAdapterInstance adapterInstance() {
-        return Mockito.mock(MockAdapterFixture.MockAdapterInstance.class);
+    MockAdapterFixture.MockRunnerEngineInstance adapterInstance() {
+        return Mockito.mock(MockAdapterFixture.MockRunnerEngineInstance.class);
     }
 
     @Bean
-    MockAdapterFixture.TestJobExecutorAdapter executionAdapter(MockAdapterFixture.MockAdapterInstance adapterInstance) {
-        var executionAdapter = Mockito.mock(MockAdapterFixture.TestJobExecutorAdapter.class);
-        Mockito.when(executionAdapter.getAdapterType()).thenReturn(new AdapterType("default"));
+    MockAdapterFixture.TestRunnerEngineDefinition executionAdapter(MockAdapterFixture.MockRunnerEngineInstance adapterInstance) {
+        var executionAdapter = Mockito.mock(MockAdapterFixture.TestRunnerEngineDefinition.class);
+        Mockito.when(executionAdapter.getEngineType()).thenReturn(new RunnerEngineType("default"));
         Mockito.when(executionAdapter.instantiate(any())).thenReturn(adapterInstance);
         return executionAdapter;
     }
 
     @Bean
-    MockAdapterFixture mockAdapterFixture(MockAdapterFixture.MockAdapterInstance adapterInstance, MockAdapterFixture.TestJobExecutorAdapter adapter) {
+    MockAdapterFixture mockAdapterFixture(MockAdapterFixture.MockRunnerEngineInstance adapterInstance, MockAdapterFixture.TestRunnerEngineDefinition adapter) {
         return new MockAdapterFixture(adapterInstance, adapter);
     }
 

@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.handlers.ha
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.api.WorkflowExecutionCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.events.WorkflowDispatchEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 
 @Component
 @RequiredArgsConstructor
@@ -24,25 +25,25 @@ import java.util.Collections;
 public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowDispatchEvent> {
     private final ObjectMapper mapper;
     private final ProjectsQueryService projectsQueryService;
-    private final WorkflowExecutionCommandService commandService;
+    private final WorkflowExecutionCommandService workflowExecutionCommandService;
 
     @Override
     public Collection<DomainTrigger> _handle(WorkflowDispatchEvent event) {
         log.info("Event triggers single workflow on path {}", event.getWorkflow());
 
-        var workflow = projectsQueryService.getFile(event.getRepository().getId(), event.getRevision(), event.getWorkflow())
+        var workflowDefinition = projectsQueryService.getFile(event.getRepository().getId(), event.getRevision(), event.getWorkflow())
                 .map(e -> new String(e.content(), StandardCharsets.UTF_8))
                 .map(this::getTree)
                 .map(WorkflowDefinition::new)
                 .orElseThrow();
 
-        log.trace("Workflow loaded {}", workflow);
+        log.trace("Workflow loaded {}", workflowDefinition);
 
-        if (!workflow.on(new WorkflowDispatchEventWrapper(event))) {
+        if (!workflowDefinition.on(new WorkflowDispatchEventWrapper(event))) {
             return Collections.emptyList();
         }
 
-        commandService.triggerWorkflow(event.getRepository().getId(), event.getRevision(), workflow);
+        workflowExecutionCommandService.triggerWorkflow(workflowDefinition, new WorkflowExecutionCommandService.Context(event.getRepository().getId(), event.getRevision(), new HashSet<>()));
 
         return Collections.emptyList();
     }

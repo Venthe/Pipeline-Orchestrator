@@ -1,7 +1,9 @@
 package eu.venthe.pipeline.orchestrator.fixtures;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.adapters.template.JobExecutorAdapter;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.ExecutionCallbackToken;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineDefinition;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.dimensions.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineInstance;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import lombok.RequiredArgsConstructor;
@@ -18,35 +20,35 @@ import static org.mockito.ArgumentMatchers.any;
 @RequiredArgsConstructor
 @Slf4j
 public class MockAdapterFixture {
-    private final MockAdapterInstance adapterInstance;
-    private final TestJobExecutorAdapter executionAdapter;
+    private final MockRunnerEngineInstance adapterInstance;
+    private final TestRunnerEngineDefinition executionAdapter;
 
-    public void setupExecution(Consumer<MockAdapterInstance.Metadata> consumer) {
+    public void setupExecution(Consumer<MockRunnerEngineInstance.Metadata> consumer) {
         Mockito.doAnswer(invocation -> {
             var projectId = invocation.getArgument(0, ProjectId.class);
             var executionId = invocation.getArgument(1, JobExecutionId.class);
             var systemApiUrl = invocation.getArgument(2, URL.class);
-            var callbackToken = invocation.getArgument(3, JobExecutorAdapter.CallbackToken.class);
+            var callbackToken = invocation.getArgument(3, ExecutionCallbackToken.class);
             var dimensions = invocation.getArgument(4, RunnerDimensions.class);
 
             try (ExecutorService threadExecutor = Executors.newSingleThreadExecutor()) {
                 threadExecutor.execute(() -> {
                     log.info("Executing {} for {}", executionId, projectId);
-                    consumer.accept(new MockAdapterInstance.Metadata(projectId, executionId, systemApiUrl, callbackToken, dimensions));
+                    consumer.accept(new MockRunnerEngineInstance.Metadata(projectId, executionId, systemApiUrl, callbackToken, dimensions));
                     log.info("Execution {} complete.", executionId);
                 });
             }
             return null;
-        }).when(adapterInstance).queueJobExecution(any(), any(), any(), any(), any());
+        }).when(adapterInstance).queueExecution(any(), any(), any(), any(), any());
     }
 
 
-    public interface TestJobExecutorAdapter extends JobExecutorAdapter {
+    public interface TestRunnerEngineDefinition extends RunnerEngineDefinition {
     }
 
-    public interface MockAdapterInstance extends JobExecutorAdapter.AdapterInstance {
+    public interface MockRunnerEngineInstance extends RunnerEngineInstance {
         record Metadata(ProjectId projectId, JobExecutionId executionId, URL systemApiUrl,
-                        JobExecutorAdapter.CallbackToken callbackToken, RunnerDimensions dimensions) {
+                        ExecutionCallbackToken executionCallbackToken, RunnerDimensions dimensions) {
         }
     }
 }
