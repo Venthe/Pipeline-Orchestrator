@@ -4,7 +4,6 @@ import eu.venthe.pipeline.orchestrator.fixtures.MockAdapterFixture;
 import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerManager;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RegisterRunnerEngineInstanceSpecification;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.JobExecutorCallbackService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.ProjectWorkflowCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.WorkflowExecutionQueryService;
@@ -77,8 +76,8 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         val requestedOrganizationId = "default";
         val sourceType = "test";
         val requestedSourceConfigurationId = "default";
-        val requestedAdapterId = "default";
-        val adapterType = "default";
+        val engineInstanceId = "default";
+        val engineType = "default";
 
         projectSourceFixture.onInstance(projectSource -> {
             when(projectSource.getProjectIds()).thenReturn(Stream.of(new ProjectDto.Id(projectName)));
@@ -104,8 +103,8 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
         val adapterSpecification = RegisterRunnerEngineInstanceSpecification.builder()
                 .organizationId(organizationId)
-                .adapterId(requestedAdapterId)
-                .adapterType(adapterType)
+                .runnerEngineInstanceId(engineInstanceId)
+                .runnerEngineType(engineType)
                 .build();
         val defaultExecutor = runnerManager.registerRunnerEngineInstance(adapterSpecification);
 

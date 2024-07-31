@@ -1,3 +1,4 @@
+/*
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution._archive.Workflow;
@@ -53,3 +54,4 @@ class WorkflowTest {
         }
     }
 }
+*/

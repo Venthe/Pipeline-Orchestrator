@@ -1,8 +1,7 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.model;
+package eu.venthe.pipeline.orchestrator.modules.automation.runners.model;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.ExecutionCallbackToken;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineInstance;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerEngineInstanceId;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.Dimension;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerId;
@@ -20,11 +19,20 @@ public class RunnerEngineInstanceAggregate implements Aggregate<RunnerEngineInst
     RunnerEngineInstanceId id;
     RunnerEngineInstance runnerEngineInstance;
 
-    public void queueJobExecution(ProjectId projectId, JobExecutionId executionId, URL systemApiUrl, ExecutionCallbackToken executionCallbackToken, Dimension... dimensions) {
-        runnerEngineInstance.queueExecution(projectId, executionId, systemApiUrl, executionCallbackToken, RunnerDimensions.builder().from(dimensions).build());
+    // TODO: Add logs
+    public void queueJobExecution(ProjectId projectId,
+                                  JobExecutionId executionId,
+                                  URL systemApiUrl,
+                                  ExecutionCallbackToken executionCallbackToken,
+                                  RunnerDimensions dimensions) {
+        runnerEngineInstance.queueExecution(projectId,
+                executionId,
+                systemApiUrl,
+                executionCallbackToken,
+                dimensions);
     }
 
     public RunnerId registerRunner(RunnerDimensions runnerDimensions) {
-        return runnerEngineInstance.registerRunner(runnerDimensions.stream().map(Dimension::new).toArray(Dimension[]::new));
+        return runnerEngineInstance.registerRunner(runnerDimensions);
     }
 }

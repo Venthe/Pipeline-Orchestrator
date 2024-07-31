@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model;
+package eu.venthe.pipeline.orchestrator.modules.automation.runners.model;
 
 import java.util.Locale;
 

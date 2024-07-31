@@ -70,6 +70,9 @@ dependencies {
     // Static analysis
     // implementation("com.google.code.findbugs:jsr305:3.0.2")
     // implementation("io.vertx:vertx-json-schema:4.5.1")
+    testImplementation("com.tngtech.archunit:archunit:1.3.0")
+    testImplementation("com.tngtech.archunit:archunit-junit5:1.3.0")
+
 }
 
 @Suppress("UnstableApiUsage")

@@ -1,24 +1,29 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.runners.impl;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerManager;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.infrastructure.RunnerEngineInstanceRepository;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RegisterRunnerEngineInstanceSpecification;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RunnerEngineInstanceAggregate;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RunnerEngineInstanceId;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.RunnerEngineProvider;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.model.RunnerEngineInstanceAggregate;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineInstance;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerEngineInstanceId;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.ExecutionCallbackToken;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerId;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.infrastructure.JobExecutorAdapterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.togglz.core.manager.FeatureManager;
 import org.togglz.core.util.NamedFeature;
 
+import java.net.URL;
+
 @Component
 @RequiredArgsConstructor
 public class RunnerManagerImpl implements RunnerManager {
-    private final JobExecutorAdapterRepository repository;
+    private final RunnerEngineInstanceRepository repository;
     private final RunnerEngineProvider runnerEngineProvider;
     private final FeatureManager featureManager;
     private final EnvUtil envUtil;
@@ -41,5 +46,31 @@ public class RunnerManagerImpl implements RunnerManager {
 
         RunnerEngineInstanceAggregate aggregate = repository.find(runnerEngineInstanceId).orElseThrow();
         return aggregate.registerRunner(dimensions);
+    }
+
+    @Override
+    public boolean queueExecution(final ProjectId projectId,
+                                  final JobExecutionId executionId,
+                                  final URL systemApiUrl,
+                                  final ExecutionCallbackToken executionCallbackToken,
+                                  final RunnerDimensions dimensions) {
+        if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
+            throw new UnsupportedOperationException();
+        }
+
+        // TODO: Find aggregate by runner dimensions:
+        //  default or org id
+        // FIXME: Actually implement
+        var aggregate = repository.findAll().stream().findAny().orElseThrow();
+
+        aggregate.queueJobExecution(
+                projectId,
+                executionId,
+                systemApiUrl,
+                executionCallbackToken,
+                dimensions
+        );
+
+        return true;
     }
 }
