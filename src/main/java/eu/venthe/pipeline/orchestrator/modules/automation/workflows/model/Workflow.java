@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution._archive;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;

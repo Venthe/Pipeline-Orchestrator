@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.handlers.ha
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.WorkflowExecutionCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.events.WorkflowDispatchEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
@@ -14,7 +14,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,7 +31,7 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
         log.info("Event triggers single workflow on path {}", event.getWorkflow());
 
         var workflowDefinition = projectsQueryService.getFile(event.getRepository().getId(), event.getRevision(), event.getWorkflow())
-                .map(e -> new String(e.content(), StandardCharsets.UTF_8))
+                .map(e -> e.content().toString())
                 .map(this::getTree)
                 .map(WorkflowDefinition::new)
                 .orElseThrow();

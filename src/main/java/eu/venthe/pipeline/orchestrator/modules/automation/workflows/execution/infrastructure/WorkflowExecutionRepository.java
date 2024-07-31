@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.infrastructure;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.workflow_execution.WorkflowExecutionId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.DomainRepository;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution._archive.WorkflowExecution;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.workflow_execution.WorkflowExecution;
 
 public interface WorkflowExecutionRepository extends DomainRepository<WorkflowExecution, WorkflowExecutionId> {
 }

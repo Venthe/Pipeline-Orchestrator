@@ -1,9 +1,10 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.impl;
 
 import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.WorkflowExecutionQueryService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowCorrelationId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.ProjectWorkflowCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.workflow_execution.WorkflowCorrelationId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.workflow_execution.WorkflowExecutionId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.security.User;
 import eu.venthe.pipeline.orchestrator.security.UserService;

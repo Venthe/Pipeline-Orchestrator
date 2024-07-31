@@ -1,11 +1,10 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution._archive;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.workflow_execution;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowCorrelationId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionStatus;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import lombok.*;
 
 import java.time.ZonedDateTime;
@@ -18,6 +17,9 @@ public class WorkflowExecution implements Aggregate<WorkflowExecutionId> {
     @Getter
     @EqualsAndHashCode.Include
     private final WorkflowExecutionId id;
+    /**
+     * What has triggered this workflow (e.g. other workflow) if applicable.
+     */
     private final WorkflowCorrelationId workflowCorrelationId;
     private final ZonedDateTime startDate;
     private ZonedDateTime endDate;
@@ -33,11 +35,15 @@ public class WorkflowExecution implements Aggregate<WorkflowExecutionId> {
         this.workflow = workflow;
         this.workflowCorrelationId = workflowCorrelationId;
 
-        jobs = new WorkflowExecutionJobs();
+        jobs = new WorkflowExecutionJobs(this.workflow);
     }
 
-    public void triggerWorkflow() {
-        throw new UnsupportedOperationException();
+    public WorkflowExecution(WorkflowDefinition workflow) {
+        this(null, workflow);
+    }
+
+    public void triggerWorkflow(final WorkflowExecutionCommandService.Context context, final EnvUtil envUtil) {
+        jobs.start(context, envUtil);
     }
 
     public void retriggerWorkflow() {

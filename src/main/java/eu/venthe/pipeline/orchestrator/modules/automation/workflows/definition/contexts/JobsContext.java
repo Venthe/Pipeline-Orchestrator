@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.JobContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities;
+import lombok.ToString;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
 // TODO: Implement context
+@ToString
 public class JobsContext {
     private final Map<JobId, JobContext> jobs;
 

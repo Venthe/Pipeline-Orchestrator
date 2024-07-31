@@ -7,6 +7,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.mode
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.model.RepositoryVisibility;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.net.URL;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 @Getter
 @SuperBuilder
+@ToString
 /**
  * The repository on GitHub where the event occurred. Webhook payloads contain the repository property when the event
  * occurs from activity in a repository.

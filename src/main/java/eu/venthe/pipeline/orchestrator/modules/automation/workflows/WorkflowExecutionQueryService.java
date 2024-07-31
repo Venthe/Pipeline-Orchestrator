@@ -1,8 +1,9 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows;
 
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.query.WorkflowExecutionDto;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowCorrelationId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.workflow_execution.WorkflowCorrelationId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.workflow_execution.WorkflowExecutionId;
 
 import java.util.List;
 import java.util.Optional;

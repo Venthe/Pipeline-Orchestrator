@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.query;
 
 import java.time.OffsetDateTime;
 import java.util.Map;

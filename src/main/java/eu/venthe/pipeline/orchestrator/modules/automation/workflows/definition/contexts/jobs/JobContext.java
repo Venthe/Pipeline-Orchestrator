@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.PermissionsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
+import lombok.ToString;
 
 import java.util.Optional;
 import java.util.Set;
 
 import static eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.Permissions.*;
 
+@ToString
 public class JobContext {
 //    private final Optional<String> name;
     private final Optional<PermissionsContext> permissions;

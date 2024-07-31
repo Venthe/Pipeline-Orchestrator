@@ -1,4 +1,8 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows;
+
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.query.JobCallbackCallMetadata;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.query.JobCallbackLogEntry;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.query.JobExecutionContext;
 
 import java.io.File;
 

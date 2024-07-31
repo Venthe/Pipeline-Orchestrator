@@ -1,5 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.io;
 
-public record File(byte[] content,
+import java.io.OutputStream;
+
+public record File(OutputStream content,
                    Metadata metadata) {
 }
