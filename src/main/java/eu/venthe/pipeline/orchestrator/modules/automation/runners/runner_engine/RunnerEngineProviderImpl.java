@@ -1,6 +1,5 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.runners.impl;
+package eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerProvider;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineDefinition;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineInstance;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerEngineType;
@@ -22,39 +21,39 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class RunnerProviderImpl implements RunnerProvider {
+public class RunnerEngineProviderImpl implements RunnerEngineProvider {
     private final FeatureManager featureManager;
-    private final AdapterProviders adapters;
+    private final EngineDefinitions engineDefinitions;
 
     @Override
-    public RunnerEngineInstance provide(RunnerEngineType runnerEngineType, SuppliedProperties properties) {
+    public Optional<RunnerEngineInstance> provide(RunnerEngineType runnerEngineType, SuppliedProperties properties) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             throw new UnsupportedOperationException();
         }
 
-        var executorAdapter = adapters.provide(runnerEngineType).orElseThrow();
+        var engineDefinition = engineDefinitions.provide(runnerEngineType).orElseThrow();
 
-        if (!runnerEngineType.equals(executorAdapter.getEngineType())) {
+        if (!runnerEngineType.equals(engineDefinition.getEngineType())) {
             log.error("Adapter of type {} not supported", runnerEngineType);
             throw new UnsupportedOperationException();
         }
 
         log.trace("Instantiating job executor adapter {}", runnerEngineType);
 
-        var instantiate = executorAdapter.instantiate(properties);
+        var instance = engineDefinition.instantiate(properties);
 
         log.info("Job executor for adapter {} instantiated", runnerEngineType);
-        return instantiate;
+        return Optional.of(instance);
     }
 
     @ToString
     @EqualsAndHashCode
     @Component
-    public static class AdapterProviders {
-        private final Map<RunnerEngineType, RunnerEngineDefinition> adapters;
+    public static class EngineDefinitions {
+        private final Map<RunnerEngineType, RunnerEngineDefinition> definitions;
 
-        public AdapterProviders(final Set<RunnerEngineDefinition> adapters) {
-            this.adapters = adapters.stream()
+        public EngineDefinitions(final Set<RunnerEngineDefinition> definitions) {
+            this.definitions = definitions.stream()
                     .collect(Collectors.toMap(
                             RunnerEngineDefinition::getEngineType,
                             Function.identity()
@@ -62,7 +61,7 @@ public class RunnerProviderImpl implements RunnerProvider {
         }
 
         public Optional<RunnerEngineDefinition> provide(RunnerEngineType runnerEngineType) {
-            return Optional.ofNullable(adapters.get(runnerEngineType));
+            return Optional.ofNullable(definitions.get(runnerEngineType));
         }
     }
 }

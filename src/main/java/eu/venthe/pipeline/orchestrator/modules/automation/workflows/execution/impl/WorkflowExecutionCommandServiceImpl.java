@@ -3,11 +3,11 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.i
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerManager;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.ExecutionCallbackToken;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineInstance;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerImplementationId;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerEngineInstanceId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.WorkflowExecutionCommandService;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.dimensions.Dimension;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.dimensions.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.Dimension;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.WorkflowExecutionId;
 import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
@@ -31,7 +31,7 @@ public class WorkflowExecutionCommandServiceImpl implements WorkflowExecutionCom
             throw new UnsupportedOperationException();
         }
 
-        RunnerEngineInstance docker = adapterManager.queryAdapter(new RunnerImplementationId("default")).orElseThrow();
+        RunnerEngineInstance docker = adapterManager.queryAdapter(new RunnerEngineInstanceId("default")).orElseThrow();
 
         JobExecutionId executionId = new JobExecutionId(UUID.randomUUID().toString());
         docker.queueExecution(

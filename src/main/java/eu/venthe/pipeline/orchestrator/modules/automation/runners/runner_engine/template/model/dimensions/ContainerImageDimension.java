@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.runners.model.dimensions;
+package eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

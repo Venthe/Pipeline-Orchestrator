@@ -3,13 +3,13 @@ package eu.venthe.pipeline.orchestrator;
 import eu.venthe.pipeline.orchestrator.fixtures.MockAdapterFixture;
 import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerManager;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RegisterRunnerImplementationSpecification;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RegisterRunnerEngineInstanceSpecification;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.JobExecutorCallbackService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.ProjectWorkflowCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.WorkflowExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.JobExecutionDetailsDto;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.dimensions.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationCommandService;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.SourceConfigurationSpecification;
@@ -102,12 +102,12 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                 .build();
         val sourceConfigurationId = organizationCommandService.addSourceConfiguration(sourceSpecification);
 
-        val adapterSpecification = RegisterRunnerImplementationSpecification.builder()
+        val adapterSpecification = RegisterRunnerEngineInstanceSpecification.builder()
                 .organizationId(organizationId)
                 .adapterId(requestedAdapterId)
                 .adapterType(adapterType)
                 .build();
-        val defaultExecutor = runnerManager.registerRunnerImplementation(adapterSpecification);
+        val defaultExecutor = runnerManager.registerRunnerEngineInstance(adapterSpecification);
 
         val defaultRunner = runnerManager.registerRunner(defaultExecutor, RunnerDimensions.none());
 

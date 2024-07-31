@@ -1,13 +1,13 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.runners.impl;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerManager;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RegisterRunnerImplementationSpecification;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerProvider;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.model.AdapterInstanceAggregate;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RegisterRunnerEngineInstanceSpecification;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.RunnerEngineProvider;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.impl.model.RunnerEngineInstanceAggregate;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineInstance;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerImplementationId;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.dimensions.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RunnerId;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerEngineInstanceId;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerId;
 import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.infrastructure.JobExecutorAdapterRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,27 +19,27 @@ import org.togglz.core.util.NamedFeature;
 @RequiredArgsConstructor
 public class RunnerManagerImpl implements RunnerManager {
     private final JobExecutorAdapterRepository repository;
-    private final RunnerProvider runnerProvider;
+    private final RunnerEngineProvider runnerEngineProvider;
     private final FeatureManager featureManager;
     private final EnvUtil envUtil;
 
     @Override
-    public RunnerImplementationId registerRunnerImplementation(RegisterRunnerImplementationSpecification specification) {
-        RunnerEngineInstance runnerEngineInstance = runnerProvider.provide(specification.runnerEngineType(), specification.properties());
+    public RunnerEngineInstanceId registerRunnerEngineInstance(RegisterRunnerEngineInstanceSpecification specification) {
+        RunnerEngineInstance runnerEngineInstance = runnerEngineProvider.provide(specification.runnerEngineType(), specification.properties()).orElseThrow();
 
-        repository.save(new AdapterInstanceAggregate(specification.runnerImplementationId(), runnerEngineInstance));
+        repository.save(new RunnerEngineInstanceAggregate(specification.runnerEngineInstanceId(), runnerEngineInstance));
 
-        return specification.runnerImplementationId();
+        return specification.runnerEngineInstanceId();
     }
 
     @Override
-    public RunnerId registerRunner(RunnerImplementationId runnerImplementationId,
+    public RunnerId registerRunner(RunnerEngineInstanceId runnerEngineInstanceId,
                                    RunnerDimensions dimensions) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             throw new UnsupportedOperationException();
         }
 
-        AdapterInstanceAggregate docker = repository.find(runnerImplementationId).orElseThrow();
-        return docker.registerRunner(dimensions);
+        RunnerEngineInstanceAggregate aggregate = repository.find(runnerEngineInstanceId).orElseThrow();
+        return aggregate.registerRunner(dimensions);
     }
 }
