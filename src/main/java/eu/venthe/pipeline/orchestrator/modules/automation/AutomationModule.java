@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.modules.automation;
 
 import eu.venthe.pipeline.orchestrator.modules.ProjectModule;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.handlers.EventHandlerProvider;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
@@ -42,7 +42,8 @@ public class AutomationModule implements ProjectModule {
         throw new UnsupportedOperationException();
     }
 
-    private String readFromInputStream(InputStream inputStream)
+   /*
+   private String readFromInputStream(InputStream inputStream)
             throws IOException {
         StringBuilder resultStringBuilder = new StringBuilder();
         try (BufferedReader br
@@ -54,4 +55,5 @@ public class AutomationModule implements ProjectModule {
         }
         return resultStringBuilder.toString();
     }
+    */
 }

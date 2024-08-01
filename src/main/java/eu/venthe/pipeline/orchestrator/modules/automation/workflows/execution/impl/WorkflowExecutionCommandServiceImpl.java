@@ -25,7 +25,7 @@ public class WorkflowExecutionCommandServiceImpl implements WorkflowExecutionCom
             throw new UnsupportedOperationException();
         }
 
-        final var execution = new WorkflowExecution(workflowDefinition);
+        final var execution = new WorkflowExecution(null, workflowDefinition);
 
         // TODO: Make it asynchronous
         execution.triggerWorkflow(context, envUtil);

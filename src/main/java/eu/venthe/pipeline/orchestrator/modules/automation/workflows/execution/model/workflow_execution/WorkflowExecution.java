@@ -38,10 +38,6 @@ public class WorkflowExecution implements Aggregate<WorkflowExecutionId> {
         jobs = new WorkflowExecutionJobs(this.workflow);
     }
 
-    public WorkflowExecution(WorkflowDefinition workflow) {
-        this(null, workflow);
-    }
-
     public void triggerWorkflow(final WorkflowExecutionCommandService.Context context, final EnvUtil envUtil) {
         jobs.start(context, envUtil);
     }

@@ -11,7 +11,7 @@ import java.util.Set;
 
 public interface WorkflowExecutionCommandService {
     // TODO: Split for public based on "execute this workflow" and private "create workflow execution"
-    WorkflowExecutionId triggerWorkflow(final WorkflowDefinition workflowDefinition, final Context context);
+    WorkflowExecutionId  triggerWorkflow(final WorkflowDefinition workflowDefinition, final Context context);
 
     default void retriggerWorkflow(WorkflowExecutionId executionId) {
         throw new UnsupportedOperationException();
