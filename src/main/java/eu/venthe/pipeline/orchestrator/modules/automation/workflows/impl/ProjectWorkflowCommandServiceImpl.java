@@ -3,8 +3,8 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.impl;
 import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.ProjectWorkflowCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.workflow_execution.WorkflowCorrelationId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.workflow_execution.WorkflowExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowCorrelationId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.security.User;
 import eu.venthe.pipeline.orchestrator.security.UserService;
@@ -37,9 +37,9 @@ public class ProjectWorkflowCommandServiceImpl implements ProjectWorkflowCommand
 
     @SneakyThrows
     @Override
-    public WorkflowExecutionId triggerWorkflowDispatch(final ProjectId id,
-                                                       final Revision revision,
-                                                       final Path workflowPath) {
+    public WorkflowRunId triggerWorkflowDispatch(final ProjectId id,
+                                                 final Revision revision,
+                                                 final Path workflowPath) {
         var eventId = UUID.randomUUID();
         ProjectEvent event = WorkflowDispatchEvent.builder()
                 .workflow(resolveFromOrchestratorDirectory(workflowPath))
@@ -53,7 +53,7 @@ public class ProjectWorkflowCommandServiceImpl implements ProjectWorkflowCommand
         var invoke = new ExponentialBackOff(executorService)
                 .invoke(() -> workflowExecutionQueryService.getExecutionDetails(new WorkflowCorrelationId(event.getId().toString())).orElseThrow());
 
-        return invoke.orElseThrow().workflowExecutionId();
+        return invoke.orElseThrow().workflowRunId();
     }
 
     private static UserContext fromUser(final User user) {

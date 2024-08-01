@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.query.WorkflowExecutionDto;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.model.query.WorkflowExecutionDto;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.workflow_execution.WorkflowCorrelationId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.execution.model.workflow_execution.WorkflowExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowCorrelationId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,11 +13,11 @@ public interface WorkflowExecutionQueryService {
         throw new UnsupportedOperationException();
     }
 
-    default Optional<WorkflowExecutionDto> getExecutionDetails(WorkflowExecutionId executionId) {
+    default Optional<WorkflowExecutionDto> getExecutionDetails(WorkflowRunId executionId) {
         throw new UnsupportedOperationException();
     }
 
-    default Optional<WorkflowExecutionDto> getExecutionDetails(WorkflowExecutionId executionId, JobExecutionId jobExecutionId) {
+    default Optional<WorkflowExecutionDto> getExecutionDetails(WorkflowRunId executionId, JobExecutionId jobExecutionId) {
         throw new UnsupportedOperationException();
     }
 
