@@ -2,7 +2,8 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archi
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.context.jobs.context.*;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.StepsContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.TimeoutContext;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.EnvironmentContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 

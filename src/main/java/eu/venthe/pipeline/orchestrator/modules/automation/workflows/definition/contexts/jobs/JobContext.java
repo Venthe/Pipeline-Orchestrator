@@ -13,14 +13,16 @@ import static eu.venthe.pipeline.orchestrator.modules.automation.workflows.model
 
 @ToString
 public class JobContext {
-//    private final Optional<String> name;
+    //    private final Optional<String> name;
     private final Optional<PermissionsContext> permissions;
+    private final Optional<NeedsContext> needs;
 
 
     private JobContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
-        permissions = PermissionsContext.create(_root.get("permissions"), Set.of(
+        needs = NeedsContext.create(root.get("needs"));
+        permissions = PermissionsContext.create(root.get("permissions"), Set.of(
                 ACTIONS,
                 ATTESTATIONS,
                 CHECKS,

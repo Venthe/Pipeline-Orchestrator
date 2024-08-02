@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archi
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.context.jobs.context.SecretsContext;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.context.jobs.context.StrategyContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.StrategyContext;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.context.jobs.context.UsesContext;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.context.jobs.context.WithContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;

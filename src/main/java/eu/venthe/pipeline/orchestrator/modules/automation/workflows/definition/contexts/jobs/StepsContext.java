@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.context.jobs.context;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
