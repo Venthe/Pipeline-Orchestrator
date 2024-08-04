@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.steps;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.steps;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

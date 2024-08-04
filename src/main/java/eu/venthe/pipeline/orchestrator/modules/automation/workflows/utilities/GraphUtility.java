@@ -37,12 +37,12 @@ public class GraphUtility {
         return groups;
     }
 
-    public static List<List<String>> buildDependencyTree(Set<JobRequirements> jobRequirements) {
+    public static List<List<String>> buildDependencyTree(Set<JobRequirement> jobRequirements) {
         Graph<String, DefaultEdge> taskGraph = new DirectedAcyclicGraph<>(DefaultEdge.class);
-        Graphs.addAllVertices(taskGraph, jobRequirements.stream().map(JobRequirements::jobId).collect(Collectors.toSet()));
+        Graphs.addAllVertices(taskGraph, jobRequirements.stream().map(JobRequirement::jobId).collect(Collectors.toSet()));
 
         jobRequirements.stream()
-                .filter(JobRequirements::hasNeeds)
+                .filter(JobRequirement::hasNeeds)
                 .flatMap(e -> e.needs().stream()
                         .map(String::trim)
                         .filter(Predicate.not(String::isBlank))
@@ -53,7 +53,7 @@ public class GraphUtility {
         return GraphUtility.getGroups(taskGraph);
     }
 
-    public record JobRequirements(String jobId, Set<String> needs) {
+    public record JobRequirement(String jobId, Set<String> needs) {
 
         public boolean hasNeeds() {
             return !needs.isEmpty();

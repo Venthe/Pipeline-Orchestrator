@@ -2,10 +2,12 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.PermissionsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.ToString;
 
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
@@ -16,7 +18,6 @@ public class JobContext {
     //    private final Optional<String> name;
     private final Optional<PermissionsContext> permissions;
     private final Optional<NeedsContext> needs;
-
 
     private JobContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
@@ -44,9 +45,13 @@ public class JobContext {
         return ContextUtilities.ensure(value, JobContext::new, () -> new IllegalArgumentException("Job must exist"));
     }
 
+    public Set<JobId> getNeeds() {
+        return needs.map(NeedsContext::getNeeds)
+                .orElseGet(Collections::emptySet);
+    }
+
     // name
     // permissions
-    // needs
     // if
     // runs-on
     // environment

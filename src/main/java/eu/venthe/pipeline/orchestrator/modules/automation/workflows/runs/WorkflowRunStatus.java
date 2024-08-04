@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum WorkflowExecutionStatus {
+public enum WorkflowRunStatus {
     COMPLETED("completed"),
     ACTION_REQUIRED("action_required"),
     CANCELLED("cancelled"),

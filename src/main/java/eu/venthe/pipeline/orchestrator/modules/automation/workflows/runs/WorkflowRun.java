@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive.Actor;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.JobRuns;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import lombok.*;
@@ -24,10 +24,10 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
     @Getter
     private Optional<OffsetDateTime> endDate;
     @Getter
-    private WorkflowExecutionStatus status;
+    private WorkflowRunStatus status;
 
     private final TriggeringEntity triggeringEntity;
-    private final WorkflowExecutionJobs jobs;
+    private final JobRuns jobs;
     private final WorkflowDefinition workflow;
 
     /*WorkflowCorrelationId workflowCorrelationId, */
@@ -37,10 +37,10 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         this.triggeringEntity = triggeringEntity;
         id = WorkflowRunId.generate();
         startDate = timeService.zone().now();
-        status = WorkflowExecutionStatus.REQUESTED;
+        status = WorkflowRunStatus.REQUESTED;
         this.workflow = workflow;
 
-        jobs = new WorkflowExecutionJobs(this.workflow.getJobs());
+        jobs = new JobRuns(this.workflow.getJobs());
     }
 
     public Actor getTriggeringActor() {

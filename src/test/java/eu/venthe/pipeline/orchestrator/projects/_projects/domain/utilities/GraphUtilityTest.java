@@ -152,7 +152,7 @@ class GraphUtilityTest {
     }
 
     @SneakyThrows
-    public static Set<GraphUtility.JobRequirements> parseYaml(String value) {
+    public static Set<GraphUtility.JobRequirement> parseYaml(String value) {
         ObjectNode nodes = (ObjectNode) YamlUtility.parseYaml(value);
 
         return nodes.properties().stream()
@@ -162,7 +162,7 @@ class GraphUtilityTest {
                                 ? StreamSupport.stream(Spliterators.spliteratorUnknownSize(e.elements(), Spliterator.ORDERED), false).map(JsonNode::asText).collect(Collectors.toSet())
                                 : Set.of(e.asText())).orElse(Collections.emptySet()))
                 )
-                .map(e -> new GraphUtility.JobRequirements(e.getKey(), e.getValue()))
+                .map(e -> new GraphUtility.JobRequirement(e.getKey(), e.getValue()))
                 .collect(Collectors.toSet());
     }
 }

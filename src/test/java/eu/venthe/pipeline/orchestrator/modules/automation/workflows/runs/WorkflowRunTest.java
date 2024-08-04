@@ -28,6 +28,6 @@ class WorkflowRunTest {
         Assertions.assertThat(run.getId()).isNotNull();
         Assertions.assertThat(run.getStartDate()).isEqualTo(EXAMPLE_START_DATE);
         Assertions.assertThat(run.getEndDate()).isEmpty();
-        Assertions.assertThat(run.getStatus()).isEqualTo(WorkflowExecutionStatus.REQUESTED);
+        Assertions.assertThat(run.getStatus()).isEqualTo(WorkflowRunStatus.REQUESTED);
     }
 }
