@@ -1,6 +1,4 @@
-package eu.venthe.pipeline.orchestrator.shared_kernel;
-
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
+package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import java.util.Collection;
 

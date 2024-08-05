@@ -1,13 +1,15 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.impl;
 
 import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.ProjectWorkflowCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowCorrelationId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.security.User;
 import eu.venthe.pipeline.orchestrator.security.UserService;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.Envelope;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.MessageBroker;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.EventId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
@@ -21,6 +23,7 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
+import java.util.EventListener;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,8 +32,8 @@ import static eu.venthe.pipeline.orchestrator.modules.automation.workflows.utili
 
 @RequiredArgsConstructor
 @Service
-public class ProjectWorkflowCommandServiceImpl implements ProjectWorkflowCommandService {
-    private final ProjectModuleMediator moduleMediator;
+public class ProjectWorkflowCommandServiceImpl implements WorkflowExecutionCommandService {
+    private final MessageBroker messageBroker;
     private final WorkflowExecutionQueryService workflowExecutionQueryService;
     private final UserService userService;
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -48,7 +51,7 @@ public class ProjectWorkflowCommandServiceImpl implements ProjectWorkflowCommand
                 .repository(RepositoryContext.builder().id(id).build())
                 .sender(fromUser(userService.getCurrentUser()))
                 .build();
-        moduleMediator.listen(event);
+        messageBroker.exchange(new Envelope<>(event));
 
         var invoke = new ExponentialBackOff(executorService)
                 .invoke(() -> workflowExecutionQueryService.getExecutionDetails(new WorkflowCorrelationId(event.getId().toString())).orElseThrow());

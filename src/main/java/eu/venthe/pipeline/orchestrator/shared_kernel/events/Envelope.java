@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.shared_kernel.message_broker;
+package eu.venthe.pipeline.orchestrator.shared_kernel.events;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

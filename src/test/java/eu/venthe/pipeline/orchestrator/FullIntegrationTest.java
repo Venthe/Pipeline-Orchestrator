@@ -5,7 +5,7 @@ import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerManager;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RegisterRunnerEngineInstanceSpecification;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutorCallbackService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.ProjectWorkflowCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.model.query.JobExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
@@ -50,7 +50,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     ProjectsCommandService projectsCommandService;
     @Autowired
-    ProjectWorkflowCommandService projectWorkflowCommandService;
+    WorkflowExecutionCommandService projectWorkflowCommandService;
     @Autowired
     JobExecutorCallbackService callbackService;
     @Autowired
@@ -86,6 +86,11 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                     .thenReturn(Optional.of("""
                             name: Test
                             on: workflow_dispatch
+                            jobs:
+                              a:
+                                steps:
+                                  - command: echo 1
+                                  - command: echo 2
                             """.getBytes(StandardCharsets.UTF_8)));
         });
 

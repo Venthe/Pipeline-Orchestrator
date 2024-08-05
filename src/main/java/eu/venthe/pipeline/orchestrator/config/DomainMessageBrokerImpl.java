@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator.config;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.message_broker.Envelope;
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainMessageBroker;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainMessageBroker;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
-import eu.venthe.pipeline.orchestrator.shared_kernel.message_broker.MessageBroker;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.Envelope;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.MessageBroker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,8 @@ public class DomainMessageBrokerImpl implements DomainMessageBroker {
 
     @Override
     public void publish(Collection<DomainTrigger> events) {
-        broker.exchange(events.stream().map(Envelope::new).collect(Collectors.toSet()));
+        Collection<Envelope<?>> collect = events.stream().map(Envelope::new).collect(Collectors.toSet());
+        broker.exchange(collect);
     }
 
     @Override
