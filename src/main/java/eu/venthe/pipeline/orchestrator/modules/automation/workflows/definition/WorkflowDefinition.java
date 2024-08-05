@@ -2,61 +2,52 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobsContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.*;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.on.OnContext;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.NameContext;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.RunNameContext;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.events.EventWrapper;
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.FileHash;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.ConcurrencyContext;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.DefaultsContext;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.EnvironmentContext;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.PermissionsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
-import lombok.*;
+import jakarta.annotation.Nullable;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
-import java.nio.file.Path;
-import java.text.MessageFormat;
-import java.util.Optional;
 import java.util.Set;
 
-@SuppressWarnings("ALL")
 @Slf4j
 @Getter
 @ToString(onlyExplicitlyIncluded = true)
+@SuperBuilder
 public class WorkflowDefinition {
-    @Getter(AccessLevel.NONE)
-    @ToString.Include
-    private final ObjectNode root;
-
-    /*
-     * The name of the workflow. If you omit name, System displays the workflow file path relative to the root of the repository.
-     */
-    private final Optional<String> name;
-    private final Optional<String> runName;
+    @Nullable
+    private final String name;
+    @Nullable
+    private final String runName;
     private final OnContext on;
-    private final Optional<PermissionsContext> permissions;
-    private final Optional<EnvironmentContext> environment;
-    private final Optional<DefaultsContext> defaults;
-    private final Optional<ConcurrencyContext> concurrency;
+    @Nullable
+    private final PermissionsContext permissions;
+    @Nullable
+    private final EnvironmentContext environment;
+    @Nullable
+    private final DefaultsContext defaults;
+    @Nullable
+    private final ConcurrencyContext concurrency;
     private final JobsContext jobs;
 
     public WorkflowDefinition(JsonNode _root) {
         if (_root == null) throw new IllegalArgumentException("Workflow should not be null");
         if (!_root.isObject()) throw new IllegalArgumentException("Root should be an object");
 
-        this.root = (ObjectNode) _root;
+        var root = (ObjectNode) _root;
 
-        name = NameContext.create(root.get("name"));
-        runName = RunNameContext.create(root.get("runName"));
+        name = NameContext.create(root.get("name")).orElse(null);
+        runName = RunNameContext.create(root.get("runName")).orElse(null);
         on = OnContext.ensure(root.get("on"));
-        permissions = PermissionsContext.create(root.get("permissions"), Set.of());
-        environment = EnvironmentContext.create(root.get("env"));
-        defaults = DefaultsContext.create(root.get("defaults"));
-        concurrency = ConcurrencyContext.create(root.get("concurrency"));
+        permissions = PermissionsContext.create(root.get("permissions"), Set.of()).orElse(null);
+        environment = EnvironmentContext.create(root.get("env")).orElse(null);
+        defaults = DefaultsContext.create(root.get("defaults")).orElse(null);
+        concurrency = ConcurrencyContext.create(root.get("concurrency")).orElse(null);
         jobs = JobsContext.ensure(root.get("jobs"));
     }
 

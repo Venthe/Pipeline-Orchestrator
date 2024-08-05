@@ -82,9 +82,9 @@ public class StepExecution {
         this.outcome = outcome;
     }
 
-    public void appendLog(OffsetDateTime timestamp, String _log) {
-        log.debug("Appending log. Time={}, Value={}", timestamp, _log);
-        logs.append(timestamp, _log);
+    public void appendLog(JobCallbackLogEntry _log) {
+        log.debug("Appending log. Time={}, Value={}", _log.timestamp(), _log);
+        logs.append(_log);
     }
 
     public boolean isDone() {

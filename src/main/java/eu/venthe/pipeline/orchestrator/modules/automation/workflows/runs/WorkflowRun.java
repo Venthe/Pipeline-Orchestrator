@@ -3,6 +3,9 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.Actor;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TimeService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TriggeringEntity;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.JobRuns;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
@@ -36,11 +39,13 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
                        TriggeringEntity triggeringEntity) {
         this.triggeringEntity = triggeringEntity;
         id = WorkflowRunId.generate();
-        startDate = timeService.zone().now();
+        startDate = timeService.offset().now();
         status = WorkflowRunStatus.REQUESTED;
         this.workflow = workflow;
 
         jobs = new JobRuns(this.workflow.getJobs());
+        // FIXME: Remove me
+        jobs.start(null, null);
     }
 
     public Actor getTriggeringActor() {

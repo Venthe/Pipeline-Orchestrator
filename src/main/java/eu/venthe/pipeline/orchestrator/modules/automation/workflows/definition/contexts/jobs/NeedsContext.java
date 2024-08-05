@@ -3,9 +3,7 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -17,7 +15,9 @@ import java.util.stream.StreamSupport;
 @ToString
 @RequiredArgsConstructor
 @Getter
+@Builder
 public class NeedsContext {
+    @Singular
     private final Set<JobId> needs;
 
     public static Optional<NeedsContext> create(final JsonNode value) {

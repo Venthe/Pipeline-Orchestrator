@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.model.query;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.steps;
 
 import lombok.RequiredArgsConstructor;
 

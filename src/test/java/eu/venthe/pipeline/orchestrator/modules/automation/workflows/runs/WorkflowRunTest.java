@@ -1,6 +1,12 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobsContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.JobContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.NeedsContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TimeService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TriggeringEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,11 +21,31 @@ class WorkflowRunTest {
     @Test
     void name() {
         var triggeringEntity = Mockito.mock(TriggeringEntity.class);
-        var workflowDefinition = Mockito.mock(WorkflowDefinition.class);
         var timeService = Mockito.mock(TimeService.class);
         var timeServiceZone = Mockito.mock(TimeService.Offset.class);
-        Mockito.when(timeService.zone()).thenReturn(timeServiceZone);
+        Mockito.when(timeService.offset()).thenReturn(timeServiceZone);
         Mockito.when(timeServiceZone.now()).thenReturn(EXAMPLE_START_DATE);
+
+        var workflowDefinition = WorkflowDefinition.builder()
+                .jobs(JobsContext.builder()
+                        .job(
+                                new JobId("1"),
+                                JobContext.builder().build()
+                        )
+                        .job(
+                                new JobId("2"),
+                                JobContext.builder().needs(NeedsContext.builder().need(new JobId("1")).build()).build()
+                        )
+                        .job(
+                                new JobId("3"),
+                                JobContext.builder().needs(NeedsContext.builder().need(new JobId("1")).build()).build()
+                        )
+                        .job(
+                                new JobId("4"),
+                                JobContext.builder().needs(NeedsContext.builder().need(new JobId("2")).build()).build()
+                        )
+                        .build())
+                .build();
 
 
         var run = new WorkflowRun(workflowDefinition, timeService, triggeringEntity);

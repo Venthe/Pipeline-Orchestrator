@@ -44,11 +44,6 @@ public class StepsExecution {
         getStep(stepId).markEnd(stoppedAt, outcome, conclusion);
     }
 
-    public void appendLog(StepExecution.Id stepId, OffsetDateTime timestamp, String _log) {
-        log.debug("Appending log for step {}", stepId);
-        getStep(stepId).appendLog(timestamp, _log);
-    }
-
     private StepExecution getStep(StepExecution.Id stepId) {
         return Optional.ofNullable(stepExecutions.get(stepId)).orElseThrow();
     }
@@ -79,6 +74,15 @@ public class StepsExecution {
 
     public Duration getTotalDuration() {
         return stepExecutions.values().stream().map(StepExecution::getTotalDuration).flatMap(Optional::stream).reduce(Duration.ZERO, Duration::plus);
+    }
+
+    public void appendLog(final StepExecution.Id stepId, final JobCallbackLogEntry _log) {
+        log.debug("Appending log for step {}", stepId);
+        getStep(stepId).appendLog(_log);
+    }
+
+    public void cancel() {
+        throw new UnsupportedOperationException();
     }
 
     public record StepExecutionSpecification(int order, String id, String name) {

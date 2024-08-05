@@ -14,8 +14,9 @@ import java.util.List;
 public class StepLogs {
     private final List<Log> logs = new ArrayList<>();
 
-    void append(final OffsetDateTime timestamp, final String log) {
-        logs.add(new Log(timestamp, log));
+    // TODO: Expand the logs
+    void append(final JobCallbackLogEntry log) {
+        logs.add(new Log(log.timestamp(), log.message()));
     }
 
     @Value
