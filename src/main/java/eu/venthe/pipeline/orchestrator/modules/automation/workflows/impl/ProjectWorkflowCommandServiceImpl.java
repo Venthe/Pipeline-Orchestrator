@@ -1,10 +1,13 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.impl;
 
-import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.infrastructure.WorkflowRunRepository;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowCorrelationId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRun;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TimeService;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.security.User;
 import eu.venthe.pipeline.orchestrator.security.UserService;
@@ -23,7 +26,6 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
-import java.util.EventListener;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,6 +39,8 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowExecutionComma
     private final WorkflowExecutionQueryService workflowExecutionQueryService;
     private final UserService userService;
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
+    private final WorkflowRunRepository repository;
+    private final TimeService timeService;
 
     @SneakyThrows
     @Override
@@ -66,5 +70,12 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowExecutionComma
                 .id(user.commonName())
                 .name(user.commonName())
                 .build();
+    }
+
+    @Override
+    public WorkflowRunId triggerWorkflow(final WorkflowDefinition definition, final Context context) {
+        var run = new WorkflowRun(definition, timeService, null);
+        repository.save(run);
+        return run.getId();
     }
 }
