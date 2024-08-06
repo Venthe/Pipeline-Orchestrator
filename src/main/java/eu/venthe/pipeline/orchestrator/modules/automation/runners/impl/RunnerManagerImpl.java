@@ -51,7 +51,6 @@ public class RunnerManagerImpl implements RunnerManager {
     @Override
     public boolean queueExecution(final ProjectId projectId,
                                   final JobExecutionId executionId,
-                                  final URL systemApiUrl,
                                   final ExecutionCallbackToken executionCallbackToken,
                                   final RunnerDimensions dimensions) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
@@ -66,7 +65,7 @@ public class RunnerManagerImpl implements RunnerManager {
         aggregate.queueJobExecution(
                 projectId,
                 executionId,
-                systemApiUrl,
+                envUtil.getServerUrl(),
                 executionCallbackToken,
                 dimensions
         );

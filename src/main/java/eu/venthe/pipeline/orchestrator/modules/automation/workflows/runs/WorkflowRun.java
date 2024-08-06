@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs;
 
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerProvider;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
@@ -22,6 +23,7 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
     @Getter
     @EqualsAndHashCode.Include
     private final WorkflowRunId id;
+    WorkflowExecutionCommandService.Context context;
     @Getter
     private final OffsetDateTime startDate;
     @Getter
@@ -35,17 +37,20 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
 
     /*WorkflowCorrelationId workflowCorrelationId, */
     public WorkflowRun(WorkflowDefinition workflow,
+                       WorkflowExecutionCommandService.Context context,
                        TimeService timeService,
-                       TriggeringEntity triggeringEntity) {
+                       TriggeringEntity triggeringEntity,
+                       RunnerProvider runnerProvider) {
+        this.context = context;
         this.triggeringEntity = triggeringEntity;
         id = WorkflowRunId.generate();
         startDate = timeService.offset().now();
         status = WorkflowRunStatus.REQUESTED;
         this.workflow = workflow;
 
-        jobs = new JobRuns(this.workflow.getJobs());
+        jobs = new JobRuns(this.workflow.getJobs(), this, timeService);
         // FIXME: Remove me
-        jobs.start(null, null);
+        jobs.start(runnerProvider, context);
     }
 
     public Actor getTriggeringActor() {
@@ -59,8 +64,8 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         return triggeringEntity.getCorrelationId();
     }
 
-    public void triggerWorkflow(final WorkflowExecutionCommandService.Context context, final EnvUtil envUtil) {
-        jobs.start(context, envUtil);
+    public void triggerWorkflow(final RunnerProvider runnerProvider, final WorkflowExecutionCommandService.Context context, final EnvUtil envUtil) {
+        jobs.start(runnerProvider, context);
     }
 
     public void retriggerWorkflow() {

@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.impl;
 
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerProvider;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
@@ -41,6 +42,7 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowExecutionComma
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
     private final WorkflowRunRepository repository;
     private final TimeService timeService;
+    private final RunnerProvider runnerProvider;
 
     @SneakyThrows
     @Override
@@ -74,7 +76,7 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowExecutionComma
 
     @Override
     public WorkflowRunId triggerWorkflow(final WorkflowDefinition definition, final Context context) {
-        var run = new WorkflowRun(definition, timeService, null);
+        var run = new WorkflowRun(definition, context, timeService, null, runnerProvider);
         repository.save(run);
         return run.getId();
     }

@@ -26,18 +26,19 @@ public class JobRunAttempt {
     private StepsExecution stepsExecution;
 
     public void request(Runner runner) {
-        if (status.awaitsRun()) {
+        if (!status.awaitsRun()) {
             throw new IllegalArgumentException();
         }
         token = new ExecutionCallbackToken();
-        runId = runner.run(jobRun.getProjectId(), jobRun.getWorkflowRunId(), jobRun.getJobId(), attemptNumber, token);
+        runId = runner.run(null, token);
         status = status.progress(REQUESTED);
     }
 
     public void cancel(Runner runner) {
-        runner.cancel(runId);
-        stepsExecution.cancel();
-        status = status.progress(CANCELLED);
+        throw new UnsupportedOperationException();
+        // runner.cancel(runId);
+        // stepsExecution.cancel();
+        // status = status.progress(CANCELLED);
     }
 
     void run(Set<StepsExecution.StepExecutionSpecification> steps,
