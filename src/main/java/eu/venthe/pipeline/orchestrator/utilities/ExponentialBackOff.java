@@ -35,7 +35,7 @@ public final class ExponentialBackOff {
 
     private <T> Either<Void, T> invokeSupply(Supplier<T> supplier, int times) {
         if (times > MAX_RETRIES) {
-            log.debug("Condition MAX_RETRIES not met. {} > {}", times, MAX_RETRIES);
+            log.error("Condition MAX_RETRIES met. {} > {}", times, MAX_RETRIES);
             return Either.failure(null);
         }
 
@@ -43,7 +43,7 @@ public final class ExponentialBackOff {
 
         if (times > 1) {
             long _milis = (long) (BACKOFF * Math.pow(EXPONENT + 1, times));
-            log.debug("Back off failed. Retry={}, Time={}ms", times, _milis);
+            log.warn("Back off failed. Retry={}, Time={}ms", times, _milis);
             try {
                 Thread.sleep(Duration.ofMillis(_milis));
             } catch (InterruptedException e) {

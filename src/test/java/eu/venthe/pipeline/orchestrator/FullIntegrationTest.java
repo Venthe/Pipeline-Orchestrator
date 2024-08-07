@@ -7,6 +7,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.Register
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutorCallbackService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.model.query.JobCallbackCallMetadata;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.model.query.JobExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationCommandService;
@@ -19,9 +20,9 @@ import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
@@ -41,6 +42,7 @@ import static org.mockito.Mockito.when;
 @TestPropertySource(properties = {
         "logging.level.eu.venthe=TRACE"
 })
+@Slf4j
 class FullIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
@@ -65,10 +67,6 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     MockProjectSourceFixture projectSourceFixture;
     @Autowired
     MockAdapterFixture adapterFixture;
-
-    @BeforeEach
-    void setup() {
-    }
 
     @Test
     void name() {
@@ -135,6 +133,12 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
         adapterFixture.setupExecution(metadata -> {
             System.out.println(metadata);
+            var _metadata = new JobCallbackCallMetadata(metadata.projectId(), metadata.executionId(), metadata.executionCallbackToken());
+            var _context = callbackService.requestContext(_metadata);
+            log.info("Context:{}\nMetadata: {}", _context, _metadata);
+            callbackService.jobRunStarted(_metadata);
+            callbackService.jobRunProgressed(_metadata);
+            callbackService.jobRunCompleted(_metadata);
         });
 
         val workflowExecutionId = projectWorkflowCommandService.triggerWorkflowDispatch(projectId, revision, Paths.get("test-workflow.yml"));

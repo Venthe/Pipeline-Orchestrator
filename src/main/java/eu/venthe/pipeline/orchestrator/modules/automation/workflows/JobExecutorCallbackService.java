@@ -11,15 +11,15 @@ public interface JobExecutorCallbackService {
         throw new UnsupportedOperationException();
     }
 
-    default void jobExecutionProgressed(JobCallbackCallMetadata callMetadata) {
+    default void jobRunProgressed(JobCallbackCallMetadata callMetadata) {
         throw new UnsupportedOperationException();
     }
 
-    default void jobExecutionStarted(JobCallbackCallMetadata callMetadata) {
+    default void jobRunStarted(JobCallbackCallMetadata callMetadata) {
         throw new UnsupportedOperationException();
     }
 
-    default void jobExecutionCompleted(JobCallbackCallMetadata callMetadata) {
+    default void jobRunCompleted(JobCallbackCallMetadata callMetadata) {
         throw new UnsupportedOperationException();
     }
 
