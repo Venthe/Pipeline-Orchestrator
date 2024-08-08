@@ -43,7 +43,7 @@ public final class ExponentialBackOff {
 
         if (times > 1) {
             long _milis = (long) (BACKOFF * Math.pow(EXPONENT + 1, times));
-            log.warn("Back off failed. Retry={}, Time={}ms", times, _milis);
+            log.warn("Back off failed. Retry={}, Time={}ms, stack trace={}", times, _milis, Thread.currentThread().getStackTrace());
             try {
                 Thread.sleep(Duration.ofMillis(_milis));
             } catch (InterruptedException e) {

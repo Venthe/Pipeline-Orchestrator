@@ -53,11 +53,11 @@ public class WorkflowExecution implements Aggregate<WorkflowRunId> {
         throw new UnsupportedOperationException();
     }
 
-    public void retriggerJobExecution(JobExecutionId executionId) {
+    public void retriggerJobExecution(JobExecutionId jobRunId) {
         throw new UnsupportedOperationException();
     }
 
-    public void stopJobExecution(JobExecutionId executionId) {
+    public void stopJobExecution(JobExecutionId jobRunId) {
         throw new UnsupportedOperationException();
     }
 
@@ -65,23 +65,23 @@ public class WorkflowExecution implements Aggregate<WorkflowRunId> {
         throw new UnsupportedOperationException();
     }
 
-    public Object provideJobExecutionContext(JobExecutionId executionId) {
+    public Object provideJobExecutionContext(JobExecutionId jobRunId) {
         throw new UnsupportedOperationException();
     }
 
-    public void notifyJobStarted(JobExecutionId executionId, ZonedDateTime startDate) {
+    public void notifyJobStarted(JobExecutionId jobRunId, ZonedDateTime startDate) {
         throw new UnsupportedOperationException();
     }
 
-    public void notifyJobCompleted(JobExecutionId executionId, ZonedDateTime startDate, Map<String, String> outputs) {
+    public void notifyJobCompleted(JobExecutionId jobRunId, ZonedDateTime startDate, Map<String, String> outputs) {
         throw new UnsupportedOperationException();
     }
 
-    public void notifyStepStarted(JobExecutionId executionId, ZonedDateTime startDate) {
+    public void notifyStepStarted(JobExecutionId jobRunId, ZonedDateTime startDate) {
         throw new UnsupportedOperationException();
     }
 
-    public void notifyStepCompleted(JobExecutionId executionId, ZonedDateTime endDate) {
+    public void notifyStepCompleted(JobExecutionId jobRunId, ZonedDateTime endDate) {
         throw new UnsupportedOperationException();
     }
 }

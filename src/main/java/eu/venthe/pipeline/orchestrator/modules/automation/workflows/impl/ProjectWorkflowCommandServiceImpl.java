@@ -4,7 +4,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerProvider
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.infrastructure.WorkflowRunRepository;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.infrastructure.WorkflowRunRepository;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowCorrelationId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRun;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;

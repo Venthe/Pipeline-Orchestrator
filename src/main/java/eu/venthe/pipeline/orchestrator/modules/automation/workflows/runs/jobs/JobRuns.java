@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobsContext;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRun;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TimeService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.GraphUtility;
@@ -59,7 +59,7 @@ public class JobRuns {
             );
         }
         log.info("{}", runs);
-        runs.get(0).values().forEach(e -> e.run((JobExecutionId executionId, ExecutionCallbackToken token) -> {
+        runs.get(0).values().forEach(e -> e.run((JobRunId executionId, ExecutionCallbackToken token) -> {
             runnerProvider.queueExecution(context.id(), executionId, token, RunnerDimensions.builder().from(context.dimensions().toArray(Dimension[]::new)).build());
             return null;
         }));

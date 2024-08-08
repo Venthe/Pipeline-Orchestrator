@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineInstance;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.ExecutionCallbackToken;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -24,7 +24,7 @@ public class DockerEngineInstance implements RunnerEngineInstance {
 
     @Override
     public boolean queueExecution(ProjectId projectId,
-                                  JobExecutionId executionId,
+                                  JobRunId executionId,
                                   URL systemApiUrl,
                                   ExecutionCallbackToken executionCallbackToken,
                                   RunnerDimensions dimensions) {

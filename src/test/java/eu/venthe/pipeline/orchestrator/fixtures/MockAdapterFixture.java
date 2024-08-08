@@ -4,7 +4,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineDefinition;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineInstance;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class MockAdapterFixture {
     public void setupExecution(Consumer<MockRunnerEngineInstance.Metadata> consumer) {
         Mockito.doAnswer(invocation -> {
             var projectId = invocation.getArgument(0, ProjectId.class);
-            var executionId = invocation.getArgument(1, JobExecutionId.class);
+            var executionId = invocation.getArgument(1, JobRunId.class);
             var systemApiUrl = invocation.getArgument(2, URL.class);
             var callbackToken = invocation.getArgument(3, ExecutionCallbackToken.class);
             var dimensions = invocation.getArgument(4, RunnerDimensions.class);
@@ -47,7 +47,7 @@ public class MockAdapterFixture {
     }
 
     public interface MockRunnerEngineInstance extends RunnerEngineInstance {
-        record Metadata(ProjectId projectId, JobExecutionId executionId, URL systemApiUrl,
+        record Metadata(ProjectId projectId, JobRunId executionId, URL systemApiUrl,
                         ExecutionCallbackToken executionCallbackToken, RunnerDimensions dimensions) {
         }
     }

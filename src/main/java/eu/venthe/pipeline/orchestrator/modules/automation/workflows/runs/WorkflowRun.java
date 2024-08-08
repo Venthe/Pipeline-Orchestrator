@@ -3,7 +3,8 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerProvider;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.JobExecutionContext;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.Actor;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TimeService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TriggeringEntity;
@@ -72,11 +73,11 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         throw new UnsupportedOperationException();
     }
 
-    public void retriggerJobExecution(JobExecutionId executionId) {
+    public void retriggerJobExecution(JobRunId executionId) {
         throw new UnsupportedOperationException();
     }
 
-    public void stopJobExecution(JobExecutionId executionId) {
+    public void stopJobExecution(JobRunId executionId) {
         throw new UnsupportedOperationException();
     }
 
@@ -84,23 +85,23 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         throw new UnsupportedOperationException();
     }
 
-    public Object provideJobExecutionContext(JobExecutionId executionId) {
+    public JobExecutionContext provideContext(JobRunId executionId) {
         throw new UnsupportedOperationException();
     }
 
-    public void notifyJobStarted(JobExecutionId executionId, ZonedDateTime startDate) {
+    public void notifyJobStarted(JobRunId executionId, ZonedDateTime startDate) {
         throw new UnsupportedOperationException();
     }
 
-    public void notifyJobCompleted(JobExecutionId executionId, ZonedDateTime startDate, Map<String, String> outputs) {
+    public void notifyJobCompleted(JobRunId executionId, ZonedDateTime startDate, Map<String, String> outputs) {
         throw new UnsupportedOperationException();
     }
 
-    public void notifyStepStarted(JobExecutionId executionId, ZonedDateTime startDate) {
+    public void notifyStepStarted(JobRunId executionId, ZonedDateTime startDate) {
         throw new UnsupportedOperationException();
     }
 
-    public void notifyStepCompleted(JobExecutionId executionId, ZonedDateTime endDate) {
+    public void notifyStepCompleted(JobRunId executionId, ZonedDateTime endDate) {
         throw new UnsupportedOperationException();
     }
 }

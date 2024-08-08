@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerId;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.ExecutionCallbackToken;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 
 import java.net.URL;
@@ -20,7 +20,7 @@ public interface RunnerEngineInstance {
     // TODO: Add generic method to pick a runner based on the dimensions
     // TODO: Add generic method to get the JobExecution to be executed per runner
     boolean queueExecution(ProjectId projectId,
-                           JobExecutionId executionId,
+                           JobRunId executionId,
                            URL systemApiUrl,
                            ExecutionCallbackToken executionCallbackToken,
                            RunnerDimensions dimensions);

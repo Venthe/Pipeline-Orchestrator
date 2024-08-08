@@ -18,7 +18,7 @@ public class InMemoryMessageBroker implements MessageListenerRegistry, MessageBr
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     public <T> void register(Class<T> clazz, Observer<T> observer) {
-        log.info("Registering observer {} for class {}", observer, clazz);
+        log.debug("Registering observer {} for class {}", observer, clazz);
         Collection<Observer<?>> consumers = observers.get(clazz);
         if (consumers == null) {
             ArrayList<Observer<?>> observersForClass = new ArrayList<>();
@@ -35,10 +35,10 @@ public class InMemoryMessageBroker implements MessageListenerRegistry, MessageBr
     }
 
     public void exchange(Envelope<?> envelope) {
-        log.info("Exchanging envelope. {}", envelope);
+        log.debug("Exchanging envelope. {}", envelope);
         Class<?> aClass = envelope.getData().getClass();
         getConsumers(aClass).forEach(observer -> executorService.execute(() -> {
-            log.info("Envelope exchanged to {}", observer.name());
+            log.debug("Envelope exchanged to {}", observer.name());
             acceptEnvelope(observer, envelope);
         }));
     }

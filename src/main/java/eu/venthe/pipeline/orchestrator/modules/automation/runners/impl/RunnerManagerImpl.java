@@ -10,15 +10,13 @@ import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.ExecutionCallbackToken;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerId;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobExecutionId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.togglz.core.manager.FeatureManager;
 import org.togglz.core.util.NamedFeature;
-
-import java.net.URL;
 
 @Component
 @RequiredArgsConstructor
@@ -50,7 +48,7 @@ public class RunnerManagerImpl implements RunnerManager {
 
     @Override
     public boolean queueExecution(final ProjectId projectId,
-                                  final JobExecutionId executionId,
+                                  final JobRunId executionId,
                                   final ExecutionCallbackToken executionCallbackToken,
                                   final RunnerDimensions dimensions) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {

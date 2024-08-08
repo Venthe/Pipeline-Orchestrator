@@ -19,13 +19,12 @@ public class RegisterPluginEndpoints {
     public void register(ProjectSourcePlugin.PluginInstance... plugins) {
 
         Arrays.stream(plugins)
-                .forEach(pluginInstance -> pluginInstance.provideEndpointMappings()
-                        .forEach(mapping -> requestMappingHandlerMapping.registerMapping(
-                                        appendPathPrefix(mapping, pluginInstance.getSourceType().value()),
-                                        mapping.handler(),
-                                        mapping.method()
-                                )
-                        )
+                .forEach(pluginInstance ->
+                        pluginInstance.provideEndpointMappings().forEach(mapping -> requestMappingHandlerMapping.registerMapping(
+                                appendPathPrefix(mapping, pluginInstance.getSourceType().value()),
+                                mapping.handler(),
+                                mapping.method()
+                        ))
                 );
     }
 
@@ -34,6 +33,7 @@ public class RegisterPluginEndpoints {
                 .paths(Stream.concat(
                         Stream.of(t),
                         mapping.requestMappingInfo().getDirectPaths().stream()
-                ).collect(Collectors.joining())).build();
+                ).collect(Collectors.joining()))
+                .build();
     }
 }

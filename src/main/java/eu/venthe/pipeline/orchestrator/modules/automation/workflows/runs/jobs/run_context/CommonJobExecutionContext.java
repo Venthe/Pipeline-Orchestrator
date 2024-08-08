@@ -1,8 +1,10 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.context.job_execution;
+/*
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.context.job_execution.contexts.*;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.contexts.*;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.run_context.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -44,3 +46,4 @@ abstract class CommonJobExecutionContext implements JobExecutionContext {
         inputs = InputsContext.create(root.get("inputs"));
     }
 }
+*/

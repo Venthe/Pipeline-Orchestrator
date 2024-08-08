@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.Register
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutorCallbackService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.model.query.JobCallbackCallMetadata;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.JobCallbackCallMetadata;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.model.query.JobExecutionDetailsDto;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationCommandService;

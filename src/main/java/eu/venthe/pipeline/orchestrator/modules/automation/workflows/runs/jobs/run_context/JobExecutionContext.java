@@ -1,5 +1,7 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.context.job_execution;
+/*
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context;
 
+*/
 /**
  * Contexts are a way to access information about workflow runs, variables, runner environments, jobs, and steps. Each
  * context is an object that contains properties, which can be strings or other objects.
@@ -10,9 +12,11 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archi
  * You can access contexts using the expression syntax. For more information, see "Expressions."
  * <p>
  * ${{ <context> }}
- */
+ *//*
+
 public interface JobExecutionContext {
-  /*
+  */
+/*
   | Workflow key                                     | Context                                                                         | Special functions                              |
   | ------------------------------------------------ | ------------------------------------------------------------------------------- | ---------------------------------------------- |
   | run-name                                         | github, inputs, vars                                                            | None                                           |
@@ -49,5 +53,7 @@ public interface JobExecutionContext {
   | jobs.<job_id>.with.<with_id>                     | github, needs, strategy, matrix, inputs, vars                                   | None                                           |
   | on.workflow_call.inputs.<inputs_id>.default      | github, inputs, vars                                                            | None                                           |
   | on.workflow_call.outputs.<output_id>.value       | github, jobs, vars, inputs                                                      | None                                           |
-   */
+   *//*
+
 }
+*/

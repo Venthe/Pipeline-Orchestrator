@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.context.job_execution.contexts;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.contexts;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
