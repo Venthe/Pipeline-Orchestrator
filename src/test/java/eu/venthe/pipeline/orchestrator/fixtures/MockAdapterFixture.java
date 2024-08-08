@@ -1,10 +1,11 @@
 package eu.venthe.pipeline.orchestrator.fixtures;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.ExecutionCallbackToken;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineDefinition;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineInstance;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunCallbackToken;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,20 +27,21 @@ public class MockAdapterFixture {
     public void setupExecution(Consumer<MockRunnerEngineInstance.Metadata> consumer) {
         Mockito.doAnswer(invocation -> {
             var projectId = invocation.getArgument(0, ProjectId.class);
-            var executionId = invocation.getArgument(1, JobRunId.class);
-            var systemApiUrl = invocation.getArgument(2, URL.class);
-            var callbackToken = invocation.getArgument(3, ExecutionCallbackToken.class);
-            var dimensions = invocation.getArgument(4, RunnerDimensions.class);
+            var workflowRunId = invocation.getArgument(1, WorkflowRunId.class);
+            var executionId = invocation.getArgument(2, JobRunId.class);
+            var systemApiUrl = invocation.getArgument(3, URL.class);
+            var callbackToken = invocation.getArgument(4, RunCallbackToken.class);
+            var dimensions = invocation.getArgument(5, RunnerDimensions.class);
 
             try (ExecutorService threadExecutor = Executors.newSingleThreadExecutor()) {
                 threadExecutor.execute(() -> {
                     log.info("Executing {} for {}", executionId, projectId);
-                    consumer.accept(new MockRunnerEngineInstance.Metadata(projectId, executionId, systemApiUrl, callbackToken, dimensions));
+                    consumer.accept(new MockRunnerEngineInstance.Metadata(projectId, workflowRunId, executionId, systemApiUrl, callbackToken, dimensions));
                     log.info("Execution {} complete.", executionId);
                 });
             }
             return null;
-        }).when(adapterInstance).queueExecution(any(), any(), any(), any(), any());
+        }).when(adapterInstance).queueExecution(any(), any(), any(), any(), any(), any());
     }
 
 
@@ -47,8 +49,14 @@ public class MockAdapterFixture {
     }
 
     public interface MockRunnerEngineInstance extends RunnerEngineInstance {
-        record Metadata(ProjectId projectId, JobRunId executionId, URL systemApiUrl,
-                        ExecutionCallbackToken executionCallbackToken, RunnerDimensions dimensions) {
+        record Metadata(
+                ProjectId projectId,
+                WorkflowRunId workflowRunId,
+                JobRunId executionId,
+                URL systemApiUrl,
+                RunCallbackToken runCallbackToken,
+                RunnerDimensions dimensions
+        ) {
         }
     }
 }

@@ -7,10 +7,11 @@ import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RunnerEn
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RunnerEngineInstanceId;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.RunnerEngineProvider;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineInstance;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.ExecutionCallbackToken;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunCallbackToken;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerId;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.utilities.EnvUtil;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +49,9 @@ public class RunnerManagerImpl implements RunnerManager {
 
     @Override
     public boolean queueExecution(final ProjectId projectId,
+                                  final WorkflowRunId workflowRunId,
                                   final JobRunId executionId,
-                                  final ExecutionCallbackToken executionCallbackToken,
+                                  final RunCallbackToken runCallbackToken,
                                   final RunnerDimensions dimensions) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             throw new UnsupportedOperationException();
@@ -62,9 +64,10 @@ public class RunnerManagerImpl implements RunnerManager {
 
         aggregate.queueJobExecution(
                 projectId,
+                workflowRunId,
                 executionId,
                 envUtil.getServerUrl(),
-                executionCallbackToken,
+                runCallbackToken,
                 dimensions
         );
 

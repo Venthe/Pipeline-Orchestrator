@@ -13,10 +13,8 @@ import java.util.function.Consumer;
 public class ProjectModuleMediator {
     private final Set<ProjectModule> modules;
 
-    private ProjectModuleMediator(final Set<ProjectModule> modules, MessageListenerRegistry registry) {
+    private ProjectModuleMediator(final Set<ProjectModule> modules) {
         this.modules = modules;
-
-        registry.register(SystemEvent.class, new MessageListenerRegistry.Observer<>(this.getClass().getSimpleName(), envelope -> listen(envelope.getData())));
     }
 
     public void onModule(Consumer<ProjectModule> action) {

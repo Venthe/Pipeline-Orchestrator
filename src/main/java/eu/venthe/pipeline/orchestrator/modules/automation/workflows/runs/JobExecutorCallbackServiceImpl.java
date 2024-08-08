@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutorCallbackService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.model.query.JobExecutionContext;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.infrastructure.WorkflowRunRepository;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.JobExecutionContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

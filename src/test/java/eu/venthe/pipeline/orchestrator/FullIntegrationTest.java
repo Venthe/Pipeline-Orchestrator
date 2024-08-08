@@ -4,12 +4,12 @@ import eu.venthe.pipeline.orchestrator.fixtures.MockAdapterFixture;
 import eu.venthe.pipeline.orchestrator.fixtures.MockProjectSourceFixture;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerManager;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.model.RegisterRunnerEngineInstanceSpecification;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.JobExecutorCallbackService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowRunCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowRunQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.JobCallbackCallMetadata;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive._1.model.query.JobExecutionDetailsDto;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.organizations.application.OrganizationCommandService;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.CreateOrganizationSpecification;
 import eu.venthe.pipeline.orchestrator.organizations.application.dto.SourceConfigurationSpecification;
@@ -52,7 +52,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     ProjectsCommandService projectsCommandService;
     @Autowired
-    WorkflowExecutionCommandService projectWorkflowCommandService;
+    WorkflowRunCommandService projectWorkflowCommandService;
     @Autowired
     JobExecutorCallbackService callbackService;
     @Autowired
@@ -61,7 +61,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     ProjectsQueryService projectsQueryService;
     @Autowired
-    WorkflowExecutionQueryService workflowExecutionQueryService;
+    WorkflowRunQueryService workflowRunQueryService;
 
     @Autowired
     MockProjectSourceFixture projectSourceFixture;
@@ -133,7 +133,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
         adapterFixture.setupExecution(metadata -> {
             System.out.println(metadata);
-            var _metadata = new JobCallbackCallMetadata(metadata.projectId(), metadata.executionId(), metadata.executionCallbackToken());
+            var _metadata = new JobCallbackCallMetadata(metadata.projectId(), metadata.workflowRunId(), metadata.executionId(), metadata.runCallbackToken());
             var _context = callbackService.requestContext(_metadata);
             log.info("Context:{}\nMetadata: {}", _context, _metadata);
             callbackService.jobRunStarted(_metadata);
@@ -144,7 +144,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         val workflowExecutionId = projectWorkflowCommandService.triggerWorkflowDispatch(projectId, revision, Paths.get("test-workflow.yml"));
 
         await("Execution done").untilAsserted(() ->
-                Assertions.assertThat(workflowExecutionQueryService.getExecutionDetails(workflowExecutionId)).isEqualTo(new JobExecutionDetailsDto()));
+                Assertions.assertThat(workflowRunQueryService.getExecutionDetails(workflowExecutionId)).isEqualTo(new JobExecutionDetailsDto()));
     }
 
 }

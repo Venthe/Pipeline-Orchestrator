@@ -1,10 +1,8 @@
-/*
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.contexts.*;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.run_context.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,17 +16,18 @@ import java.util.Optional;
 @EqualsAndHashCode
 @SuperBuilder
 abstract class CommonJobExecutionContext implements JobExecutionContext {
+
     private final GithubContext github;
     private final EnvContext env;
     private final VarsContext vars;
     private final JobContext job;
+    private final StepsContext steps;
     private final RunnerContext runner;
     private final SecretsContext secrets;
-    private final Optional<InputsContext> inputs;
-    private final NeedsContext needs;
-    private final Optional<MatrixContext> matrix;
-    private final StepsContext steps;
     private final StrategyContext strategy;
+    private final Optional<MatrixContext> matrix;
+    private final NeedsContext needs;
+    private final Optional<InputsContext> inputs;
 
     protected CommonJobExecutionContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
@@ -46,4 +45,3 @@ abstract class CommonJobExecutionContext implements JobExecutionContext {
         inputs = InputsContext.create(root.get("inputs"));
     }
 }
-*/

@@ -1,10 +1,11 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.runners.model;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.ExecutionCallbackToken;
+import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunCallbackToken;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.RunnerEngineInstance;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunnerId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +21,16 @@ public class RunnerEngineInstanceAggregate implements Aggregate<RunnerEngineInst
 
     // TODO: Add logs
     public void queueJobExecution(ProjectId projectId,
+                                  WorkflowRunId workflowRunId,
                                   JobRunId executionId,
                                   URL systemApiUrl,
-                                  ExecutionCallbackToken executionCallbackToken,
+                                  RunCallbackToken runCallbackToken,
                                   RunnerDimensions dimensions) {
         runnerEngineInstance.queueExecution(projectId,
+                workflowRunId,
                 executionId,
                 systemApiUrl,
-                executionCallbackToken,
+                runCallbackToken,
                 dimensions);
     }
 

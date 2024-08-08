@@ -1,13 +1,7 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerProvider;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.ExecutionCallbackToken;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.Dimension;
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobsContext;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRun;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TimeService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.GraphUtility;
@@ -32,11 +26,8 @@ public class JobRuns {
     private final TimeService timeService;
 
     private List<Map<JobId, JobRun>> runs = new ArrayList<>();
-    private WorkflowExecutionCommandService.Context context;
 
-    public void start(final RunnerProvider runnerProvider,
-                      final WorkflowExecutionCommandService.Context context) {
-        this.context = context;
+    public List<JobRun.RequestJobRunSpecification> run() {
         var lists = GraphUtility.buildDependencyTree(jobs.getJobs().entrySet().stream()
                 .map(e -> Map.entry(
                         e.getKey(),
@@ -59,13 +50,11 @@ public class JobRuns {
             );
         }
         log.info("{}", runs);
-        runs.get(0).values().forEach(e -> e.run((JobRunId executionId, ExecutionCallbackToken token) -> {
-            runnerProvider.queueExecution(context.id(), executionId, token, RunnerDimensions.builder().from(context.dimensions().toArray(Dimension[]::new)).build());
-            return null;
-        }));
+
+        return runs.get(0).values().stream().map(JobRun::run).toList();
     }
 
     private JobRun createRun(final JobId id) {
-        return new JobRun(context, Pair.of(id, jobs.getJobs().get(id)), workflowRun, timeService);
+        return new JobRun(Pair.of(id, jobs.getJobs().get(id)));
     }
 }

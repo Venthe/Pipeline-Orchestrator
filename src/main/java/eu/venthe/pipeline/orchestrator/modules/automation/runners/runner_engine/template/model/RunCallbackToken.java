@@ -2,8 +2,8 @@ package eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine
 
 import java.util.UUID;
 
-public record ExecutionCallbackToken(String value) {
-    public ExecutionCallbackToken() {
+public record RunCallbackToken(String value) {
+    public RunCallbackToken() {
         this(UUID.randomUUID().toString());
     }
 }

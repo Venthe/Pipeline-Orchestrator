@@ -1,4 +1,3 @@
-/*
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -16,11 +15,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @SuppressWarnings("ALL")
 public class ReusableWorkflowJobExecutionContext extends CommonJobExecutionContext implements JobExecutionContext {
-    */
-/**
+    /**
      * Outputs for a reusable workflow
-     *//*
-
+     * */
     private final JobsContext jobs;
 
     public ReusableWorkflowJobExecutionContext(JsonNode _root) {
@@ -30,4 +27,3 @@ public class ReusableWorkflowJobExecutionContext extends CommonJobExecutionConte
         jobs = JobsContext.ensure(root.get("jobs"));
     }
 }
-*/

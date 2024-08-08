@@ -1,4 +1,6 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.model;
 
-public record JobRunId(String value) {
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobId;
+
+public record JobRunId(JobId jobId, int value) {
 }

@@ -8,7 +8,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.Workflo
 import java.util.List;
 import java.util.Optional;
 
-public interface WorkflowExecutionQueryService {
+public interface WorkflowRunQueryService {
     default List<WorkflowExecutionDto> getExecutions() {
         throw new UnsupportedOperationException();
     }

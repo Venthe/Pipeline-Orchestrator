@@ -10,7 +10,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
 import java.nio.file.Path;
 import java.util.Set;
 
-public interface WorkflowExecutionCommandService {
+public interface WorkflowRunCommandService {
     WorkflowRunId triggerWorkflowDispatch(final ProjectId id, final Revision revision, final Path workflowPath);
 
     default void retriggerWorkflow(WorkflowRunId executionId) {

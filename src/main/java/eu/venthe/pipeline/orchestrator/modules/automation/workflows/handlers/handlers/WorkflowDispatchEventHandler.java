@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.handlers.ha
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowRunCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.events.WorkflowDispatchEventWrapper;
 import eu.venthe.pipeline.orchestrator.projects.application.ProjectsQueryService;
@@ -24,7 +24,7 @@ import java.util.HashSet;
 public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowDispatchEvent> {
     private final ObjectMapper mapper;
     private final ProjectsQueryService projectsQueryService;
-    private final WorkflowExecutionCommandService workflowExecutionCommandService;
+    private final WorkflowRunCommandService workflowRunCommandService;
 
     @Override
     public Collection<DomainTrigger> _handle(WorkflowDispatchEvent event) {
@@ -42,7 +42,7 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
             return Collections.emptyList();
         }
 
-        workflowExecutionCommandService.triggerWorkflow(workflowDefinition, new WorkflowExecutionCommandService.Context(event.getRepository().getId(), event.getRevision(), new HashSet<>()));
+        workflowRunCommandService.triggerWorkflow(workflowDefinition, new WorkflowRunCommandService.Context(event.getRepository().getId(), event.getRevision(), new HashSet<>()));
 
         return Collections.emptyList();
     }

@@ -1,14 +1,14 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.impl;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerProvider;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionCommandService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowExecutionQueryService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowRunCommandService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowRunQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.infrastructure.WorkflowRunRepository;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowCorrelationId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRun;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TimeService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.infrastructure.WorkflowRunRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.security.User;
 import eu.venthe.pipeline.orchestrator.security.UserService;
@@ -35,14 +35,13 @@ import static eu.venthe.pipeline.orchestrator.modules.automation.workflows.utili
 
 @RequiredArgsConstructor
 @Service
-public class ProjectWorkflowCommandServiceImpl implements WorkflowExecutionCommandService {
+public class ProjectWorkflowCommandServiceImpl implements WorkflowRunCommandService {
     private final MessageBroker messageBroker;
-    private final WorkflowExecutionQueryService workflowExecutionQueryService;
+    private final WorkflowRunQueryService workflowRunQueryService;
     private final UserService userService;
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
     private final WorkflowRunRepository repository;
     private final TimeService timeService;
-    private final RunnerProvider runnerProvider;
 
     @SneakyThrows
     @Override
@@ -60,7 +59,7 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowExecutionComma
         messageBroker.exchange(new Envelope<>(event));
 
         var invoke = new ExponentialBackOff(executorService)
-                .invoke(() -> workflowExecutionQueryService.getExecutionDetails(new WorkflowCorrelationId(event.getId().toString())).orElseThrow());
+                .invoke(() -> workflowRunQueryService.getExecutionDetails(new WorkflowCorrelationId(event.getId().toString())).orElseThrow());
 
         return invoke.orElseThrow().workflowRunId();
     }
@@ -76,8 +75,10 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowExecutionComma
 
     @Override
     public WorkflowRunId triggerWorkflow(final WorkflowDefinition definition, final Context context) {
-        var run = new WorkflowRun(definition, context, timeService, null, runnerProvider);
-        repository.save(run);
+        var pair = WorkflowRun.crate(definition, context, timeService, null);
+        var run = pair.getRight();
+        repository.save(new WorkflowRunRepository.Aggregate(new WorkflowRunRepository.Id(context.id(), run.getId()), run));
+        messageBroker.exchange(Envelope.from(pair.getLeft()));
         return run.getId();
     }
 }
