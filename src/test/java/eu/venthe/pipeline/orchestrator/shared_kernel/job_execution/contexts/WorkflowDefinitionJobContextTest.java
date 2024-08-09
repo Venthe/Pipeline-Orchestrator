@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JobContextTest extends AbstractContextTest {
+class WorkflowDefinitionJobContextTest extends AbstractContextTest {
     @Test
     void name() {
         // Given

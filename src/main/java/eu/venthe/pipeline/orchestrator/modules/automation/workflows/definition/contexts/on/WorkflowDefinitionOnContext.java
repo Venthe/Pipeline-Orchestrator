@@ -12,21 +12,21 @@ import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 @Slf4j
-public class OnContext implements OnMatcher {
+public class WorkflowDefinitionOnContext implements OnMatcher {
     private final JsonNode root;
 
-    public static OnContext ensure(JsonNode root) {
+    public static WorkflowDefinitionOnContext ensure(JsonNode root) {
         if (root == null || root.isNull()) {
             throw new IllegalArgumentException("There is no \"on\" property, this workflow will never run");
         }
 
-        return new OnContext(root);
+        return new WorkflowDefinitionOnContext(root);
     }
 
     @Override
     public <T extends SystemEvent> Boolean on(EventWrapper<T> event) {
         if (event == null) {
-            throw new IllegalArgumentException("Eevent should not be null");
+            throw new IllegalArgumentException("Event should not be null");
         }
 
         if (root.isTextual()) {

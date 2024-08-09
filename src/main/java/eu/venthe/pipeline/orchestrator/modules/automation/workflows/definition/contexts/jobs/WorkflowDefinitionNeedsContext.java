@@ -16,16 +16,16 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 @Getter
 @Builder
-public class NeedsContext {
+public class WorkflowDefinitionNeedsContext {
     @Singular
     private final Set<JobId> needs;
 
-    public static Optional<NeedsContext> create(final JsonNode value) {
+    public static Optional<WorkflowDefinitionNeedsContext> create(final JsonNode value) {
         return ContextUtilities.create(value, node -> {
             if (node.isTextual()) {
-                return new NeedsContext(Collections.singleton(new JobId(node.textValue())));
+                return new WorkflowDefinitionNeedsContext(Collections.singleton(new JobId(node.textValue())));
             } else if (node.isArray()) {
-                return new NeedsContext(StreamSupport.stream(node.spliterator(), false)
+                return new WorkflowDefinitionNeedsContext(StreamSupport.stream(node.spliterator(), false)
                         .filter(Predicate.not(JsonNode::isNull))
                         .filter(Predicate.not(JsonNode::isEmpty))
                         .map(JsonNode::textValue)

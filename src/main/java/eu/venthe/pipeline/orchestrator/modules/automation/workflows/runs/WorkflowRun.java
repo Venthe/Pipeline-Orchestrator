@@ -21,6 +21,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -50,9 +51,8 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
                                                                TriggeringEntity triggeringEntity) {
         var run = new WorkflowRun(workflow, context, timeService, triggeringEntity);
 
-        Stream<DomainTrigger> a = Stream.of(new WorkflowRunCreatedEvent(run.getProjectId(), run.getId()));
         return Pair.of(
-                Stream.concat(a, run.run().stream()).toList(),
+                Collections.singletonList(new WorkflowRunCreatedEvent(run.getProjectId(), run.getId())),
                 run
         );
     }
@@ -61,7 +61,7 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         return context.id();
     }
 
-    private List<RequestJobRunCommand> run() {
+    public List<RequestJobRunCommand> run() {
         return jobs.run().stream().map(e -> new RequestJobRunCommand(context.id(), getId(), new JobRunId(e.jobId(), e.runAttempt()), e.token(), RunnerDimensions.builder().build())).toList();
     }
 
@@ -107,10 +107,8 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         throw new UnsupportedOperationException();
     }
 
-    public JobExecutionContext provideContext(JobRunId executionId) {
-        // TODO: Expand upon
-        return new JobExecutionContext() {
-        };
+    public JobExecutionContext provideContext(JobRunId jobRunId) {
+        return jobs.provideContext(jobRunId);
     }
 
     public void notifyJobStarted(JobRunId executionId, ZonedDateTime startDate) {

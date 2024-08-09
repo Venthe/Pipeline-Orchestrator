@@ -8,11 +8,11 @@ import java.util.Optional;
 
 // TODO: Implement context
 @RequiredArgsConstructor
-public class DefaultsContext {
-    private DefaultsContext(JsonNode node) {
+public class WorkflowDefinitionDefaultsContext {
+    private WorkflowDefinitionDefaultsContext(JsonNode node) {
     }
 
-    public static Optional<DefaultsContext> create(JsonNode root) {
-        return ContextUtilities.create(root, DefaultsContext::new);
+    public static Optional<WorkflowDefinitionDefaultsContext> create(JsonNode root) {
+        return ContextUtilities.create(root, WorkflowDefinitionDefaultsContext::new);
     }
 }

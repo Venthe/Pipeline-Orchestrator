@@ -5,7 +5,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.ru
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class JobsContextTest extends AbstractContextTest {
+class WorkflowDefinitionJobsContextTest extends AbstractContextTest {
     // Given
     @Test
     void name() {

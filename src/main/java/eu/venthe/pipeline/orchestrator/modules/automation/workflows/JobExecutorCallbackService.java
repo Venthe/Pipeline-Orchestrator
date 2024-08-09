@@ -7,9 +7,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.st
 import java.io.File;
 
 public interface JobExecutorCallbackService {
-    default JobExecutionContext requestContext(JobCallbackCallMetadata callMetadata) {
-        throw new UnsupportedOperationException();
-    }
+    JobExecutionContext requestContext(JobCallbackCallMetadata callMetadata)
 
     default void jobRunProgressed(JobCallbackCallMetadata callMetadata) {
         throw new UnsupportedOperationException();

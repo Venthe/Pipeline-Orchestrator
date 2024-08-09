@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.RunCallbackToken;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.JobContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.WorkflowDefinitionJobContext;
 import lombok.ToString;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -10,9 +10,9 @@ import org.apache.commons.lang3.tuple.Pair;
 public class JobRun {
     private JobRunAttempt attempt;
 
-    private final Pair<JobId, JobContext> jobContext;
+    private final Pair<JobId, WorkflowDefinitionJobContext> jobContext;
 
-    JobRun(final Pair<JobId, JobContext> jobContext) {
+    JobRun(final Pair<JobId, WorkflowDefinitionJobContext> jobContext) {
         this.jobContext = jobContext;
     }
 

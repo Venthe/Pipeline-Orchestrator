@@ -8,10 +8,12 @@ import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.Workflo
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRun;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TimeService;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.events.RequestJobRunCommand;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.infrastructure.WorkflowRunRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.security.User;
 import eu.venthe.pipeline.orchestrator.security.UserService;
+import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.Envelope;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.MessageBroker;
 import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
@@ -27,9 +29,13 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.PipelineUtilities.resolveFromOrchestratorDirectory;
 
@@ -76,9 +82,14 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowRunCommandServ
     @Override
     public WorkflowRunId triggerWorkflow(final WorkflowDefinition definition, final Context context) {
         var pair = WorkflowRun.crate(definition, context, timeService, null);
-        var run = pair.getRight();
-        repository.save(new WorkflowRunRepository.Aggregate(new WorkflowRunRepository.Id(context.id(), run.getId()), run));
-        messageBroker.exchange(Envelope.from(pair.getLeft()));
-        return run.getId();
+        var workflowRun = pair.getRight();
+        repository.save(new WorkflowRunRepository.Aggregate(new WorkflowRunRepository.Id(context.id(), workflowRun.getId()), workflowRun));
+        var runEvents = workflowRun.run();
+        var creationEvents = pair.getLeft();
+        Collection<Envelope<?>> allEvents = Stream.concat(runEvents.stream(), creationEvents.stream())
+                .map(Envelope::new)
+                .collect(Collectors.toUnmodifiableList());
+        messageBroker.exchange(allEvents);
+        return workflowRun.getId();
     }
 }

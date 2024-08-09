@@ -10,13 +10,13 @@ import java.util.Set;
 
 // TODO: Implement context
 @RequiredArgsConstructor
-public class PermissionsContext {
-    private PermissionsContext(JsonNode node) {
+public class WorkflowDefinitionPermissionsContext {
+    private WorkflowDefinitionPermissionsContext(JsonNode node) {
     }
 
     // TODO: Use allowed permissions
-    public static Optional<PermissionsContext> create(JsonNode root, final Set<Permissions> allowedPermissions) {
-        return ContextUtilities.create(root, PermissionsContext::new);
+    public static Optional<WorkflowDefinitionPermissionsContext> create(JsonNode root, final Set<Permissions> allowedPermissions) {
+        return ContextUtilities.create(root, WorkflowDefinitionPermissionsContext::new);
     }
     // read|write|none
     // read-all

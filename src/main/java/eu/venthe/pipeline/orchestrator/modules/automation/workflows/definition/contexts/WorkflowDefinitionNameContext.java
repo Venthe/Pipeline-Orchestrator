@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 import java.util.Optional;
 
 @UtilityClass
-public class NameContext {
+public class WorkflowDefinitionNameContext {
     public static Optional<String> create(JsonNode root) {
         return ContextUtilities.Text.create(root);
     }

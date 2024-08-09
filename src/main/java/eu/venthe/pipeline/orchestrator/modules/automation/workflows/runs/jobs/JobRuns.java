@@ -1,7 +1,8 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs;
 
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobsContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.WorkflowDefinitionJobsContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRun;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TimeService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.GraphUtility;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @ToString
 public class JobRuns {
-    private final JobsContext jobs;
+    private final WorkflowDefinitionJobsContext jobs;
     @ToString.Exclude
     private final WorkflowRun workflowRun;
     private final TimeService timeService;
@@ -56,5 +57,9 @@ public class JobRuns {
 
     private JobRun createRun(final JobId id) {
         return new JobRun(Pair.of(id, jobs.getJobs().get(id)));
+    }
+
+    private void provideContext(final JobRunId id) {
+
     }
 }

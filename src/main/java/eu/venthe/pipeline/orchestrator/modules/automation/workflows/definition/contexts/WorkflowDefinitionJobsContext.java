@@ -2,10 +2,9 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.JobContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.WorkflowDefinitionJobContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.pipeline.orchestrator.utilities.CollectionUtilities;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
 import lombok.ToString;
@@ -18,21 +17,21 @@ import java.util.stream.Collectors;
 @ToString
 @Getter
 // TODO: Implement context
-public class JobsContext {
+public class WorkflowDefinitionJobsContext {
     @Singular
-    private final Map<JobId, JobContext> jobs;
+    private final Map<JobId, WorkflowDefinitionJobContext> jobs;
 
-    private JobsContext(JsonNode _root) {
+    private WorkflowDefinitionJobsContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
         jobs = CollectionUtilities.iteratorToStream(root.fields())
                 .collect(Collectors.toMap(
-                        e -> new JobId(e.getKey()),
-                        e -> JobContext.ensure(e.getValue())
+                        entry -> new JobId(entry.getKey()),
+                        entry -> WorkflowDefinitionJobContext.ensure(entry.getValue())
                 ));
     }
 
-    public static JobsContext ensure(final JsonNode root) {
-        return ContextUtilities.ensure(root, JobsContext::new, () -> new IllegalArgumentException("Jobs must exist"));
+    public static WorkflowDefinitionJobsContext ensure(final JsonNode root) {
+        return ContextUtilities.ensure(root, WorkflowDefinitionJobsContext::new, () -> new IllegalArgumentException("Jobs must exist"));
     }
 }

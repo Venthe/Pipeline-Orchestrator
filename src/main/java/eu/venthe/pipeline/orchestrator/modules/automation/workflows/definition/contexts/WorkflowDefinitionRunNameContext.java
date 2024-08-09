@@ -5,7 +5,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.util
 
 import java.util.Optional;
 
-public class RunNameContext {
+public class WorkflowDefinitionRunNameContext {
     public static Optional<String> create(JsonNode root) {
         return ContextUtilities.Text.create(root);
     }

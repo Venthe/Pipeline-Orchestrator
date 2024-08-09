@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition._archive;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -8,10 +8,10 @@ import java.util.Optional;
 
 // TODO: Implement context
 @RequiredArgsConstructor
-public class StepsContext {
+public class StepsContext2 {
     private final ArrayNode root;
 
-    public static Optional<StepsContext> create(JsonNode root) {
+    public static Optional<StepsContext2> create(JsonNode root) {
 
         JsonNode steps = root.get("steps");
 
@@ -21,7 +21,7 @@ public class StepsContext {
 
         if (!steps.isArray()) throw new IllegalArgumentException();
 
-        return Optional.of(new StepsContext((ArrayNode) steps));
+        return Optional.of(new StepsContext2((ArrayNode) steps));
     }
 
     public ArrayNode getRaw() {

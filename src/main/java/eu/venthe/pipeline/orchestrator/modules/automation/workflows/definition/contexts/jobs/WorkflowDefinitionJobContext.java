@@ -3,10 +3,9 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobId;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.PermissionsContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.WorkflowDefinitionPermissionsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import jakarta.annotation.Nullable;
-import lombok.Builder;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
@@ -17,18 +16,18 @@ import static eu.venthe.pipeline.orchestrator.modules.automation.workflows.model
 
 @ToString
 @SuperBuilder
-public class JobContext {
+public class WorkflowDefinitionJobContext {
     // private final Optional<String> name;
     @Nullable
-    private final PermissionsContext permissions;
+    private final WorkflowDefinitionPermissionsContext permissions;
     @Nullable
-    private final NeedsContext needs;
+    private final WorkflowDefinitionNeedsContext needs;
 
-    private JobContext(JsonNode _root) {
+    private WorkflowDefinitionJobContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
-        needs = NeedsContext.create(root.get("needs")).orElse(null);
-        permissions = PermissionsContext.create(root.get("permissions"), Set.of(
+        needs = WorkflowDefinitionNeedsContext.create(root.get("needs")).orElse(null);
+        permissions = WorkflowDefinitionPermissionsContext.create(root.get("permissions"), Set.of(
                 ACTIONS,
                 ATTESTATIONS,
                 CHECKS,
@@ -46,8 +45,8 @@ public class JobContext {
         )).orElse(null);
     }
 
-    public static JobContext ensure(final JsonNode value) {
-        return ContextUtilities.ensure(value, JobContext::new, () -> new IllegalArgumentException("Job must exist"));
+    public static WorkflowDefinitionJobContext ensure(final JsonNode value) {
+        return ContextUtilities.ensure(value, WorkflowDefinitionJobContext::new, () -> new IllegalArgumentException("Job must exist"));
     }
 
     public Set<JobId> getNeeds() {

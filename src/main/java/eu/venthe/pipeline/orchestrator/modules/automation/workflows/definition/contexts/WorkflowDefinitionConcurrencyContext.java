@@ -6,11 +6,11 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.util
 import java.util.Optional;
 
 // TODO: Implement context
-public class ConcurrencyContext {
-    private ConcurrencyContext(JsonNode node) {
+public class WorkflowDefinitionConcurrencyContext {
+    private WorkflowDefinitionConcurrencyContext(JsonNode node) {
     }
 
-    public static Optional<ConcurrencyContext> create(JsonNode root) {
-        return ContextUtilities.create(root, ConcurrencyContext::new);
+    public static Optional<WorkflowDefinitionConcurrencyContext> create(JsonNode root) {
+        return ContextUtilities.create(root, WorkflowDefinitionConcurrencyContext::new);
     }
 }

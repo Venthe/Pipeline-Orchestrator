@@ -1,8 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs;
-
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.PermissionsContext;
-
-import java.util.Optional;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows._archive;
 
 public class ReusableWorkflowJob {
 //    private final Optional<UsesContext> uses;

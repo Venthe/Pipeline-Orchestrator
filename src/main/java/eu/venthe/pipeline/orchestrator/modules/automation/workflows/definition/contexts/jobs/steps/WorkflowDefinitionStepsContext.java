@@ -2,10 +2,9 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.Optional;
+import java.util.List;
 
-@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @RequiredArgsConstructor
-public class StepDefinition {
-    Optional<StepId> id;
+public class WorkflowDefinitionStepsContext {
+    private final List<WorkflowDefinitionStepContext> steps;
 }

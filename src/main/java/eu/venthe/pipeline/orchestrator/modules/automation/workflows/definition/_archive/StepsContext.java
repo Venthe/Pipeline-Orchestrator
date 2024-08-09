@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition._archive;
 
 public class StepsContext {
 //    steps[*].id

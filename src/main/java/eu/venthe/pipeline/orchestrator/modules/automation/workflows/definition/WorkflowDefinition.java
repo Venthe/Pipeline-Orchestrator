@@ -3,11 +3,10 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.*;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.on.OnContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.on.WorkflowDefinitionOnContext;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.events.EventWrapper;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import jakarta.annotation.Nullable;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
@@ -24,16 +23,16 @@ public class WorkflowDefinition {
     private final String name;
     @Nullable
     private final String runName;
-    private final OnContext on;
+    private final WorkflowDefinitionOnContext on;
     @Nullable
-    private final PermissionsContext permissions;
+    private final WorkflowDefinitionPermissionsContext permissions;
     @Nullable
-    private final EnvironmentContext environment;
+    private final WorkflowDefinitionEnvironmentContext environment;
     @Nullable
-    private final DefaultsContext defaults;
+    private final WorkflowDefinitionDefaultsContext defaults;
     @Nullable
-    private final ConcurrencyContext concurrency;
-    private final JobsContext jobs;
+    private final WorkflowDefinitionConcurrencyContext concurrency;
+    private final WorkflowDefinitionJobsContext jobs;
 
     public WorkflowDefinition(JsonNode _root) {
         if (_root == null) throw new IllegalArgumentException("Workflow should not be null");
@@ -41,14 +40,14 @@ public class WorkflowDefinition {
 
         var root = (ObjectNode) _root;
 
-        name = NameContext.create(root.get("name")).orElse(null);
-        runName = RunNameContext.create(root.get("runName")).orElse(null);
-        on = OnContext.ensure(root.get("on"));
-        permissions = PermissionsContext.create(root.get("permissions"), Set.of()).orElse(null);
-        environment = EnvironmentContext.create(root.get("env")).orElse(null);
-        defaults = DefaultsContext.create(root.get("defaults")).orElse(null);
-        concurrency = ConcurrencyContext.create(root.get("concurrency")).orElse(null);
-        jobs = JobsContext.ensure(root.get("jobs"));
+        name = WorkflowDefinitionNameContext.create(root.get("name")).orElse(null);
+        runName = WorkflowDefinitionRunNameContext.create(root.get("runName")).orElse(null);
+        on = WorkflowDefinitionOnContext.ensure(root.get("on"));
+        permissions = WorkflowDefinitionPermissionsContext.create(root.get("permissions"), Set.of()).orElse(null);
+        environment = WorkflowDefinitionEnvironmentContext.create(root.get("env")).orElse(null);
+        defaults = WorkflowDefinitionDefaultsContext.create(root.get("defaults")).orElse(null);
+        concurrency = WorkflowDefinitionConcurrencyContext.create(root.get("concurrency")).orElse(null);
+        jobs = WorkflowDefinitionJobsContext.ensure(root.get("jobs"));
     }
 
     public <T extends SystemEvent> Boolean on(EventWrapper<T> event) {

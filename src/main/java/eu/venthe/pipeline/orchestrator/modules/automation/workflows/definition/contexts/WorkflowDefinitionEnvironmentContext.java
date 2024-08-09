@@ -9,12 +9,12 @@ import java.util.Optional;
 
 // TODO: Implement context
 @RequiredArgsConstructor
-public class EnvironmentContext {
-    private EnvironmentContext(JsonNode node) {
+public class WorkflowDefinitionEnvironmentContext {
+    private WorkflowDefinitionEnvironmentContext(JsonNode node) {
     }
 
-    public static Optional<EnvironmentContext> create(JsonNode root) {
-        return ContextUtilities.create(root, EnvironmentContext::new);
+    public static Optional<WorkflowDefinitionEnvironmentContext> create(JsonNode root) {
+        return ContextUtilities.create(root, WorkflowDefinitionEnvironmentContext::new);
     }
 
     public Map<String, String> getProperties() {
