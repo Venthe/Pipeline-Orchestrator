@@ -38,7 +38,7 @@ public class ContextUtilities {
         return ensure(root, mapper).orElseThrow();
     }
 
-    public static Function<JsonNode, String> toTextMapper() {
+    public static Function<JsonNode, String> toText() {
         return fromTextMapper(UnaryOperator.identity());
     }
 
@@ -70,6 +70,16 @@ public class ContextUtilities {
         };
     }
 
+    public static Function<JsonNode, Integer> toInteger() {
+        return node -> {
+            if (!node.isInt()) {
+                throw new IllegalArgumentException();
+            }
+
+            return node.asInt();
+        };
+    }
+
     @UtilityClass
     public static class Collection {
         public static <U, T extends java.util.Collection<U>> T createCollection(JsonNode node, Function<Stream<JsonNode>, T> mapper) {
@@ -85,7 +95,7 @@ public class ContextUtilities {
     @UtilityClass
     public static class Text {
         public static Optional<String> create(JsonNode root) {
-            return ContextUtilities.create(root, toTextMapper());
+            return ContextUtilities.create(root, toText());
         }
 
         public static String ensure(JsonNode root) {

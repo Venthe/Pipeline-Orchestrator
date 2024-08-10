@@ -52,9 +52,9 @@ public class RepositoryContext {
         final var root = ContextUtilities.validateIsObjectNode(_root);
 
         this.id = ContextUtilities.ensure(root.get("id"), ContextUtilities.fromTextMapper(ProjectId::from));
-        this.name = ContextUtilities.ensure(root.get("name"), ContextUtilities.toTextMapper());
-        this.fullName = ContextUtilities.ensure(root.get("fullName"), ContextUtilities.toTextMapper());
-        this.description = ContextUtilities.create(root.get("description"), ContextUtilities.toTextMapper());
+        this.name = ContextUtilities.ensure(root.get("name"), ContextUtilities.toText());
+        this.fullName = ContextUtilities.ensure(root.get("fullName"), ContextUtilities.toText());
+        this.description = ContextUtilities.create(root.get("description"), ContextUtilities.toText());
         this.owner = UserContext.ensure(root.get("owner"));
         this.url = UrlContext.ensure(root.get("url"));
         this.visibility = RepositoryVisibilityContext.ensure(root.get("visibility"));

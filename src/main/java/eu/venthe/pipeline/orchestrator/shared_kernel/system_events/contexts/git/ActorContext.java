@@ -17,7 +17,7 @@ public final class ActorContext {
     private ActorContext(final JsonNode _root) {
         final var root = ContextUtilities.validateIsObjectNode(_root);
 
-        name = ContextUtilities.ensure(root.get("name"), ContextUtilities.toTextMapper());
+        name = ContextUtilities.ensure(root.get("name"), ContextUtilities.toText());
     }
 
     public static ActorContext ensure(final JsonNode author) {

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.JobId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.WorkflowDefinitionPermissionsContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.steps.StepDefinitionFactory;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.jobs.steps.WorkflowDefinitionStepsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import jakarta.annotation.Nullable;
 import lombok.ToString;
@@ -11,6 +13,8 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Collections;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.Permissions.*;
 
@@ -22,6 +26,8 @@ public class WorkflowDefinitionJobContext {
     private final WorkflowDefinitionPermissionsContext permissions;
     @Nullable
     private final WorkflowDefinitionNeedsContext needs;
+    @Nullable
+    private final WorkflowDefinitionStepsContext steps;
 
     private WorkflowDefinitionJobContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
@@ -43,6 +49,8 @@ public class WorkflowDefinitionJobContext {
                 SECURITY_EVENTS,
                 STATUSES
         )).orElse(null);
+
+        steps = WorkflowDefinitionStepsContext.create(root.get("steps")).orElse(null);
     }
 
     public static WorkflowDefinitionJobContext ensure(final JsonNode value) {
@@ -65,7 +73,6 @@ public class WorkflowDefinitionJobContext {
     // defaults.run
     // defaults.run.shell
     // defaults.run.working-directory
-    // steps
     // timeout-minutes
     // strategy
     // strategy.matrix

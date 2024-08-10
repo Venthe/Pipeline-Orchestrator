@@ -4,18 +4,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.contexts.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
+import jakarta.annotation.Nullable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Optional;
-
 @Getter
 @ToString
 @EqualsAndHashCode
 @SuperBuilder
-abstract class CommonJobExecutionContext implements JobExecutionContext {
+abstract class AbstractJobExecutionContext implements JobExecutionContext {
 
     private final GithubContext github;
     private final EnvContext env;
@@ -25,11 +24,11 @@ abstract class CommonJobExecutionContext implements JobExecutionContext {
     private final RunnerContext runner;
     private final SecretsContext secrets;
     private final StrategyContext strategy;
-    private final Optional<MatrixContext> matrix;
+    @Nullable  private final MatrixContext matrix;
     private final NeedsContext needs;
-    private final Optional<InputsContext> inputs;
+    @Nullable private final InputsContext inputs;
 
-    protected CommonJobExecutionContext(JsonNode _root) {
+    protected AbstractJobExecutionContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
         github = GithubContext.ensure(root.get("github"));
@@ -40,8 +39,8 @@ abstract class CommonJobExecutionContext implements JobExecutionContext {
         runner = RunnerContext.ensure(root.get("runner"));
         secrets = SecretsContext.ensure(root.get("secrets"));
         strategy = StrategyContext.ensure(root.get("strategy"));
-        matrix = MatrixContext.create(root.get("matrix"));
+        matrix = MatrixContext.create(root.get("matrix")).orElse(null);
         needs = NeedsContext.ensure(root.get("needs"));
-        inputs = InputsContext.create(root.get("inputs"));
+        inputs = InputsContext.create(root.get("inputs")).orElse(null);
     }
 }

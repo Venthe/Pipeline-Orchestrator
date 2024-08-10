@@ -11,6 +11,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.events.
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.events.WorkflowRunCreatedEvent;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.JobRuns;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.JobExecutionContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.JobRunContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
@@ -107,7 +108,7 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         throw new UnsupportedOperationException();
     }
 
-    public JobExecutionContext provideContext(JobRunId jobRunId) {
+    public JobRunContext provideContext(JobRunId jobRunId) {
         return jobs.provideContext(jobRunId);
     }
 
