@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.system_events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.WorkflowDispatchInputsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.PathContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.git.RevisionContext;
@@ -27,7 +27,7 @@ import java.nio.file.Path;
 @SuperBuilder
 public class WorkflowDispatchEvent extends AbstractProjectEvent {
     private final WorkflowDispatchInputsContext inputs;
-    private final Revision revision;
+    private final GitRevision revision;
     private final Path workflow;
 
     public WorkflowDispatchEvent(ObjectNode _root) {

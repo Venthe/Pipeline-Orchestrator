@@ -9,9 +9,7 @@ import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 
 public record RequestJobRunCommand(ProjectId projectId,
                                    WorkflowRunId workflowRunId,
-                                   JobRunId runId,
-                                   RunCallbackToken runCallbackToken,
-                                   RunnerDimensions dimensions) implements DomainTrigger {
+                                   JobRunId runId) implements DomainTrigger {
     @Override
     public String getType() {
         return "request_job";

@@ -4,8 +4,7 @@ import eu.venthe.pipeline.orchestrator.projects.application.dto.CreateProjectSpe
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 
 public interface ProjectsCommandService {
 
@@ -19,9 +18,9 @@ public interface ProjectsCommandService {
         throw new UnsupportedOperationException();
     }
 
-    void registerTrackedRevision(ProjectId projectId, Revision revision);
+    void registerTrackedRevision(ProjectId projectId, GitRevision revision);
 
-    default void unregisterTrackedRevision(ProjectId projectId, Revision revision) {
+    default void unregisterTrackedRevision(ProjectId projectId, GitRevision revision) {
         throw new UnsupportedOperationException();
     }
 }

@@ -5,13 +5,13 @@ import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.W
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 
 import java.nio.file.Path;
 import java.util.Set;
 
 public interface WorkflowRunCommandService {
-    WorkflowRunId triggerWorkflowDispatch(final ProjectId id, final Revision revision, final Path workflowPath);
+    WorkflowRunId triggerWorkflowDispatch(final ProjectId id, final GitRevision revision, final Path workflowPath);
 
     default void retriggerWorkflow(WorkflowRunId executionId) {
         throw new UnsupportedOperationException();
@@ -34,5 +34,5 @@ public interface WorkflowRunCommandService {
         throw new UnsupportedOperationException();
     }
 
-    record Context(ProjectId id, Revision revision, Set<Dimension> dimensions) {}
+    record Context(ProjectId id, GitRevision revision, Set<Dimension> dimensions) {}
 }

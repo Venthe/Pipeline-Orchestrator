@@ -3,18 +3,13 @@ package eu.venthe.pipeline.orchestrator.modules.automation;
 import eu.venthe.pipeline.orchestrator.modules.ProjectModule;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.EventHandlerProvider;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.togglz.core.manager.FeatureManager;
 import org.togglz.core.util.NamedFeature;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 @Component
 @RequiredArgsConstructor
@@ -30,7 +25,7 @@ public class AutomationModule implements ProjectModule {
     }
 
     @Override
-    public void registerTrackedRevision(final ProjectId id, final Revision ref) {
+    public void registerTrackedRevision(final ProjectId id, final GitRevision ref) {
         if (featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             return;
         }
@@ -38,7 +33,7 @@ public class AutomationModule implements ProjectModule {
     }
 
     @Override
-    public void unregisterTrackedRevision(final ProjectId id, final Revision ref) {
+    public void unregisterTrackedRevision(final ProjectId id, final GitRevision ref) {
         throw new UnsupportedOperationException();
     }
 

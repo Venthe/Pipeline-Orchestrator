@@ -3,7 +3,7 @@ package eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.GlobPatternMatching;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,7 +42,7 @@ public class AbstractOnPropertyAndIgnoredProperty {
                         .toList());
     }
 
-    public boolean match(Revision property) {
+    public boolean match(GitRevision property) {
         return match(List.of(property.value()));
     }
 

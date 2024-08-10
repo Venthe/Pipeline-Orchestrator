@@ -1,6 +1,5 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowRunCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
@@ -10,8 +9,6 @@ import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.depende
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.events.RequestJobRunCommand;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.events.WorkflowRunCreatedEvent;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.JobRuns;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.JobExecutionContext;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.JobRunContext;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
@@ -26,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -63,7 +59,9 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
     }
 
     public List<RequestJobRunCommand> run() {
-        return jobs.run().stream().map(e -> new RequestJobRunCommand(context.id(), getId(), new JobRunId(e.jobId(), e.runAttempt()), e.token(), RunnerDimensions.builder().build())).toList();
+        return jobs.run().stream()
+                .map(e -> new RequestJobRunCommand(context.id(), getId(), new JobRunId(e.jobId(), e.runAttempt())))
+                .toList();
     }
 
     /*WorkflowCorrelationId workflowCorrelationId, */
@@ -106,10 +104,6 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
 
     public void stopRunningJobExecutions() {
         throw new UnsupportedOperationException();
-    }
-
-    public JobRunContext provideContext(JobRunId jobRunId) {
-        return jobs.provideContext(jobRunId);
     }
 
     public void notifyJobStarted(JobRunId executionId, ZonedDateTime startDate) {

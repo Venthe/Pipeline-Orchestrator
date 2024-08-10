@@ -1,6 +1,5 @@
 package eu.venthe.pipeline.orchestrator.modules.automation.workflows.impl;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.runners.RunnerProvider;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowRunCommandService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.WorkflowRunQueryService;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.WorkflowDefinition;
@@ -8,15 +7,13 @@ import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.Workflo
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRun;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRunId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TimeService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.events.RequestJobRunCommand;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.infrastructure.WorkflowRunRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.security.User;
 import eu.venthe.pipeline.orchestrator.security.UserService;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.Envelope;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.MessageBroker;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.EventId;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.WorkflowDispatchEvent;
@@ -30,7 +27,6 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -52,7 +48,7 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowRunCommandServ
     @SneakyThrows
     @Override
     public WorkflowRunId triggerWorkflowDispatch(final ProjectId id,
-                                                 final Revision revision,
+                                                 final GitRevision revision,
                                                  final Path workflowPath) {
         var eventId = UUID.randomUUID();
         ProjectEvent event = WorkflowDispatchEvent.builder()

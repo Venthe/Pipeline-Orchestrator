@@ -5,8 +5,7 @@ import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.c
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.model.JobRunId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.WorkflowRun;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.dependencies.TimeService;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.JobExecutionContext;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context.JobRunContext;
+import eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive.run_context.JobRunContext;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.GraphUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -61,8 +60,4 @@ public class JobRuns {
         return new JobRun(Pair.of(id, jobs.getJobs().get(id)));
     }
 
-    public JobRunContext provideContext(final JobRunId id) {
-
-        return new JobRunContext();
-    }
 }

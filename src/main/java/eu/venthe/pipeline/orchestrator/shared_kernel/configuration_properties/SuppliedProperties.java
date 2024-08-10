@@ -1,5 +1,9 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties;
 
+import eu.venthe.pipeline.orchestrator.shared_kernel.dynamic_variable.BooleanDynamicProperty;
+import eu.venthe.pipeline.orchestrator.shared_kernel.dynamic_variable.IntegerDynamicProperty;
+import eu.venthe.pipeline.orchestrator.shared_kernel.dynamic_variable.DynamicProperty;
+import eu.venthe.pipeline.orchestrator.shared_kernel.dynamic_variable.TextDynamicProperty;
 import lombok.Builder;
 
 import java.util.HashMap;
@@ -7,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Builder
-public record SuppliedProperties(Map<PropertyName, SuppliedConfigurationProperty> properties) {
+public record SuppliedProperties(Map<PropertyName, DynamicProperty> properties) {
     public SuppliedProperties {
         if (properties == null) properties = new HashMap<>();
     }
@@ -16,27 +20,27 @@ public record SuppliedProperties(Map<PropertyName, SuppliedConfigurationProperty
         return SuppliedProperties.builder().build();
     }
 
-    public Optional<SuppliedConfigurationProperty> get(String key) {
+    public Optional<DynamicProperty> get(String key) {
         return Optional.ofNullable(properties.get(new PropertyName(key)));
     }
 
     public static class SuppliedPropertiesBuilder {
-        private Map<PropertyName, SuppliedConfigurationProperty> properties = new HashMap<>();
+        private Map<PropertyName, DynamicProperty> properties = new HashMap<>();
 
         public SuppliedPropertiesBuilder property(String key, String value) {
-            var entry = Map.entry(new PropertyName(key), new TextSuppliedConfigurationProperty(value));
+            var entry = Map.entry(new PropertyName(key), new TextDynamicProperty(value));
             properties.put(entry.getKey(), entry.getValue());
             return this;
         }
 
         public SuppliedPropertiesBuilder property(String key, boolean value) {
-            var entry = Map.entry(new PropertyName(key), new BooleanSuppliedConfigurationProperty(value));
+            var entry = Map.entry(new PropertyName(key), new BooleanDynamicProperty(value));
             properties.put(entry.getKey(), entry.getValue());
             return this;
         }
 
         public SuppliedPropertiesBuilder property(String key, int value) {
-            var entry = Map.entry(new PropertyName(key), new IntegerSuppliedConfigurationProperty(value));
+            var entry = Map.entry(new PropertyName(key), new IntegerDynamicProperty(value));
             properties.put(entry.getKey(), entry.getValue());
             return this;
         }

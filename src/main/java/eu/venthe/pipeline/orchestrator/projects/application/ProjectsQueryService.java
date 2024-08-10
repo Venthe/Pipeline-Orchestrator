@@ -7,7 +7,7 @@ import eu.venthe.pipeline.orchestrator.projects.application.dto.ProjectDetailsDt
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.modules.automation.workflows.utilities.GlobPatternMatching;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.io.File;
 
 import java.nio.file.Path;
@@ -32,7 +32,7 @@ public interface ProjectsQueryService {
 
     Set<File> getFiles(GlobPatternMatching.Glob pattern);
 
-    Optional<File> getFile(ProjectId id, Revision revision, Path file);
+    Optional<File> getFile(ProjectId id, GitRevision revision, Path file);
 
     Optional<ProjectDetailsDto> getProjectDetails(ProjectId id);
 }

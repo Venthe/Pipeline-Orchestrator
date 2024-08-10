@@ -1,5 +1,6 @@
 package eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties;
 
+import eu.venthe.pipeline.orchestrator.shared_kernel.dynamic_variable.DynamicProperty;
 import lombok.Builder;
 import lombok.Value;
 
@@ -13,7 +14,7 @@ public class ConfigurationPropertyDefinition {
     @Builder.Default
     Boolean masked = false;
 
-    Optional<SuppliedConfigurationProperty> getDefaultValue() {
+    Optional<DynamicProperty> getDefaultValue() {
         return Optional.empty();
     }
 

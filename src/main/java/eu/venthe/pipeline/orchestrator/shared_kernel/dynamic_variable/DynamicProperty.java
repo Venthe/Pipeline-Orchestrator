@@ -1,6 +1,6 @@
-package eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties;
+package eu.venthe.pipeline.orchestrator.shared_kernel.dynamic_variable;
 
-public interface SuppliedConfigurationProperty {
+public interface DynamicProperty {
     default boolean isText() {
         return false;
     }

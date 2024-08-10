@@ -19,7 +19,7 @@ import eu.venthe.pipeline.orchestrator.projects.application.impl.ProjectSourcesM
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectStatus;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.ProjectDto;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.assertj.core.api.Assertions;
@@ -127,7 +127,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
 
-        val revision = new Revision("main");
+        val revision = new GitRevision("main");
 
         projectsCommandService.registerTrackedRevision(projectId, revision);
 

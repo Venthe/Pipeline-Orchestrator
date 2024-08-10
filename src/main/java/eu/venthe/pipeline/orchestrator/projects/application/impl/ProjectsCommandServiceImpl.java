@@ -8,8 +8,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.ProjectRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.SourceConfigurationRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class ProjectsCommandServiceImpl implements ProjectsCommandService {
     private final ProjectModuleMediator projectModuleMediator;
 
     @Override
-    public void registerTrackedRevision(final ProjectId projectId, final Revision revision) {
+    public void registerTrackedRevision(final ProjectId projectId, final GitRevision revision) {
         log.debug("Registering revision {} for tracking on project {}", revision, projectId);
         var project = repository.find(projectId).orElseThrow();
         project.registerTrackedRevision(revision);

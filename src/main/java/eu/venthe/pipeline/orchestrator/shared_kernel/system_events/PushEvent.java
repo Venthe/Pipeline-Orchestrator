@@ -2,7 +2,7 @@ package eu.venthe.pipeline.orchestrator.shared_kernel.system_events;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.CommitDetailsContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.UserContext;
 import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.contexts.common.BooleanContext;
@@ -37,7 +37,7 @@ public class PushEvent extends AbstractProjectEvent {
      * The SHA of the most recent commit on ref before the push.
      */
     private final String before;
-    private final Optional<Revision> baseRef;
+    private final Optional<GitRevision> baseRef;
     private final List<CommitDetailsContext> commits;
     /**
      * URL that shows the changes in this ref update, from the before commit to the after commit. For a newly created
@@ -62,7 +62,7 @@ public class PushEvent extends AbstractProjectEvent {
     /**
      * The full git ref that was pushed. Example: refs/heads/main or refs/tags/v3.14.1.
      */
-    private final Revision ref;
+    private final GitRevision ref;
 
     public PushEvent(ObjectNode _root) {
         super(_root);

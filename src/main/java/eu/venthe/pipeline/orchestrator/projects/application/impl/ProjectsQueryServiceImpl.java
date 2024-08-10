@@ -9,7 +9,7 @@ import eu.venthe.pipeline.orchestrator.projects.domain.Project;
 import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
 import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.ProjectRepository;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.SourceConfigurationId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 import eu.venthe.pipeline.orchestrator.shared_kernel.io.File;
 import eu.venthe.pipeline.orchestrator.shared_kernel.io.Metadata;
 import lombok.RequiredArgsConstructor;
@@ -68,7 +68,7 @@ public class ProjectsQueryServiceImpl implements ProjectsQueryService {
     }
 
     @Override
-    public Optional<File> getFile(final ProjectId id, final Revision revision, final Path file) {
+    public Optional<File> getFile(final ProjectId id, final GitRevision revision, final Path file) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             throw new UnsupportedOperationException();
         }

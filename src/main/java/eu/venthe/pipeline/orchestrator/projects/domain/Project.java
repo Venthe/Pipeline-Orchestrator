@@ -4,8 +4,7 @@ import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.Revision;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
+import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -53,12 +52,12 @@ public class Project implements Aggregate<ProjectId> {
         status = ProjectStatus.ARCHIVED;
     }
 
-    public void registerTrackedRevision(Revision revision) {
+    public void registerTrackedRevision(GitRevision revision) {
         log.debug("Notify about registered ref {} in the project {} for the modules", revision, id);
         projectModules.onModule(module -> module.registerTrackedRevision(id, revision));
     }
 
-    public void unregisterTrackedRevision(Revision revision) {
+    public void unregisterTrackedRevision(GitRevision revision) {
         log.debug("Notify about unregistered ref {} in the project {} for the modules", revision, id);
         projectModules.onModule(module -> module.unregisterTrackedRevision(id, revision));
     }

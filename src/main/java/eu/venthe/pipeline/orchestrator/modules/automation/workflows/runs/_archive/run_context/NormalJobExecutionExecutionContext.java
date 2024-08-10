@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs.jobs.run_context;
+package eu.venthe.pipeline.orchestrator.modules.automation.workflows.runs._archive.run_context;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.EqualsAndHashCode;
