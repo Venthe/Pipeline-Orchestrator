@@ -1,7 +1,7 @@
 package eu.venthe.platform.source_configuration.domain.plugins.template;
 
-import eu.venthe.platform.source_configuration.domain.plugins.template.model.FileDto;
-import eu.venthe.platform.source_configuration.plugins.template.model.FileDto;
+import eu.venthe.platform.shared_kernel.io.File;
+import eu.venthe.platform.shared_kernel.io.Metadata;
 
 import java.nio.file.Path;
 import java.util.Collection;
@@ -17,11 +17,11 @@ public interface ProjectDataProvider {
      * @param path              Path of the file to access
      * @return Either {@code Optional} or bytes for a file
      */
-    default Optional<byte[]> getFile(String projectIdentifier, String revision, Path path) {
+    default Optional<File> getFile(String projectIdentifier, String revision, Path path) {
         throw new UnsupportedOperationException();
     }
 
-    default Collection<FileDto> getFileList(String projectIdentifier, String revision, Path path) {
+    default Collection<Metadata> getFileList(String projectIdentifier, String revision, Path path) {
         throw new UnsupportedOperationException();
     }
 

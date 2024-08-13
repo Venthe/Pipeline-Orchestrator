@@ -1,14 +1,13 @@
-package eu.venthe.platform.source_configuration.domain;
+package eu.venthe.platform.organization.domain;
 
 import com.google.common.collect.Sets;
 import eu.venthe.platform.project.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.project.domain.ProjectId;
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.domain.ProjectsSourceConfiguration;
+import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
 import eu.venthe.platform.source_configuration.domain.plugins.template.model.ProjectDto;
-import eu.venthe.platform.source_configuration.plugins.template.ProjectSourcePlugin;
-import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
 import org.jgrapht.alg.util.Pair;
 
 import java.util.Set;
@@ -17,9 +16,10 @@ import java.util.stream.Stream;
 import static eu.venthe.platform.project.domain.ProjectStatus.ARCHIVED;
 import static java.util.stream.Collectors.toSet;
 
-record ProjectsSourceConfigurationSynchronizer(
+record ProjectsSynchronizer(
         ProjectsSourceConfiguration configuration,
-        ProjectSourcePlugin.PluginInstance pluginInstance, ProjectsCommandService projectsCommandService,
+        ProjectSourcePluginInstance pluginInstance,
+        ProjectsCommandService projectsCommandService,
         ProjectsQueryService projectsQueryService) {
     public void synchronize() {
         final Set<String> allProjectsFromSource = getAllProjectsFromSource();

@@ -1,6 +1,7 @@
 package eu.venthe.platform.source_configuration.domain.plugins;
 
 import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
 import eu.venthe.platform.source_configuration.domain.plugins.template.model.SourceType;
 import eu.venthe.platform.shared_kernel.configuration_properties.SuppliedProperties;
 import lombok.EqualsAndHashCode;
@@ -24,7 +25,7 @@ public class PluginProvider {
     private final FeatureManager featureManager;
     private final PluginProviders pluginProviders;
 
-    public ProjectSourcePlugin.PluginInstance provide(SourceType sourceType, SuppliedProperties properties) {
+    public ProjectSourcePluginInstance provide(SourceType sourceType, SuppliedProperties properties) {
         var sourcePlugin = pluginProviders.provide(sourceType).orElseThrow();
 
         if (!sourceType.equals(sourcePlugin.getSourceType())) {

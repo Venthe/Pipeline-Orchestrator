@@ -14,12 +14,8 @@ public interface ProjectSourcePlugin {
 
     SourceType getSourceType();
 
-    PluginInstance instantiate(SuppliedProperties properties);
+    ProjectSourcePluginInstance instantiate(SuppliedProperties properties);
 
     Map<PropertyName, ConfigurationPropertyDefinition> getConfigurationPropertiesDefinitions();
-
-    interface PluginInstance extends ProjectsProvider, ProjectDataProvider, EndpointProvider {
-        SourceType getSourceType();
-    }
 
 }

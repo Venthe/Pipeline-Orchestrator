@@ -3,7 +3,7 @@ package eu.venthe.platform.source_configuration.domain.plugins.gerrit;
 import com.google.common.collect.MoreCollectors;
 import eu.venthe.platform.gerrit.api.ProjectsApi;
 import eu.venthe.platform.gerrit.model.ProjectInfo;
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
 import eu.venthe.platform.source_configuration.domain.plugins.template.model.FileDto;
 import eu.venthe.platform.source_configuration.domain.plugins.template.model.SourceType;
 import eu.venthe.platform.source_configuration.domain.plugins.template.model.ProjectDto;
@@ -32,7 +32,7 @@ import static eu.venthe.platform.source_configuration.domain.plugins.gerrit.Gerr
 
 @Slf4j
 @Value
-public class GerritPluginInstance implements ProjectSourcePlugin.PluginInstance {
+public class GerritPluginInstance implements ProjectSourcePluginInstance {
     ProjectsApi projectsApi;
     SourceType sourceType;
     GerritConfiguration configuration;

@@ -1,6 +1,7 @@
 package eu.venthe.platform.source_configuration.domain.plugins.gerrit;
 
 import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
 import eu.venthe.platform.source_configuration.domain.plugins.template.model.SourceType;
 import eu.venthe.platform.shared_kernel.configuration_properties.ConfigurationPropertyDefinition;
 import eu.venthe.platform.shared_kernel.configuration_properties.PropertyName;
@@ -18,7 +19,7 @@ public class GerritProjectSourcePlugin implements ProjectSourcePlugin {
     }
 
     @Override
-    public PluginInstance instantiate(SuppliedProperties properties) {
+    public ProjectSourcePluginInstance instantiate(SuppliedProperties properties) {
         return new GerritPluginInstance(GerritConfiguration.construct(properties), getSourceType());
     }
 
