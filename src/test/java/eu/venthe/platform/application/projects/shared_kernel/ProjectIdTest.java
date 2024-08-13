@@ -2,7 +2,7 @@ package eu.venthe.platform.application.projects.shared_kernel;
 
 import eu.venthe.platform.organization.domain.OrganizationId;
 import eu.venthe.platform.project.domain.ProjectId;
-import eu.venthe.platform.source_configuration.SourceConfigurationId;
+import eu.venthe.platform.data_source_configuration.SourceConfigurationId;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

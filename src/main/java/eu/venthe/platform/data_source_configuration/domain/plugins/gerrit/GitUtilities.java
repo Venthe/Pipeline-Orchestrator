@@ -1,4 +1,4 @@
-package eu.venthe.platform.source_configuration.domain.plugins.gerrit;
+package eu.venthe.platform.data_source_configuration.domain.plugins.gerrit;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

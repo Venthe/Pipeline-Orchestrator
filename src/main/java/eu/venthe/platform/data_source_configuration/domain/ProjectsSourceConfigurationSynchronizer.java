@@ -1,14 +1,14 @@
-package eu.venthe.platform.source_configuration.domain;
+package eu.venthe.platform.data_source_configuration.domain;
 
 import com.google.common.collect.Sets;
 import eu.venthe.platform.project.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.project.domain.ProjectId;
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
-import eu.venthe.platform.source_configuration.domain.plugins.template.model.ProjectDto;
-import eu.venthe.platform.source_configuration.plugins.template.ProjectSourcePlugin;
-import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
+import eu.venthe.platform.data_source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.data_source_configuration.domain.plugins.template.model.ProjectDto;
+import eu.venthe.platform.data_source_configuration.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.data_source_configuration.plugins.template.model.ProjectDto;
 import org.jgrapht.alg.util.Pair;
 
 import java.util.Set;

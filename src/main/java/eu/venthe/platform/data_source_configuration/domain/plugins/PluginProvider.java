@@ -1,9 +1,7 @@
-package eu.venthe.platform.source_configuration.domain.plugins;
+package eu.venthe.platform.data_source_configuration.domain.plugins;
 
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
-import eu.venthe.platform.source_configuration.domain.plugins.template.model.SourceType;
-import eu.venthe.platform.source_configuration.plugins.template.ProjectSourcePlugin;
-import eu.venthe.platform.source_configuration.plugins.template.model.SourceType;
+import eu.venthe.platform.data_source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.data_source_configuration.domain.plugins.template.model.SourceType;
 import eu.venthe.platform.shared_kernel.configuration_properties.SuppliedProperties;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;

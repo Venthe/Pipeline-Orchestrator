@@ -1,8 +1,5 @@
 package eu.venthe.platform.project.domain;
 
-import eu.venthe.platform.application.modules.ProjectModuleMediator;
-import eu.venthe.platform.source_configuration.ProjectsSourceConfiguration;
-import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
 import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
 import lombok.AllArgsConstructor;
@@ -19,7 +16,6 @@ public class Project implements Aggregate<ProjectId> {
     @EqualsAndHashCode.Include
     private final ProjectId id;
     private final ProjectsSourceConfiguration owningConfiguration;
-    private final ProjectModuleMediator projectModules;
     private final ProjectSpecifiedDataProvider provider;
 
     public Project(final ProjectId id,
@@ -54,12 +50,10 @@ public class Project implements Aggregate<ProjectId> {
 
     public void registerTrackedRevision(GitRevision revision) {
         log.debug("Notify about registered ref {} in the project {} for the modules", revision, id);
-        projectModules.onModule(module -> module.registerTrackedRevision(id, revision));
     }
 
     public void unregisterTrackedRevision(GitRevision revision) {
         log.debug("Notify about unregistered ref {} in the project {} for the modules", revision, id);
-        projectModules.onModule(module -> module.unregisterTrackedRevision(id, revision));
     }
 
 }

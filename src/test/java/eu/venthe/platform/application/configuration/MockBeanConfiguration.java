@@ -3,7 +3,7 @@ package eu.venthe.platform.application.configuration;
 import eu.venthe.platform.application.fixtures.MockAdapterFixture;
 import eu.venthe.platform.application.fixtures.MockProjectSourceFixture;
 import eu.venthe.platform.runner.runner_engine.template.model.RunnerEngineType;
-import eu.venthe.platform.source_configuration.plugins.template.model.SourceType;
+import eu.venthe.platform.data_source_configuration.plugins.template.model.SourceType;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;

@@ -1,7 +1,7 @@
-package eu.venthe.platform.source_configuration.domain.plugins.template;
+package eu.venthe.platform.data_source_configuration.domain.plugins.template;
 
-import eu.venthe.platform.source_configuration.domain.plugins.template.model.FileDto;
-import eu.venthe.platform.source_configuration.plugins.template.model.FileDto;
+import eu.venthe.platform.data_source_configuration.domain.plugins.template.model.FileDto;
+import eu.venthe.platform.data_source_configuration.plugins.template.model.FileDto;
 
 import java.nio.file.Path;
 import java.util.Collection;

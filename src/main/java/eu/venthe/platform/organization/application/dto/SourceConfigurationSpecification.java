@@ -1,8 +1,8 @@
 package eu.venthe.platform.organization.application.dto;
 
 import eu.venthe.platform.organization.domain.OrganizationId;
-import eu.venthe.platform.source_configuration.SourceConfigurationId;
-import eu.venthe.platform.source_configuration.plugins.template.model.SourceType;
+import eu.venthe.platform.data_source_configuration.SourceConfigurationId;
+import eu.venthe.platform.data_source_configuration.plugins.template.model.SourceType;
 import eu.venthe.platform.shared_kernel.configuration_properties.SuppliedProperties;
 import lombok.Builder;
 import lombok.NonNull;

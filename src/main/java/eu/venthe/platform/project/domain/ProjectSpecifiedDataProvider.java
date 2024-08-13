@@ -1,7 +1,7 @@
 package eu.venthe.platform.project.domain;
 
-import eu.venthe.platform.source_configuration.plugins.template.ProjectDataProvider;
-import eu.venthe.platform.source_configuration.plugins.template.model.FileDto;
+import eu.venthe.platform.data_source_configuration.plugins.template.ProjectDataProvider;
+import eu.venthe.platform.data_source_configuration.plugins.template.model.FileDto;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.file.Path;
