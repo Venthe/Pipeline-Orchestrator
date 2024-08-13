@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.workflows.definition.contexts.on.matchers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.venthe.pipeline.utilities.CollectionUtilities;
+import eu.venthe.pipeline.application.utilities.CollectionUtilities;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.utilities;
+package eu.venthe.pipeline.application.utilities;
 
 import lombok.experimental.UtilityClass;
 

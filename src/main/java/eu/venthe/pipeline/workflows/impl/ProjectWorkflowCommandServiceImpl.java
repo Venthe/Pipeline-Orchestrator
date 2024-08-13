@@ -20,7 +20,7 @@ import eu.venthe.pipeline.shared_kernel.system_events.WorkflowDispatchEvent;
 import eu.venthe.pipeline.shared_kernel.system_events.contexts.RepositoryContext;
 import eu.venthe.pipeline.shared_kernel.system_events.contexts.UserContext;
 import eu.venthe.pipeline.shared_kernel.system_events.model.UserType;
-import eu.venthe.pipeline.utilities.ExponentialBackOff;
+import eu.venthe.pipeline.application.utilities.ExponentialBackOff;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;

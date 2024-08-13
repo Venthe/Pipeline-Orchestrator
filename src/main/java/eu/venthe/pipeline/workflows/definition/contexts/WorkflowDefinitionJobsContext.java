@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.workflows.definition.contexts.jobs.WorkflowDefinitionJobContext;
 import eu.venthe.pipeline.shared_kernel.system_events.contexts.utilities.ContextUtilities;
-import eu.venthe.pipeline.utilities.CollectionUtilities;
+import eu.venthe.pipeline.application.utilities.CollectionUtilities;
 import lombok.Getter;
 import lombok.Singular;
 import lombok.ToString;

@@ -11,8 +11,8 @@ import lombok.experimental.SuperBuilder;
 import java.util.HashMap;
 import java.util.Map;
 
-import static eu.venthe.pipeline.utilities.CollectionUtilities.sameKey;
-import static eu.venthe.pipeline.utilities.CollectionUtilities.toMap;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.sameKey;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.toMap;
 
 /**
  * The steps context contains information about the steps in the current job that have an id specified and have already

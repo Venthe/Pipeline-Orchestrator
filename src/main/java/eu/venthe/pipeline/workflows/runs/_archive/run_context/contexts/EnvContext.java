@@ -14,8 +14,8 @@ import lombok.experimental.SuperBuilder;
 import java.util.HashMap;
 import java.util.Map;
 
-import static eu.venthe.pipeline.utilities.CollectionUtilities.sameKey;
-import static eu.venthe.pipeline.utilities.CollectionUtilities.toMap;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.sameKey;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.toMap;
 
 /**
  * The env context contains variables that have been set in a workflow, job, or step. It does not contain variables

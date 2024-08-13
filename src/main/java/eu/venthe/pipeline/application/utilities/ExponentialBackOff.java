@@ -1,4 +1,4 @@
-package eu.venthe.pipeline.utilities;
+package eu.venthe.pipeline.application.utilities;
 
 import eu.venthe.pipeline.shared_kernel.Either;
 import lombok.extern.slf4j.Slf4j;

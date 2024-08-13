@@ -13,7 +13,7 @@ import eu.venthe.pipeline.runners.runner_engine.template.model.dimensions.Runner
 import eu.venthe.pipeline.workflows.model.JobRunId;
 import eu.venthe.pipeline.workflows.runs.WorkflowRunId;
 import eu.venthe.pipeline.projects.domain.ProjectId;
-import eu.venthe.pipeline.utilities.EnvUtil;
+import eu.venthe.pipeline.application.utilities.EnvUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.togglz.core.manager.FeatureManager;

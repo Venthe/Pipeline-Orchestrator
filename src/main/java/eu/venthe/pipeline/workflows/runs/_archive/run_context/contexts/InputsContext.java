@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static eu.venthe.pipeline.utilities.CollectionUtilities.sameKey;
-import static eu.venthe.pipeline.utilities.CollectionUtilities.toMap;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.sameKey;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.toMap;
 
 /**
  * The inputs context contains input properties passed to an action, to a reusable workflow, or to a manually triggered

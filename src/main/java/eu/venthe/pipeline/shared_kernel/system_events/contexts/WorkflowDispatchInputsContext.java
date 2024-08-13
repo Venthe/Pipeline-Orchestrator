@@ -8,7 +8,7 @@ import eu.venthe.pipeline.shared_kernel.system_events.contexts.utilities.InputUt
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static eu.venthe.pipeline.utilities.CollectionUtilities.toMap;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.toMap;
 
 public class WorkflowDispatchInputsContext {
     private final Map<String, InputUtilities.InputValue<?>> inputs;

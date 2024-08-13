@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static eu.venthe.pipeline.utilities.CollectionUtilities.sameKey;
-import static eu.venthe.pipeline.utilities.CollectionUtilities.toMap;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.sameKey;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.toMap;
 
 /**
  * For workflows with a matrix, the matrix context contains the matrix properties defined in the workflow file that

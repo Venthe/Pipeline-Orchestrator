@@ -13,8 +13,8 @@ import lombok.experimental.SuperBuilder;
 import java.util.HashMap;
 import java.util.Map;
 
-import static eu.venthe.pipeline.utilities.CollectionUtilities.sameKey;
-import static eu.venthe.pipeline.utilities.CollectionUtilities.toMap;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.sameKey;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.toMap;
 
 /**
  * The secrets context contains the names and values of secrets that are available to a workflow run. The secrets

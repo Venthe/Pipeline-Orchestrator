@@ -13,8 +13,8 @@ import lombok.experimental.SuperBuilder;
 import java.util.Map;
 import java.util.Optional;
 
-import static eu.venthe.pipeline.utilities.CollectionUtilities.sameKey;
-import static eu.venthe.pipeline.utilities.CollectionUtilities.toMap;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.sameKey;
+import static eu.venthe.pipeline.application.utilities.CollectionUtilities.toMap;
 
 /**
  * The job context contains information about the currently running job.
