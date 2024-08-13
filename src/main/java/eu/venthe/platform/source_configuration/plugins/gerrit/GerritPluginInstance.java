@@ -1,12 +1,12 @@
-package eu.venthe.platform.project.domain.source_configurations.plugins.gerrit;
+package eu.venthe.platform.source_configuration.plugins.gerrit;
 
 import com.google.common.collect.MoreCollectors;
 import eu.venthe.platform.gerrit.api.ProjectsApi;
 import eu.venthe.platform.gerrit.model.ProjectInfo;
-import eu.venthe.platform.project.domain.source_configurations.plugins.template.ProjectSourcePlugin;
-import eu.venthe.platform.project.domain.source_configurations.plugins.template.model.FileDto;
-import eu.venthe.platform.project.domain.source_configurations.plugins.template.model.SourceType;
-import eu.venthe.platform.project.domain.source_configurations.plugins.template.model.ProjectDto;
+import eu.venthe.platform.source_configuration.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.plugins.template.model.FileDto;
+import eu.venthe.platform.source_configuration.plugins.template.model.SourceType;
+import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
 import eu.venthe.platform.project.domain.ProjectStatus;
 import jakarta.ws.rs.core.UriBuilder;
 import lombok.SneakyThrows;
@@ -28,7 +28,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static eu.venthe.platform.project.domain.source_configurations.plugins.gerrit.GerritHeaders.getTraceId;
+import static eu.venthe.platform.source_configuration.plugins.gerrit.GerritHeaders.getTraceId;
 
 @Slf4j
 @Value

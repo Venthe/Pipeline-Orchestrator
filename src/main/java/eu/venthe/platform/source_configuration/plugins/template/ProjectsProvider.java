@@ -1,6 +1,6 @@
-package eu.venthe.platform.project.domain.source_configurations.plugins.template;
+package eu.venthe.platform.source_configuration.plugins.template;
 
-import eu.venthe.platform.project.domain.source_configurations.plugins.template.model.ProjectDto;
+import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
 
 import java.util.Optional;
 import java.util.stream.Stream;

@@ -1,4 +1,4 @@
-package eu.venthe.platform.project.domain.source_configurations.plugins.template.model;
+package eu.venthe.platform.source_configuration.plugins.template.model;
 
 import java.util.Locale;
 

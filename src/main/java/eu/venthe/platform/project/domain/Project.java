@@ -1,8 +1,8 @@
 package eu.venthe.platform.project.domain;
 
 import eu.venthe.platform.application.modules.ProjectModuleMediator;
-import eu.venthe.platform.project.domain.source_configurations.ProjectsSourceConfiguration;
-import eu.venthe.platform.project.domain.source_configurations.plugins.template.model.ProjectDto;
+import eu.venthe.platform.source_configuration.ProjectsSourceConfiguration;
+import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
 import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
 import lombok.AllArgsConstructor;

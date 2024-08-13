@@ -1,4 +1,4 @@
-package eu.venthe.platform.project.domain.source_configurations.plugins.template;
+package eu.venthe.platform.source_configuration.plugins.template;
 
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 

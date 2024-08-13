@@ -1,6 +1,6 @@
 package eu.venthe.platform.application.fixtures;
 
-import eu.venthe.platform.project.domain.source_configurations.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.plugins.template.ProjectSourcePlugin;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

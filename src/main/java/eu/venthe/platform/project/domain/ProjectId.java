@@ -1,7 +1,7 @@
 package eu.venthe.platform.project.domain;
 
 import eu.venthe.platform.organization.domain.OrganizationId;
-import eu.venthe.platform.project.domain.source_configurations.SourceConfigurationId;
+import eu.venthe.platform.source_configuration.SourceConfigurationId;
 import lombok.Value;
 import lombok.experimental.SuperBuilder;
 

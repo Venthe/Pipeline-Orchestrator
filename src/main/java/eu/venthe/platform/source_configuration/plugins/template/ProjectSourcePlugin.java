@@ -1,8 +1,8 @@
-package eu.venthe.platform.project.domain.source_configurations.plugins.template;
+package eu.venthe.platform.source_configuration.plugins.template;
 
 import eu.venthe.platform.shared_kernel.configuration_properties.ConfigurationPropertyDefinition;
 import eu.venthe.platform.shared_kernel.configuration_properties.PropertyName;
-import eu.venthe.platform.project.domain.source_configurations.plugins.template.model.SourceType;
+import eu.venthe.platform.source_configuration.plugins.template.model.SourceType;
 import eu.venthe.platform.shared_kernel.configuration_properties.SuppliedProperties;
 
 import java.util.Map;

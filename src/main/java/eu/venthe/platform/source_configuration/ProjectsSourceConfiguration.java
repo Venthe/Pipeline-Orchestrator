@@ -1,9 +1,9 @@
-package eu.venthe.platform.project.domain.source_configurations;
+package eu.venthe.platform.source_configuration;
 
-import eu.venthe.platform.project.domain.source_configurations.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.plugins.template.ProjectSourcePlugin;
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
-import eu.venthe.platform.project.domain.source_configurations.plugins.template.model.ProjectDto;
+import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
 import eu.venthe.platform.shared_kernel.Aggregate;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
