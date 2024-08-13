@@ -17,8 +17,8 @@ import java.util.stream.Stream;
 import static eu.venthe.platform.project.domain.ProjectStatus.ARCHIVED;
 import static java.util.stream.Collectors.toSet;
 
-record ProjectsSynchronizer(MessageBroker messageBroker) {
-    List<DomainTrigger> synchronize(ProjectsProvider projectsProvider) {
+record ProjectsSynchronizer(Sources sources, MessageBroker messageBroker) {
+    List<DomainTrigger> synchronize() {
         final Set<String> allProjectsFromSource = getAllProjectsFromSource();
         final Set<String> registeredProjects = getRegisteredProjects();
 
@@ -28,6 +28,8 @@ record ProjectsSynchronizer(MessageBroker messageBroker) {
     }
 
     private Set<String> getAllProjectsFromSource() {
+        sources.each
+
         return projectsProvider().listProjectsFromSource()
                 .map(ProjectId::getName)
                 .collect(toSet());

@@ -4,7 +4,6 @@ import eu.venthe.platform.organization.domain.source_configuration.plugins.templ
 import eu.venthe.platform.organization.domain.source_configuration.plugins.template.model.ProjectDto;
 import eu.venthe.platform.organization.domain.source_configuration.plugins.template.model.ProjectId;
 import eu.venthe.platform.organization.domain.source_configuration.plugins.template.model.Revision;
-import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
@@ -13,29 +12,17 @@ import lombok.Value;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 @Value
 public class Organization {
     OrganizationId organizationId;
-    Map<SourceId, ProjectSourcePluginInstance> sources;
+    Sources sources;
     ProjectsSynchronizer projectsSynchronizer;
-    ProjectsQueryService projectsQueryService;
 
     public List<DomainTrigger> synchronize() {
-        projectsSynchronizer.synchronize(new ProjectsSynchronizer.ProjectsProvider() {
-            @Override
-            public Stream<ProjectId> listProjectsFromSource() {
-                return getDefaultSource().getProjectIds();
-            }
-
-            @Override
-            public Stream<ProjectId> listRegisteredProjects() {
-                return projectsQueryService.getProjectIds(organizationId).map(e->e.getName());
-            }
-        });
+        return projectsSynchronizer.synchronize();
     }
 
     public Stream<ProjectDto> listAllProjects() {
@@ -59,6 +46,6 @@ public class Organization {
     }
 
     private ProjectSourcePluginInstance getDefaultSource() {
-        return sources.get(SourceId.DEFAULT);
+        return sources.getByAlias(Sources.SourceAlias.DEFAULT);
     }
 }
