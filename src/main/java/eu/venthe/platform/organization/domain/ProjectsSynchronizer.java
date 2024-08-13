@@ -1,29 +1,26 @@
 package eu.venthe.platform.organization.domain;
 
 import com.google.common.collect.Sets;
-import eu.venthe.platform.project.application.dto.CreateProjectSpecificationDto;
+import com.google.common.eventbus.EventBus;
+import eu.venthe.platform.organization.domain.source_configuration.plugins.template.model.ProjectId;
 import eu.venthe.platform.project.application.ProjectsCommandService;
-import eu.venthe.platform.project.application.ProjectsQueryService;
-import eu.venthe.platform.project.domain.ProjectId;
-import eu.venthe.platform.source_configuration.domain.ProjectsSourceConfiguration;
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
-import eu.venthe.platform.source_configuration.domain.plugins.template.model.ProjectDto;
+import eu.venthe.platform.project.application.dto.CreateProjectSpecificationDto;
+import eu.venthe.platform.shared_kernel.events.DomainTrigger;
+import eu.venthe.platform.organization.domain.source_configuration.plugins.template.model.ProjectDto;
+import eu.venthe.platform.shared_kernel.events.MessageBroker;
 import org.jgrapht.alg.util.Pair;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import static eu.venthe.platform.project.domain.ProjectStatus.ARCHIVED;
 import static java.util.stream.Collectors.toSet;
 
-record ProjectsSynchronizer(
-        ProjectsSourceConfiguration configuration,
-        ProjectSourcePluginInstance pluginInstance,
-        ProjectsCommandService projectsCommandService,
-        ProjectsQueryService projectsQueryService) {
-    public void synchronize() {
+record ProjectsSynchronizer(MessageBroker messageBroker) {
+    List<DomainTrigger> synchronize(ProjectsProvider projectsProvider) {
         final Set<String> allProjectsFromSource = getAllProjectsFromSource();
-        final Set<String> registeredProjects = getRegisteredProjects(projectsQueryService);
+        final Set<String> registeredProjects = getRegisteredProjects();
 
         updateProjects(projectsCommandService, allProjectsFromSource, registeredProjects);
         archiveProjects(projectsCommandService, allProjectsFromSource, registeredProjects);
@@ -31,15 +28,13 @@ record ProjectsSynchronizer(
     }
 
     private Set<String> getAllProjectsFromSource() {
-        return pluginInstance.getProjectIds()
-                .map(ProjectDto.Id::id)
-                .map(this::buildProjectId)
+        return projectsProvider().listProjectsFromSource()
                 .map(ProjectId::getName)
                 .collect(toSet());
     }
 
-    private Set<String> getRegisteredProjects(ProjectsQueryService projectsQueryService) {
-        return projectsQueryService.getProjectIds(configuration.getId())
+    private Set<String> getRegisteredProjects() {
+        return projectsProvider().listRegisteredProjects()
                 .map(ProjectId::getName)
                 .collect(toSet());
     }
@@ -71,7 +66,7 @@ record ProjectsSynchronizer(
                 .forEach(newProjectDto -> projectsCommandService.add(configuration.getConfigurationId(), newProjectDto));
     }
 
-    private Stream<ProjectId> getProjectsToCreate(Set<String> allProjectsFromSource, Set<String> registeredProjects) {
+    private Stream<eu.venthe.platform.organization.domain.source_configuration.plugins.template.model> getProjectsToCreate(Set<String> allProjectsFromSource, Set<String> registeredProjects) {
         return Sets.difference(allProjectsFromSource, registeredProjects).stream()
                 .map(this::buildProjectId);
     }
@@ -81,6 +76,11 @@ record ProjectsSynchronizer(
     }
 
     private ProjectId buildProjectId(String projectId) {
-         return ProjectId.builder().configurationId(configuration.getId()).name(projectId).build();
+        return ProjectId.builder().configurationId(configuration.getId()).name(projectId).build();
+    }
+
+    public interface ProjectsProvider {
+        Stream<ProjectId> listProjectsFromSource();
+        Stream<ProjectId> listRegisteredProjects();
     }
 }

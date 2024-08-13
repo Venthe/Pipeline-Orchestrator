@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class ProjectId {
     private static final Pattern PATTERN = Pattern.compile("/^(?:(?<configuration>.+):)?(?:(?<organization>.+?)/)?(?<name>.*\\w)$/", Pattern.CASE_INSENSITIVE);
 
-    SourceConfigurationId configurationId;
+    String configurationId;
     OrganizationId organizationId;
     String name;
 

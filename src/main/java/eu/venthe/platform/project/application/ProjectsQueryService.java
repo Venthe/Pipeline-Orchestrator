@@ -1,5 +1,6 @@
 package eu.venthe.platform.project.application;
 
+import eu.venthe.platform.organization.domain.OrganizationId;
 import eu.venthe.platform.project.application.dto.WorkflowTaskDto;
 import eu.venthe.platform.project.application.dto.ProjectDto;
 import eu.venthe.platform.project.application.dto.WorkflowDetailDto;
@@ -28,7 +29,7 @@ public interface ProjectsQueryService {
 
     List<WorkflowTaskDto> showAllTasks();
 
-    Stream<ProjectId> getProjectIds(SourceConfigurationId id);
+    Stream<ProjectId> getProjectIds(OrganizationId id);
 
     Set<File> getFiles(GlobPatternMatching.Glob pattern);
 
