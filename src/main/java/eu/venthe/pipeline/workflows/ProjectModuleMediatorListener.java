@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.workflows;
 
-import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
+import eu.venthe.pipeline.application.modules.ProjectModuleMediator;
 import eu.venthe.pipeline.shared_kernel.events.MessageListenerRegistry;
 import eu.venthe.pipeline.shared_kernel.system_events.SystemEvent;
 import org.springframework.stereotype.Service;

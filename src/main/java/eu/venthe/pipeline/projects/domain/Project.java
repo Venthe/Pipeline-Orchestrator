@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.projects.domain;
 
-import eu.venthe.pipeline.orchestrator.modules.ProjectModuleMediator;
+import eu.venthe.pipeline.application.modules.ProjectModuleMediator;
 import eu.venthe.pipeline.projects.domain.source_configurations.ProjectsSourceConfiguration;
 import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.model.ProjectDto;
 import eu.venthe.pipeline.shared_kernel.Aggregate;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.pipeline.workflows.definition.contexts.on.matchers.*;
 import eu.venthe.pipeline.workflows.events.EventWrapper;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.on.matchers.*;
+import eu.venthe.pipeline.application.modules.automation.workflows.definition.contexts.on.matchers.*;
 import eu.venthe.pipeline.shared_kernel.system_events.SystemEvent;
 import eu.venthe.pipeline.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.experimental.UtilityClass;

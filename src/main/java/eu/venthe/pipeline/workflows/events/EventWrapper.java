@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.workflows.events;
 
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.on.matchers.*;
+import eu.venthe.pipeline.application.modules.automation.workflows.definition.contexts.on.matchers.*;
 import eu.venthe.pipeline.shared_kernel.system_events.SystemEvent;
 import eu.venthe.pipeline.shared_kernel.system_events.model.EventType;
 import eu.venthe.pipeline.workflows.definition.contexts.on.matchers.*;

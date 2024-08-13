@@ -2,7 +2,7 @@ package eu.venthe.pipeline.workflows.definition;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.definition.contexts.*;
+import eu.venthe.pipeline.application.modules.automation.workflows.definition.contexts.*;
 import eu.venthe.pipeline.workflows.definition.contexts.*;
 import eu.venthe.pipeline.workflows.definition.contexts.on.WorkflowDefinitionOnContext;
 import eu.venthe.pipeline.workflows.events.EventWrapper;
