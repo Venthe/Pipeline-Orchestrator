@@ -1,7 +1,8 @@
-package eu.venthe.platform.source_configuration.plugins.template;
+package eu.venthe.platform.source_configuration.domain.plugins.template;
 
 import eu.venthe.platform.shared_kernel.configuration_properties.ConfigurationPropertyDefinition;
 import eu.venthe.platform.shared_kernel.configuration_properties.PropertyName;
+import eu.venthe.platform.source_configuration.domain.plugins.template.model.SourceType;
 import eu.venthe.platform.source_configuration.plugins.template.model.SourceType;
 import eu.venthe.platform.shared_kernel.configuration_properties.SuppliedProperties;
 

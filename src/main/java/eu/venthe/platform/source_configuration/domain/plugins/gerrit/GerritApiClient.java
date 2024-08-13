@@ -1,4 +1,4 @@
-package eu.venthe.platform.source_configuration.plugins.gerrit;
+package eu.venthe.platform.source_configuration.domain.plugins.gerrit;
 
 import eu.venthe.platform.gerrit.invoker.ApiClient;
 

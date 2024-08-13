@@ -1,12 +1,12 @@
-package eu.venthe.platform.source_configuration.plugins.gerrit;
+package eu.venthe.platform.source_configuration.domain.plugins.gerrit;
 
 import com.google.common.collect.MoreCollectors;
 import eu.venthe.platform.gerrit.api.ProjectsApi;
 import eu.venthe.platform.gerrit.model.ProjectInfo;
-import eu.venthe.platform.source_configuration.plugins.template.ProjectSourcePlugin;
-import eu.venthe.platform.source_configuration.plugins.template.model.FileDto;
-import eu.venthe.platform.source_configuration.plugins.template.model.SourceType;
-import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
+import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.domain.plugins.template.model.FileDto;
+import eu.venthe.platform.source_configuration.domain.plugins.template.model.SourceType;
+import eu.venthe.platform.source_configuration.domain.plugins.template.model.ProjectDto;
 import eu.venthe.platform.project.domain.ProjectStatus;
 import jakarta.ws.rs.core.UriBuilder;
 import lombok.SneakyThrows;
