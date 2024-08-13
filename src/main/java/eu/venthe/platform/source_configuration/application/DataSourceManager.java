@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class DataSourceManager {
+public class DataSourceManager implements ProjectsSourceConfigurationQueryService, ProjectsSourceConfigurationCommandService {
     private final DataSourceConfigurationRepository repository;
     private final PluginProvider provider;
 
-    public SourceConfigurationId createSourceConfiguration(ProjectsSourceConfiguration.Specification specification) {
+    @Override
+    public SourceConfigurationId register(ProjectsSourceConfiguration.Specification specification) {
 
         if (repository.exists(specification.id())) {
             throw new IllegalArgumentException("Configuration \"%s\" already exists.".formatted(specification.id().id()));
@@ -25,5 +26,10 @@ public class DataSourceManager {
         repository.save(configuration);
 
         return configuration.getConfigurationId();
+    }
+
+    @Override
+    public void unregister(SourceConfigurationId sourceConfigurationId) {
+        throw new UnsupportedOperationException();
     }
 }

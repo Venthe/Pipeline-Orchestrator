@@ -1,4 +1,4 @@
-package eu.venthe.platform._archive.projects_and_orgs;
+package eu.venthe.platform.source_configuration.application;
 
 import lombok.Value;
 

@@ -15,7 +15,7 @@ import eu.venthe.platform.organization.application.dto.CreateOrganizationSpecifi
 import eu.venthe.platform.source_configuration.application.SourceConfigurationSpecification;
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
-import eu.venthe.platform.project.application.impl.ProjectSourcesManager;
+import eu.venthe.platform.source_configuration.application.ProjectSourcesManager;
 import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.project.domain.ProjectStatus;
 import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;

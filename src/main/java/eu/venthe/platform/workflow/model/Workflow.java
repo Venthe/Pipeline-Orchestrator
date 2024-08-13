@@ -18,7 +18,7 @@ public class Workflow {
     private final Path file;
     // TODO: Update name
     // TODO: Set name
-    //  eiter filename or if present workflow name
+    //  eiter path or if present workflow name
     private String name;
     private boolean pinnned = false;
     private boolean enabled = true;

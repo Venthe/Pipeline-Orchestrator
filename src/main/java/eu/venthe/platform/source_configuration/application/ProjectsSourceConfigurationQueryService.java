@@ -1,8 +1,7 @@
-package eu.venthe.platform.project.application;
+package eu.venthe.platform.source_configuration.application;
 
-import eu.venthe.platform._archive.projects_and_orgs.ReadProjectSourceConfigurationDto;
-import eu.venthe.platform.source_configuration.SourceConfigurationId;
-import eu.venthe.platform.source_configuration.plugins.template.model.SourceType;
+import eu.venthe.platform.source_configuration.domain.SourceConfigurationId;
+import eu.venthe.platform.source_configuration.domain.plugins.template.model.SourceType;
 
 import java.util.Optional;
 import java.util.Set;
