@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.application.shared_kernel.job_execution;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.venthe.pipeline.workflows.runs._archive.run_context.ReusableWorkflowJobExecutionContext;
+import eu.venthe.pipeline.workflow.runs._archive.run_context.ReusableWorkflowJobExecutionContext;
 import eu.venthe.pipeline.application.shared_kernel.job_execution.contexts.AbstractContextTest;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;

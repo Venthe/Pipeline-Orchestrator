@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.application.projects.plugin.gerrit;
 
-import eu.venthe.pipeline.projects.domain.source_configurations.plugins.gerrit.GerritProjectSourcePlugin;
-import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.model.SourceType;
-import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.project.domain.source_configurations.plugins.gerrit.GerritProjectSourcePlugin;
+import eu.venthe.pipeline.project.domain.source_configurations.plugins.template.model.SourceType;
+import eu.venthe.pipeline.project.domain.source_configurations.plugins.template.ProjectSourcePlugin;
 import eu.venthe.pipeline.shared_kernel.configuration_properties.ConfigurationPropertyDefinition;
 import eu.venthe.pipeline.shared_kernel.configuration_properties.PropertyName;
 import lombok.extern.slf4j.Slf4j;

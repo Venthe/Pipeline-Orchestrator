@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.application.fixtures;
 
-import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.project.domain.source_configurations.plugins.template.ProjectSourcePlugin;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

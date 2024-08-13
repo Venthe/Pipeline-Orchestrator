@@ -1,6 +1,6 @@
 package eu.venthe.pipeline.application.config;
 
-import eu.venthe.pipeline.workflows.runs.dependencies.TimeService;
+import eu.venthe.pipeline.workflow.runs.dependencies.TimeService;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;

@@ -1,12 +1,12 @@
 package eu.venthe.pipeline.application.fixtures;
 
-import eu.venthe.pipeline.runners.runner_engine.template.RunnerEngineDefinition;
-import eu.venthe.pipeline.runners.runner_engine.template.RunnerEngineInstance;
-import eu.venthe.pipeline.runners.runner_engine.template.model.RunCallbackToken;
-import eu.venthe.pipeline.runners.runner_engine.template.model.dimensions.RunnerDimensions;
-import eu.venthe.pipeline.workflows.model.JobRunId;
-import eu.venthe.pipeline.workflows.runs.WorkflowRunId;
-import eu.venthe.pipeline.projects.domain.ProjectId;
+import eu.venthe.pipeline.runner.runner_engine.template.RunnerEngineDefinition;
+import eu.venthe.pipeline.runner.runner_engine.template.RunnerEngineInstance;
+import eu.venthe.pipeline.runner.runner_engine.template.model.RunCallbackToken;
+import eu.venthe.pipeline.runner.runner_engine.template.model.dimensions.RunnerDimensions;
+import eu.venthe.pipeline.workflow.model.JobRunId;
+import eu.venthe.pipeline.workflow.runs.WorkflowRunId;
+import eu.venthe.pipeline.project.domain.ProjectId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;

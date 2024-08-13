@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.application.projects.shared_kernel;
 
-import eu.venthe.pipeline.organizations.domain.OrganizationId;
-import eu.venthe.pipeline.projects.domain.ProjectId;
-import eu.venthe.pipeline.projects.domain.source_configurations.SourceConfigurationId;
+import eu.venthe.pipeline.organization.domain.OrganizationId;
+import eu.venthe.pipeline.project.domain.ProjectId;
+import eu.venthe.pipeline.project.domain.source_configurations.SourceConfigurationId;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.shared_kernel.system_events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.venthe.pipeline.projects.domain.ProjectId;
+import eu.venthe.pipeline.project.domain.ProjectId;
 import eu.venthe.pipeline.shared_kernel.system_events.contexts.common.UrlContext;
 import eu.venthe.pipeline.shared_kernel.system_events.contexts.model.RepositoryVisibilityContext;
 import eu.venthe.pipeline.shared_kernel.system_events.contexts.utilities.ContextUtilities;

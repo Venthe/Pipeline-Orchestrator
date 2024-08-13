@@ -2,8 +2,8 @@ package eu.venthe.pipeline.application.configuration;
 
 import eu.venthe.pipeline.application.fixtures.MockAdapterFixture;
 import eu.venthe.pipeline.application.fixtures.MockProjectSourceFixture;
-import eu.venthe.pipeline.runners.runner_engine.template.model.RunnerEngineType;
-import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.model.SourceType;
+import eu.venthe.pipeline.runner.runner_engine.template.model.RunnerEngineType;
+import eu.venthe.pipeline.project.domain.source_configurations.plugins.template.model.SourceType;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;

@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.application.config;
 
 import eu.venthe.pipeline.application.infrastructure.in_memory_repository.InMemoryDomainRepository;
-import eu.venthe.pipeline.projects.domain.infrastructure.SourceConfigurationRepository;
-import eu.venthe.pipeline.projects.domain.source_configurations.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.projects.domain.source_configurations.SourceConfigurationId;
+import eu.venthe.pipeline.project.domain.infrastructure.SourceConfigurationRepository;
+import eu.venthe.pipeline.project.domain.source_configurations.ProjectsSourceConfiguration;
+import eu.venthe.pipeline.project.domain.source_configurations.SourceConfigurationId;
 import org.springframework.stereotype.Component;
 
 @Component

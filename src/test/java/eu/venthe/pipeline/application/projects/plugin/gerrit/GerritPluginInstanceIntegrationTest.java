@@ -2,10 +2,10 @@ package eu.venthe.pipeline.application.projects.plugin.gerrit;
 
 import eu.venthe.pipeline.application.AbstractIntegrationTest;
 import eu.venthe.pipeline.application.config.RegisterPluginEndpoints;
-import eu.venthe.pipeline.projects.domain.source_configurations.plugins.gerrit.GerritConfiguration;
-import eu.venthe.pipeline.projects.domain.source_configurations.plugins.gerrit.GerritPluginInstance;
-import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.model.SourceType;
-import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.project.domain.source_configurations.plugins.gerrit.GerritConfiguration;
+import eu.venthe.pipeline.project.domain.source_configurations.plugins.gerrit.GerritPluginInstance;
+import eu.venthe.pipeline.project.domain.source_configurations.plugins.template.model.SourceType;
+import eu.venthe.pipeline.project.domain.source_configurations.plugins.template.ProjectSourcePlugin;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

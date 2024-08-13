@@ -1,14 +1,14 @@
 package eu.venthe.pipeline.application.projects.domain;
 
-import eu.venthe.pipeline.projects.application.ProjectsCommandService;
-import eu.venthe.pipeline.projects.application.ProjectsQueryService;
-import eu.venthe.pipeline.projects.application.dto.CreateProjectSpecificationDto;
-import eu.venthe.pipeline.projects.domain.ProjectId;
-import eu.venthe.pipeline.projects.domain.ProjectStatus;
-import eu.venthe.pipeline.projects.domain.source_configurations.ProjectsSourceConfiguration;
-import eu.venthe.pipeline.projects.domain.source_configurations.SourceConfigurationId;
-import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.model.ProjectDto;
+import eu.venthe.pipeline.project.application.ProjectsCommandService;
+import eu.venthe.pipeline.project.application.ProjectsQueryService;
+import eu.venthe.pipeline.project.application.dto.CreateProjectSpecificationDto;
+import eu.venthe.pipeline.project.domain.ProjectId;
+import eu.venthe.pipeline.project.domain.ProjectStatus;
+import eu.venthe.pipeline.project.domain.source_configurations.ProjectsSourceConfiguration;
+import eu.venthe.pipeline.project.domain.source_configurations.SourceConfigurationId;
+import eu.venthe.pipeline.project.domain.source_configurations.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.project.domain.source_configurations.plugins.template.model.ProjectDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

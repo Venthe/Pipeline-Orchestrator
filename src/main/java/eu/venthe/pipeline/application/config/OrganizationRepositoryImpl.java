@@ -2,9 +2,9 @@ package eu.venthe.pipeline.application.config;
 
 import com.google.common.collect.MoreCollectors;
 import eu.venthe.pipeline.application.infrastructure.in_memory_repository.InMemoryRepository;
-import eu.venthe.pipeline.organizations.domain.Organization;
-import eu.venthe.pipeline.organizations.domain.OrganizationId;
-import eu.venthe.pipeline.organizations.domain.infrastructure.OrganizationRepository;
+import eu.venthe.pipeline.organization.domain.Organization;
+import eu.venthe.pipeline.organization.domain.OrganizationId;
+import eu.venthe.pipeline.organization.domain.infrastructure.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

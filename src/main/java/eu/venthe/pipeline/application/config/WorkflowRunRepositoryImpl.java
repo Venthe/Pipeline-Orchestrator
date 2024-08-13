@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.application.config;
 
 import eu.venthe.pipeline.application.infrastructure.in_memory_repository.InMemoryDomainRepository;
-import eu.venthe.pipeline.workflows.runs.infrastructure.WorkflowRunRepository;
+import eu.venthe.pipeline.workflow.runs.infrastructure.WorkflowRunRepository;
 import org.springframework.stereotype.Component;
 
 @Component
