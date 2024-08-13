@@ -3,7 +3,7 @@ package eu.venthe.platform.project.application;
 import eu.venthe.platform.project.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.project.domain.ProjectStatus;
-import eu.venthe.platform.data_source_configuration.SourceConfigurationId;
+import eu.venthe.platform.source_configuration.SourceConfigurationId;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
 
 public interface ProjectsCommandService {

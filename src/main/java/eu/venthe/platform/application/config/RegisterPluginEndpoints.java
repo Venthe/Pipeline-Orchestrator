@@ -1,7 +1,7 @@
 package eu.venthe.platform.application.config;
 
-import eu.venthe.platform.data_source_configuration.plugins.template.EndpointProvider;
-import eu.venthe.platform.data_source_configuration.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.plugins.template.EndpointProvider;
+import eu.venthe.platform.source_configuration.plugins.template.ProjectSourcePlugin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;

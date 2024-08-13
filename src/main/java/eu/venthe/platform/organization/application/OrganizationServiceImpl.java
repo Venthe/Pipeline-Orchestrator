@@ -10,9 +10,9 @@ import eu.venthe.platform.organization.domain.infrastructure.OrganizationReposit
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.project.domain.infrastructure.SourceConfigurationRepository;
-import eu.venthe.platform.data_source_configuration.ProjectsSourceConfiguration;
-import eu.venthe.platform.data_source_configuration.SourceConfigurationId;
-import eu.venthe.platform.data_source_configuration.plugins.PluginProvider;
+import eu.venthe.platform.source_configuration.ProjectsSourceConfiguration;
+import eu.venthe.platform.source_configuration.SourceConfigurationId;
+import eu.venthe.platform.source_configuration.plugins.PluginProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

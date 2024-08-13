@@ -1,4 +1,4 @@
-package eu.venthe.platform.data_source_configuration.domain.plugins.gerrit;
+package eu.venthe.platform.source_configuration.domain.plugins.gerrit;
 
 import eu.venthe.platform.shared_kernel.configuration_properties.ConfigurationPropertyDefinition;
 import eu.venthe.platform.shared_kernel.configuration_properties.PropertyName;

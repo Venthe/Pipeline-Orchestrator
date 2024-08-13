@@ -1,12 +1,12 @@
 package eu.venthe.platform.application.projects.plugin.gerrit;
 
 import eu.venthe.platform.project.domain.ProjectStatus;
-import eu.venthe.platform.data_source_configuration.plugins.gerrit.GerritConfiguration;
-import eu.venthe.platform.data_source_configuration.plugins.gerrit.GerritPluginInstance;
-import eu.venthe.platform.data_source_configuration.plugins.template.model.SourceType;
-import eu.venthe.platform.data_source_configuration.plugins.template.ProjectSourcePlugin;
-import eu.venthe.platform.data_source_configuration.plugins.template.model.FileDto;
-import eu.venthe.platform.data_source_configuration.plugins.template.model.ProjectDto;
+import eu.venthe.platform.source_configuration.plugins.gerrit.GerritConfiguration;
+import eu.venthe.platform.source_configuration.plugins.gerrit.GerritPluginInstance;
+import eu.venthe.platform.source_configuration.plugins.template.model.SourceType;
+import eu.venthe.platform.source_configuration.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.plugins.template.model.FileDto;
+import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

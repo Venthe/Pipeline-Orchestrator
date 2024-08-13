@@ -1,7 +1,7 @@
-package eu.venthe.platform.data_source_configuration.domain;
+package eu.venthe.platform.source_configuration.domain;
 
-import eu.venthe.platform.data_source_configuration.domain.plugins.template.ProjectSourcePlugin;
-import eu.venthe.platform.data_source_configuration.domain.plugins.template.model.ProjectDto;
+import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.domain.plugins.template.model.ProjectDto;
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.shared_kernel.Aggregate;

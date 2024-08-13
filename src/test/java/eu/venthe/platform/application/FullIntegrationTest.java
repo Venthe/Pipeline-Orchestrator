@@ -18,7 +18,7 @@ import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.project.application.impl.ProjectSourcesManager;
 import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.project.domain.ProjectStatus;
-import eu.venthe.platform.data_source_configuration.plugins.template.model.ProjectDto;
+import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
