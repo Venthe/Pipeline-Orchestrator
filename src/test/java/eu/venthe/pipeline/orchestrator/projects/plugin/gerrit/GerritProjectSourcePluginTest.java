@@ -1,10 +1,10 @@
 package eu.venthe.pipeline.orchestrator.projects.plugin.gerrit;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.gerrit.GerritProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.model.SourceType;
-import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
-import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.ConfigurationPropertyDefinition;
-import eu.venthe.pipeline.orchestrator.shared_kernel.configuration_properties.PropertyName;
+import eu.venthe.pipeline.projects.domain.source_configurations.plugins.gerrit.GerritProjectSourcePlugin;
+import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.model.SourceType;
+import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.shared_kernel.configuration_properties.ConfigurationPropertyDefinition;
+import eu.venthe.pipeline.shared_kernel.configuration_properties.PropertyName;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

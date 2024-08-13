@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.modules;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
+import eu.venthe.pipeline.projects.domain.ProjectId;
+import eu.venthe.pipeline.shared_kernel.git.GitRevision;
+import eu.venthe.pipeline.shared_kernel.system_events.SystemEvent;
 
 public interface ProjectModule {
     void handleEvent(final SystemEvent event);

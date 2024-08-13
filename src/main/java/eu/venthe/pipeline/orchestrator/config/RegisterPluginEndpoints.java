@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.config;
 
-import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.EndpointProvider;
-import eu.venthe.pipeline.orchestrator.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
+import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.EndpointProvider;
+import eu.venthe.pipeline.projects.domain.source_configurations.plugins.template.ProjectSourcePlugin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;

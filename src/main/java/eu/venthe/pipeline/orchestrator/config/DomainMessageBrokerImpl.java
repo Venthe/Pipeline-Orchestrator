@@ -1,9 +1,9 @@
 package eu.venthe.pipeline.orchestrator.config;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainMessageBroker;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.Envelope;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.MessageBroker;
+import eu.venthe.pipeline.shared_kernel.events.DomainMessageBroker;
+import eu.venthe.pipeline.shared_kernel.events.DomainTrigger;
+import eu.venthe.pipeline.shared_kernel.events.Envelope;
+import eu.venthe.pipeline.shared_kernel.events.MessageBroker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

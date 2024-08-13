@@ -1,8 +1,8 @@
 package eu.venthe.pipeline.orchestrator.infrastructure.in_memory_message_broker;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.Envelope;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.MessageBroker;
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.MessageListenerRegistry;
+import eu.venthe.pipeline.shared_kernel.events.Envelope;
+import eu.venthe.pipeline.shared_kernel.events.MessageBroker;
+import eu.venthe.pipeline.shared_kernel.events.MessageListenerRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.awaitility.Awaitility;

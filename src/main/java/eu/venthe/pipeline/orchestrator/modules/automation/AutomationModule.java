@@ -1,11 +1,11 @@
 package eu.venthe.pipeline.orchestrator.modules.automation;
 
 import eu.venthe.pipeline.orchestrator.modules.ProjectModule;
-import eu.venthe.pipeline.orchestrator.modules.automation.workflows.EventHandlerProvider;
-import eu.venthe.pipeline.orchestrator.projects.domain.ProjectId;
-import eu.venthe.pipeline.orchestrator.shared_kernel.git.GitRevision;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.ProjectEvent;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
+import eu.venthe.pipeline.workflows.EventHandlerProvider;
+import eu.venthe.pipeline.projects.domain.ProjectId;
+import eu.venthe.pipeline.shared_kernel.git.GitRevision;
+import eu.venthe.pipeline.shared_kernel.system_events.ProjectEvent;
+import eu.venthe.pipeline.shared_kernel.system_events.SystemEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.togglz.core.manager.FeatureManager;

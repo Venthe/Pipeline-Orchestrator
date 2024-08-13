@@ -1,7 +1,6 @@
 package eu.venthe.pipeline.orchestrator.modules;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.events.MessageListenerRegistry;
-import eu.venthe.pipeline.orchestrator.shared_kernel.system_events.SystemEvent;
+import eu.venthe.pipeline.shared_kernel.system_events.SystemEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

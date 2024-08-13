@@ -1,7 +1,7 @@
 package eu.venthe.pipeline.orchestrator.infrastructure.in_memory_repository;
 
-import eu.venthe.pipeline.orchestrator.shared_kernel.Aggregate;
-import eu.venthe.pipeline.orchestrator.shared_kernel.DomainRepository;
+import eu.venthe.pipeline.shared_kernel.Aggregate;
+import eu.venthe.pipeline.shared_kernel.DomainRepository;
 
 import java.util.*;
 
