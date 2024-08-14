@@ -2,6 +2,8 @@ package eu.venthe.platform.project.domain;
 
 import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
+import eu.venthe.platform.shared_kernel.project.ProjectId;
+import eu.venthe.platform.shared_kernel.project.ProjectStatus;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

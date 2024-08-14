@@ -7,7 +7,7 @@ import eu.venthe.platform.project.application.dto.ProjectDetailsDto;
 import eu.venthe.platform.project.application.dto.ProjectDto;
 import eu.venthe.platform.project.application.dto.WorkflowTaskDto;
 import eu.venthe.platform.project.domain.Project;
-import eu.venthe.platform.project.domain.ProjectId;
+import eu.venthe.platform.shared_kernel.project.ProjectId;
 import eu.venthe.platform.project.domain.infrastructure.ProjectRepository;
 import eu.venthe.platform.source_configuration.SourceConfigurationId;
 import eu.venthe.platform.shared_kernel.git.GitRevision;

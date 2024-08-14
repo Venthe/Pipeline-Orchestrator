@@ -1,88 +1,78 @@
 package eu.venthe.platform.organization.domain;
 
 import com.google.common.collect.Sets;
-import com.google.common.eventbus.EventBus;
-import eu.venthe.platform.organization.domain.source_configuration.plugins.template.model.ProjectId;
-import eu.venthe.platform.project.application.ProjectsCommandService;
-import eu.venthe.platform.project.application.dto.CreateProjectSpecificationDto;
+import eu.venthe.platform.organization.domain.events.ArchiveProjectCommand;
+import eu.venthe.platform.organization.domain.events.CreateProjectCommand;
+import eu.venthe.platform.organization.domain.events.SynchronizeProjectCommand;
+import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
-import eu.venthe.platform.organization.domain.source_configuration.plugins.template.model.ProjectDto;
 import eu.venthe.platform.shared_kernel.events.MessageBroker;
-import org.jgrapht.alg.util.Pair;
+import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProjectId;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static eu.venthe.platform.project.domain.ProjectStatus.ARCHIVED;
 import static java.util.stream.Collectors.toSet;
 
-record ProjectsSynchronizer(Sources sources, MessageBroker messageBroker) {
+record ProjectsSynchronizer(
+        Sources sources,
+        MessageBroker messageBroker,
+        ProjectsQueryService projectsQueryService,
+        OrganizationId organizationId
+) {
     List<DomainTrigger> synchronize() {
-        final Set<String> allProjectsFromSource = getAllProjectsFromSource();
-        final Set<String> registeredProjects = getRegisteredProjects();
+        final Set<SourceOwnedProjectId> allProjectsFromSource = getAllAvailableProjectIds();
+        final Set<SourceOwnedProjectId> registeredProjects = getAlreadyRegisteredProjects();
 
-        updateProjects(projectsCommandService, allProjectsFromSource, registeredProjects);
-        archiveProjects(projectsCommandService, allProjectsFromSource, registeredProjects);
-        createProjects(projectsCommandService, allProjectsFromSource, registeredProjects);
+        return Stream.<List<DomainTrigger>>builder()
+                .add(updateProjects(allProjectsFromSource, registeredProjects))
+                .add(archiveProjects(allProjectsFromSource, registeredProjects))
+                .add(createProjects(allProjectsFromSource, registeredProjects))
+                .build()
+                .flatMap(Collection::stream)
+                .toList();
     }
 
-    private Set<String> getAllProjectsFromSource() {
-        sources.each
+    private Set<SourceOwnedProjectId> getAllAvailableProjectIds() {
+        return new HashSet<>(sources.getAllAvailableProjectIds());
+    }
 
-        return projectsProvider().listProjectsFromSource()
-                .map(ProjectId::getName)
+    private Set<SourceOwnedProjectId> getAlreadyRegisteredProjects() {
+        return projectsQueryService.getProjectIds(organizationId)
+                .map(e -> new SourceOwnedProjectId(e.getConfigurationId(), e.getName()))
                 .collect(toSet());
     }
 
-    private Set<String> getRegisteredProjects() {
-        return projectsProvider().listRegisteredProjects()
-                .map(ProjectId::getName)
-                .collect(toSet());
+    private List<DomainTrigger> updateProjects(Set<SourceOwnedProjectId> allProjectsFromSource, Set<SourceOwnedProjectId> registeredProjects) {
+        return getProjectsToUpdate(allProjectsFromSource, registeredProjects)
+                .<DomainTrigger>map(SynchronizeProjectCommand::new)
+                .toList();
     }
 
-    private void updateProjects(ProjectsCommandService projectsCommandService, Set<String> allProjectsFromSource, Set<String> registeredProjects) {
-        getProjectsToUpdate(allProjectsFromSource, registeredProjects)
-                .forEach(projectsCommandService::synchronize);
+    private Stream<SourceOwnedProjectId> getProjectsToUpdate(Set<SourceOwnedProjectId> allProjectsFromSource, Set<SourceOwnedProjectId> registeredProjects) {
+        return Sets.intersection(allProjectsFromSource, registeredProjects).stream();
     }
 
-    private Stream<ProjectId> getProjectsToUpdate(Set<String> allProjectsFromSource, Set<String> registeredProjects) {
-        return Sets.intersection(allProjectsFromSource, registeredProjects).stream()
-                .map(this::buildProjectId);
+    private List<DomainTrigger> archiveProjects(Set<SourceOwnedProjectId> allProjectsFromSource, Set<SourceOwnedProjectId> registeredProjects) {
+        return getProjectsToArchive(allProjectsFromSource, registeredProjects)
+                .<DomainTrigger>map(ArchiveProjectCommand::new)
+                .toList();
     }
 
-    private void archiveProjects(ProjectsCommandService projectsCommandService, Set<String> allProjectsFromSource, Set<String> registeredProjects) {
-        getProjectsToArchive(allProjectsFromSource, registeredProjects)
-                .forEach(projectId -> projectsCommandService.changeStatus(projectId, ARCHIVED));
+    private Stream<SourceOwnedProjectId> getProjectsToArchive(Set<SourceOwnedProjectId> allProjectsFromSource, Set<SourceOwnedProjectId> registeredProjects) {
+        return Sets.difference(registeredProjects, allProjectsFromSource).stream();
     }
 
-    private Stream<ProjectId> getProjectsToArchive(Set<String> allProjectsFromSource, Set<String> registeredProjects) {
-        return Sets.difference(registeredProjects, allProjectsFromSource).stream()
-                .map(this::buildProjectId);
+    private List<DomainTrigger> createProjects(Set<SourceOwnedProjectId> allProjectsFromSource, Set<SourceOwnedProjectId> registeredProjects) {
+        return getProjectsToCreate(allProjectsFromSource, registeredProjects)
+                .<DomainTrigger>map(CreateProjectCommand::new)
+                .toList();
     }
 
-    private void createProjects(ProjectsCommandService projectsCommandService, Set<String> allProjectsFromSource, Set<String> registeredProjects) {
-        getProjectsToCreate(allProjectsFromSource, registeredProjects)
-                .map(projectId -> Pair.of(projectId, projectIdToProjectDto(projectId)))
-                .map(entry -> new CreateProjectSpecificationDto(entry.getFirst(), entry.getSecond().getStatus()))
-                .forEach(newProjectDto -> projectsCommandService.add(configuration.getConfigurationId(), newProjectDto));
-    }
-
-    private Stream<eu.venthe.platform.organization.domain.source_configuration.plugins.template.model> getProjectsToCreate(Set<String> allProjectsFromSource, Set<String> registeredProjects) {
-        return Sets.difference(allProjectsFromSource, registeredProjects).stream()
-                .map(this::buildProjectId);
-    }
-
-    private ProjectDto projectIdToProjectDto(ProjectId projectId) {
-        return configuration.getProject(projectId.getName()).orElseThrow();
-    }
-
-    private ProjectId buildProjectId(String projectId) {
-        return ProjectId.builder().configurationId(configuration.getId()).name(projectId).build();
-    }
-
-    public interface ProjectsProvider {
-        Stream<ProjectId> listProjectsFromSource();
-        Stream<ProjectId> listRegisteredProjects();
+    private Stream<SourceOwnedProjectId> getProjectsToCreate(Set<SourceOwnedProjectId> allProjectsFromSource, Set<SourceOwnedProjectId> registeredProjects) {
+        return Sets.difference(allProjectsFromSource, registeredProjects).stream();
     }
 }

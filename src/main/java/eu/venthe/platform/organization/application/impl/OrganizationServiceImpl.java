@@ -3,13 +3,11 @@ package eu.venthe.platform.organization.application.impl;
 
 import eu.venthe.platform.organization.application.OrganizationCommandService;
 import eu.venthe.platform.organization.application.model.CreateOrganizationSpecification;
-import eu.venthe.platform.organization.domain.Organization;
 import eu.venthe.platform.organization.domain.OrganizationFactory;
 import eu.venthe.platform.organization.domain.OrganizationId;
 import eu.venthe.platform.organization.domain.infrastructure.OrganizationRepository;
-import eu.venthe.platform.organization.domain.source_configuration.application.DataSourceQueryService;
-import eu.venthe.platform.project.application.ProjectsCommandService;
-import eu.venthe.platform.project.application.ProjectsQueryService;
+import eu.venthe.platform.shared_kernel.events.Envelope;
+import eu.venthe.platform.shared_kernel.events.MessageBroker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +21,7 @@ public class OrganizationServiceImpl implements OrganizationCommandService {
     private final FeatureManager featureManager;
     private final OrganizationRepository organizationRepository;
     private final OrganizationFactory organizationFactory;
+    private final MessageBroker messageBroker;
 
     @Override
     public OrganizationId register(final CreateOrganizationSpecification specification) {
@@ -35,9 +34,12 @@ public class OrganizationServiceImpl implements OrganizationCommandService {
         }
 
         log.trace("Creating organization. {}", specification);
-        Organization organization = organizationFactory.create(specification);
-        organizationRepository.save(organization);
-        log.info("Organization \"{}\" created.", specification.organizationId().value());
+        var result = organizationFactory.create(specification);
+        organizationRepository.save(result.getKey());
+        log.info("Organization \"{}\" created.", result.getKey().getOrganizationId());
+
+        messageBroker.exchange(Envelope.from(result.getRight()));
+
         return specification.organizationId();
     }
 

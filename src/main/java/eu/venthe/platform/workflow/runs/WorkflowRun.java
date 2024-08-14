@@ -9,7 +9,7 @@ import eu.venthe.platform.workflow.runs.dependencies.TriggeringEntity;
 import eu.venthe.platform.workflow.runs.events.RequestJobRunCommand;
 import eu.venthe.platform.workflow.runs.events.WorkflowRunCreatedEvent;
 import eu.venthe.platform.workflow.runs.jobs.JobRuns;
-import eu.venthe.platform.project.domain.ProjectId;
+import eu.venthe.platform.shared_kernel.project.ProjectId;
 import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import lombok.EqualsAndHashCode;

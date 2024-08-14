@@ -3,12 +3,12 @@ package eu.venthe.platform.application.projects.domain;
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.project.application.dto.CreateProjectSpecificationDto;
-import eu.venthe.platform.project.domain.ProjectId;
-import eu.venthe.platform.project.domain.ProjectStatus;
+import eu.venthe.platform.shared_kernel.project.ProjectId;
+import eu.venthe.platform.shared_kernel.project.ProjectStatus;
 import eu.venthe.platform.source_configuration.ProjectsSourceConfiguration;
 import eu.venthe.platform.source_configuration.SourceConfigurationId;
-import eu.venthe.platform.source_configuration.plugins.template.ProjectSourcePlugin;
-import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
+import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.domain.plugins.template.Project;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,9 +39,9 @@ class ProjectsSourceConfigurationTest {
 
     @Test
     void name() {
-        Mockito.when(pluginInstance.getProjectIds()).thenReturn(Stream.of(new ProjectDto.Id("123")));
+        Mockito.when(pluginInstance.getProjectIds()).thenReturn(Stream.of(new Project.Id("123")));
         Mockito.when(projectQueries.getProjectIds(new SourceConfigurationId("TestName"))).thenReturn(Stream.empty());
-        Mockito.when(pluginInstance.getProject("123")).thenReturn(Optional.of(new ProjectDto("123", ProjectStatus.ACTIVE)));
+        Mockito.when(pluginInstance.getProject("123")).thenReturn(Optional.of(new Project("123", ProjectStatus.ACTIVE)));
 
         // FIXME: Uncomment
         // projectsSourceConfiguration.synchronize();
@@ -51,7 +51,7 @@ class ProjectsSourceConfigurationTest {
 
     @Test
     void name2() {
-        ProjectDto expectedValue = new ProjectDto("123", ProjectStatus.ACTIVE);
+        Project expectedValue = new Project("123", ProjectStatus.ACTIVE);
         Mockito.when(pluginInstance.getProject("123")).thenReturn(Optional.of(expectedValue));
 
         var project = projectsSourceConfiguration.getProject("123");

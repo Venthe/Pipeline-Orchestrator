@@ -4,7 +4,7 @@ import eu.venthe.platform.application.modules.ProjectModuleMediator;
 import eu.venthe.platform.project.application.dto.CreateProjectSpecificationDto;
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.domain.Project;
-import eu.venthe.platform.project.domain.ProjectId;
+import eu.venthe.platform.shared_kernel.project.ProjectId;
 import eu.venthe.platform.project.domain.infrastructure.ProjectRepository;
 import eu.venthe.platform.project.domain.infrastructure.SourceConfigurationRepository;
 import eu.venthe.platform.source_configuration.SourceConfigurationId;

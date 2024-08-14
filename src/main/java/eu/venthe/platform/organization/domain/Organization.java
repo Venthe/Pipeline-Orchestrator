@@ -1,19 +1,12 @@
 package eu.venthe.platform.organization.domain;
 
-import eu.venthe.platform.organization.domain.source_configuration.plugins.template.ProjectSourcePluginInstance;
-import eu.venthe.platform.organization.domain.source_configuration.plugins.template.model.ProjectDto;
-import eu.venthe.platform.organization.domain.source_configuration.plugins.template.model.ProjectId;
-import eu.venthe.platform.organization.domain.source_configuration.plugins.template.model.Revision;
+import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
-import eu.venthe.platform.shared_kernel.io.File;
-import eu.venthe.platform.shared_kernel.io.Metadata;
+import eu.venthe.platform.shared_kernel.events.MessageBroker;
+import eu.venthe.platform.source_configuration.domain.model.SourceId;
 import lombok.Value;
 
-import java.nio.file.Path;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Value
 public class Organization {
@@ -21,31 +14,23 @@ public class Organization {
     Sources sources;
     ProjectsSynchronizer projectsSynchronizer;
 
+    Organization(OrganizationId organizationId, Sources sources, MessageBroker messageBroker, ProjectsQueryService projectsQueryService) {
+        this.sources = sources;
+        this.organizationId = organizationId;
+        this.projectsSynchronizer = new ProjectsSynchronizer(sources, messageBroker, projectsQueryService, organizationId);
+    }
+
     public List<DomainTrigger> synchronize() {
         return projectsSynchronizer.synchronize();
     }
 
-    public Stream<ProjectDto> listAllProjects() {
-        return getDefaultSource().getProjects();
+    // FIXME: Publish event
+    public void addConfiguration(SourceId sourceId) {
+        addConfiguration(sourceId);
     }
 
-    public Stream<ProjectId> listAllProjectIDs() {
-        return getDefaultSource().getProjectIds();
-    }
-
-    public Optional<ProjectDto> getProject(ProjectId projectId) {
-        return getDefaultSource().getProject(projectId);
-    }
-
-    public Optional<File> getFile(ProjectId projectId, Revision revision, Path path) {
-        return getDefaultSource().getFile(projectId, revision, path);
-    }
-
-    public Collection<Metadata> getFileList(ProjectId projectId, Revision revision, Path path) {
-        return getDefaultSource().getFileList(projectId, revision, path);
-    }
-
-    private ProjectSourcePluginInstance getDefaultSource() {
-        return sources.getByAlias(Sources.SourceAlias.DEFAULT);
+    // FIXME: Publish event
+    public void addConfiguration(SourceId sourceId, Sources.SourceAlias alias) {
+        sources.addConfiguration(sourceId, alias);
     }
 }

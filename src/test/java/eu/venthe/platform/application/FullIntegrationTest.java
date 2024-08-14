@@ -16,9 +16,9 @@ import eu.venthe.platform.source_configuration.application.SourceConfigurationSp
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.source_configuration.application.ProjectSourcesManager;
-import eu.venthe.platform.project.domain.ProjectId;
-import eu.venthe.platform.project.domain.ProjectStatus;
-import eu.venthe.platform.source_configuration.plugins.template.model.ProjectDto;
+import eu.venthe.platform.shared_kernel.project.ProjectId;
+import eu.venthe.platform.shared_kernel.project.ProjectStatus;
+import eu.venthe.platform.source_configuration.domain.plugins.template.Project;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -78,8 +78,8 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         val engineType = "default";
 
         projectSourceFixture.onInstance(projectSource -> {
-            when(projectSource.getProjectIds()).thenReturn(Stream.of(new ProjectDto.Id(projectName)));
-            when(projectSource.getProject(projectName)).thenReturn(Optional.of(new ProjectDto(projectName, ProjectStatus.ACTIVE)));
+            when(projectSource.getProjectIds()).thenReturn(Stream.of(new Project.Id(projectName)));
+            when(projectSource.getProject(projectName)).thenReturn(Optional.of(new Project(projectName, ProjectStatus.ACTIVE)));
             when(projectSource.getFile(eq(projectName), eq("main"), eq(Path.of(".mantle", "workflows", "test-workflow.yml"))))
                     .thenReturn(Optional.of("""
                             name: Test

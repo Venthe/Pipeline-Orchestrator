@@ -1,6 +1,6 @@
 package eu.venthe.platform.project.application.dto;
 
-import eu.venthe.platform.project.domain.ProjectStatus;
+import eu.venthe.platform.shared_kernel.project.ProjectStatus;
 import lombok.Value;
 
 @Value
