@@ -1,6 +1,7 @@
 package eu.venthe.platform.namespace.domain;
 
 import eu.venthe.platform.project.application.ProjectsQueryService;
+import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.shared_kernel.events.MessageBroker;
 import eu.venthe.platform.source_configuration.application.SourceQueryService;
@@ -15,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Value
-public class Namespace {
+public class Namespace implements Aggregate<NamespaceName> {
     NamespaceName namespaceName;
     Source source;
     ProjectsSynchronizer projectsSynchronizer;
@@ -28,6 +29,10 @@ public class Namespace {
 
     public List<DomainTrigger> synchronize() {
         return projectsSynchronizer.synchronize();
+    }
+
+    public NamespaceName getId() {
+        return namespaceName;
     }
 
     @RequiredArgsConstructor

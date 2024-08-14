@@ -36,6 +36,12 @@ public class NamespaceCommandServiceImpl implements NamespaceCommandService {
     }
 
     @Override
+    public void synchronize(final NamespaceName name) {
+        var namespace = namespaceRepository.find(name).orElseThrow();
+        messageBroker.exchange(Envelope.from(namespace.synchronize()));
+    }
+
+    @Override
     public void archive(final NamespaceName namespaceName) {
         throw new UnsupportedOperationException();
     }

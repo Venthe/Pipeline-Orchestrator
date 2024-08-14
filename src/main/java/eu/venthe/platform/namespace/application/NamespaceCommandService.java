@@ -7,4 +7,6 @@ public interface NamespaceCommandService {
     NamespaceName register(CreateNamespaceSpecification specification);
 
     void archive(NamespaceName namespaceName);
+
+    void synchronize(NamespaceName name);
 }

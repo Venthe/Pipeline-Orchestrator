@@ -25,9 +25,11 @@ public class ProjectsCommandServiceImpl implements ProjectsCommandService {
             throw new IllegalArgumentException();
         }
 
+        log.trace("Saving project {}", createProjectSpecification);
         var result = Project.create(createProjectSpecification.projectId(), createProjectSpecification.configurationSourceId(), sourceQueryService);
 
         repository.save(result.getKey());
         messageBroker.exchange(Envelope.from(result.getValue()));
+        log.debug("Project saved {}", result.getKey());
     }
 }
