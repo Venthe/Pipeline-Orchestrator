@@ -1,13 +1,14 @@
 package eu.venthe.platform.runner.model;
 
-import eu.venthe.platform.runner.runner_engine.template.model.RunCallbackToken;
+import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.runner.runner_engine.template.RunnerEngineInstance;
-import eu.venthe.platform.runner.runner_engine.template.model.dimensions.RunnerDimensions;
+import eu.venthe.platform.runner.runner_engine.template.model.RunCallbackToken;
+import eu.venthe.platform.runner.runner_engine.template.model.RunnerContext;
 import eu.venthe.platform.runner.runner_engine.template.model.RunnerId;
+import eu.venthe.platform.runner.runner_engine.template.model.dimensions.RunnerDimensions;
+import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
-import eu.venthe.platform.project.domain.ProjectId;
-import eu.venthe.platform.shared_kernel.Aggregate;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
@@ -26,11 +27,8 @@ public class RunnerEngineInstanceAggregate implements Aggregate<RunnerEngineInst
                                   URL systemApiUrl,
                                   RunCallbackToken runCallbackToken,
                                   RunnerDimensions dimensions) {
-        runnerEngineInstance.queueExecution(projectId,
-                workflowRunId,
-                executionId,
-                systemApiUrl,
-                runCallbackToken,
+        var context = new RunnerContext(null, systemApiUrl, runCallbackToken);
+        runnerEngineInstance.queueExecution(context,
                 dimensions);
     }
 

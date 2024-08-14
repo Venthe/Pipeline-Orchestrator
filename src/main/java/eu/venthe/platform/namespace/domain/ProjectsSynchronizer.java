@@ -7,6 +7,7 @@ import eu.venthe.platform.namespace.domain.events.SynchronizeProjectCommand;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.shared_kernel.events.MessageBroker;
+import eu.venthe.platform.source_configuration.domain.model.ConfigurationSourceId;
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProjectId;
 
 import java.util.Collection;
@@ -42,7 +43,7 @@ record ProjectsSynchronizer(
 
     private Set<SourceOwnedProjectId> getAlreadyRegisteredProjects() {
         return projectsQueryService.getProjectIds(namespaceName)
-                .map(e -> new SourceOwnedProjectId(e.getConfigurationId(), e.getName()))
+                .map(e -> new SourceOwnedProjectId(source.getConfigurationSourceId(), e.getName()))
                 .collect(toSet());
     }
 

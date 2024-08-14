@@ -1,6 +1,6 @@
 package eu.venthe.platform.source_configuration.domain.plugins.gerrit;
 
-import eu.venthe.platform.source_configuration.domain.model.Revision;
+import eu.venthe.platform.shared_kernel.git.Revision;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.Git;

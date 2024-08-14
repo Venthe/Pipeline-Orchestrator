@@ -6,6 +6,7 @@ import eu.venthe.platform.shared_kernel.events.MessageBroker;
 import eu.venthe.platform.source_configuration.application.SourceQueryService;
 import eu.venthe.platform.source_configuration.domain.model.ConfigurationSourceId;
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProjectId;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
@@ -32,6 +33,7 @@ public class Namespace {
     @RequiredArgsConstructor
     static class Source {
         private final SourceQueryService sourceQueryService;
+        @Getter
         private final ConfigurationSourceId configurationSourceId;
 
         Source(final ConfigurationSourceId configurationSourceId, final SourceQueryService sourceQueryService) {

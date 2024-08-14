@@ -5,9 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public class RunStepDefinition extends AbstractStepDefinition {
     @Nonnull
     private final String run;

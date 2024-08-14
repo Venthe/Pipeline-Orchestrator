@@ -2,7 +2,7 @@ package eu.venthe.platform.source_configuration.domain.plugins.template;
 
 import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
-import eu.venthe.platform.source_configuration.domain.model.Revision;
+import eu.venthe.platform.shared_kernel.git.Revision;
 
 import java.nio.file.Path;
 import java.util.Collection;

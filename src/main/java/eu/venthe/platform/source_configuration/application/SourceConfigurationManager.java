@@ -8,7 +8,7 @@ import eu.venthe.platform.source_configuration.domain.infrastructure.SourceConfi
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProject;
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProjectId;
 import eu.venthe.platform.source_configuration.domain.plugins.template.SourceProjectId;
-import eu.venthe.platform.source_configuration.domain.model.Revision;
+import eu.venthe.platform.shared_kernel.git.Revision;
 import eu.venthe.platform.source_configuration.domain.plugins.PluginProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

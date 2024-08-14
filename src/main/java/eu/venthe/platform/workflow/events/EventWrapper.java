@@ -1,6 +1,5 @@
 package eu.venthe.platform.workflow.events;
 
-import eu.venthe.platform.application.modules.automation.workflows.definition.contexts.on.matchers.*;
 import eu.venthe.platform.shared_kernel.system_events.SystemEvent;
 import eu.venthe.platform.shared_kernel.system_events.model.EventType;
 import eu.venthe.platform.workflow.definition.contexts.on.matchers.*;

@@ -21,7 +21,7 @@ public class GerritProjectSourcePlugin implements ProjectSourcePlugin {
 
     @Override
     public ProjectSourcePluginInstance instantiate(SuppliedProperties properties) {
-        return new GerritPluginInstance(GerritConfiguration.construct(properties), getSourceType());
+        return new GerritPluginInstance(GerritConfiguration.construct(properties));
     }
 
     @Override

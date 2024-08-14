@@ -1,16 +1,12 @@
 package eu.venthe.platform.application.config;
 
 import eu.venthe.platform.application.infrastructure.in_memory_repository.InMemoryDomainRepository;
-import eu.venthe.platform.project.domain.infrastructure.SourceConfigurationRepository;
-import eu.venthe.platform.source_configuration.ProjectsSourceConfiguration;
-import eu.venthe.platform.source_configuration.SourceConfigurationId;
+import eu.venthe.platform.source_configuration.domain.ProjectSourcePluginInstanceAggregate;
+import eu.venthe.platform.source_configuration.domain.infrastructure.SourceConfigurationRepository;
+import eu.venthe.platform.source_configuration.domain.model.ConfigurationSourceId;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SourceConfigurationRepositoryImpl extends InMemoryDomainRepository<ProjectsSourceConfiguration, SourceConfigurationId>
+public class SourceConfigurationRepositoryImpl extends InMemoryDomainRepository<ProjectSourcePluginInstanceAggregate, ConfigurationSourceId>
         implements SourceConfigurationRepository {
-    @Override
-    public boolean exists(SourceConfigurationId id) {
-        return findAll().stream().anyMatch(e -> e.getConfigurationId().equals(id));
-    }
 }

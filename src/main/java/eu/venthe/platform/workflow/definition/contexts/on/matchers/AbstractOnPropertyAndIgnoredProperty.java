@@ -2,9 +2,9 @@ package eu.venthe.platform.workflow.definition.contexts.on.matchers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.platform.workflow.utilities.GlobPatternMatching;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
+import eu.venthe.platform.workflow.utilities.GlobPatternMatching;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.file.Path;
@@ -43,7 +43,7 @@ public class AbstractOnPropertyAndIgnoredProperty {
     }
 
     public boolean match(GitRevision property) {
-        return match(List.of(property.value()));
+        return match(List.of(property.getHash().value()));
     }
 
     public boolean match(Collection<String> properties) {

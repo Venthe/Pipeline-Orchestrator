@@ -2,6 +2,7 @@ package eu.venthe.platform.source_configuration.domain;
 
 import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.shared_kernel.configuration_properties.SuppliedProperties;
+import eu.venthe.platform.shared_kernel.git.Revision;
 import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
 import eu.venthe.platform.source_configuration.domain.model.*;

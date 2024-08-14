@@ -11,8 +11,6 @@ public class RunnerListener {
         registry.register(RequestJobRunCommand.class, new MessageListenerRegistry.Observer<>(RunnerProvider.class.getSimpleName(), envelope -> {
             var runRequest = envelope.getData();
 
-            workflowRunQueryService.getContext();
-
             runnerProvider.queueExecution(runRequest.projectId(), runRequest.workflowRunId(), runRequest.runId(), runRequest.runCallbackToken(), runRequest.dimensions());
         }));
     }

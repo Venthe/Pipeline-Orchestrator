@@ -30,7 +30,7 @@ public class ProjectId {
         return projectIdBuilder.build();
     }
 
-    public class ProjectIdBuilder {
+    public static class ProjectIdBuilder {
         public ProjectIdBuilder namespaceName(String namespaceName) {
             this.namespaceName = new NamespaceName(namespaceName);
             return this;
