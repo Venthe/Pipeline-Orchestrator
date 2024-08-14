@@ -60,7 +60,7 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowRunCommandServ
                 .build();
         messageBroker.exchange(new Envelope<>(event));
 
-        var invoke = new ExponentialBackOff(executorService)
+        var invoke = new ExponentialBackOff()
                 .invoke(() -> workflowRunQueryService.getExecutionDetails(new WorkflowCorrelationId(event.getId().toString())).orElseThrow());
 
         return invoke.orElseThrow().workflowRunId();

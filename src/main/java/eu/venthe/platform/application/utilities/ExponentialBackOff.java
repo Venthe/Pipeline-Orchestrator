@@ -4,10 +4,6 @@ import eu.venthe.platform.shared_kernel.Either;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 
 @Slf4j
@@ -17,20 +13,8 @@ public final class ExponentialBackOff {
     private static int MAX_RETRIES = 5;
     private static double EXPONENT = 1.1;
 
-    private final ExecutorService executorService;
-
-    public ExponentialBackOff(ExecutorService executorService) {
-        this.executorService = executorService;
-    }
-
     public <T> Either<Void, T> invoke(Supplier<T> supplier) {
-        try {
-            return executorService.submit(() ->
-                            invokeSupply(supplier, 1))
-                    .get(TIMEOUT, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            throw new RuntimeException(e);
-        }
+        return invokeSupply(supplier, 1);
     }
 
     private <T> Either<Void, T> invokeSupply(Supplier<T> supplier, int times) {

@@ -37,25 +37,29 @@ public abstract class AbstractStepDefinition {
 
     private static class StepIdContext {
         private static Optional<String> create(final JsonNode id) {
-            throw new UnsupportedOperationException();
+            // TODO: Fixme
+            return Optional.empty();
         }
     }
 
     private static class StepIfContext {
         private static Optional<String> create(final JsonNode id) {
-            throw new UnsupportedOperationException();
+            // TODO: Fixme
+            return Optional.empty();
         }
     }
 
     private static class StepNameContext {
         private static Optional<String> create(final JsonNode id) {
-            throw new UnsupportedOperationException();
+            // TODO: Fixme
+            return Optional.empty();
         }
     }
 
     public static class StepEnvironmentVariablesContext {
         private static Optional<StepEnvironmentVariablesContext> create(final JsonNode root) {
-            throw new UnsupportedOperationException();
+            // TODO: Fixme
+            return Optional.empty();
         }
     }
 }

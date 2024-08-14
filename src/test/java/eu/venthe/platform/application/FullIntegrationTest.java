@@ -87,8 +87,8 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                             jobs:
                               a:
                                 steps:
-                                  - command: echo 1
-                                  - command: echo 2
+                                  - run: echo 1
+                                  - run: echo 2
                             """.getBytes(StandardCharsets.UTF_8)), null)));
         });
 
@@ -115,8 +115,6 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         await("Synchronization done")
                 .until(() -> !projectsQueryService.getProjectIds(createdNamespaceName).collect(toSet()).isEmpty());
 
-        // FIXME: Add organization to project ID
-        //  Project ID should have ORG in it (Or only org?)
         val projectId = new ProjectId(createdNamespaceName, projectName);
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());

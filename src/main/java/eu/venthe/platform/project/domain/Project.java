@@ -4,21 +4,28 @@ import eu.venthe.platform.project.domain.event.ProjectCreatedEvent;
 import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
+import eu.venthe.platform.shared_kernel.git.SimpleRevision;
+import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.project.ProjectStatus;
 import eu.venthe.platform.source_configuration.application.SourceQueryService;
 import eu.venthe.platform.source_configuration.domain.model.ConfigurationSourceId;
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProject;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Project implements Aggregate<ProjectId> {
 
     @EqualsAndHashCode.Include
@@ -30,7 +37,7 @@ public class Project implements Aggregate<ProjectId> {
                    final ConfigurationSourceId configurationSourceId,
                    final SourceQueryService sourceQueryService) {
         this.id = id;
-        this.source = new Source(configurationSourceId, sourceQueryService);
+        this.source = new Source(sourceQueryService, configurationSourceId, id);
     }
 
     public static Pair<Project, List<DomainTrigger>> create(final ProjectId projectId, final ConfigurationSourceId configurationSourceId, final SourceQueryService sourceQueryService) {
@@ -39,7 +46,7 @@ public class Project implements Aggregate<ProjectId> {
 
     public void synchronize() {
         log.debug("Initiating synchronization of project {}", id);
-        var freshProjectInfo = source.getProject(getId());
+        var freshProjectInfo = source.getProject();
         status = freshProjectInfo.status();
         log.info("Synchronization of project {} done", id);
     }
@@ -64,12 +71,26 @@ public class Project implements Aggregate<ProjectId> {
         log.debug("Notify about unregistered ref {} in the project {} for the modules", revision, id);
     }
 
-    record Source(ConfigurationSourceId configurationSourceId,
-                  SourceQueryService sourceQueryService) {
-        eu.venthe.platform.source_configuration.domain.plugins.template.Project getProject(final ProjectId id) {
-            return sourceQueryService.getProject(configurationSourceId, id.getName())
+    public Optional<File> getFile(final SimpleRevision revision, final Path file) {
+        return getSource().getFile(revision, file);
+    }
+
+    @AllArgsConstructor
+    @ToString
+    static final class Source {
+        @ToString.Exclude
+        private final SourceQueryService sourceQueryService;
+        private final ConfigurationSourceId configurationSourceId;
+        private final ProjectId projectId;
+
+        eu.venthe.platform.source_configuration.domain.plugins.template.Project getProject() {
+            return sourceQueryService.getProject(configurationSourceId, projectId.getName())
                     .map(SourceOwnedProject::project)
                     .orElseThrow();
+        }
+
+        private Optional<File> getFile(final SimpleRevision revision, final Path file) {
+            return sourceQueryService.getFile(configurationSourceId, projectId.getName(), revision, file);
         }
     }
 }

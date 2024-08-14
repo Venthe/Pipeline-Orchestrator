@@ -1,17 +1,18 @@
 package eu.venthe.platform.runner;
 
-import eu.venthe.platform.workflow.WorkflowRunQueryService;
-import eu.venthe.platform.workflow.runs.events.RequestJobRunCommand;
+import eu.venthe.platform.runner.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.platform.shared_kernel.events.MessageListenerRegistry;
+import eu.venthe.platform.workflow.runs.events.RequestJobRunCommand;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RunnerListener {
-    public RunnerListener(final WorkflowRunQueryService workflowRunQueryService, final MessageListenerRegistry registry, final RunnerProvider runnerProvider) {
+    public RunnerListener(final MessageListenerRegistry registry, final RunnerProvider runnerProvider) {
         registry.register(RequestJobRunCommand.class, new MessageListenerRegistry.Observer<>(RunnerProvider.class.getSimpleName(), envelope -> {
-            // var runRequest = envelope.getData();
+            RequestJobRunCommand runRequest = envelope.getData();
 
-            // runnerProvider.queueExecution(runRequest.projectId(), runRequest.workflowRunId(), runRequest.runId(), runRequest.runCallbackToken(), runRequest.dimensions());
+            // FIXME: Get token from the project
+            runnerProvider.queueExecution(runRequest.projectId(), runRequest.workflowRunId(), runRequest.runId(), null, RunnerDimensions.none());
         }));
     }
 }

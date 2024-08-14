@@ -50,18 +50,7 @@ public class ProjectsQueryServiceImpl implements ProjectsQueryService {
             throw new UnsupportedOperationException();
         }
 
-        var data = """
-                name: learn-github-actions
-                on: workflow_dispatch
-                jobs:
-                  check-bats-version:
-                    name: My first job
-                    steps:
-                      - name: Run echo
-                        run: echo "Hello world!"
-                """;
-
-        return Optional.of(new File(new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8)), new Metadata("whatever", Metadata.FileType.FILE, 12, Instant.MAX, Instant.MAX, true, true, true)));
+        return projectRepository.find(id).orElseThrow().getFile(revision, file);
     }
 
     private static ProjectDto toProjectDto(Project p) {

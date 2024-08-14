@@ -3,12 +3,14 @@ package eu.venthe.platform.workflow.definition.contexts.jobs.steps;
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 @RequiredArgsConstructor
+@ToString
 public class WorkflowDefinitionStepsContext {
     private final List<? extends AbstractStepDefinition> steps;
 
