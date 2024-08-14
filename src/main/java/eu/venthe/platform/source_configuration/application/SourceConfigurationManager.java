@@ -1,5 +1,6 @@
 package eu.venthe.platform.source_configuration.application;
 
+import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
 import eu.venthe.platform.source_configuration.domain.ProjectSourcePluginInstanceAggregate;
@@ -8,7 +9,6 @@ import eu.venthe.platform.source_configuration.domain.infrastructure.SourceConfi
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProject;
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProjectId;
 import eu.venthe.platform.source_configuration.domain.plugins.template.SourceProjectId;
-import eu.venthe.platform.shared_kernel.git.Revision;
 import eu.venthe.platform.source_configuration.domain.plugins.PluginProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,15 +39,15 @@ public class SourceConfigurationManager implements SourceQueryService {
     }
 
     @Override
-    public Optional<File> getFile(final ConfigurationSourceId configurationSourceId, final SourceProjectId sourceProjectId, final Revision revision, final Path path) {
+    public Optional<File> getFile(final ConfigurationSourceId configurationSourceId, final SourceProjectId sourceProjectId, final SimpleRevision simpleRevision, final Path path) {
         var sourceConfiguration = getConfiguration(configurationSourceId);
-        return sourceConfiguration.getFile(sourceProjectId, revision, path);
+        return sourceConfiguration.getFile(sourceProjectId, simpleRevision, path);
     }
 
     @Override
-    public Collection<Metadata> getFileList(final ConfigurationSourceId configurationSourceId, final SourceProjectId sourceProjectId, final Revision revision, final Path path) {
+    public Collection<Metadata> getFileList(final ConfigurationSourceId configurationSourceId, final SourceProjectId sourceProjectId, final SimpleRevision simpleRevision, final Path path) {
         var sourceConfiguration = getConfiguration(configurationSourceId);
-        return sourceConfiguration.getFileList(sourceProjectId, revision, path);
+        return sourceConfiguration.getFileList(sourceProjectId, simpleRevision, path);
     }
 
     @Override

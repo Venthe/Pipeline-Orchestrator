@@ -3,12 +3,13 @@ package eu.venthe.platform.shared_kernel.system_events;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
+import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.system_events.contexts.CommitDetailsContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.UserContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.common.BooleanContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.common.UrlContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.git.GitHashContext;
-import eu.venthe.platform.shared_kernel.system_events.contexts.git.RevisionContext;
+import eu.venthe.platform.shared_kernel.system_events.contexts.git.SimpleRevisionContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.platform.shared_kernel.system_events.model.EventType;
 import lombok.EqualsAndHashCode;
@@ -37,7 +38,7 @@ public class PushEvent extends AbstractProjectEvent {
      * The SHA of the most recent commit on ref before the push.
      */
     private final String before;
-    private final Optional<GitRevision> baseRef;
+    private final Optional<SimpleRevision> baseRef;
     private final List<CommitDetailsContext> commits;
     /**
      * URL that shows the changes in this ref update, from the before commit to the after commit. For a newly created
@@ -62,7 +63,7 @@ public class PushEvent extends AbstractProjectEvent {
     /**
      * The full git ref that was pushed. Example: refs/heads/main or refs/tags/v3.14.1.
      */
-    private final GitRevision ref;
+    private final SimpleRevision ref;
 
     public PushEvent(ObjectNode _root) {
         super(_root);
@@ -70,7 +71,8 @@ public class PushEvent extends AbstractProjectEvent {
 
         after = GitHashContext.ensure(root.get("after"));
         before = GitHashContext.ensure(root.get("before"));
-        baseRef = RevisionContext.create(root.get("baseRef"));
+        // TODO: Full revision?
+        baseRef = SimpleRevisionContext.create(root.get("baseRef"));
         commits = CommitDetailsContext.list(root.get("commits"));
         compare = UrlContext.ensure(root.get("compare"));
         final JsonNode forced1 = root.get("created");
@@ -81,7 +83,8 @@ public class PushEvent extends AbstractProjectEvent {
         forced = BooleanContext.ensure(forced3);
         headCommit = CommitDetailsContext.create(root.get("headCommit"));
         pusher = UserContext.ensure(root.get("pusher"));
-        ref = RevisionContext.ensure(root.get("ref"));
+        // TODO: Full revision?
+        ref = SimpleRevisionContext.ensure(root.get("ref"));
     }
 
     public EventType getType() {

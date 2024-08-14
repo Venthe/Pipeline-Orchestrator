@@ -6,7 +6,7 @@ import eu.venthe.platform.project.application.model.ProjectDto;
 import eu.venthe.platform.project.domain.Project;
 import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.project.domain.infrastructure.ProjectRepository;
-import eu.venthe.platform.shared_kernel.git.GitRevision;
+import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +14,8 @@ import org.springframework.stereotype.Service;
 import org.togglz.core.manager.FeatureManager;
 import org.togglz.core.util.NamedFeature;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.Collection;
@@ -46,27 +45,23 @@ public class ProjectsQueryServiceImpl implements ProjectsQueryService {
     }
 
     @Override
-    public Optional<File> getFile(final ProjectId id, final GitRevision revision, final Path file) {
+    public Optional<File> getFile(final ProjectId id, final SimpleRevision revision, final Path file) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             throw new UnsupportedOperationException();
         }
 
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream(); PrintStream printStream = new PrintStream(outputStream)) {
-            printStream.print("""
-                    name: learn-github-actions
-                    on: workflow_dispatch
-                    jobs:
-                      check-bats-version:
-                        name: My first job
-                        steps:
-                          - name: Run echo
-                            run: echo "Hello world!"
-                    """);
+        var data = """
+                name: learn-github-actions
+                on: workflow_dispatch
+                jobs:
+                  check-bats-version:
+                    name: My first job
+                    steps:
+                      - name: Run echo
+                        run: echo "Hello world!"
+                """;
 
-            return Optional.of(new File(outputStream, new Metadata("whatever", Metadata.FileType.FILE, 12, Instant.MAX, Instant.MAX, true, true, true)));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return Optional.of(new File(new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8)), new Metadata("whatever", Metadata.FileType.FILE, 12, Instant.MAX, Instant.MAX, true, true, true)));
     }
 
     private static ProjectDto toProjectDto(Project p) {

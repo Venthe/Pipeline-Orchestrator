@@ -1,6 +1,7 @@
 package eu.venthe.platform.workflow;
 
 import eu.venthe.platform.runner.runner_engine.template.model.dimensions.Dimension;
+import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
 import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
@@ -11,7 +12,7 @@ import java.nio.file.Path;
 import java.util.Set;
 
 public interface WorkflowRunCommandService {
-    WorkflowRunId triggerWorkflowDispatch(final ProjectId id, final GitRevision revision, final Path workflowPath);
+    WorkflowRunId triggerWorkflowDispatch(final ProjectId id, final SimpleRevision simpleRevision, final Path workflowPath);
 
     default void retriggerWorkflow(WorkflowRunId executionId) {
         throw new UnsupportedOperationException();
@@ -34,5 +35,5 @@ public interface WorkflowRunCommandService {
         throw new UnsupportedOperationException();
     }
 
-    record Context(ProjectId id, GitRevision revision, Set<Dimension> dimensions) {}
+    record Context(ProjectId id, SimpleRevision revision, Set<Dimension> dimensions) {}
 }

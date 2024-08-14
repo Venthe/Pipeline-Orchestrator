@@ -2,7 +2,7 @@ package eu.venthe.platform.source_configuration.domain;
 
 import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.shared_kernel.configuration_properties.SuppliedProperties;
-import eu.venthe.platform.shared_kernel.git.Revision;
+import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
 import eu.venthe.platform.source_configuration.domain.model.*;
@@ -35,13 +35,13 @@ public class ProjectSourcePluginInstanceAggregate implements Aggregate<Configura
     }
 
     @Override
-    public Optional<File> getFile(final SourceProjectId sourceProjectId, final Revision revision, final Path path) {
-        return pluginInstance.getFile(sourceProjectId, revision, path);
+    public Optional<File> getFile(final SourceProjectId sourceProjectId, final SimpleRevision simpleRevision, final Path path) {
+        return pluginInstance.getFile(sourceProjectId, simpleRevision, path);
     }
 
     @Override
-    public Collection<Metadata> getFileList(final SourceProjectId sourceProjectId, final Revision revision, final Path path) {
-        return pluginInstance.getFileList(sourceProjectId, revision, path);
+    public Collection<Metadata> getFileList(final SourceProjectId sourceProjectId, final SimpleRevision simpleRevision, final Path path) {
+        return pluginInstance.getFileList(sourceProjectId, simpleRevision, path);
     }
 
     public Stream<SourceOwnedProject> getProjects() {

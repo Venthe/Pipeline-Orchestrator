@@ -1,15 +1,12 @@
 package eu.venthe.platform.application.projects.plugin.gerrit;
 
 import eu.venthe.platform.application.AbstractIntegrationTest;
-import eu.venthe.platform.application.config.RegisterPluginEndpoints;
 import eu.venthe.platform.source_configuration.domain.plugins.gerrit.GerritConfiguration;
 import eu.venthe.platform.source_configuration.domain.plugins.gerrit.GerritPluginInstance;
-import eu.venthe.platform.source_configuration.domain.model.SourceType;
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -22,15 +19,11 @@ class GerritPluginInstanceIntegrationTest extends AbstractIntegrationTest {
             .password("secret")
             .build();
 
-    ProjectSourcePlugin.PluginInstance plugin = new GerritPluginInstance(CONFIGURATION, new SourceType("gerrit"));
+    ProjectSourcePluginInstance plugin = new GerritPluginInstance(CONFIGURATION);
 
-    @Autowired
-    RegisterPluginEndpoints registerPluginEndpoints;
 
     @Test
     void listProjects() {
-        registerPluginEndpoints.register(plugin);
-
         var retrieve = SimpleStringClient.mutate(restClient)
                 .method(HttpMethod.POST)
                 .uri("/gerrit/handle/patchset-created")

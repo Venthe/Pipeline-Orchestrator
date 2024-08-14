@@ -3,8 +3,9 @@ package eu.venthe.platform.shared_kernel.system_events;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
+import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.system_events.contexts.git.ReferenceTypeContext;
-import eu.venthe.platform.shared_kernel.system_events.contexts.git.RevisionContext;
+import eu.venthe.platform.shared_kernel.system_events.contexts.git.SimpleRevisionContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.platform.shared_kernel.system_events.model.EventType;
 import lombok.EqualsAndHashCode;
@@ -28,8 +29,8 @@ public class CreateEvent extends AbstractProjectEvent {
     /**
      * The name of the repository's default branch (usually main).
      */
-    private final GitRevision mainBranch;
-    private final GitRevision ref;
+    private final SimpleRevision mainBranch;
+    private final SimpleRevision ref;
     private final String refType;
 
     public CreateEvent(ObjectNode _root) {
@@ -39,8 +40,9 @@ public class CreateEvent extends AbstractProjectEvent {
 
         final JsonNode description1 = root.get("description");
         description = ContextUtilities.Text.create(description1);
-        mainBranch = RevisionContext.ensure(root.get("mainBranch"));
-        ref = RevisionContext.ensure(root.get("ref"));
+        mainBranch = SimpleRevisionContext.ensure(root.get("mainBranch"));
+        // TODO: Full revision?
+        ref = SimpleRevisionContext.ensure(root.get("ref"));
         refType = ReferenceTypeContext.ensure(root.get("refType"));
     }
 

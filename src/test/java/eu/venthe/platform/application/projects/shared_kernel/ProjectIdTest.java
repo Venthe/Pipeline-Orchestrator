@@ -2,29 +2,29 @@ package eu.venthe.platform.application.projects.shared_kernel;
 
 import eu.venthe.platform.namespace.domain.NamespaceName;
 import eu.venthe.platform.project.domain.ProjectId;
-import eu.venthe.platform.source_configuration.SourceConfigurationId;
+import eu.venthe.platform.source_configuration.domain.plugins.template.SourceProjectId;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class SourceProjectIdTest {
+class ProjectIdTest {
     @Test
     void deserialize() {
-        assertThat(ProjectId.from("test/internal-name"))
-                .isEqualTo(ProjectId.builder().configurationId(new SourceConfigurationId("default")).namespaceName(new NamespaceName("default")).name("test/internal-name").build());
+        assertThat(ProjectId.from("internal-name"))
+                .isEqualTo(new ProjectId(new NamespaceName("default"), new SourceProjectId("internal-name")));
     }
 
     @Test
     void serialize() {
-        assertThat(ProjectId.builder().configurationId(new SourceConfigurationId("test1")).namespaceName(new NamespaceName("test2")).name("project/internal-name").build().serialize())
-                .isEqualTo("test1:test2/project/internal-name");
+        assertThat(new ProjectId(new NamespaceName("test2"), new SourceProjectId("internal-name")).serialize())
+                .isEqualTo("test2/internal-name");
     }
 
     @Test
     void deserialize_noproject() {
-        assertThatThrownBy(() -> ProjectId.from("test"))
-                .hasMessage("Project name is required")
+        assertThatThrownBy(() -> ProjectId.from("/test"))
+                .hasMessage("Project namespace is required")
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

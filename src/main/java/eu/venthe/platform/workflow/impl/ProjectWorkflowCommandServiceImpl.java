@@ -1,5 +1,6 @@
 package eu.venthe.platform.workflow.impl;
 
+import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.WorkflowRunQueryService;
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
@@ -13,7 +14,6 @@ import eu.venthe.platform.application.security.User;
 import eu.venthe.platform.application.security.UserService;
 import eu.venthe.platform.shared_kernel.events.Envelope;
 import eu.venthe.platform.shared_kernel.events.MessageBroker;
-import eu.venthe.platform.shared_kernel.git.GitRevision;
 import eu.venthe.platform.shared_kernel.system_events.EventId;
 import eu.venthe.platform.shared_kernel.system_events.ProjectEvent;
 import eu.venthe.platform.shared_kernel.system_events.WorkflowDispatchEvent;
@@ -48,12 +48,12 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowRunCommandServ
     @SneakyThrows
     @Override
     public WorkflowRunId triggerWorkflowDispatch(final ProjectId id,
-                                                 final GitRevision revision,
+                                                 final SimpleRevision simpleRevision,
                                                  final Path workflowPath) {
         var eventId = UUID.randomUUID();
         ProjectEvent event = WorkflowDispatchEvent.builder()
                 .workflow(resolveFromOrchestratorDirectory(workflowPath))
-                .revision(revision)
+                .revision(simpleRevision)
                 .id(new EventId(eventId))
                 .repository(RepositoryContext.builder().id(id).build())
                 .sender(fromUser(userService.getCurrentUser()))

@@ -1,7 +1,7 @@
 package eu.venthe.platform.shared_kernel.io;
 
-import java.io.OutputStream;
+import java.io.InputStream;
 
-public record File(OutputStream content,
+public record File(InputStream content,
                    Metadata metadata) {
 }

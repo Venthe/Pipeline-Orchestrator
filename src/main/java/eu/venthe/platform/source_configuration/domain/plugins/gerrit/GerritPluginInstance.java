@@ -8,7 +8,7 @@ import eu.venthe.platform.shared_kernel.io.Metadata;
 import eu.venthe.platform.shared_kernel.project.ProjectStatus;
 import eu.venthe.platform.source_configuration.domain.plugins.template.Project;
 import eu.venthe.platform.source_configuration.domain.plugins.template.SourceProjectId;
-import eu.venthe.platform.shared_kernel.git.Revision;
+import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.source_configuration.domain.model.SourceType;
 import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
 import jakarta.ws.rs.core.UriBuilder;
@@ -80,9 +80,9 @@ public class GerritPluginInstance implements ProjectSourcePluginInstance {
     }*/
 
     @Override
-    public Optional<File> getFile(SourceProjectId sourceProjectId, Revision revision, Path path) {
+    public Optional<File> getFile(SourceProjectId sourceProjectId, SimpleRevision simpleRevision, Path path) {
         String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceProjectId.value()).toString();
-        return GitUtilities.onRepository(string, revision, rootDirectory -> {
+        return GitUtilities.onRepository(string, simpleRevision, rootDirectory -> {
             // FIXME
             return Optional.of(rootDirectory.toPath().resolve(path)).map(Path::toFile).filter(java.io.File::exists).map(GerritPluginInstance::getBytes).map(e -> null);
         });
@@ -94,7 +94,7 @@ public class GerritPluginInstance implements ProjectSourcePluginInstance {
     }
 
     @Override
-    public Collection<Metadata> getFileList(SourceProjectId sourceProjectId, Revision revision, Path path) {
+    public Collection<Metadata> getFileList(SourceProjectId sourceProjectId, SimpleRevision simpleRevision, Path path) {
         String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceProjectId.value()).toString();
         throw new UnsupportedOperationException();
         // return GitUtilities.onRepository(string, revision, rootDirectory -> {

@@ -4,6 +4,7 @@ import eu.venthe.platform.namespace.domain.NamespaceName;
 import eu.venthe.platform.project.application.model.ProjectDto;
 import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
+import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.io.File;
 
 import java.nio.file.Path;
@@ -18,5 +19,5 @@ public interface ProjectsQueryService {
 
     Stream<ProjectId> getProjectIds(NamespaceName id);
 
-    Optional<File> getFile(ProjectId id, GitRevision revision, Path file);
+    Optional<File> getFile(ProjectId id, SimpleRevision revision, Path file);
 }

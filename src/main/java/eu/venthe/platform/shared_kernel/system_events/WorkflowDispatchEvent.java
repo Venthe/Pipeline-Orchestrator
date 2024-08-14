@@ -1,10 +1,10 @@
 package eu.venthe.platform.shared_kernel.system_events;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.platform.shared_kernel.git.GitRevision;
+import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.system_events.contexts.WorkflowDispatchInputsContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.common.PathContext;
-import eu.venthe.platform.shared_kernel.system_events.contexts.git.RevisionContext;
+import eu.venthe.platform.shared_kernel.system_events.contexts.git.SimpleRevisionContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.platform.shared_kernel.system_events.model.EventType;
 import lombok.EqualsAndHashCode;
@@ -27,7 +27,7 @@ import java.nio.file.Path;
 @SuperBuilder
 public class WorkflowDispatchEvent extends AbstractProjectEvent {
     private final WorkflowDispatchInputsContext inputs;
-    private final GitRevision revision;
+    private final SimpleRevision revision;
     private final Path workflow;
 
     public WorkflowDispatchEvent(ObjectNode _root) {
@@ -35,7 +35,7 @@ public class WorkflowDispatchEvent extends AbstractProjectEvent {
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         inputs = WorkflowDispatchInputsContext.create(root.get("inputs"));
-        revision = RevisionContext.ensure(root.get("revision"));
+        revision = SimpleRevisionContext.ensure(root.get("revision"));
         workflow = PathContext.ensure(root.get("workflow"));
     }
 

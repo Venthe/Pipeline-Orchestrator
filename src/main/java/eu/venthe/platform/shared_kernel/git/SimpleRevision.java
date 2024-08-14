@@ -1,4 +1,4 @@
 package eu.venthe.platform.shared_kernel.git;
 
-public record Revision(String value) {
+public record SimpleRevision(String value) {
 }

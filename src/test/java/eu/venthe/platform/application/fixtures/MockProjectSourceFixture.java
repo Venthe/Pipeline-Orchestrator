@@ -1,6 +1,7 @@
 package eu.venthe.platform.application.fixtures;
 
 import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,6 +20,6 @@ public class MockProjectSourceFixture {
     public interface TestProjectSourcePlugin extends ProjectSourcePlugin {
     }
 
-    public interface MockProjectSource extends ProjectSourcePlugin.PluginInstance {
+    public interface MockProjectSource extends ProjectSourcePluginInstance {
     }
 }
