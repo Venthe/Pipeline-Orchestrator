@@ -6,7 +6,7 @@ import eu.venthe.platform.runner.runner_engine.template.model.dimensions.RunnerD
 import eu.venthe.platform.runner.runner_engine.template.model.RunnerId;
 import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
-import eu.venthe.platform.shared_kernel.project.ProjectId;
+import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.shared_kernel.Aggregate;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;

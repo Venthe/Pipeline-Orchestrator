@@ -1,7 +1,7 @@
 package eu.venthe.platform.application.projects.shared_kernel;
 
 import eu.venthe.platform.namespace.domain.NamespaceName;
-import eu.venthe.platform.shared_kernel.project.ProjectId;
+import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.source_configuration.SourceConfigurationId;
 import org.junit.jupiter.api.Test;
 

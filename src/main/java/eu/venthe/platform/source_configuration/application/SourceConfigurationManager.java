@@ -2,8 +2,8 @@ package eu.venthe.platform.source_configuration.application;
 
 import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
-import eu.venthe.platform.source_configuration.ProjectSourcePluginInstanceAggregate;
-import eu.venthe.platform.source_configuration.domain.model.SourceId;
+import eu.venthe.platform.source_configuration.domain.ProjectSourcePluginInstanceAggregate;
+import eu.venthe.platform.source_configuration.domain.model.ConfigurationSourceId;
 import eu.venthe.platform.source_configuration.domain.infrastructure.SourceConfigurationRepository;
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProject;
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProjectId;
@@ -26,50 +26,50 @@ public class SourceConfigurationManager implements SourceQueryService {
     private final SourceConfigurationRepository repository;
     private final PluginProvider provider;
 
-    public SourceId register(SourceConfigurationSpecification specification) {
+    public ConfigurationSourceId register(SourceConfigurationSpecification specification) {
 
-        var configuration = new ProjectSourcePluginInstanceAggregate(new SourceId(), specification.properties(), provider.provide(specification.sourceType(), specification.properties()));
+        var configuration = new ProjectSourcePluginInstanceAggregate(new ConfigurationSourceId(), specification.properties(), provider.provide(specification.sourceType(), specification.properties()));
         repository.save(configuration);
 
         return configuration.getId();
     }
 
-    public void unregister(SourceId sourceConfigurationId) {
+    public void unregister(ConfigurationSourceId sourceConfigurationId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<File> getFile(final SourceId sourceId, final SourceProjectId sourceProjectId, final Revision revision, final Path path) {
-        var sourceConfiguration = getConfiguration(sourceId);
+    public Optional<File> getFile(final ConfigurationSourceId configurationSourceId, final SourceProjectId sourceProjectId, final Revision revision, final Path path) {
+        var sourceConfiguration = getConfiguration(configurationSourceId);
         return sourceConfiguration.getFile(sourceProjectId, revision, path);
     }
 
     @Override
-    public Collection<Metadata> getFileList(final SourceId sourceId, final SourceProjectId sourceProjectId, final Revision revision, final Path path) {
-        var sourceConfiguration = getConfiguration(sourceId);
+    public Collection<Metadata> getFileList(final ConfigurationSourceId configurationSourceId, final SourceProjectId sourceProjectId, final Revision revision, final Path path) {
+        var sourceConfiguration = getConfiguration(configurationSourceId);
         return sourceConfiguration.getFileList(sourceProjectId, revision, path);
     }
 
     @Override
-    public Stream<SourceOwnedProject> getProjects(final SourceId sourceId) {
-        var sourceConfiguration = getConfiguration(sourceId);
+    public Stream<SourceOwnedProject> getProjects(final ConfigurationSourceId configurationSourceId) {
+        var sourceConfiguration = getConfiguration(configurationSourceId);
         return sourceConfiguration.getProjects();
     }
 
     @Override
-    public Stream<SourceOwnedProjectId> getProjectIdentifiers(final SourceId sourceId) {
-        var sourceConfiguration = getConfiguration(sourceId);
+    public Stream<SourceOwnedProjectId> getProjectIdentifiers(final ConfigurationSourceId configurationSourceId) {
+        var sourceConfiguration = getConfiguration(configurationSourceId);
         return sourceConfiguration.getProjectIdentifiers();
     }
 
     @Override
-    public Optional<SourceOwnedProject> getProject(final SourceId sourceId, final SourceProjectId id) {
-        var sourceConfiguration = getConfiguration(sourceId);
+    public Optional<SourceOwnedProject> getProject(final ConfigurationSourceId configurationSourceId, final SourceProjectId id) {
+        var sourceConfiguration = getConfiguration(configurationSourceId);
         return sourceConfiguration.getProject(id);
     }
 
-    private ProjectSourcePluginInstanceAggregate getConfiguration(final SourceId sourceId) {
-        return repository.find(sourceId).orElseThrow();
+    private ProjectSourcePluginInstanceAggregate getConfiguration(final ConfigurationSourceId configurationSourceId) {
+        return repository.find(configurationSourceId).orElseThrow();
     }
 
 }

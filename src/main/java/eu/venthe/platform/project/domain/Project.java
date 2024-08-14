@@ -1,40 +1,46 @@
 package eu.venthe.platform.project.domain;
 
+import eu.venthe.platform.project.domain.event.ProjectCreatedEvent;
 import eu.venthe.platform.shared_kernel.Aggregate;
+import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
-import eu.venthe.platform.shared_kernel.project.ProjectId;
 import eu.venthe.platform.shared_kernel.project.ProjectStatus;
-import lombok.AllArgsConstructor;
+import eu.venthe.platform.source_configuration.application.SourceQueryService;
+import eu.venthe.platform.source_configuration.domain.model.ConfigurationSourceId;
+import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProject;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@AllArgsConstructor
 public class Project implements Aggregate<ProjectId> {
 
     @EqualsAndHashCode.Include
     private final ProjectId id;
-    private final ProjectsSourceConfiguration owningConfiguration;
-    private final ProjectSpecifiedDataProvider provider;
+    private final Source source;
+    private ProjectStatus status;
 
     public Project(final ProjectId id,
-                    final ProjectsSourceConfiguration owningConfiguration,
-                    final ProjectModuleMediator projectModules) {
+                   final ConfigurationSourceId configurationSourceId,
+                   final SourceQueryService sourceQueryService) {
         this.id = id;
-        this.owningConfiguration = owningConfiguration;
-        this.projectModules = projectModules;
-        this.provider = new ProjectSpecifiedDataProvider(this.id.getName(), owningConfiguration.getPluginInstance());
+        this.source = new Source(configurationSourceId, sourceQueryService);
     }
 
-    private ProjectStatus status;
+    public static Pair<Project, List<DomainTrigger>> create(final ProjectId projectId, final ConfigurationSourceId configurationSourceId, final SourceQueryService sourceQueryService) {
+        return Pair.of(new Project(projectId, configurationSourceId, sourceQueryService), Collections.singletonList(new ProjectCreatedEvent(projectId)));
+    }
 
     public void synchronize() {
         log.debug("Initiating synchronization of project {}", id);
-        ProjectDto projectDto = owningConfiguration.getProject(getId().getName()).orElseThrow();
-        status = projectDto.getStatus();
+        var freshProjectInfo = source.getProject(getId());
+        status = freshProjectInfo.status();
         log.info("Synchronization of project {} done", id);
     }
 
@@ -58,4 +64,12 @@ public class Project implements Aggregate<ProjectId> {
         log.debug("Notify about unregistered ref {} in the project {} for the modules", revision, id);
     }
 
+    record Source(ConfigurationSourceId configurationSourceId,
+                  SourceQueryService sourceQueryService) {
+        eu.venthe.platform.source_configuration.domain.plugins.template.Project getProject(final ProjectId id) {
+            return sourceQueryService.getProject(configurationSourceId, id.getName())
+                    .map(SourceOwnedProject::project)
+                    .orElseThrow();
+        }
+    }
 }

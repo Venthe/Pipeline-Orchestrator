@@ -16,7 +16,7 @@ import eu.venthe.platform.source_configuration.application.SourceConfigurationSp
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.source_configuration.application.ProjectSourcesManager;
-import eu.venthe.platform.shared_kernel.project.ProjectId;
+import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.shared_kernel.project.ProjectStatus;
 import eu.venthe.platform.source_configuration.domain.plugins.template.Project;
 import eu.venthe.platform.shared_kernel.git.GitRevision;

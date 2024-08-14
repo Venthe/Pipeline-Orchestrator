@@ -68,7 +68,7 @@ record ProjectsSynchronizer(
 
     private List<DomainTrigger> createProjects(Set<SourceOwnedProjectId> allProjectsFromSource, Set<SourceOwnedProjectId> registeredProjects) {
         return getProjectsToCreate(allProjectsFromSource, registeredProjects)
-                .<DomainTrigger>map(CreateProjectCommand::new)
+                .<DomainTrigger>map(e -> new CreateProjectCommand(namespaceName(), e))
                 .toList();
     }
 

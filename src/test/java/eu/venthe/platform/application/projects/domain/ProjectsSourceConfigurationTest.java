@@ -2,8 +2,8 @@ package eu.venthe.platform.application.projects.domain;
 
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
-import eu.venthe.platform.project.application.dto.CreateProjectSpecificationDto;
-import eu.venthe.platform.shared_kernel.project.ProjectId;
+import eu.venthe.platform.project.application.model.CreateProjectSpecification;
+import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.shared_kernel.project.ProjectStatus;
 import eu.venthe.platform.source_configuration.ProjectsSourceConfiguration;
 import eu.venthe.platform.source_configuration.SourceConfigurationId;
@@ -46,7 +46,7 @@ class ProjectsSourceConfigurationTest {
         // FIXME: Uncomment
         // projectsSourceConfiguration.synchronize();
 
-        Mockito.verify(projectCommands).add(new SourceConfigurationId("TestName"), new CreateProjectSpecificationDto(ProjectId.builder().name("123").configurationId(new SourceConfigurationId("TestName")).build(), ProjectStatus.ACTIVE));
+        Mockito.verify(projectCommands).add(new SourceConfigurationId("TestName"), new CreateProjectSpecification(ProjectId.builder().name("123").configurationId(new SourceConfigurationId("TestName")).build(), ProjectStatus.ACTIVE));
     }
 
     @Test

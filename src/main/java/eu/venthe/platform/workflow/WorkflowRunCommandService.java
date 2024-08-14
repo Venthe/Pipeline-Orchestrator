@@ -4,7 +4,7 @@ import eu.venthe.platform.runner.runner_engine.template.model.dimensions.Dimensi
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
 import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
-import eu.venthe.platform.shared_kernel.project.ProjectId;
+import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
 
 import java.nio.file.Path;

@@ -4,7 +4,7 @@ import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.shared_kernel.events.MessageBroker;
 import eu.venthe.platform.source_configuration.application.SourceQueryService;
-import eu.venthe.platform.source_configuration.domain.model.SourceId;
+import eu.venthe.platform.source_configuration.domain.model.ConfigurationSourceId;
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProjectId;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -32,15 +32,15 @@ public class Namespace {
     @RequiredArgsConstructor
     static class Source {
         private final SourceQueryService sourceQueryService;
-        private final SourceId sourceId;
+        private final ConfigurationSourceId configurationSourceId;
 
-        Source(final SourceId sourceId, final SourceQueryService sourceQueryService) {
-            this.sourceId = sourceId;
+        Source(final ConfigurationSourceId configurationSourceId, final SourceQueryService sourceQueryService) {
+            this.configurationSourceId = configurationSourceId;
             this.sourceQueryService = sourceQueryService;
         }
 
         Set<SourceOwnedProjectId> getAllAvailableProjectIds() {
-            return sourceQueryService.getProjectIdentifiers(sourceId).collect(Collectors.toSet());
+            return sourceQueryService.getProjectIdentifiers(configurationSourceId).collect(Collectors.toSet());
         }
     }
 }

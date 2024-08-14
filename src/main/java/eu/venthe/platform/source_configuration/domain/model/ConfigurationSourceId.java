@@ -2,8 +2,8 @@ package eu.venthe.platform.source_configuration.domain.model;
 
 import java.util.UUID;
 
-public record SourceId(String value) {
-    public SourceId() {
+public record ConfigurationSourceId(String value) {
+    public ConfigurationSourceId() {
         this(UUID.randomUUID().toString());
     }
 }

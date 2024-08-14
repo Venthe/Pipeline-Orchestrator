@@ -1,4 +1,4 @@
-package eu.venthe.platform.source_configuration;
+package eu.venthe.platform.source_configuration.domain;
 
 import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.shared_kernel.configuration_properties.SuppliedProperties;
@@ -22,10 +22,10 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-public class ProjectSourcePluginInstanceAggregate implements Aggregate<SourceId>, ProjectDataProvider {
+public class ProjectSourcePluginInstanceAggregate implements Aggregate<ConfigurationSourceId>, ProjectDataProvider {
     @Getter
     @EqualsAndHashCode.Include
-    private final SourceId id;
+    private final ConfigurationSourceId id;
     private final SuppliedProperties properties;
     private final ProjectSourcePluginInstance pluginInstance;
 
