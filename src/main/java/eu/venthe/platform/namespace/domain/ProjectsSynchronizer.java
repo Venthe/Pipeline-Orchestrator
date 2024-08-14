@@ -1,9 +1,9 @@
-package eu.venthe.platform.organization.domain;
+package eu.venthe.platform.namespace.domain;
 
 import com.google.common.collect.Sets;
-import eu.venthe.platform.organization.domain.events.ArchiveProjectCommand;
-import eu.venthe.platform.organization.domain.events.CreateProjectCommand;
-import eu.venthe.platform.organization.domain.events.SynchronizeProjectCommand;
+import eu.venthe.platform.namespace.domain.events.ArchiveProjectCommand;
+import eu.venthe.platform.namespace.domain.events.CreateProjectCommand;
+import eu.venthe.platform.namespace.domain.events.SynchronizeProjectCommand;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.shared_kernel.events.MessageBroker;
@@ -18,10 +18,10 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toSet;
 
 record ProjectsSynchronizer(
-        Sources sources,
+        Namespace.Source source,
         MessageBroker messageBroker,
         ProjectsQueryService projectsQueryService,
-        OrganizationId organizationId
+        NamespaceName namespaceName
 ) {
     List<DomainTrigger> synchronize() {
         final Set<SourceOwnedProjectId> allProjectsFromSource = getAllAvailableProjectIds();
@@ -37,11 +37,11 @@ record ProjectsSynchronizer(
     }
 
     private Set<SourceOwnedProjectId> getAllAvailableProjectIds() {
-        return new HashSet<>(sources.getAllAvailableProjectIds());
+        return new HashSet<>(source.getAllAvailableProjectIds());
     }
 
     private Set<SourceOwnedProjectId> getAlreadyRegisteredProjects() {
-        return projectsQueryService.getProjectIds(organizationId)
+        return projectsQueryService.getProjectIds(namespaceName)
                 .map(e -> new SourceOwnedProjectId(e.getConfigurationId(), e.getName()))
                 .collect(toSet());
     }

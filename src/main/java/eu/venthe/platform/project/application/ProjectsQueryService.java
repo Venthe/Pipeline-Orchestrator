@@ -1,11 +1,10 @@
 package eu.venthe.platform.project.application;
 
-import eu.venthe.platform.organization.domain.OrganizationId;
+import eu.venthe.platform.namespace.domain.NamespaceName;
 import eu.venthe.platform.project.application.dto.WorkflowTaskDto;
 import eu.venthe.platform.project.application.dto.ProjectDto;
 import eu.venthe.platform.project.application.dto.WorkflowDetailDto;
 import eu.venthe.platform.project.application.dto.ProjectDetailsDto;
-import eu.venthe.platform.source_configuration.SourceConfigurationId;
 import eu.venthe.platform.shared_kernel.project.ProjectId;
 import eu.venthe.platform.workflow.utilities.GlobPatternMatching;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
@@ -29,7 +28,7 @@ public interface ProjectsQueryService {
 
     List<WorkflowTaskDto> showAllTasks();
 
-    Stream<ProjectId> getProjectIds(OrganizationId id);
+    Stream<ProjectId> getProjectIds(NamespaceName id);
 
     Set<File> getFiles(GlobPatternMatching.Glob pattern);
 

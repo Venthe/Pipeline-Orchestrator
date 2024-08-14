@@ -1,6 +1,6 @@
 package eu.venthe.platform.shared_kernel.project;
 
-import eu.venthe.platform.organization.domain.OrganizationId;
+import eu.venthe.platform.namespace.domain.NamespaceName;
 import eu.venthe.platform.source_configuration.SourceConfigurationId;
 import eu.venthe.platform.source_configuration.domain.model.SourceId;
 import eu.venthe.platform.source_configuration.domain.plugins.template.SourceProjectId;
@@ -14,12 +14,11 @@ import java.util.regex.Pattern;
 public class ProjectId {
     private static final Pattern PATTERN = Pattern.compile("/^(?:(?<configuration>.+):)?(?:(?<organization>.+?)/)?(?<name>.*\\w)$/", Pattern.CASE_INSENSITIVE);
 
-    SourceId configurationId;
-    OrganizationId organizationId;
+    NamespaceName namespaceName;
     SourceProjectId name;
 
     public String serialize() {
-        return "%s:%s/%s".formatted(configurationId.value(), organizationId.value(), name);
+        return "%s/%s".formatted(namespaceName.value(), name);
     }
 
     public static ProjectId from(String projectId) {
@@ -28,7 +27,7 @@ public class ProjectId {
 
         var builder = ProjectId.builder();
         builder.configurationId(new SourceConfigurationId(extracted(projectId, 0, sourceSeparator)));
-        builder.organizationId(new OrganizationId(extracted(projectId, Math.max(sourceSeparator, 0), orgSeparator)));
+        builder.namespaceName(new NamespaceName(extracted(projectId, Math.max(sourceSeparator, 0), orgSeparator)));
 
         var projectSeparator = Math.max((Math.max(sourceSeparator, 0)), orgSeparator);
 

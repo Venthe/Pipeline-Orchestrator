@@ -1,7 +1,7 @@
-package eu.venthe.platform.organization.domain;
+package eu.venthe.platform.namespace.domain;
 
-import eu.venthe.platform.organization.application.model.CreateOrganizationSpecification;
-import eu.venthe.platform.organization.domain.events.OrganizationCreatedEvent;
+import eu.venthe.platform.namespace.application.model.CreateNamespaceSpecification;
+import eu.venthe.platform.namespace.domain.events.NamespaceCreatedEvent;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.shared_kernel.events.MessageBroker;
@@ -16,20 +16,20 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class OrganizationFactory {
+public class NamespaceFactory {
     private final SourceConfigurationManager sourceConfigurationManager;
     private final SourceQueryService sourceQueryService;
     private final MessageBroker messageBroker;
     private final ProjectsQueryService projectsQueryService;
 
-    public Pair<Organization, List<DomainTrigger>> create(CreateOrganizationSpecification specification) {
+    public Pair<Namespace, List<DomainTrigger>> create(CreateNamespaceSpecification specification) {
 
         var source = sourceConfigurationManager.register(specification.source());
-        var organization = new Organization(specification.organizationId(), new Sources(source, sourceQueryService), messageBroker, projectsQueryService);
+        var organization = new Namespace(specification.namespaceName(), new Namespace.Source(source, sourceQueryService), messageBroker, projectsQueryService);
 
         return Pair.of(
                 organization,
-                Collections.singletonList(new OrganizationCreatedEvent())
+                Collections.singletonList(new NamespaceCreatedEvent(organization.getNamespaceName()))
         );
     }
 }

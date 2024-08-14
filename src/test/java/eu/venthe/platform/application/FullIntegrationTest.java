@@ -10,8 +10,8 @@ import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.WorkflowRunQueryService;
 import eu.venthe.platform.workflow.runs.JobCallbackCallMetadata;
 import eu.venthe.platform.workflow.runs._archive._1.model.query.JobExecutionDetailsDto;
-import eu.venthe.platform.organization.application.OrganizationCommandService;
-import eu.venthe.platform.organization.application.model.CreateOrganizationSpecification;
+import eu.venthe.platform.namespace.application.NamespaceCommandService;
+import eu.venthe.platform.namespace.application.model.CreateNamespaceSpecification;
 import eu.venthe.platform.source_configuration.application.SourceConfigurationSpecification;
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
@@ -56,7 +56,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     JobExecutorCallbackService callbackService;
     @Autowired
-    OrganizationCommandService organizationCommandService;
+    NamespaceCommandService namespaceCommandService;
 
     @Autowired
     ProjectsQueryService projectsQueryService;
@@ -92,17 +92,17 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                             """.getBytes(StandardCharsets.UTF_8)));
         });
 
-        val organizationSpecification = CreateOrganizationSpecification.builder()
+        val organizationSpecification = CreateNamespaceSpecification.builder()
                 .organizationId(requestedOrganizationId)
                 .build();
-        final var organizationId = organizationCommandService.create(organizationSpecification);
+        final var organizationId = namespaceCommandService.create(organizationSpecification);
 
         val sourceSpecification = SourceConfigurationSpecification.builder()
                 .organizationId(organizationId)
                 .sourceType(sourceType)
                 .configurationId(requestedSourceConfigurationId)
                 .build();
-        val sourceConfigurationId = organizationCommandService.addSourceConfiguration(sourceSpecification);
+        val sourceConfigurationId = namespaceCommandService.addSourceConfiguration(sourceSpecification);
 
         val adapterSpecification = RegisterRunnerEngineInstanceSpecification.builder()
                 .organizationId(organizationId)

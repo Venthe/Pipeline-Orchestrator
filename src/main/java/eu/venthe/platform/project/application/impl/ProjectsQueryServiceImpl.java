@@ -1,6 +1,6 @@
 package eu.venthe.platform.project.application.impl;
 
-import eu.venthe.platform.organization.domain.OrganizationId;
+import eu.venthe.platform.namespace.domain.NamespaceName;
 import eu.venthe.platform.workflow.utilities.GlobPatternMatching;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.project.application.dto.ProjectDetailsDto;
@@ -54,7 +54,7 @@ public class ProjectsQueryServiceImpl implements ProjectsQueryService {
     }
 
     @Override
-    public Stream<ProjectId> getProjectIds(OrganizationId configurationId) {
+    public Stream<ProjectId> getProjectIds(NamespaceName configurationId) {
         return projectRepository.findAll().stream()
                 .filter(e -> e.getOwningConfiguration()
                         .getConfigurationId()

@@ -1,0 +1,46 @@
+package eu.venthe.platform.namespace.domain;
+
+import eu.venthe.platform.project.application.ProjectsQueryService;
+import eu.venthe.platform.shared_kernel.events.DomainTrigger;
+import eu.venthe.platform.shared_kernel.events.MessageBroker;
+import eu.venthe.platform.source_configuration.application.SourceQueryService;
+import eu.venthe.platform.source_configuration.domain.model.SourceId;
+import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProjectId;
+import lombok.RequiredArgsConstructor;
+import lombok.Value;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Value
+public class Namespace {
+    NamespaceName namespaceName;
+    Source source;
+    ProjectsSynchronizer projectsSynchronizer;
+
+    Namespace(NamespaceName namespaceName, Source source, MessageBroker messageBroker, ProjectsQueryService projectsQueryService) {
+        this.source = source;
+        this.namespaceName = namespaceName;
+        this.projectsSynchronizer = new ProjectsSynchronizer(source, messageBroker, projectsQueryService, namespaceName);
+    }
+
+    public List<DomainTrigger> synchronize() {
+        return projectsSynchronizer.synchronize();
+    }
+
+    @RequiredArgsConstructor
+    static class Source {
+        private final SourceQueryService sourceQueryService;
+        private final SourceId sourceId;
+
+        Source(final SourceId sourceId, final SourceQueryService sourceQueryService) {
+            this.sourceId = sourceId;
+            this.sourceQueryService = sourceQueryService;
+        }
+
+        Set<SourceOwnedProjectId> getAllAvailableProjectIds() {
+            return sourceQueryService.getProjectIdentifiers(sourceId).collect(Collectors.toSet());
+        }
+    }
+}

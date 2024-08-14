@@ -1,7 +1,6 @@
-package eu.venthe.platform.organization.domain.events;
+package eu.venthe.platform.namespace.domain.events;
 
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
-import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProject;
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProjectId;
 
 public class CreateProjectCommand implements DomainTrigger {
