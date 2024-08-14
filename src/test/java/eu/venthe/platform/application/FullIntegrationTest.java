@@ -20,7 +20,9 @@ import eu.venthe.platform.workflow.JobExecutorCallbackService;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.WorkflowRunQueryService;
 import eu.venthe.platform.workflow.runs.JobCallbackCallMetadata;
+import eu.venthe.platform.workflow.runs.WorkflowRunStatus;
 import eu.venthe.platform.workflow.runs._archive._1.model.query.JobExecutionDetailsDto;
+import eu.venthe.platform.workflow.runs._archive._1.model.query.WorkflowExecutionDto;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.assertj.core.api.Assertions;
@@ -127,10 +129,10 @@ class FullIntegrationTest extends AbstractIntegrationTest {
             callbackService.jobRunCompleted(_metadata);
         });
 
-        val workflowExecutionId = projectWorkflowCommandService.triggerWorkflowDispatch(projectId, revision, Paths.get("test-workflow.yml"));
+        val workflowRunId = projectWorkflowCommandService.triggerWorkflowDispatch(projectId, revision, Paths.get("test-workflow.yml"));
 
         await("Execution done").untilAsserted(() ->
-                Assertions.assertThat(workflowRunQueryService.getExecutionDetails(workflowExecutionId)).isEqualTo(new JobExecutionDetailsDto()));
+                Assertions.assertThat(workflowRunQueryService.getExecutionDetails(workflowRunId)).isPresent().contains(new WorkflowExecutionDto(workflowRunId, WorkflowRunStatus.SUCCESS)));
     }
 
 }

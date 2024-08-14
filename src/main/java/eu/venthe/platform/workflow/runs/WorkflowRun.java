@@ -1,5 +1,8 @@
 package eu.venthe.platform.workflow.runs;
 
+import eu.venthe.platform.project.domain.ProjectId;
+import eu.venthe.platform.shared_kernel.Aggregate;
+import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
 import eu.venthe.platform.workflow.model.JobRunId;
@@ -9,9 +12,6 @@ import eu.venthe.platform.workflow.runs.dependencies.TriggeringEntity;
 import eu.venthe.platform.workflow.runs.events.RequestJobRunCommand;
 import eu.venthe.platform.workflow.runs.events.WorkflowRunCreatedEvent;
 import eu.venthe.platform.workflow.runs.jobs.JobRuns;
-import eu.venthe.platform.project.domain.ProjectId;
-import eu.venthe.platform.shared_kernel.Aggregate;
-import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -30,7 +30,7 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
     @Getter
     @EqualsAndHashCode.Include
     private final WorkflowRunId id;
-    WorkflowRunCommandService.Context context;
+    private final WorkflowRunCommandService.Context context;
     @Getter
     private final OffsetDateTime startDate;
     @Getter

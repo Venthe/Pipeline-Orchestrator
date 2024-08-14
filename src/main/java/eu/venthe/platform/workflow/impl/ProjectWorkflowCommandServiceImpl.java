@@ -8,6 +8,7 @@ import eu.venthe.platform.workflow.runs.WorkflowCorrelationId;
 import eu.venthe.platform.workflow.runs.WorkflowRun;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
 import eu.venthe.platform.workflow.runs.dependencies.TimeService;
+import eu.venthe.platform.workflow.runs.dependencies.TriggeringEntity;
 import eu.venthe.platform.workflow.runs.infrastructure.WorkflowRunRepository;
 import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.application.security.User;
@@ -61,7 +62,7 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowRunCommandServ
         messageBroker.exchange(new Envelope<>(event));
 
         var invoke = new ExponentialBackOff()
-                .invoke(() -> workflowRunQueryService.getExecutionDetails(new WorkflowCorrelationId(event.getId().toString())).orElseThrow());
+                .invoke(() -> workflowRunQueryService.getExecutionDetails(new WorkflowCorrelationId(event.getId().serialize())).orElseThrow());
 
         return invoke.orElseThrow().workflowRunId();
     }
@@ -76,10 +77,10 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowRunCommandServ
     }
 
     @Override
-    public WorkflowRunId triggerWorkflow(final WorkflowDefinition definition, final Context context) {
-        var pair = WorkflowRun.crate(definition, context, timeService, null);
+    public WorkflowRunId triggerWorkflow(WorkflowDefinition definition, Context context, TriggeringEntity triggeringEntity) {
+        var pair = WorkflowRun.crate(definition, context, timeService, triggeringEntity);
         var workflowRun = pair.getRight();
-        repository.save(new WorkflowRunRepository.Aggregate(new WorkflowRunRepository.Id(context.id(), workflowRun.getId()), workflowRun));
+        repository.save(workflowRun);
         var runEvents = workflowRun.run();
         var creationEvents = pair.getLeft();
         Collection<Envelope<?>> allEvents = Stream.concat(runEvents.stream(), creationEvents.stream())

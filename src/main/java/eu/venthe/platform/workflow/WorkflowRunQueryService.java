@@ -13,15 +13,11 @@ public interface WorkflowRunQueryService {
         throw new UnsupportedOperationException();
     }
 
-    default Optional<WorkflowExecutionDto> getExecutionDetails(WorkflowRunId executionId) {
-        throw new UnsupportedOperationException();
-    }
+    Optional<WorkflowExecutionDto> getExecutionDetails(WorkflowRunId executionId);
 
     default Optional<WorkflowExecutionDto> getExecutionDetails(WorkflowRunId executionId, JobRunId jobRunId) {
         throw new UnsupportedOperationException();
     }
 
-    default Optional<WorkflowExecutionDto> getExecutionDetails(WorkflowCorrelationId workflowCorrelationId) {
-        throw new UnsupportedOperationException();
-    }
+    Optional<WorkflowExecutionDto> getExecutionDetails(WorkflowCorrelationId workflowCorrelationId);
 }

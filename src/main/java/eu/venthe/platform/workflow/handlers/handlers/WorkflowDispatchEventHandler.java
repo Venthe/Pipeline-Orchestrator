@@ -9,6 +9,9 @@ import eu.venthe.platform.shared_kernel.system_events.WorkflowDispatchEvent;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
 import eu.venthe.platform.workflow.events.WorkflowDispatchEventWrapper;
+import eu.venthe.platform.workflow.runs.WorkflowCorrelationId;
+import eu.venthe.platform.workflow.runs.dependencies.Actor;
+import eu.venthe.platform.workflow.runs.dependencies.TriggeringEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +53,17 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
             return Collections.emptyList();
         }
 
-        workflowRunCommandService.triggerWorkflow(workflowDefinition, new WorkflowRunCommandService.Context(event.getRepository().getId(), event.getRevision(), new HashSet<>()));
+        workflowRunCommandService.triggerWorkflow(workflowDefinition, new WorkflowRunCommandService.Context(event.getRepository().getId(), event.getRevision(), new HashSet<>()), new TriggeringEntity() {
+            @Override
+            public Actor getActor() {
+                return null;
+            }
+
+            @Override
+            public WorkflowCorrelationId getCorrelationId() {
+                return new WorkflowCorrelationId(event.getId().serialize());
+            }
+        });
 
         return Collections.emptyList();
     }

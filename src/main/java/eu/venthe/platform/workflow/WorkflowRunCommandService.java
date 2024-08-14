@@ -1,12 +1,12 @@
 package eu.venthe.platform.workflow;
 
+import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.runner.runner_engine.template.model.dimensions.Dimension;
 import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
 import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
-import eu.venthe.platform.project.domain.ProjectId;
-import eu.venthe.platform.shared_kernel.git.GitRevision;
+import eu.venthe.platform.workflow.runs.dependencies.TriggeringEntity;
 
 import java.nio.file.Path;
 import java.util.Set;
@@ -31,9 +31,12 @@ public interface WorkflowRunCommandService {
     }
 
     // Low level API
-    default WorkflowRunId triggerWorkflow(WorkflowDefinition definition, Context context) {
-        throw new UnsupportedOperationException();
-    }
+    WorkflowRunId triggerWorkflow(WorkflowDefinition definition, Context context, TriggeringEntity triggeringEntity);
 
-    record Context(ProjectId id, SimpleRevision revision, Set<Dimension> dimensions) {}
+    record Context(
+            ProjectId id,
+            SimpleRevision revision,
+            Set<Dimension> dimensions
+    ) {
+    }
 }
