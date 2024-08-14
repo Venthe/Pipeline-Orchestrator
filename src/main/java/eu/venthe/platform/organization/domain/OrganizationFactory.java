@@ -23,15 +23,9 @@ public class OrganizationFactory {
     private final ProjectsQueryService projectsQueryService;
 
     public Pair<Organization, List<DomainTrigger>> create(CreateOrganizationSpecification specification) {
-        var id = specification.organizationId();
 
-        if (specification.sources().get(Sources.SourceAlias.DEFAULT) == null) {
-            throw new UnsupportedOperationException();
-        }
-
-        var organization = new Organization(id, new Sources(sourceQueryService), messageBroker, projectsQueryService);
-
-        specification.sources().forEach((k, v) -> organization.addConfiguration(sourceConfigurationManager.register(v), k));
+        var source = sourceConfigurationManager.register(specification.source());
+        var organization = new Organization(specification.organizationId(), new Sources(source, sourceQueryService), messageBroker, projectsQueryService);
 
         return Pair.of(
                 organization,

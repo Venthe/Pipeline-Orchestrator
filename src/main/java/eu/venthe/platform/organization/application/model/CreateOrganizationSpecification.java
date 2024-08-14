@@ -10,7 +10,7 @@ import java.util.Map;
 @Builder
 public record CreateOrganizationSpecification(
         OrganizationId organizationId,
-        Map<Sources.SourceAlias, SourceConfigurationSpecification> sources
+        SourceConfigurationSpecification source
 ) {
     public static class CreateOrganizationSpecificationBuilder {
         public CreateOrganizationSpecificationBuilder organizationId(String organizationId) {
