@@ -78,7 +78,7 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         status = WorkflowRunStatus.REQUESTED;
         this.workflow = workflow;
 
-        jobs = new JobRuns(this.workflow.getJobs(), this, timeService);
+        jobs = new JobRuns(this.workflow.getJobs(), timeService);
     }
 
     public Actor getTriggeringActor() {
@@ -109,14 +109,14 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
     }
 
     public List<DomainTrigger> notifyJobStarted(JobRunId executionId, ZonedDateTime startDate) {
-        throw new UnsupportedOperationException();
+        return jobs.notifyJobStarted(executionId, startDate);
     }
 
     public List<DomainTrigger> notifyJobCompleted(JobRunId executionId, ZonedDateTime startDate, Map<String, String> outputs) {
-        throw new UnsupportedOperationException();
+        return jobs.notifyJobCompleted(executionId, startDate, outputs);
     }
 
-    List<DomainTrigger> progress(final JobRunId id, final StepId key, final JobRunStatus value, ZonedDateTime timeOfChange) {
-        throw new UnsupportedOperationException();
+    List<DomainTrigger> progress(JobRunId id, StepId key, JobRunStatus value, ZonedDateTime timeOfChange) {
+        return jobs.progress(id, key, value, timeOfChange);
     }
 }
