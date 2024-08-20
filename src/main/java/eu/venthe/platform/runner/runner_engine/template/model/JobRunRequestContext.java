@@ -63,7 +63,6 @@ public record JobRunRequestContext(
             Integer retentionDays,
             WorkflowRunId workflowRunId,
             Integer workflowRunAttempt,
-            RunCallbackToken callbackToken,
             String workflowName,
             GitRevision workflowRevision) {
     }

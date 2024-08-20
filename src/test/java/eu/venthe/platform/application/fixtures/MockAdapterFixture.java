@@ -25,16 +25,16 @@ public class MockAdapterFixture {
     private final MockRunnerEngineInstance adapterInstance;
     private final TestRunnerEngineDefinition executionAdapter;
 
-    public void setupExecution(Consumer<MockRunnerEngineInstance.Metadata> consumer) {
+    public void setupExecution(ContextConsumer consumer) {
         Mockito.doAnswer(invocation -> {
             var context = invocation.getArgument(0, RunnerContext.class);
             var dimensions = invocation.getArgument(1, RunnerDimensions.class);
 
             try (ExecutorService threadExecutor = Executors.newSingleThreadExecutor()) {
                 threadExecutor.execute(() -> {
-                    log.info("Executing {} for {}", null, null);
-                    consumer.accept(new MockRunnerEngineInstance.Metadata(context, dimensions));
-                    log.info("Execution {} complete.", (Object) null);
+                    log.info("Executing {} for {}", context, dimensions);
+                    consumer.accept(context, dimensions);
+                    log.info("Execution {} complete.", (Object) context);
                 });
             }
             return null;
@@ -46,10 +46,10 @@ public class MockAdapterFixture {
     }
 
     public interface MockRunnerEngineInstance extends RunnerEngineInstance {
-        record Metadata(
-                RunnerContext context,
-                RunnerDimensions dimensions
-        ) {
-        }
+    }
+
+    @FunctionalInterface
+    public interface ContextConsumer {
+        void accept(RunnerContext context, RunnerDimensions dimensions);
     }
 }

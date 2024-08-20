@@ -5,12 +5,14 @@ import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
+import eu.venthe.platform.workflow.definition._archive.steps.StepId;
 import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.dependencies.Actor;
 import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import eu.venthe.platform.workflow.runs.dependencies.TriggeringEntity;
 import eu.venthe.platform.workflow.runs.events.RequestJobRunCommand;
 import eu.venthe.platform.workflow.runs.events.WorkflowRunCreatedEvent;
+import eu.venthe.platform.workflow.runs.jobs.JobRunStatus;
 import eu.venthe.platform.workflow.runs.jobs.JobRuns;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -71,7 +73,7 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
                         TriggeringEntity triggeringEntity) {
         this.context = context;
         this.triggeringEntity = triggeringEntity;
-        id = WorkflowRunId.generate();
+        id = WorkflowRunId.generate(context.id());
         startDate = timeService.offset().now();
         status = WorkflowRunStatus.REQUESTED;
         this.workflow = workflow;
@@ -106,19 +108,15 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         throw new UnsupportedOperationException();
     }
 
-    public void notifyJobStarted(JobRunId executionId, ZonedDateTime startDate) {
+    public List<DomainTrigger> notifyJobStarted(JobRunId executionId, ZonedDateTime startDate) {
         throw new UnsupportedOperationException();
     }
 
-    public void notifyJobCompleted(JobRunId executionId, ZonedDateTime startDate, Map<String, String> outputs) {
+    public List<DomainTrigger> notifyJobCompleted(JobRunId executionId, ZonedDateTime startDate, Map<String, String> outputs) {
         throw new UnsupportedOperationException();
     }
 
-    public void notifyStepStarted(JobRunId executionId, ZonedDateTime startDate) {
-        throw new UnsupportedOperationException();
-    }
-
-    public void notifyStepCompleted(JobRunId executionId, ZonedDateTime endDate) {
+    List<DomainTrigger> progress(final JobRunId id, final StepId key, final JobRunStatus value, ZonedDateTime timeOfChange) {
         throw new UnsupportedOperationException();
     }
 }

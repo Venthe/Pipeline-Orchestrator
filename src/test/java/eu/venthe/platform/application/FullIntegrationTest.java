@@ -21,7 +21,6 @@ import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.WorkflowRunQueryService;
 import eu.venthe.platform.workflow.runs.JobCallbackCallMetadata;
 import eu.venthe.platform.workflow.runs.WorkflowRunStatus;
-import eu.venthe.platform.workflow.runs._archive._1.model.query.JobExecutionDetailsDto;
 import eu.venthe.platform.workflow.runs._archive._1.model.query.WorkflowExecutionDto;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -34,6 +33,8 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.ZonedDateTime;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -121,12 +122,12 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
 
-        adapterFixture.setupExecution(metadata -> {
-            var _metadata = new JobCallbackCallMetadata(null, null, null, metadata.context().runCallbackToken());
-            log.info("Metadata: {}", metadata);
-            callbackService.jobRunStarted(_metadata);
-            callbackService.jobRunProgressed(_metadata);
-            callbackService.jobRunCompleted(_metadata);
+        adapterFixture.setupExecution((context, dimensions) -> {
+            var _metadata = new JobCallbackCallMetadata(context.jobRunRequestContext().system().workflowRunId(), context.jobRunRequestContext().system().jobRunId(), context.runCallbackToken());
+            log.info("Metadata: {}, Dimensions: {}", context, dimensions);
+            callbackService.jobRunStarted(_metadata, ZonedDateTime.now());
+            callbackService.jobRunProgressed(_metadata, Map.of());
+            callbackService.jobRunCompleted(_metadata, ZonedDateTime.now(), Map.of());
         });
 
         val workflowRunId = projectWorkflowCommandService.triggerWorkflowDispatch(projectId, revision, Paths.get("test-workflow.yml"));

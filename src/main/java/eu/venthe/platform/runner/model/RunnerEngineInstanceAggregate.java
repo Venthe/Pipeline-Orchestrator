@@ -2,6 +2,7 @@ package eu.venthe.platform.runner.model;
 
 import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.runner.runner_engine.template.RunnerEngineInstance;
+import eu.venthe.platform.runner.runner_engine.template.model.JobRunRequestContext;
 import eu.venthe.platform.runner.runner_engine.template.model.RunCallbackToken;
 import eu.venthe.platform.runner.runner_engine.template.model.RunnerContext;
 import eu.venthe.platform.runner.runner_engine.template.model.RunnerId;
@@ -27,7 +28,36 @@ public class RunnerEngineInstanceAggregate implements Aggregate<RunnerEngineInst
                                   URL systemApiUrl,
                                   RunCallbackToken runCallbackToken,
                                   RunnerDimensions dimensions) {
-        var context = new RunnerContext(null, systemApiUrl, runCallbackToken);
+        var context = new RunnerContext(
+                new JobRunRequestContext(
+                        new JobRunRequestContext.SystemContext(
+                                null,
+                                null,
+                                null,
+                                null,
+                                null,
+                                executionId,
+                                null,
+                                null,
+                                null,
+                                null,
+                                workflowRunId,
+                                null,
+                                null,
+                                null
+                        ),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                ),
+                systemApiUrl,
+                runCallbackToken
+        );
         runnerEngineInstance.queueExecution(context,
                 dimensions);
     }
