@@ -130,7 +130,7 @@ openApiGenerate {
     templateDir.set("$projectDir/src/main/resources/template/gerrit/")
     inputSpec.set("$projectDir/src/main/resources/schemas/gerrit.openapi.yaml")
     validateSpec = true
-    targetPackage = "eu.venthe.pipeline.gerrit"
+    targetPackage = "eu.venthe.platform.gerrit"
 }
 
 java.sourceSets["main"].java {
