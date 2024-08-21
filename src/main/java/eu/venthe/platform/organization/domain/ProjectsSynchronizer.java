@@ -1,9 +1,9 @@
-package eu.venthe.platform.namespace.domain;
+package eu.venthe.platform.organization.domain;
 
 import com.google.common.collect.Sets;
-import eu.venthe.platform.namespace.domain.events.ArchiveProjectCommand;
-import eu.venthe.platform.namespace.domain.events.CreateProjectCommand;
-import eu.venthe.platform.namespace.domain.events.SynchronizeProjectCommand;
+import eu.venthe.platform.organization.domain.events.ArchiveProjectCommand;
+import eu.venthe.platform.organization.domain.events.CreateProjectCommand;
+import eu.venthe.platform.organization.domain.events.SynchronizeProjectCommand;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.shared_kernel.events.MessageBroker;
@@ -19,10 +19,10 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toSet;
 
 record ProjectsSynchronizer(
-        Namespace.Source source,
+        Organization.Source source,
         MessageBroker messageBroker,
         ProjectsQueryService projectsQueryService,
-        NamespaceName namespaceName
+        OrganizationName organizationName
 ) {
     List<DomainTrigger> synchronize() {
         final Set<SourceOwnedProjectId> allProjectsFromSource = getAllAvailableProjectIds();
@@ -42,7 +42,7 @@ record ProjectsSynchronizer(
     }
 
     private Set<SourceOwnedProjectId> getAlreadyRegisteredProjects() {
-        return projectsQueryService.getProjectIds(namespaceName)
+        return projectsQueryService.getProjectIds(organizationName)
                 .map(e -> new SourceOwnedProjectId(source.getConfigurationSourceId(), e.getName()))
                 .collect(toSet());
     }
@@ -69,7 +69,7 @@ record ProjectsSynchronizer(
 
     private List<DomainTrigger> createProjects(Set<SourceOwnedProjectId> allProjectsFromSource, Set<SourceOwnedProjectId> registeredProjects) {
         return getProjectsToCreate(allProjectsFromSource, registeredProjects)
-                .<DomainTrigger>map(e -> new CreateProjectCommand(namespaceName(), e))
+                .<DomainTrigger>map(e -> new CreateProjectCommand(organizationName(), e))
                 .toList();
     }
 

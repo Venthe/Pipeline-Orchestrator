@@ -1,13 +1,13 @@
-package eu.venthe.platform.namespace.domain.events;
+package eu.venthe.platform.organization.domain.events;
 
-import eu.venthe.platform.namespace.domain.NamespaceName;
+import eu.venthe.platform.organization.domain.OrganizationName;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedProjectId;
 import lombok.Value;
 
 @Value
 public class CreateProjectCommand implements DomainTrigger {
-    NamespaceName namespaceName;
+    OrganizationName organizationName;
     SourceOwnedProjectId projectId;
 
     @Override

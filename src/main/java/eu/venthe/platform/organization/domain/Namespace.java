@@ -1,4 +1,4 @@
-package eu.venthe.platform.namespace.domain;
+package eu.venthe.platform.organization.domain;
 
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.shared_kernel.Aggregate;
@@ -16,23 +16,23 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Value
-public class Namespace implements Aggregate<NamespaceName> {
-    NamespaceName namespaceName;
+public class Organization implements Aggregate<OrganizationName> {
+    OrganizationName organizationName;
     Source source;
     ProjectsSynchronizer projectsSynchronizer;
 
-    Namespace(NamespaceName namespaceName, Source source, MessageBroker messageBroker, ProjectsQueryService projectsQueryService) {
+    Organization(OrganizationName organizationName, Source source, MessageBroker messageBroker, ProjectsQueryService projectsQueryService) {
         this.source = source;
-        this.namespaceName = namespaceName;
-        this.projectsSynchronizer = new ProjectsSynchronizer(source, messageBroker, projectsQueryService, namespaceName);
+        this.organizationName = organizationName;
+        this.projectsSynchronizer = new ProjectsSynchronizer(source, messageBroker, projectsQueryService, organizationName);
     }
 
     public List<DomainTrigger> synchronize() {
         return projectsSynchronizer.synchronize();
     }
 
-    public NamespaceName getId() {
-        return namespaceName;
+    public OrganizationName getId() {
+        return organizationName;
     }
 
     @RequiredArgsConstructor

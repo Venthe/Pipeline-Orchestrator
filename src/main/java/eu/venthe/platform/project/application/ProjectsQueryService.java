@@ -1,6 +1,6 @@
 package eu.venthe.platform.project.application;
 
-import eu.venthe.platform.namespace.domain.NamespaceName;
+import eu.venthe.platform.organization.domain.OrganizationName;
 import eu.venthe.platform.project.application.model.ProjectDto;
 import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
@@ -17,7 +17,7 @@ public interface ProjectsQueryService {
 
     Optional<ProjectDto> find(ProjectId projectId);
 
-    Stream<ProjectId> getProjectIds(NamespaceName id);
+    Stream<ProjectId> getProjectIds(OrganizationName id);
 
     Optional<File> getFile(ProjectId id, SimpleRevision revision, Path file);
 }

@@ -2,8 +2,8 @@ package eu.venthe.platform.application;
 
 import eu.venthe.platform.application.fixtures.MockAdapterFixture;
 import eu.venthe.platform.application.fixtures.MockProjectSourceFixture;
-import eu.venthe.platform.namespace.application.NamespaceCommandService;
-import eu.venthe.platform.namespace.application.model.CreateNamespaceSpecification;
+import eu.venthe.platform.organization.application.OrganizationCommandService;
+import eu.venthe.platform.organization.application.model.CreateOrganizationSpecification;
 import eu.venthe.platform.project.application.ProjectsCommandService;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.project.domain.ProjectId;
@@ -59,7 +59,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     JobExecutorCallbackService callbackService;
     @Autowired
-    NamespaceCommandService namespaceCommandService;
+    OrganizationCommandService organizationCommandService;
 
     @Autowired
     ProjectsQueryService projectsQueryService;
@@ -74,7 +74,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Test
     void name() {
         val projectName = new SourceProjectId("Example-Project");
-        val namespaceName = "default";
+        val organizationName = "default";
         val sourceType = "test";
         val engineInstanceId = "default";
         val engineType = "default";
@@ -99,14 +99,14 @@ class FullIntegrationTest extends AbstractIntegrationTest {
                 .sourceType(sourceType)
                 .build();
 
-        val organizationSpecification = CreateNamespaceSpecification.builder()
-                .namespaceName(namespaceName)
+        val organizationSpecification = CreateOrganizationSpecification.builder()
+                .organizationName(organizationName)
                 .source(sourceSpecification)
                 .build();
-        val createdNamespaceName = namespaceCommandService.register(organizationSpecification);
+        val createdOrganizationName = organizationCommandService.register(organizationSpecification);
 
         val adapterSpecification = RegisterRunnerEngineInstanceSpecification.builder()
-                .namespaceName(createdNamespaceName)
+                .organizationName(createdOrganizationName)
                 .runnerEngineInstanceId(engineInstanceId)
                 .runnerEngineType(engineType)
                 .build();
@@ -116,9 +116,9 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
         // At this point, auto synchronization should happen. Let's wait for it.
         await("Synchronization done")
-                .until(() -> !projectsQueryService.getProjectIds(createdNamespaceName).collect(toSet()).isEmpty());
+                .until(() -> !projectsQueryService.getProjectIds(createdOrganizationName).collect(toSet()).isEmpty());
 
-        val projectId = new ProjectId(createdNamespaceName, projectName);
+        val projectId = new ProjectId(createdOrganizationName, projectName);
         await("Project found")
                 .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
 

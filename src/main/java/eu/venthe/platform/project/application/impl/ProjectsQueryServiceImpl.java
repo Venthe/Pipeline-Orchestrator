@@ -1,6 +1,6 @@
 package eu.venthe.platform.project.application.impl;
 
-import eu.venthe.platform.namespace.domain.NamespaceName;
+import eu.venthe.platform.organization.domain.OrganizationName;
 import eu.venthe.platform.project.application.ProjectsQueryService;
 import eu.venthe.platform.project.application.model.ProjectDto;
 import eu.venthe.platform.project.domain.Project;
@@ -40,8 +40,8 @@ public class ProjectsQueryServiceImpl implements ProjectsQueryService {
     }
 
     @Override
-    public Stream<ProjectId> getProjectIds(NamespaceName namespaceName) {
-        return projectRepository.findAll().stream().map(Project::getId).filter(id -> id.getNamespaceName().equals(namespaceName));
+    public Stream<ProjectId> getProjectIds(OrganizationName organizationName) {
+        return projectRepository.findAll().stream().map(Project::getId).filter(id -> id.getOrganizationName().equals(organizationName));
     }
 
     @Override

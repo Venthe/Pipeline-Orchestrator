@@ -1,13 +1,13 @@
 package eu.venthe.platform.runner.model;
 
-import eu.venthe.platform.namespace.domain.NamespaceName;
+import eu.venthe.platform.organization.domain.OrganizationName;
 import eu.venthe.platform.runner.runner_engine.template.model.RunnerEngineType;
 import eu.venthe.platform.shared_kernel.configuration_properties.SuppliedProperties;
 import lombok.Builder;
 import lombok.NonNull;
 
 @Builder
-public record RegisterRunnerEngineInstanceSpecification(@NonNull NamespaceName namespaceName,
+public record RegisterRunnerEngineInstanceSpecification(@NonNull OrganizationName organizationName,
                                                         @NonNull RunnerEngineInstanceId runnerEngineInstanceId,
                                                         @NonNull RunnerEngineType runnerEngineType,
                                                         @NonNull SuppliedProperties properties) {

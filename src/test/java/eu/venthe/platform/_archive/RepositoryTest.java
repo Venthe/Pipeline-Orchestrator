@@ -42,7 +42,7 @@ class RepositoryTest extends AbstractBaseTest {
                 "branchName: \"main\"\n" +
                 "workflow: update-property\n" +
                 "inputs:\n" +
-                "  namespace: integration\n" +
+                "  organization: integration\n" +
                 "  applicationName: argocd-example\n" +
                 "  propertyKey: test\n" +
                 "  propertyValue: test6";
