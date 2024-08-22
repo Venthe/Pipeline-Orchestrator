@@ -1,11 +1,11 @@
 /*
 package eu.venthe.pipeline.orchestrator;
 
-import eu.venthe.pipeline.orchestrator.projects.api.dto.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects.api.ProjectsQueryService;
-import eu.venthe.pipeline.orchestrator.projects._archive.api.ProjectsSourceConfigurationCommandService;
-import eu.venthe.pipeline.orchestrator.projects._archive.api.ProjectsSourceConfigurationQueryService;
-import eu.venthe.pipeline.orchestrator.projects._archive.api.ReadProjectSourceConfigurationDto;
+import eu.venthe.pipeline.orchestrator.repositorys.api.dto.RepositoryDto;
+import eu.venthe.pipeline.orchestrator.repositorys.api.RepositoryQueryService;
+import eu.venthe.pipeline.orchestrator.repositorys._archive.api.RepositorySourceConfigurationCommandService;
+import eu.venthe.pipeline.orchestrator.repositorys._archive.api.RepositorySourceConfigurationQueryService;
+import eu.venthe.pipeline.orchestrator.repositorys._archive.api.ReadRepositorySourceConfigurationDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +17,14 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
-class ProjectsIntegrationTest extends AbstractIntegrationTest {
+class RepositoryIntegrationTest extends AbstractIntegrationTest {
     @Autowired
-    ProjectsSourceConfigurationCommandService projectsSourceConfigurationService;
+    RepositorySourceConfigurationCommandService repositorysSourceConfigurationService;
     @Autowired
-    ProjectsSourceConfigurationQueryService projectsSourceConfigurationQueryService;
+    RepositorySourceConfigurationQueryService repositorysSourceConfigurationQueryService;
 
     @Autowired
-    ProjectsQueryService projectsService;
+    RepositoryQueryService repositorysService;
 
     @Test
     @Disabled
@@ -36,21 +36,21 @@ class ProjectsIntegrationTest extends AbstractIntegrationTest {
         );
         String id = "gerrit_1";
         String sourceType = "gerrit";
-        String projectId = projectsSourceConfigurationService.addProjectSourceConfiguration(id, sourceType, properties);
+        String repositoryId = repositorysSourceConfigurationService.addRepositorySourceConfiguration(id, sourceType, properties);
 
-        Set<ReadProjectSourceConfigurationDto> projectConfigurations = projectsSourceConfigurationQueryService.listConfigurations();
+        Set<ReadRepositorySourceConfigurationDto> repositoryConfigurations = repositorysSourceConfigurationQueryService.listConfigurations();
         await().untilAsserted(() -> {
-            assertThat(projectConfigurations).singleElement()
-                    .isEqualTo(new ReadProjectSourceConfigurationDto(id, sourceType));
+            assertThat(repositoryConfigurations).singleElement()
+                    .isEqualTo(new ReadRepositorySourceConfigurationDto(id, sourceType));
         });
 
-        projectsSourceConfigurationService.synchronizeProject(projectId);
+        repositorysSourceConfigurationService.synchronizeRepository(repositoryId);
 
         await().untilAsserted(() -> {
-            Collection<ProjectDto> projects = projectsService.listProjects();
-            assertThat(projects).hasSize(2).containsExactlyInAnyOrder(
-                    new ProjectDto("All-Projects", id),
-                    new ProjectDto("All-Users", id)
+            Collection<RepositoryDto> repositorys = repositorysService.listRepository();
+            assertThat(repositorys).hasSize(2).containsExactlyInAnyOrder(
+                    new RepositoryDto("All-Repository", id),
+                    new RepositoryDto("All-Users", id)
             );
         });
     }

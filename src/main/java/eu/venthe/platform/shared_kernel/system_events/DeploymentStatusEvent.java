@@ -25,7 +25,7 @@ import java.util.Optional;
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class DeploymentStatusEvent extends AbstractProjectEvent {
+public class DeploymentStatusEvent extends AbstractRepositoryEvent {
     private final DeploymentStatusAction action;
     private final DeploymentContext deployment;
     private final DeploymentStatusContext deploymentStatus;

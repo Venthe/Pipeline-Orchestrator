@@ -1,4 +1,4 @@
-package eu.venthe.platform.application.projects.domain.utilities;
+package eu.venthe.platform.application.repositorys.domain.utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,7 +1,6 @@
 package eu.venthe.platform.application.infrastructure.in_memory_repository;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;

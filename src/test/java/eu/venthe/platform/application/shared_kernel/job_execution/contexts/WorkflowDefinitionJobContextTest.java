@@ -33,9 +33,7 @@ class WorkflowDefinitionJobContextTest extends AbstractContextTest {
 
         // Then
         assertThat(ensure.getStatus()).isEqualTo("success");
-        assertThat(ensure.getContainer()).satisfies(c -> {
-            assertThat(c.getNetwork()).isEqualTo("github_network_53269bd575974817b43f4733536b200c");
-        });
+        assertThat(ensure.getContainer()).satisfies(c -> assertThat(c.getNetwork()).isEqualTo("github_network_53269bd575974817b43f4733536b200c"));
         assertThat(ensure.getServices()).containsEntry(
                 "postgres",
                 JobContext.Service.builder()

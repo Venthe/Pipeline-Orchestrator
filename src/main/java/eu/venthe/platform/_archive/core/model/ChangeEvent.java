@@ -41,7 +41,7 @@ public class ChangeEvent extends AbstractContinuousIntegrationEvent {
         root.set("type", new TextNode(typeProvider(event)));
 
         ObjectNode metadata = objectMapper.createObjectNode();
-        metadata.set("projectName", JenkinsUtilities.getByPath(event, "change.project", JsonNode::asText).map(TextNode::new).orElseThrow());
+        metadata.set("repositoryName", JenkinsUtilities.getByPath(event, "change.repository", JsonNode::asText).map(TextNode::new).orElseThrow());
         TextNode revisionNode = JenkinsUtilities.getByPath(event, "patchSet.ref", JsonNode::asText).map(TextNode::new).orElseThrow();
         metadata.set("revision", revisionNode);
         metadata.set("branchName", JenkinsUtilities.getByPath(event, "patchSet.revision", JsonNode::asText).map(TextNode::new).orElseThrow());

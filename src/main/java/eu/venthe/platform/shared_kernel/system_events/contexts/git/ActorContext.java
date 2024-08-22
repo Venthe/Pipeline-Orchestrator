@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 
 // TODO: Finish actor context
-@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public final class ActorContext {
     /**
      * The git author's name.

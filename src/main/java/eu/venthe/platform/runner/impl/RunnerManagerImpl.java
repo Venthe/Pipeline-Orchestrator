@@ -12,7 +12,7 @@ import eu.venthe.platform.runner.runner_engine.template.model.RunnerId;
 import eu.venthe.platform.runner.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
-import eu.venthe.platform.project.domain.ProjectId;
+import eu.venthe.platform.repository.domain.RepositoryId;
 import eu.venthe.platform.application.utilities.EnvUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -48,7 +48,7 @@ public class RunnerManagerImpl implements RunnerManager {
     }
 
     @Override
-    public boolean queueExecution(final ProjectId projectId,
+    public boolean queueExecution(final RepositoryId repositoryId,
                                   final WorkflowRunId workflowRunId,
                                   final JobRunId executionId,
                                   final RunCallbackToken runCallbackToken,
@@ -63,7 +63,7 @@ public class RunnerManagerImpl implements RunnerManager {
         var aggregate = repository.findAll().stream().findAny().orElseThrow();
 
         aggregate.queueJobExecution(
-                projectId,
+                repositoryId,
                 workflowRunId,
                 executionId,
                 envUtil.getServerUrl(),

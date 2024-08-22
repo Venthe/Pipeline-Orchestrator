@@ -1,4 +1,4 @@
-package eu.venthe.platform.application.projects.plugin.gerrit;
+package eu.venthe.platform.application.repositorys.plugin.gerrit;
 
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;

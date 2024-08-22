@@ -1,9 +1,9 @@
 package eu.venthe.platform.source_configuration.domain.plugins;
 
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
+import eu.venthe.platform.source_configuration.domain.plugins.template.RepositorySourcePlugin;
 import eu.venthe.platform.source_configuration.domain.model.SourceType;
 import eu.venthe.platform.shared_kernel.configuration_properties.SuppliedProperties;
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
+import eu.venthe.platform.source_configuration.domain.plugins.template.RepositorySourcePluginInstance;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -25,7 +25,7 @@ public class PluginProvider {
     private final FeatureManager featureManager;
     private final PluginProviders pluginProviders;
 
-    public ProjectSourcePluginInstance provide(SourceType sourceType, SuppliedProperties properties) {
+    public RepositorySourcePluginInstance provide(SourceType sourceType, SuppliedProperties properties) {
         var sourcePlugin = pluginProviders.provide(sourceType).orElseThrow();
 
         if (!sourceType.equals(sourcePlugin.getSourceType())) {
@@ -49,17 +49,17 @@ public class PluginProvider {
     @ToString
     @EqualsAndHashCode
     public static class PluginProviders {
-        private final Map<SourceType, ProjectSourcePlugin> providers;
+        private final Map<SourceType, RepositorySourcePlugin> providers;
 
-        public PluginProviders(final Set<ProjectSourcePlugin> providers) {
+        public PluginProviders(final Set<RepositorySourcePlugin> providers) {
             this.providers = providers.stream()
                     .collect(Collectors.toMap(
-                            ProjectSourcePlugin::getSourceType,
+                            RepositorySourcePlugin::getSourceType,
                             Function.identity()
                     ));
         }
 
-        public Optional<ProjectSourcePlugin> provide(SourceType sourceType) {
+        public Optional<RepositorySourcePlugin> provide(SourceType sourceType) {
             return Optional.ofNullable(providers.get(sourceType));
         }
     }

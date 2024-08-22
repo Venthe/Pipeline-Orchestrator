@@ -3,7 +3,7 @@ package eu.venthe.platform.runner.runner_engine.template.model;
 import eu.venthe.platform.workflow.definition.contexts.JobId;
 import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
-import eu.venthe.platform.project.domain.ProjectId;
+import eu.venthe.platform.repository.domain.RepositoryId;
 import eu.venthe.platform.shared_kernel.dynamic_variable.DynamicProperty;
 import eu.venthe.platform.shared_kernel.git.GitRevision;
 import eu.venthe.platform.shared_kernel.system_events.SystemEvent;
@@ -40,7 +40,7 @@ public record JobRunRequestContext(
      *                           refs/heads/feature-branch-1.
      * @param event              The full event webhook payload.
      * @param jobId              The job_id of the current job.
-     * @param projectId
+     * @param repositoryId
      * @param triggeringActor
      * @param repositoryOwner
      * @param retentionDays
@@ -57,7 +57,7 @@ public record JobRunRequestContext(
             @Nullable GitRevision revision,
             SystemEvent event,
             JobRunId jobRunId,
-            ProjectId projectId,
+            RepositoryId repositoryId,
             UserContext triggeringActor,
             UserContext repositoryOwner,
             Integer retentionDays,

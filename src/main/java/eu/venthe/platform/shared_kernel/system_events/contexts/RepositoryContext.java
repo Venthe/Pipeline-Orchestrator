@@ -1,7 +1,7 @@
 package eu.venthe.platform.shared_kernel.system_events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.venthe.platform.project.domain.ProjectId;
+import eu.venthe.platform.repository.domain.RepositoryId;
 import eu.venthe.platform.shared_kernel.system_events.contexts.common.UrlContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.model.RepositoryVisibilityContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
@@ -34,7 +34,7 @@ public class RepositoryContext {
     /**
      * Unique identifier of the repository
      */
-    private final ProjectId id;
+    private final RepositoryId id;
     /**
      * The name of the repository.
      */
@@ -51,7 +51,7 @@ public class RepositoryContext {
     private RepositoryContext(final JsonNode _root) {
         final var root = ContextUtilities.validateIsObjectNode(_root);
 
-        this.id = ContextUtilities.ensure(root.get("id"), ContextUtilities.fromTextMapper(ProjectId::from));
+        this.id = ContextUtilities.ensure(root.get("id"), ContextUtilities.fromTextMapper(RepositoryId::from));
         this.name = ContextUtilities.ensure(root.get("name"), ContextUtilities.toText());
         this.fullName = ContextUtilities.ensure(root.get("fullName"), ContextUtilities.toText());
         this.description = ContextUtilities.create(root.get("description"), ContextUtilities.toText());

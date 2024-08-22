@@ -41,15 +41,15 @@ class GerritMediatorApplicationTests extends BaseTest {
 
         patchSetCreated.patchSet(patchSet);
 
-        var change = new Change().project("Test").branch("master").id("I82e2cdfc33bab1fc92ef2b6d004c0d1905791a39").number(41).subject("Example 34345").owner(administratorAccount).url(URI.create("http://da00cc7d77f0/c/Test/+/41")).commitMessage("Example 34345\\n\\nChange-Id: I82e2cdfc33bab1fc92ef2b6d004c0d1905791a39\\n")
+        var change = new Change().repository("Test").branch("master").id("I82e2cdfc33bab1fc92ef2b6d004c0d1905791a39").number(41).subject("Example 34345").owner(administratorAccount).url(URI.create("http://da00cc7d77f0/c/Test/+/41")).commitMessage("Example 34345\\n\\nChange-Id: I82e2cdfc33bab1fc92ef2b6d004c0d1905791a39\\n")
                 // FIXME: To date;
                 .createdOn("1669309009").status(Change.StatusEnum.NEW).wip(true);
 
         patchSetCreated.change(change)
                 // FIXME: To date
                 .eventCreatedOn("1669310025");
-        // FIXME: Lacking project
-        //  project: { name: 'Test' },
+        // FIXME: Lacking repository
+        //  repository: { name: 'Test' },
         // FIXME: Lacking refName
         //  refName: 'refs/heads/master',
         // FIXME: Lacking changeKey

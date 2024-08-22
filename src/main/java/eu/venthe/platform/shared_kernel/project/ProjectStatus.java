@@ -1,6 +1,6 @@
-package eu.venthe.platform.shared_kernel.project;
+package eu.venthe.platform.shared_kernel.repository;
 
-public enum ProjectStatus {
+public enum RepositoryStatus {
     ACTIVE,
     ARCHIVED,
     NOT_AVAILABLE

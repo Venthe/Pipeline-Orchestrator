@@ -12,7 +12,7 @@ public enum OperatingSystemDimension implements Dimension.Value {
         this.value = new Dimension(key, value);
     }
 
-    Dimension value;
+    final Dimension value;
 
     private static class Constants {
         private static final String OPERATING_SYSTEM_CONSTANTS = "operating_system";

@@ -1,7 +1,7 @@
 package eu.venthe.platform.application.configuration;
 
 import eu.venthe.platform.application.fixtures.MockAdapterFixture;
-import eu.venthe.platform.application.fixtures.MockProjectSourceFixture;
+import eu.venthe.platform.application.fixtures.MockRepositorySourceFixture;
 import eu.venthe.platform.runner.runner_engine.template.model.RunnerEngineType;
 import eu.venthe.platform.source_configuration.domain.model.SourceType;
 import lombok.extern.slf4j.Slf4j;
@@ -34,20 +34,20 @@ public class MockBeanConfiguration {
     }
 
     @Bean
-    MockProjectSourceFixture.MockProjectSource mockProjectSource() {
-        return Mockito.mock(MockProjectSourceFixture.MockProjectSource.class);
+    MockRepositorySourceFixture.MockRepositorySource mockRepositorySource() {
+        return Mockito.mock(MockRepositorySourceFixture.MockRepositorySource.class);
     }
 
     @Bean
-    MockProjectSourceFixture.TestProjectSourcePlugin testProjectSourcePlugin(MockProjectSourceFixture.MockProjectSource instance) {
-        var sourcePlugin = Mockito.mock(MockProjectSourceFixture.TestProjectSourcePlugin.class);
+    MockRepositorySourceFixture.TestRepositorySourcePlugin testRepositorySourcePlugin(MockRepositorySourceFixture.MockRepositorySource instance) {
+        var sourcePlugin = Mockito.mock(MockRepositorySourceFixture.TestRepositorySourcePlugin.class);
         Mockito.when(sourcePlugin.getSourceType()).thenReturn(new SourceType("test"));
         Mockito.when(sourcePlugin.instantiate(any())).thenReturn(instance);
         return sourcePlugin;
     }
 
     @Bean
-    MockProjectSourceFixture mockProjectSourceFixture(MockProjectSourceFixture.TestProjectSourcePlugin plugin, MockProjectSourceFixture.MockProjectSource instance) {
-        return new MockProjectSourceFixture(instance, plugin);
+    MockRepositorySourceFixture mockRepositorySourceFixture(MockRepositorySourceFixture.TestRepositorySourcePlugin plugin, MockRepositorySourceFixture.MockRepositorySource instance) {
+        return new MockRepositorySourceFixture(instance, plugin);
     }
 }

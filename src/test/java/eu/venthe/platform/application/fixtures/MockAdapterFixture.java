@@ -1,21 +1,15 @@
 package eu.venthe.platform.application.fixtures;
 
-import eu.venthe.platform.project.domain.ProjectId;
 import eu.venthe.platform.runner.runner_engine.template.RunnerEngineDefinition;
 import eu.venthe.platform.runner.runner_engine.template.RunnerEngineInstance;
-import eu.venthe.platform.runner.runner_engine.template.model.RunCallbackToken;
 import eu.venthe.platform.runner.runner_engine.template.model.RunnerContext;
 import eu.venthe.platform.runner.runner_engine.template.model.dimensions.RunnerDimensions;
-import eu.venthe.platform.workflow.model.JobRunId;
-import eu.venthe.platform.workflow.runs.WorkflowRunId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;
 
-import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 import static org.mockito.ArgumentMatchers.any;
 

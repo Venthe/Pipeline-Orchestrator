@@ -10,7 +10,6 @@ import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 import org.openapitools.generator.gradle.plugin.tasks.GeneratorsTask
 import org.openapitools.generator.gradle.plugin.tasks.MetaTask
 import org.openapitools.generator.gradle.plugin.tasks.ValidateTask
-import java.io.File
 
 class GenerateOpenApiClientPlugin : Plugin<Project> {
     companion object {
@@ -124,7 +123,6 @@ class GenerateOpenApiClientPlugin : Plugin<Project> {
             it.generateModelDocumentation.set(generate.generateModelDocumentation)
             it.generateApiTests.set(generate.generateApiTests)
             it.generateApiDocumentation.set(generate.generateApiDocumentation)
-            it.withXml.set(generate.withXml)
             it.logToStderr.set(generate.logToStderr)
             it.enablePostProcessFile.set(generate.enablePostProcessFile)
             it.skipValidateSpec.set(generate.skipValidateSpec)
@@ -132,28 +130,23 @@ class GenerateOpenApiClientPlugin : Plugin<Project> {
             it.engine.set(generate.engine)
             it.cleanupOutput.set(generate.cleanupOutput)
             it.dryRun.set(generate.dryRun)
+            it.generatorName.set(generate.generatorName)
 
-            it.generatorName.set("java")
             it.apiPackage.set("${generate.targetPackage}.api")
             it.invokerPackage.set("${generate.targetPackage}.invoker")
             it.modelPackage.set("${generate.targetPackage}.model")
 
-            it.configOptions.set(generate.configOptions.get() + mapOf(
-                    "useJakartaEe" to "true",
-                    "library" to "resttemplate",
+            it.configOptions.set(
+                generate.configOptions.get() + mapOf(
                     "licenseName" to "MIT",
                     "licenseUrl" to "https://opensource.org/licenses/MIT"
-            ))
+                )
+            )
 
             it.doLast {
-                val get = generate.outputDir.get()
-                it.project.delete(File(File(get), ".github"))
-                it.project.delete(File(File(get), ".openapi-generator"))
-                it.project.delete(File(File(get), "api"))
-                it.project.delete(File(File(get), "docs"))
-                it.project.delete(File(File(get), "gradle"))
-                it.project.delete(File(File(get), "gradlew.bat"))
-                it.project.delete(File(File(get), "src/test"))
+                it.project.delete(it.project.fileTree(generate.outputDir.get()) { u ->
+                    u.exclude("src")
+                })
             }
         }
 

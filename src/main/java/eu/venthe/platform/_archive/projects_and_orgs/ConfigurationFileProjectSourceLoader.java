@@ -1,8 +1,8 @@
 /*
-package eu.venthe.pipeline.orchestrator.projects.api.file;
+package eu.venthe.pipeline.orchestrator.repositorys.api.file;
 
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectSourceConfigurationDto;
-import eu.venthe.pipeline.orchestrator.projects.application.ProjectsSourceConfigurationService;
+import eu.venthe.pipeline.orchestrator.repositorys.application.RepositorySourceConfigurationDto;
+import eu.venthe.pipeline.orchestrator.repositorys.application.RepositorySourceConfigurationService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,18 +17,18 @@ import java.util.Optional;
 @Slf4j
 // FIXME: Remove
 //  We need to have a listener before we send the event out
-@DependsOn("projectConfigurationSourceEventListener")
-public class ConfigurationFileProjectSourceLoader {
-    private final ProjectsSourceConfigurationService projectsSourceConfigurationService;
-    private final ProjectSourcesConfiguration configuration;
+@DependsOn("repositoryConfigurationSourceEventListener")
+public class ConfigurationFileRepositorySourceLoader {
+    private final RepositorySourceConfigurationService repositorysSourceConfigurationService;
+    private final RepositorySourcesConfiguration configuration;
 
     @PostConstruct
     void loadFromConfiguration() {
-        log.info("Loading project configuration from file. {}", configuration);
-        Optional.ofNullable(configuration.getProjectSources()).ifPresent(el -> el.forEach((name, value) -> {
+        log.info("Loading repository configuration from file. {}", configuration);
+        Optional.ofNullable(configuration.getRepositorySources()).ifPresent(el -> el.forEach((name, value) -> {
             String sourcePluginId = value.getSourcePluginId();
             Map<String, String> properties = value.getProperties();
-            projectsSourceConfigurationService.addProjectSourceConfiguration(new ProjectSourceConfigurationDto(name, sourcePluginId, properties));
+            repositorysSourceConfigurationService.addRepositorySourceConfiguration(new RepositorySourceConfigurationDto(name, sourcePluginId, properties));
         }));
     }
 }

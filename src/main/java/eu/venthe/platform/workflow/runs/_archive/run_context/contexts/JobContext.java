@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
+import jakarta.annotation.Nullable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
@@ -63,7 +64,7 @@ public class JobContext {
         /**
          * The ID of the container.
          */
-        private final Optional<String> id;
+        @Nullable private final String id;
         /**
          * The ID of the container network. The runner creates the network used by all containers in a job.
          */
@@ -72,7 +73,7 @@ public class JobContext {
         private Container(JsonNode _root) {
             ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
-            id = ContextUtilities.Text.create(root.get("id"));
+            id = ContextUtilities.Text.create(root.get("id")).orElse(null);
             network = ContextUtilities.Text.ensure(root.get("network"));
         }
 

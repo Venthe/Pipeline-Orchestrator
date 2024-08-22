@@ -1,9 +1,9 @@
-package eu.venthe.platform.application.projects.plugin.gerrit;
+package eu.venthe.platform.application.repositorys.plugin.gerrit;
 
 import eu.venthe.platform.application.AbstractIntegrationTest;
 import eu.venthe.platform.source_configuration.domain.plugins.gerrit.GerritConfiguration;
 import eu.venthe.platform.source_configuration.domain.plugins.gerrit.GerritPluginInstance;
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
+import eu.venthe.platform.source_configuration.domain.plugins.template.RepositorySourcePluginInstance;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,11 +19,11 @@ class GerritPluginInstanceIntegrationTest extends AbstractIntegrationTest {
             .password("secret")
             .build();
 
-    ProjectSourcePluginInstance plugin = new GerritPluginInstance(CONFIGURATION);
+    RepositorySourcePluginInstance plugin = new GerritPluginInstance(CONFIGURATION);
 
 
     @Test
-    void listProjects() {
+    void listRepository() {
         var retrieve = SimpleStringClient.mutate(restClient)
                 .method(HttpMethod.POST)
                 .uri("/gerrit/handle/patchset-created")
@@ -32,8 +32,6 @@ class GerritPluginInstanceIntegrationTest extends AbstractIntegrationTest {
                 .retrieve()
                 .toBodilessEntity();
 
-        Assertions.assertThat(retrieve).satisfies(e -> {
-            Assertions.assertThat(e.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
-        });
+        Assertions.assertThat(retrieve).satisfies(e -> Assertions.assertThat(e.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200)));
     }
 }

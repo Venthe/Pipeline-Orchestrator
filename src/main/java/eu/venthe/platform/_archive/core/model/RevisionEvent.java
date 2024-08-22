@@ -41,16 +41,16 @@ public class RevisionEvent extends AbstractContinuousIntegrationEvent {
         root.set("type", new TextNode(typeProvider(event)));
 
         ObjectNode metadata = objectMapper.createObjectNode();
-        TextNode projectNameNode = JenkinsUtilities.getByPath(event, "refUpdate.project", JsonNode::asText).map(TextNode::new).orElseThrow();
-        metadata.set("projectName", projectNameNode);
+        TextNode repositoryNameNode = JenkinsUtilities.getByPath(event, "refUpdate.repository", JsonNode::asText).map(TextNode::new).orElseThrow();
+        metadata.set("repositoryName", repositoryNameNode);
         TextNode revisionNode = JenkinsUtilities.getByPath(event, "refUpdate.newRev", JsonNode::asText).map(TextNode::new).orElseThrow();
         metadata.set("revision", revisionNode);
         metadata.set("branchName", JenkinsUtilities.getByPath(event, "refUpdate.refName", JsonNode::asText).map(TextNode::new).orElseThrow());
         root.set("metadata", metadata);
 
         ObjectNode additionalProperties = objectMapper.createObjectNode();
-        additionalProperties.set("commit", gerritApi.getCommitForProject(projectNameNode.textValue(), revisionNode.textValue(), traceId));
-        additionalProperties.set("files", gerritApi.getCommitFilesForProject(projectNameNode.textValue(), revisionNode.textValue(), traceId));
+        additionalProperties.set("commit", gerritApi.getCommitForRepository(repositoryNameNode.textValue(), revisionNode.textValue(), traceId));
+        additionalProperties.set("files", gerritApi.getCommitFilesForRepository(repositoryNameNode.textValue(), revisionNode.textValue(), traceId));
         root.set("additionalProperties", additionalProperties);
 
         return new RevisionEvent(root);

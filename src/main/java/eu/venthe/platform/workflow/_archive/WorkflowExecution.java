@@ -1,10 +1,10 @@
 /*
-package eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions;
+package eu.venthe.pipeline.orchestrator.repositorys.domain.workflow_executions;
 
 import eu.venthe.pipeline.orchestrator.plugins.job_executors.JobExecutor;
 import com.google.common.collect.MoreCollectors;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.HandledEvent;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.events.HandledEvent;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.workflows.Workflow;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

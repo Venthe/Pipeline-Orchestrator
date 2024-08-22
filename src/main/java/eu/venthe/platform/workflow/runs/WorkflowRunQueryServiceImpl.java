@@ -16,12 +16,12 @@ public class WorkflowRunQueryServiceImpl implements WorkflowRunQueryService {
 
     @Override
     public Optional<WorkflowExecutionDto> getExecutionDetails(final WorkflowRunId executionId) {
-        return repository.findAll().stream().filter(e -> e.getId().equals(executionId)).map(e -> toDto(e)).collect(MoreCollectors.toOptional());
+        return repository.findAll().stream().filter(e -> e.getId().equals(executionId)).map(WorkflowRunQueryServiceImpl::toDto).collect(MoreCollectors.toOptional());
     }
 
     @Override
     public Optional<WorkflowExecutionDto> getExecutionDetails(final WorkflowCorrelationId workflowCorrelationId) {
-        return repository.findAll().stream().filter(e -> e.getTriggerCorrelationId().equals(workflowCorrelationId)).map(e -> toDto(e)).collect(MoreCollectors.toOptional());
+        return repository.findAll().stream().filter(e -> e.getTriggerCorrelationId().equals(workflowCorrelationId)).map(WorkflowRunQueryServiceImpl::toDto).collect(MoreCollectors.toOptional());
     }
 
     private static WorkflowExecutionDto toDto(final WorkflowRun e) {

@@ -32,13 +32,13 @@ public class MainService {
     private List<Workflow> loadWorkflowsForEvent(Event event) {
         if (List.of(EventType.WORKFLOW_DISPATCH, EventType.WORKFLOW_CALL).contains(event.getType())) {
             RemoteWorkflowCall mappedEvent = (RemoteWorkflowCall) event;
-            return versionControlSystem.getFile(event.getRepositoryContext().getProjectName(), event.getRepositoryContext().getRef(), mappedEvent.getWorkflow())
+            return versionControlSystem.getFile(event.getRepositoryContext().getRepositoryName(), event.getRepositoryContext().getRef(), mappedEvent.getWorkflow())
                     .map(Workflow::fromFile)
                     .map(List::of)
                     .orElse(Collections.emptyList());
         }
 
-        return versionControlSystem.getFiles(event.getRepositoryContext().getProjectName(), event.getRepositoryContext().getRef(), ".pipeline/workflows/  // .ya?ml").stream()
+        return versionControlSystem.getFiles(event.getRepositoryContext().getRepositoryName(), event.getRepositoryContext().getRef(), ".pipeline/workflows/  // .ya?ml").stream()
                 .map(Workflow::fromFile)
                 .toList();
     }

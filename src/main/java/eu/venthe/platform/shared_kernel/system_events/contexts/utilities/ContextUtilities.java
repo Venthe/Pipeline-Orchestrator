@@ -19,7 +19,7 @@ public class ContextUtilities {
     public static <T> Optional<T> create(final JsonNode root, Function<JsonNode, T> mapper) {
         return Optional.ofNullable(root)
                 .filter(Predicate.not(JsonNode::isNull))
-                .map(mapper::apply);
+                .map(mapper);
     }
 
     public static JsonNode ensure(final JsonNode root) {

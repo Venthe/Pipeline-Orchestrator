@@ -77,7 +77,7 @@ class SystemTest {
         return WorkflowDispatchEvent.builder(objectMapper)
                 .workflow("Sample workflow.yml")
                 .withRepository(repository ->
-                        repository.projectName(SAMPLE_PROJECT)
+                        repository.repositoryName(SAMPLE_PROJECT)
                 )
                 .ref("xyz")
                 .build();

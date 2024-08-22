@@ -1,5 +1,5 @@
 /*
-package eu.venthe.pipeline.orchestrator.projects.api;
+package eu.venthe.pipeline.orchestrator.repositorys.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/repositorys")
 @RequiredArgsConstructor
-public class ProjectsController {
-    private final ProjectsQueryService queryService;
+public class RepositoryController {
+    private final RepositoryQueryService queryService;
 
     @GetMapping("/list")
     public ResponseEntity<?> list() {
-        return ResponseEntity.ok(queryService.listProjects());
+        return ResponseEntity.ok(queryService.listRepository());
     }
 }
 */

@@ -2,7 +2,6 @@ package eu.venthe.platform.shared_kernel.system_events.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.platform.shared_kernel.git.GitRevision;
 import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.system_events.contexts.git.GitHashContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.git.SimpleRevisionContext;

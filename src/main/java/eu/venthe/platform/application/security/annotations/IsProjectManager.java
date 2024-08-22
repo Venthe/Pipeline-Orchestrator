@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This role has limited control over the CI/CD system, including managing users, projects, pipelines, and integrations
- * within relevant projects.
+ * This role has limited control over the CI/CD system, including managing users, repositorys, pipelines, and integrations
+ * within relevant repositorys.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

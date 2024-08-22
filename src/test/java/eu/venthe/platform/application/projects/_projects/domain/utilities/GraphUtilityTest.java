@@ -1,9 +1,9 @@
-package eu.venthe.platform.application.projects.domain.utilities;
+package eu.venthe.platform.application.repositorys.domain.utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.platform.workflow.utilities.GraphUtility;
-import eu.venthe.platform.application.projects.utilities.YamlUtility;
+import eu.venthe.platform.application.repositorys.utilities.YamlUtility;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

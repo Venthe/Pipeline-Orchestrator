@@ -1,16 +1,16 @@
 package eu.venthe.platform.source_configuration.domain.plugins.gerrit;
 
 import com.google.common.collect.MoreCollectors;
-import eu.venthe.platform.gerrit.api.ProjectsApi;
-import eu.venthe.platform.gerrit.model.ProjectInfo;
+import eu.venthe.platform.gerrit.api.RepositoryApi;
+import eu.venthe.platform.gerrit.model.RepositoryInfo;
 import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
-import eu.venthe.platform.shared_kernel.project.ProjectStatus;
-import eu.venthe.platform.source_configuration.domain.plugins.template.Project;
-import eu.venthe.platform.source_configuration.domain.plugins.template.SourceProjectId;
+import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
+import eu.venthe.platform.source_configuration.domain.plugins.template.Repository;
+import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryId;
 import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.source_configuration.domain.model.SourceType;
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
+import eu.venthe.platform.source_configuration.domain.plugins.template.RepositorySourcePluginInstance;
 import jakarta.ws.rs.core.UriBuilder;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -26,20 +26,20 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static eu.venthe.platform.source_configuration.domain.plugins.gerrit.GerritHeaders.getTraceId;
-import static eu.venthe.platform.source_configuration.domain.plugins.gerrit.GerritProjectSourcePlugin.SOURCE_TYPE;
+import static eu.venthe.platform.source_configuration.domain.plugins.gerrit.GerritRepositorySourcePlugin.SOURCE_TYPE;
 
 @Slf4j
-public class GerritPluginInstance implements ProjectSourcePluginInstance {
+public class GerritPluginInstance implements RepositorySourcePluginInstance {
     @Getter
     private final SourceType sourceType;
-    private final ProjectsApi projectsApi;
+    private final RepositoryApi repositorysApi;
     private final GerritConfiguration configuration;
 
     public GerritPluginInstance(GerritConfiguration configuration) {
         this.configuration = configuration;
         var apiClient = new GerritApiClient(configuration);
         this.sourceType = SOURCE_TYPE;
-        projectsApi = new ProjectsApi(apiClient);
+        repositorysApi = new RepositoryApi(apiClient);
     }
 
    /* @SneakyThrows
@@ -55,7 +55,7 @@ public class GerritPluginInstance implements ProjectSourcePluginInstance {
                         "change-restored",
                         "comment-added",
                         "dropped-output",
-                        "project-created",
+                        "repository-created",
                         "patchset-created",
                         "ref-updated",
                         "reviewer-added",
@@ -64,7 +64,7 @@ public class GerritPluginInstance implements ProjectSourcePluginInstance {
                         "wip-state-changed",
                         "private-state-changed",
                         "vote-deleted",
-                        "project-head-updated"
+                        "repository-head-updated"
                 )
                 .map(a -> String.join("/", "/handle", a))
                 .map(GerritPluginInstance::mappingInfoFor)
@@ -80,8 +80,8 @@ public class GerritPluginInstance implements ProjectSourcePluginInstance {
     }*/
 
     @Override
-    public Optional<File> getFile(SourceProjectId sourceProjectId, SimpleRevision simpleRevision, Path path) {
-        String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceProjectId.value()).toString();
+    public Optional<File> getFile(SourceRepositoryId sourceRepositoryId, SimpleRevision simpleRevision, Path path) {
+        String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceRepositoryId.value()).toString();
         return GitUtilities.onRepository(string, simpleRevision, rootDirectory -> {
             // FIXME
             return Optional.of(rootDirectory.toPath().resolve(path)).map(Path::toFile).filter(java.io.File::exists).map(GerritPluginInstance::getBytes).map(e -> null);
@@ -94,8 +94,8 @@ public class GerritPluginInstance implements ProjectSourcePluginInstance {
     }
 
     @Override
-    public Collection<Metadata> getFileList(SourceProjectId sourceProjectId, SimpleRevision simpleRevision, Path path) {
-        String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceProjectId.value()).toString();
+    public Collection<Metadata> getFileList(SourceRepositoryId sourceRepositoryId, SimpleRevision simpleRevision, Path path) {
+        String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceRepositoryId.value()).toString();
         throw new UnsupportedOperationException();
         // return GitUtilities.onRepository(string, revision, rootDirectory -> {
         //     java.io.File relativeDirectory = rootDirectory.toPath().resolve(path).toFile();
@@ -119,34 +119,34 @@ public class GerritPluginInstance implements ProjectSourcePluginInstance {
     }
 
     @Override
-    public Stream<Project> getProjects() {
-        return getListProjects().entrySet().stream()
-                .filter(project -> !Objects.equals(project.getValue().getState(), ProjectInfo.StateEnum.HIDDEN))
-                .map(project -> new Project(new SourceProjectId(project.getKey()), statusMapper(project.getValue().getState())))
+    public Stream<Repository> getRepository() {
+        return getListRepository().entrySet().stream()
+                .filter(repository -> !Objects.equals(repository.getValue().getState(), RepositoryInfo.StateEnum.HIDDEN))
+                .map(repository -> new Repository(new SourceRepositoryId(repository.getKey()), statusMapper(repository.getValue().getState())))
                 .distinct();
     }
 
     @Override
-    public Stream<SourceProjectId> getProjectIdentifiers() {
-        return getProjects().map(Project::sourceProjectId);
+    public Stream<SourceRepositoryId> getRepositoryIdentifiers() {
+        return getRepository().map(Repository::sourceRepositoryId);
     }
 
     @Override
-    public Optional<Project> getProject(SourceProjectId id) {
-        // FIXME: Don't ask for all projects
-        return getProjects()
-                .filter(p -> p.sourceProjectId().equals(id))
+    public Optional<Repository> getRepository(SourceRepositoryId id) {
+        // FIXME: Don't ask for all repositorys
+        return getRepository()
+                .filter(p -> p.sourceRepositoryId().equals(id))
                 .collect(MoreCollectors.toOptional());
     }
 
-    private Map<String, ProjectInfo> getListProjects() {
-        return projectsApi.listProjects(null, null, null, null, null, null, null, null, null, null, null, null, null, null, getTraceId());
+    private Map<String, RepositoryInfo> getListRepository() {
+        return repositorysApi.listRepository(null, null, null, null, null, null, null, null, null, null, null, null, null, null, getTraceId());
     }
 
-    private static ProjectStatus statusMapper(ProjectInfo.StateEnum stateEnum) {
+    private static RepositoryStatus statusMapper(RepositoryInfo.StateEnum stateEnum) {
         return switch (stateEnum) {
-            case ACTIVE -> ProjectStatus.ACTIVE;
-            case READ_ONLY -> ProjectStatus.ARCHIVED;
+            case ACTIVE -> RepositoryStatus.ACTIVE;
+            case READ_ONLY -> RepositoryStatus.ARCHIVED;
             case null, default -> throw new UnsupportedOperationException();
         };
     }

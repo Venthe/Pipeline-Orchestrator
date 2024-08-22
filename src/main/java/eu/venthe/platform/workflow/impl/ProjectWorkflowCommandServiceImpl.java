@@ -10,13 +10,13 @@ import eu.venthe.platform.workflow.runs.WorkflowRunId;
 import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import eu.venthe.platform.workflow.runs.dependencies.TriggeringEntity;
 import eu.venthe.platform.workflow.runs.infrastructure.WorkflowRunRepository;
-import eu.venthe.platform.project.domain.ProjectId;
+import eu.venthe.platform.repository.domain.RepositoryId;
 import eu.venthe.platform.application.security.User;
 import eu.venthe.platform.application.security.UserService;
 import eu.venthe.platform.shared_kernel.events.Envelope;
 import eu.venthe.platform.shared_kernel.events.MessageBroker;
 import eu.venthe.platform.shared_kernel.system_events.EventId;
-import eu.venthe.platform.shared_kernel.system_events.ProjectEvent;
+import eu.venthe.platform.shared_kernel.system_events.RepositoryEvent;
 import eu.venthe.platform.shared_kernel.system_events.WorkflowDispatchEvent;
 import eu.venthe.platform.shared_kernel.system_events.contexts.RepositoryContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.UserContext;
@@ -38,7 +38,7 @@ import static eu.venthe.platform.workflow.utilities.PipelineUtilities.resolveFro
 
 @RequiredArgsConstructor
 @Service
-public class ProjectWorkflowCommandServiceImpl implements WorkflowRunCommandService {
+public class RepositoryWorkflowCommandServiceImpl implements WorkflowRunCommandService {
     private final MessageBroker messageBroker;
     private final WorkflowRunQueryService workflowRunQueryService;
     private final UserService userService;
@@ -48,11 +48,11 @@ public class ProjectWorkflowCommandServiceImpl implements WorkflowRunCommandServ
 
     @SneakyThrows
     @Override
-    public WorkflowRunId triggerWorkflowDispatch(final ProjectId id,
+    public WorkflowRunId triggerWorkflowDispatch(final RepositoryId id,
                                                  final SimpleRevision simpleRevision,
                                                  final Path workflowPath) {
         var eventId = UUID.randomUUID();
-        ProjectEvent event = WorkflowDispatchEvent.builder()
+        RepositoryEvent event = WorkflowDispatchEvent.builder()
                 .workflow(resolveFromOrchestratorDirectory(workflowPath))
                 .revision(simpleRevision)
                 .id(new EventId(eventId))

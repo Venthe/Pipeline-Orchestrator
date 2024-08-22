@@ -1,6 +1,6 @@
 package eu.venthe.platform.runner.model;
 
-import eu.venthe.platform.project.domain.ProjectId;
+import eu.venthe.platform.repository.domain.RepositoryId;
 import eu.venthe.platform.runner.runner_engine.template.RunnerEngineInstance;
 import eu.venthe.platform.runner.runner_engine.template.model.JobRunRequestContext;
 import eu.venthe.platform.runner.runner_engine.template.model.RunCallbackToken;
@@ -22,7 +22,7 @@ public class RunnerEngineInstanceAggregate implements Aggregate<RunnerEngineInst
     RunnerEngineInstance runnerEngineInstance;
 
     // TODO: Add logs
-    public void queueJobExecution(ProjectId projectId,
+    public void queueJobExecution(RepositoryId repositoryId,
                                   WorkflowRunId workflowRunId,
                                   JobRunId executionId,
                                   URL systemApiUrl,

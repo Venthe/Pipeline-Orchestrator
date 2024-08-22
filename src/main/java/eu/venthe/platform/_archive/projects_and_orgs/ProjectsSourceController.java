@@ -1,5 +1,5 @@
 /*
-package eu.venthe.pipeline.orchestrator.projects._archive.api;
+package eu.venthe.pipeline.orchestrator.repositorys._archive.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,10 +11,10 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/projects-source-configurations")
-public class ProjectsSourceController {
-    private final ProjectsSourceConfigurationCommandService commandService;
-    private final ProjectsSourceConfigurationQueryService queryService;
+@RequestMapping("/repositorys-source-configurations")
+public class RepositorySourceController {
+    private final RepositorySourceConfigurationCommandService commandService;
+    private final RepositorySourceConfigurationQueryService queryService;
     private final ObjectMapper objectMapper;
 
     @GetMapping("/list")
@@ -22,35 +22,35 @@ public class ProjectsSourceController {
         return ResponseEntity.ok(queryService.listConfigurations());
     }
 
-    @GetMapping("/{projectSourceConfigurationId}")
-    public ResponseEntity<?> getConfiguration(@PathVariable String projectSourceConfigurationId) {
-        return ResponseEntity.ok(queryService.getConfiguration(projectSourceConfigurationId));
+    @GetMapping("/{repositorySourceConfigurationId}")
+    public ResponseEntity<?> getConfiguration(@PathVariable String repositorySourceConfigurationId) {
+        return ResponseEntity.ok(queryService.getConfiguration(repositorySourceConfigurationId));
     }
 
-    @DeleteMapping("/{projectSourceConfigurationId}")
-    public ResponseEntity<?> removeProjectSourceConfiguration(@PathVariable String projectSourceConfigurationId) {
-        commandService.removeProjectSourceConfiguration(projectSourceConfigurationId);
+    @DeleteMapping("/{repositorySourceConfigurationId}")
+    public ResponseEntity<?> removeRepositorySourceConfiguration(@PathVariable String repositorySourceConfigurationId) {
+        commandService.removeRepositorySourceConfiguration(repositorySourceConfigurationId);
 
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/{projectSourceConfigurationId}/synchronize")
-    public ResponseEntity<?> synchronizeProject(@PathVariable("projectSourceConfigurationId") String projectSourceConfigurationId) {
-        commandService.synchronizeProject(projectSourceConfigurationId);
+    @PostMapping("/{repositorySourceConfigurationId}/synchronize")
+    public ResponseEntity<?> synchronizeRepository(@PathVariable("repositorySourceConfigurationId") String repositorySourceConfigurationId) {
+        commandService.synchronizeRepository(repositorySourceConfigurationId);
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/synchronize")
-    public ResponseEntity<?> synchronizeProjects() {
-        commandService.synchronizeProjects();
+    public ResponseEntity<?> synchronizeRepository() {
+        commandService.synchronizeRepository();
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(consumes = {"application/json"})
-    public ResponseEntity<?> addProjectSourceConfiguration(@RequestBody ObjectNode configurationDto) {
-        commandService.addProjectSourceConfiguration(
+    public ResponseEntity<?> addRepositorySourceConfiguration(@RequestBody ObjectNode configurationDto) {
+        commandService.addRepositorySourceConfiguration(
                 configurationDto.get("configurationId").asText(),
                 configurationDto.get("systemType").asText(),
                 Map.of()

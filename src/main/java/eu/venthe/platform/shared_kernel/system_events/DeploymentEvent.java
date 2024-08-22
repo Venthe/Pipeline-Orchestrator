@@ -23,7 +23,7 @@ import java.util.Optional;
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class DeploymentEvent extends AbstractProjectEvent {
+public class DeploymentEvent extends AbstractRepositoryEvent {
     private final DeploymentAction action;
     private final DeploymentContext deployment;
     private final Optional<WorkflowContext> workflow;

@@ -46,7 +46,7 @@ class SystemE2ETest {
         Map<String, String> defaults = new HashMap<>();
         defaults.put("workflow", ".pipeline/workflows/exampleWorkflow1.yaml");
         defaults.put("repository.ref", "main");
-        defaults.put("repository.projectName", "Example-Project");
+        defaults.put("repository.repositoryName", "Example-Repository");
 
         defaults.putAll(properties);
 
@@ -59,7 +59,7 @@ class SystemE2ETest {
                 workflow: "${{workflow}}"
                 repository:
                   ref: "${{repository.ref}}"
-                  projectName: "${{repository.projectName}}"
+                  repositoryName: "${{repository.repositoryName}}"
                 sender:
                   name: Venthe
                 """, defaults);

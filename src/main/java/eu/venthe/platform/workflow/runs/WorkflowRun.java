@@ -1,6 +1,6 @@
 package eu.venthe.platform.workflow.runs;
 
-import eu.venthe.platform.project.domain.ProjectId;
+import eu.venthe.platform.repository.domain.RepositoryId;
 import eu.venthe.platform.shared_kernel.Aggregate;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
@@ -14,6 +14,7 @@ import eu.venthe.platform.workflow.runs.events.RequestJobRunCommand;
 import eu.venthe.platform.workflow.runs.events.WorkflowRunCreatedEvent;
 import eu.venthe.platform.workflow.runs.jobs.JobRunStatus;
 import eu.venthe.platform.workflow.runs.jobs.JobRuns;
+import jakarta.annotation.Nullable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -36,7 +37,8 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
     @Getter
     private final OffsetDateTime startDate;
     @Getter
-    private Optional<OffsetDateTime> endDate;
+    @Nullable
+    private OffsetDateTime endDate;
     @Getter
     private WorkflowRunStatus status;
 
@@ -51,12 +53,12 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         var run = new WorkflowRun(workflow, context, timeService, triggeringEntity);
 
         return Pair.of(
-                Collections.singletonList(new WorkflowRunCreatedEvent(run.getProjectId(), run.getId())),
+                Collections.singletonList(new WorkflowRunCreatedEvent(run.getRepositoryId(), run.getId())),
                 run
         );
     }
 
-    private ProjectId getProjectId() {
+    private RepositoryId getRepositoryId() {
         return context.id();
     }
 

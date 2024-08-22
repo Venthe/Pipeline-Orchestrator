@@ -1,25 +1,25 @@
 /*
-package eu.venthe.pipeline.orchestrator.projects._archive.api;
+package eu.venthe.pipeline.orchestrator.repositorys._archive.api;
 
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.MessageListenerRegistry;
-import eu.venthe.pipeline.orchestrator.projects._archive.api.events.ProjectSourceConfigurationAddedEvent;
+import eu.venthe.pipeline.orchestrator.repositorys._archive.api.events.RepositorySourceConfigurationAddedEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class ProjectConfigurationSourceEventListener {
-    private final ProjectsSourceConfigurationCommandService projectsSourceConfigurationService;
+public class RepositoryConfigurationSourceEventListener {
+    private final RepositorySourceConfigurationCommandService repositorysSourceConfigurationService;
 
-    public ProjectConfigurationSourceEventListener(MessageListenerRegistry listener, ProjectsSourceConfigurationCommandService projectsSourceConfigurationService) {
-        this.projectsSourceConfigurationService = projectsSourceConfigurationService;
+    public RepositoryConfigurationSourceEventListener(MessageListenerRegistry listener, RepositorySourceConfigurationCommandService repositorysSourceConfigurationService) {
+        this.repositorysSourceConfigurationService = repositorysSourceConfigurationService;
 
-        listener.observe(ProjectSourceConfigurationAddedEvent.class, (envelope -> projectSourceAdded(envelope.getData())));
+        listener.observe(RepositorySourceConfigurationAddedEvent.class, (envelope -> repositorySourceAdded(envelope.getData())));
     }
 
-    public void projectSourceAdded(ProjectSourceConfigurationAddedEvent event) {
-        log.info("Received ProjectSourceConfigurationAddedEvent. {}", event);
-        projectsSourceConfigurationService.synchronizeProject(event.getSourceId());
+    public void repositorySourceAdded(RepositorySourceConfigurationAddedEvent event) {
+        log.info("Received RepositorySourceConfigurationAddedEvent. {}", event);
+        repositorysSourceConfigurationService.synchronizeRepository(event.getSourceId());
     }
 }
 */

@@ -11,7 +11,6 @@ import eu.venthe.platform.workflow.utilities.GraphUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class JobRuns {
         }
         log.info("{}", runs);
 
-        return runs.get(0).values().stream().map(JobRun::run).toList();
+        return runs.getFirst().values().stream().map(JobRun::run).toList();
     }
 
     private JobRun createRun(JobId id) {

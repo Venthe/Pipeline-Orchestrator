@@ -39,7 +39,7 @@ public class WorkflowDispatchHandler implements EventHandler {
         log.debug("Workflow dispatch handler {}", event);
         WorkflowDispatchEvent mappedEvent = new WorkflowDispatchEvent(objectMapper, event);
 
-        Workflow workflow = getWorkflow(mappedEvent.getRepository().getProjectName(), mappedEvent.getRef(), mappedEvent.getWorkflow())
+        Workflow workflow = getWorkflow(mappedEvent.getRepository().getRepositoryName(), mappedEvent.getRef(), mappedEvent.getWorkflow())
                 .orElseThrow();
 
 //        new WorkflowExecution()
@@ -47,9 +47,9 @@ public class WorkflowDispatchHandler implements EventHandler {
         executorService.execute("123");
     }
 
-    private Optional<Workflow> getWorkflow(String projectName, String ref, String workflowFileName) throws JsonProcessingException {
+    private Optional<Workflow> getWorkflow(String repositoryName, String ref, String workflowFileName) throws JsonProcessingException {
         Path workflowPath = Path.of(".pipeline", "workflows", workflowFileName);
-        return Optional.ofNullable((ObjectNode) objectMapper.readTree(versionControlSystem.showFile(projectName, ref, workflowPath.toString()).orElseThrow()))
+        return Optional.ofNullable((ObjectNode) objectMapper.readTree(versionControlSystem.showFile(repositoryName, ref, workflowPath.toString()).orElseThrow()))
                 .map((ObjectNode workflowFile) -> new Workflow(workflowFile, workflowFileName, expressionUtilities));
     }
 

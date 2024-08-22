@@ -50,6 +50,7 @@ public class EnvUtil {
         return hostname;
     }
 
+    // TODO: Set public URL
     @SneakyThrows
     public URL getServerUrl() {
         return new URL("http://" + getHostname() + ":" + getPort());

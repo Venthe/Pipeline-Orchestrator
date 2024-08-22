@@ -21,9 +21,8 @@ import lombok.ToString;
  */
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
-@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class PullRequestReviewEvent extends AbstractProjectEvent {
+public class PullRequestReviewEvent extends AbstractRepositoryEvent {
     private final PullRequestReviewAction action;
     private final PullRequestContext pullRequest;
     private final PullRequestReviewContext review;

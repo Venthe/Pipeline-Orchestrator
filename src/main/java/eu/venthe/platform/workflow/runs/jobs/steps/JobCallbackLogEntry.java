@@ -7,4 +7,7 @@ public record JobCallbackLogEntry(LogSeverity severity,
                                   OffsetDateTime timestamp,
                                   String message,
                                   Map.Entry<String, String>... structuredData) {
+    @SafeVarargs
+    public JobCallbackLogEntry {
+    }
 }

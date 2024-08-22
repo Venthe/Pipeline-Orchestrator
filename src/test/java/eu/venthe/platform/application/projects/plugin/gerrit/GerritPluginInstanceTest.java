@@ -1,11 +1,11 @@
 /*
-package eu.venthe.platform.application.projects.plugin.gerrit;
+package eu.venthe.platform.application.repositorys.plugin.gerrit;
 
-import eu.venthe.platform.shared_kernel.project.ProjectStatus;
+import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
 import eu.venthe.platform.source_configuration.domain.plugins.gerrit.GerritConfiguration;
 import eu.venthe.platform.source_configuration.domain.plugins.gerrit.GerritPluginInstance;
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePluginInstance;
-import eu.venthe.platform.source_configuration.domain.plugins.template.Project;
+import eu.venthe.platform.source_configuration.domain.plugins.template.RepositorySourcePluginInstance;
+import eu.venthe.platform.source_configuration.domain.plugins.template.Repository;
 import eu.venthe.platform.source_configuration.domain.model.SourceType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,27 +23,27 @@ class GerritPluginInstanceTest {
             .password("secret")
             .build();
 
-    ProjectSourcePluginInstance plugin = new GerritPluginInstance(CONFIGURATION);
+    RepositorySourcePluginInstance plugin = new GerritPluginInstance(CONFIGURATION);
 
     @Test
-    void listProjects() {
-        Collection<Project> projects = plugin.getProjects().collect(Collectors.toSet());
+    void listRepository() {
+        Collection<Repository> repositorys = plugin.getRepository().collect(Collectors.toSet());
 
-        Assertions.assertThat(projects).hasSize(2)
+        Assertions.assertThat(repositorys).hasSize(2)
                 .containsExactlyInAnyOrder(
-                        new Project("All-Projects", ProjectStatus.ACTIVE),
-                        new Project("All-Users", ProjectStatus.ACTIVE)
+                        new Repository("All-Repository", RepositoryStatus.ACTIVE),
+                        new Repository("All-Users", RepositoryStatus.ACTIVE)
                 );
     }
 
 */
 /*    @Test
     void listFiles() {
-        Collection<Metadata> files = plugin.getFileList("All-Projects", "refs/meta/config", Paths.get("."));
+        Collection<Metadata> files = plugin.getFileList("All-Repository", "refs/meta/config", Paths.get("."));
 
         Assertions.assertThat(files).hasSize(3)
                 .containsExactlyInAnyOrder(
-                        Metadata.directory(Paths.get("project.config"), 2223L, FileDto.Type.FILE),
+                        Metadata.directory(Paths.get("repository.config"), 2223L, FileDto.Type.FILE),
                         new Metadata(Paths.get(".git"), 4096L, FileDto.Type.DIRECTORY),
                         new Metadata(Paths.get("groups"), 336L, FileDto.Type.FILE)
                 );
@@ -52,11 +52,11 @@ class GerritPluginInstanceTest {
 
     @Test
     void showFile() {
-        Optional<String> file = plugin.getFile("All-Projects", "refs/meta/config", Paths.get("project.config")).map(e -> new String(e, StandardCharsets.UTF_8));
+        Optional<String> file = plugin.getFile("All-Repository", "refs/meta/config", Paths.get("repository.config")).map(e -> new String(e, StandardCharsets.UTF_8));
 
         Assertions.assertThat(file).isPresent().hasValue("""
-                [project]
-                	description = Access inherited by all other projects.
+                [repository]
+                	description = Access inherited by all other repositorys.
                 [receive]
                 	requireContributorAgreement = false
                 	requireSignedOffBy = false
@@ -77,42 +77,42 @@ class GerritPluginInstanceTest {
                 	pushMerge = group Registered Users
                 [access "refs/heads/*"]
                 	create = group Administrators
-                	create = group Project Owners
+                	create = group Repository Owners
                 	editTopicName = +force group Administrators
-                	editTopicName = +force group Project Owners
+                	editTopicName = +force group Repository Owners
                 	forgeAuthor = group Registered Users
                 	forgeCommitter = group Administrators
-                	forgeCommitter = group Project Owners
+                	forgeCommitter = group Repository Owners
                 	label-Code-Review = -2..+2 group Administrators
-                	label-Code-Review = -2..+2 group Project Owners
+                	label-Code-Review = -2..+2 group Repository Owners
                 	label-Code-Review = -1..+1 group Registered Users
                 	push = group Administrators
-                	push = group Project Owners
+                	push = group Repository Owners
                 	read = group Anonymous Users
                 	revert = group Registered Users
                 	submit = group Administrators
-                	submit = group Project Owners
+                	submit = group Repository Owners
                 [access "refs/meta/config"]
                 	exclusiveGroupPermissions = read
                 	create = group Administrators
-                	create = group Project Owners
+                	create = group Repository Owners
                 	label-Code-Review = -2..+2 group Administrators
-                	label-Code-Review = -2..+2 group Project Owners
+                	label-Code-Review = -2..+2 group Repository Owners
                 	push = group Administrators
-                	push = group Project Owners
+                	push = group Repository Owners
                 	read = group Administrators
-                	read = group Project Owners
+                	read = group Repository Owners
                 	submit = group Administrators
-                	submit = group Project Owners
+                	submit = group Repository Owners
                 [access "refs/meta/version"]
                 	read = group Anonymous Users
                 [access "refs/tags/*"]
                 	create = group Administrators
-                	create = group Project Owners
+                	create = group Repository Owners
                 	createSignedTag = group Administrators
-                	createSignedTag = group Project Owners
+                	createSignedTag = group Repository Owners
                 	createTag = group Administrators
-                	createTag = group Project Owners
+                	createTag = group Repository Owners
                 [label "Code-Review"]
                 	function = MaxWithBlock
                 	defaultValue = 0

@@ -2,7 +2,6 @@ package eu.venthe.platform.shared_kernel.system_events;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.platform.shared_kernel.git.GitRevision;
 import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.system_events.contexts.git.ReferenceTypeContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.git.SimpleRevisionContext;
@@ -21,7 +20,7 @@ import java.util.Optional;
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class CreateEvent extends AbstractProjectEvent {
+public class CreateEvent extends AbstractRepositoryEvent {
     /**
      * The repository's current description.
      */

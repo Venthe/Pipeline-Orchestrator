@@ -1,13 +1,13 @@
 /*
-package eu.venthe.pipeline.orchestrator.projects.domain;
+package eu.venthe.pipeline.orchestrator.repositorys.domain;
 
-import eu.venthe.pipeline.orchestrator.projects.adapter.plugin.controlled_provider.ControlledTestProjectProvider;
-import eu.venthe.pipeline.orchestrator.projects.adapter.plugin.controlled_provider.ControlledTestProviderPlugin;
-import eu.venthe.pipeline.orchestrator.projects.adapter.plugin.controlled_provider.ControlledTestVersionControlSystem;
-import eu.venthe.pipeline.orchestrator.projects.adapter.template.model.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects._archive.api.events.ProjectDiscoveredEvent;
-import eu.venthe.pipeline.orchestrator.projects._archive.api.events.ProjectSourceConfigurationAddedEvent;
-import eu.venthe.pipeline.orchestrator.projects._archive.domain.*;
+import eu.venthe.pipeline.orchestrator.repositorys.adapter.plugin.controlled_provider.ControlledTestRepositoryProvider;
+import eu.venthe.pipeline.orchestrator.repositorys.adapter.plugin.controlled_provider.ControlledTestProviderPlugin;
+import eu.venthe.pipeline.orchestrator.repositorys.adapter.plugin.controlled_provider.ControlledTestVersionControlSystem;
+import eu.venthe.pipeline.orchestrator.repositorys.adapter.template.model.RepositoryDto;
+import eu.venthe.pipeline.orchestrator.repositorys._archive.api.events.RepositoryDiscoveredEvent;
+import eu.venthe.pipeline.orchestrator.repositorys._archive.api.events.RepositorySourceConfigurationAddedEvent;
+import eu.venthe.pipeline.orchestrator.repositorys._archive.domain.*;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainEvent;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -21,33 +21,33 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
-import static eu.venthe.pipeline.orchestrator.projects.adapter.plugin.controlled_provider.ControlledTestProviderPlugin.SOURCE_TYPE;
-import static eu.venthe.pipeline.orchestrator.projects.adapter.plugin.controlled_provider.ControlledTestProviderPlugin.generateId;
+import static eu.venthe.pipeline.orchestrator.repositorys.adapter.plugin.controlled_provider.ControlledTestProviderPlugin.SOURCE_TYPE;
+import static eu.venthe.pipeline.orchestrator.repositorys.adapter.plugin.controlled_provider.ControlledTestProviderPlugin.generateId;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SoftAssertionsExtension.class)
-class ProjectSourceConfigurationTest {
+class RepositorySourceConfigurationTest {
     @InjectSoftAssertions
     private SoftAssertions sa;
 
-    private ProjectSourceConfigurationFactory projectSourceConfigurationFactory;
+    private RepositorySourceConfigurationFactory repositorySourceConfigurationFactory;
     private ControlledTestVersionControlSystem versionControlSystem;
-    private ControlledTestProjectProvider projectProvider;
+    private ControlledTestRepositoryProvider repositoryProvider;
 
     private String configurationId;
-    private ProjectSourceConfiguration configuration;
+    private RepositorySourceConfiguration configuration;
 
     @BeforeEach
     void setup() {
         versionControlSystem = new ControlledTestVersionControlSystem();
-        projectProvider = new ControlledTestProjectProvider();
-        projectSourceConfigurationFactory = new ProjectSourceConfigurationFactoryImpl(Set.of(new ControlledTestProviderPlugin(versionControlSystem, projectProvider)));
+        repositoryProvider = new ControlledTestRepositoryProvider();
+        repositorySourceConfigurationFactory = new RepositorySourceConfigurationFactoryImpl(Set.of(new ControlledTestProviderPlugin(versionControlSystem, repositoryProvider)));
         configurationId = generateId();
     }
 
     @Test
     void shouldRegisterConfiguration() {
-        var result = projectSourceConfigurationFactory.createConfiguration(
+        var result = repositorySourceConfigurationFactory.createConfiguration(
                 configurationId,
                 SOURCE_TYPE,
                 new HashMap<>()
@@ -55,47 +55,47 @@ class ProjectSourceConfigurationTest {
 
         configuration = result.getLeft();
         sa.assertThat(configuration).satisfies(
-                _configuration -> sa.assertThat(_configuration.getId()).isEqualTo(ProjectSourceConfigurationId.of(configurationId)),
+                _configuration -> sa.assertThat(_configuration.getId()).isEqualTo(RepositorySourceConfigurationId.of(configurationId)),
                 _configuration -> sa.assertThat(_configuration.getSourceType()).isEqualTo(SOURCE_TYPE)
         );
         sa.assertThat(result.getRight()).containsExactlyInAnyOrder(
-                new ProjectSourceConfigurationAddedEvent(configurationId, SOURCE_TYPE)
+                new RepositorySourceConfigurationAddedEvent(configurationId, SOURCE_TYPE)
         );
     }
 
     @Test
-    void shouldLoadProjectsFromDirectory() {
+    void shouldLoadRepositoryFromDirectory() {
         shouldRegisterConfiguration();
 
-        assertThat(configuration.getKnownProjects()).isEmpty();
+        assertThat(configuration.getKnownRepository()).isEmpty();
 
         Collection<DomainEvent> result = configuration.synchronize();
 
         Assertions.assertThat(result).containsExactlyInAnyOrder(
-                new ProjectDiscoveredEvent("Simple-Dispatch", configurationId)
+                new RepositoryDiscoveredEvent("Simple-Dispatch", configurationId)
         );
-        assertThat(configuration.getKnownProjects())
+        assertThat(configuration.getKnownRepository())
                 .containsExactlyInAnyOrder(
-                        new KnownProject("Simple-Dispatch", configurationId)
+                        new KnownRepository("Simple-Dispatch", configurationId)
                 );
     }
 
     @Test
-    void shouldLoadProjectsFromMemory() {
-        shouldLoadProjectsFromDirectory();
+    void shouldLoadRepositoryFromMemory() {
+        shouldLoadRepositoryFromDirectory();
 
-        projectProvider.addProject(new ProjectDto(ProjectDto.Status.ACTIVE, "Test-Project"));
+        repositoryProvider.addRepository(new RepositoryDto(RepositoryDto.Status.ACTIVE, "Test-Repository"));
 
         Collection<DomainEvent> result = configuration.synchronize();
 
         Assertions.assertThat(result).containsExactlyInAnyOrder(
-                new ProjectDiscoveredEvent("Test-Project", configurationId)
+                new RepositoryDiscoveredEvent("Test-Repository", configurationId)
         );
 
-        assertThat(configuration.getKnownProjects())
+        assertThat(configuration.getKnownRepository())
                 .containsExactlyInAnyOrder(
-                        new KnownProject("Simple-Dispatch", configurationId),
-                        new KnownProject("Test-Project", configurationId)
+                        new KnownRepository("Simple-Dispatch", configurationId),
+                        new KnownRepository("Test-Repository", configurationId)
                 );
     }
 }

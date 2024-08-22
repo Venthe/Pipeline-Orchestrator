@@ -4,7 +4,7 @@ import com.google.common.collect.MoreCollectors;
 import eu.venthe.platform.workflow.EventHandlerProvider;
 import eu.venthe.platform.workflow.handlers.handlers.DefaultEventHandler;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
-import eu.venthe.platform.shared_kernel.system_events.ProjectEvent;
+import eu.venthe.platform.shared_kernel.system_events.RepositoryEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class EventHandlerProviderImpl implements EventHandlerProvider {
     private final Set<EventHandler> eventHandlers;
 
     @Override
-    public Collection<DomainTrigger> handle(ProjectEvent event) {
+    public Collection<DomainTrigger> handle(RepositoryEvent event) {
         //noinspection unchecked
         return eventHandlers.stream()
                 .filter(e -> e.canHandle(event))

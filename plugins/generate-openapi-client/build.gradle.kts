@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
-
 plugins {
     kotlin("jvm") version "1.9.23"
     `java-gradle-plugin`
@@ -18,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.openapitools:openapi-generator-gradle-plugin:7.4.0")
+    implementation("org.openapitools:openapi-generator-gradle-plugin:7.8.0")
 }
 
 gradlePlugin {

@@ -2,9 +2,9 @@ package eu.venthe.platform.workflow.handlers.handlers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.venthe.platform.project.application.ProjectsQueryService;
+import eu.venthe.platform.repository.application.RepositoryQueryService;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
-import eu.venthe.platform.shared_kernel.system_events.ProjectEvent;
+import eu.venthe.platform.shared_kernel.system_events.RepositoryEvent;
 import eu.venthe.platform.shared_kernel.system_events.WorkflowDispatchEvent;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
@@ -28,14 +28,14 @@ import java.util.HashSet;
 @Slf4j
 public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowDispatchEvent> {
     private final ObjectMapper mapper;
-    private final ProjectsQueryService projectsQueryService;
+    private final RepositoryQueryService repositorysQueryService;
     private final WorkflowRunCommandService workflowRunCommandService;
 
     @Override
     public Collection<DomainTrigger> _handle(WorkflowDispatchEvent event) {
         log.info("Event triggers single workflow on path {}", event.getWorkflow());
 
-        var workflowDefinition = projectsQueryService.getFile(event.getRepository().getId(), event.getRevision(), event.getWorkflow())
+        var workflowDefinition = repositorysQueryService.getFile(event.getRepository().getId(), event.getRevision(), event.getWorkflow())
                 .map(e -> {
                     try (var content = e.content()) {
                         return new String(content.readAllBytes(), StandardCharsets.UTF_8);
@@ -74,7 +74,7 @@ public class WorkflowDispatchEventHandler extends AbstractEventHandler<WorkflowD
     }
 
     @Override
-    public boolean canHandle(ProjectEvent event) {
+    public boolean canHandle(RepositoryEvent event) {
         return event instanceof WorkflowDispatchEvent;
     }
 }

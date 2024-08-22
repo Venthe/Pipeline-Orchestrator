@@ -15,7 +15,7 @@ import java.util.Optional;
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class WorkflowJobEvent extends AbstractProjectEvent {
+public class WorkflowJobEvent extends AbstractRepositoryEvent {
     /**
      * A request for a specific ref(branch,sha,tag) to be deployed
      */

@@ -15,18 +15,18 @@ import java.util.Map;
 
 @Slf4j
 @Service
-public class MockProjectLoader {
-    private static final String ROOT = "./projects";
+public class MockRepositoryLoader {
+    private static final String ROOT = "./repositorys";
     private final ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
 
     @Test
     void test() throws IOException {
 
-        JsonNode projectsDefinition = loadYaml("definition.yaml");
-        JsonNode projects = projectsDefinition.get("projects");
-        for (Map.Entry<String, JsonNode> project : projects.properties()) {
-            String projectKey = project.getKey();
-            JsonNode refs = project.getValue().get("refs");
+        JsonNode repositorysDefinition = loadYaml("definition.yaml");
+        JsonNode repositorys = repositorysDefinition.get("repositorys");
+        for (Map.Entry<String, JsonNode> repository : repositorys.properties()) {
+            String repositoryKey = repository.getKey();
+            JsonNode refs = repository.getValue().get("refs");
             for (Map.Entry<String, JsonNode> ref : refs.properties()) {
                 String refKey = ref.getKey();
                 JsonNode workflows = ref.getValue().get("workflows");
@@ -34,7 +34,7 @@ public class MockProjectLoader {
                     String path = el.get("path").asText();
                     String name = el.get("name").asText();
 
-                    log.info("[{}:{}]Loading {} from {}", projectKey, refKey, name, path);
+                    log.info("[{}:{}]Loading {} from {}", repositoryKey, refKey, name, path);
                     log.info("{}", loadYaml(path));
                 }
             }

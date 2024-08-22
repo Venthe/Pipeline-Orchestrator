@@ -28,7 +28,7 @@ import java.util.Optional;
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class DeploymentReviewEvent extends AbstractProjectEvent {
+public class DeploymentReviewEvent extends AbstractRepositoryEvent {
     private final DeploymentReviewAction action;
     private final OffsetDateTime since;
     private final Optional<WorkflowRunContext> workflowRun;

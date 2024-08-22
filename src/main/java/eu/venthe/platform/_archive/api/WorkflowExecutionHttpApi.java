@@ -1,9 +1,9 @@
 /*
-package eu.venthe.pipeline.orchestrator.projects.api;
+package eu.venthe.pipeline.orchestrator.repositorys.api;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.projects.application.WorkflowExecutionService;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.JobExecutionStatus;
+import eu.venthe.pipeline.orchestrator.repositorys.application.WorkflowExecutionService;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.workflow_executions.JobExecutionStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

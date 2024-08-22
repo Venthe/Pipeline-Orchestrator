@@ -2,7 +2,6 @@ package eu.venthe.platform.shared_kernel.system_events;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.platform.shared_kernel.git.GitRevision;
 import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.system_events.contexts.CommitDetailsContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.UserContext;
@@ -29,7 +28,7 @@ import java.util.Optional;
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class PushEvent extends AbstractProjectEvent {
+public class PushEvent extends AbstractRepositoryEvent {
     /**
      * The SHA of the most recent commit on ref after the push.
      */

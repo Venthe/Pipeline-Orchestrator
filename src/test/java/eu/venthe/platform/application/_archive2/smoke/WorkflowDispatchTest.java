@@ -5,9 +5,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import eu.venthe.pipeline.orchestrator.AbstractIntegrationTest;
-import eu.venthe.pipeline.orchestrator.projects.domain.application.WorkflowTriggerService;
-import eu.venthe.pipeline.orchestrator.projects.domain.events.TriggerEvent;
-import eu.venthe.pipeline.orchestrator.projects.domain.infrastructure.WorkflowExecutionRepository;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.application.WorkflowTriggerService;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.events.TriggerEvent;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.infrastructure.WorkflowExecutionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +37,10 @@ class WorkflowDispatchTest extends AbstractIntegrationTest {
                 ref: "refs/heads/main"
                 repository:
                   repositoryId: gerrit
-                  project: Example-Project
+                  repository: Example-Repository
                 """);
 
-//        testVersionControlSystem.addFile(new TestVersionControlSystem.FileRef("TEST", "Example-Project", "main", ".pipeline/workflows/example.yaml"), """
+//        testVersionControlSystem.addFile(new TestVersionControlSystem.FileRef("TEST", "Example-Repository", "main", ".pipeline/workflows/example.yaml"), """
 //                on:
 //                  workflow_dispatch: ~
 //                jobs:

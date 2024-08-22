@@ -25,7 +25,7 @@ class GerritEventTest extends AbstractBaseTest {
         // given
 
         testEventApi.queueEvent(
-                new EventTriggerDto("patchset-created", "Example project", "xyz", "main", null, "build", null)
+                new EventTriggerDto("patchset-created", "Example repository", "xyz", "main", null, "build", null)
         );
 
         // when

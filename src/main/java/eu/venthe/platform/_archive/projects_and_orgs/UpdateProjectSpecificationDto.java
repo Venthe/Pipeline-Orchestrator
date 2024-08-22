@@ -1,6 +1,6 @@
-package eu.venthe.platform._archive.projects_and_orgs;
+package eu.venthe.platform._archive.repositorys_and_orgs;
 
-import eu.venthe.platform.shared_kernel.project.ProjectStatus;
+import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
 
-public record UpdateProjectSpecificationDto(ProjectStatus status, String projectName) {
+public record UpdateRepositorySpecificationDto(RepositoryStatus status, String repositoryName) {
 }

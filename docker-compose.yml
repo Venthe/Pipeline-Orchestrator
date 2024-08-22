@@ -29,7 +29,7 @@ services:
       - zookeeper-2
       - zookeeper-3
     ports:
-      - 29092:29092
+      - "29092:29092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181,zookeeper-2:2181,zookeper-3:2181
@@ -45,7 +45,7 @@ services:
       - zookeeper-2
       - zookeeper-3
     ports:
-      - 39092:39092
+      - "39092:39092"
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181,zookeeper-2:2181,zookeper-3:2181
@@ -62,7 +62,7 @@ services:
       - zookeeper-2
       - zookeeper-3
     ports:
-      - 49092:49092
+      - "49092:49092"
     environment:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181,zookeeper-2:2181,zookeper-3:2181
@@ -85,13 +85,13 @@ services:
     restart: unless-stopped
     image: mongo
     ports:
-      - 27017:27017
+      - "27017:27017"
 
   mongo-express:
     restart: unless-stopped
     image: mongo-express
     ports:
-      - 8081:8081
+      - "8081:8081"
     environment:
       ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
 

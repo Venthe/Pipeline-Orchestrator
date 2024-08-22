@@ -1,21 +1,21 @@
 package eu.venthe.platform.application;
 
 import eu.venthe.platform.application.fixtures.MockAdapterFixture;
-import eu.venthe.platform.application.fixtures.MockProjectSourceFixture;
+import eu.venthe.platform.application.fixtures.MockRepositorySourceFixture;
 import eu.venthe.platform.organization.application.OrganizationCommandService;
 import eu.venthe.platform.organization.application.model.CreateOrganizationSpecification;
-import eu.venthe.platform.project.application.ProjectsCommandService;
-import eu.venthe.platform.project.application.ProjectsQueryService;
-import eu.venthe.platform.project.domain.ProjectId;
+import eu.venthe.platform.repository.application.RepositoryCommandService;
+import eu.venthe.platform.repository.application.RepositoryQueryService;
+import eu.venthe.platform.repository.domain.RepositoryId;
 import eu.venthe.platform.runner.RunnerManager;
 import eu.venthe.platform.runner.model.RegisterRunnerEngineInstanceSpecification;
 import eu.venthe.platform.runner.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.io.File;
-import eu.venthe.platform.shared_kernel.project.ProjectStatus;
+import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
 import eu.venthe.platform.source_configuration.application.SourceConfigurationSpecification;
-import eu.venthe.platform.source_configuration.domain.plugins.template.Project;
-import eu.venthe.platform.source_configuration.domain.plugins.template.SourceProjectId;
+import eu.venthe.platform.source_configuration.domain.plugins.template.Repository;
+import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryId;
 import eu.venthe.platform.workflow.JobExecutorCallbackService;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.WorkflowRunQueryService;
@@ -53,37 +53,37 @@ class FullIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     RunnerManager runnerManager;
     @Autowired
-    ProjectsCommandService projectsCommandService;
+    RepositoryCommandService repositorysCommandService;
     @Autowired
-    WorkflowRunCommandService projectWorkflowCommandService;
+    WorkflowRunCommandService repositoryWorkflowCommandService;
     @Autowired
     JobExecutorCallbackService callbackService;
     @Autowired
     OrganizationCommandService organizationCommandService;
 
     @Autowired
-    ProjectsQueryService projectsQueryService;
+    RepositoryQueryService repositorysQueryService;
     @Autowired
     WorkflowRunQueryService workflowRunQueryService;
 
     @Autowired
-    MockProjectSourceFixture projectSourceFixture;
+    MockRepositorySourceFixture repositorySourceFixture;
     @Autowired
     MockAdapterFixture adapterFixture;
 
     @Test
     void name() {
-        val projectName = new SourceProjectId("Example-Project");
+        val repositoryName = new SourceRepositoryId("Example-Repository");
         val organizationName = "default";
         val sourceType = "test";
         val engineInstanceId = "default";
         val engineType = "default";
         val revision = new SimpleRevision("main");
 
-        projectSourceFixture.onInstance(projectSource -> {
-            when(projectSource.getProjectIdentifiers()).thenReturn(Stream.of(projectName));
-            when(projectSource.getProject(projectName)).thenReturn(Optional.of(new Project(projectName, ProjectStatus.ACTIVE)));
-            when(projectSource.getFile(eq(projectName), eq(revision), eq(Path.of(".mantle", "workflows", "test-workflow.yml"))))
+        repositorySourceFixture.onInstance(repositorySource -> {
+            when(repositorySource.getRepositoryIdentifiers()).thenReturn(Stream.of(repositoryName));
+            when(repositorySource.getRepository(repositoryName)).thenReturn(Optional.of(new Repository(repositoryName, RepositoryStatus.ACTIVE)));
+            when(repositorySource.getFile(eq(repositoryName), eq(revision), eq(Path.of(".mantle", "workflows", "test-workflow.yml"))))
                     .thenReturn(Optional.of(new File(new ByteArrayInputStream("""
                             name: Test
                             on: workflow_dispatch
@@ -116,11 +116,11 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
         // At this point, auto synchronization should happen. Let's wait for it.
         await("Synchronization done")
-                .until(() -> !projectsQueryService.getProjectIds(createdOrganizationName).collect(toSet()).isEmpty());
+                .until(() -> !repositorysQueryService.getRepositoryIds(createdOrganizationName).collect(toSet()).isEmpty());
 
-        val projectId = new ProjectId(createdOrganizationName, projectName);
-        await("Project found")
-                .untilAsserted(() -> assertThat(projectsQueryService.find(projectId)).isPresent());
+        val repositoryId = new RepositoryId(createdOrganizationName, repositoryName);
+        await("Repository found")
+                .untilAsserted(() -> assertThat(repositorysQueryService.find(repositoryId)).isPresent());
 
         adapterFixture.setupExecution((context, dimensions) -> {
             var _metadata = new JobCallbackCallMetadata(context.jobRunRequestContext().system().workflowRunId(), context.jobRunRequestContext().system().jobRunId(), context.runCallbackToken());
@@ -130,7 +130,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
             callbackService.jobRunCompleted(_metadata, ZonedDateTime.now(), Map.of());
         });
 
-        val workflowRunId = projectWorkflowCommandService.triggerWorkflowDispatch(projectId, revision, Paths.get("test-workflow.yml"));
+        val workflowRunId = repositoryWorkflowCommandService.triggerWorkflowDispatch(repositoryId, revision, Paths.get("test-workflow.yml"));
 
         await("Execution done").untilAsserted(() ->
                 Assertions.assertThat(workflowRunQueryService.getExecutionDetails(workflowRunId)).isPresent().contains(new WorkflowExecutionDto(workflowRunId, WorkflowRunStatus.SUCCESS)));

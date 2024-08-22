@@ -46,7 +46,7 @@ public enum Permissions {
      */
     PULL_REQUESTS,
     /**
-     * Work with GitHub projects (classic). For example, repository-projects: write permits an action to add a column to a project (classic). For more information, see "Permissions required for GitHub Apps."
+     * Work with GitHub repositorys (classic). For example, repository-repositorys: write permits an action to add a column to a repository (classic). For more information, see "Permissions required for GitHub Apps."
      */
     REPOSITORY_PROJECTS,
     /**
@@ -61,7 +61,7 @@ public enum Permissions {
     public enum Value {
         READ,
         WRITE,
-        NONE;
+        NONE
     }
 
     public record Permission(Permissions permission, Value value) {}

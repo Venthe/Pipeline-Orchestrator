@@ -17,9 +17,8 @@ import lombok.ToString;
  */
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
-@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class WorkflowRunEvent extends AbstractProjectEvent {
+public class WorkflowRunEvent extends AbstractRepositoryEvent {
     private final WorkflowContext workflow;
     private final WorkflowRunContext workflowRun;
 

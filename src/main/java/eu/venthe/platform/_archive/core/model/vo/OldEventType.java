@@ -16,7 +16,7 @@ public class OldEventType {
     public static final String CHANGE_RESTORED = "change-restored";
     public static final String COMMENT_ADDED = "comment-added";
     public static final String DROPPED_OUTPUT = "dropped-output";
-    public static final String PROJECT_CREATED = "project-created";
+    public static final String PROJECT_CREATED = "repository-created";
     public static final String PATCHSET_CREATED = "patchset-created";
     public static final String REF_UPDATED = "ref-updated";
     public static final String REVIEWER_ADDED = "reviewer-added";
@@ -25,7 +25,7 @@ public class OldEventType {
     public static final String WIP_STATE_CHANGED = "wip-state-changed";
     public static final String PRIVATE_STATE_CHANGED = "private-state-changed";
     public static final String VOTE_DELETED = "vote-deleted";
-    public static final String PROJECT_HEAD_UPDATED = "project-head-updated";
+    public static final String PROJECT_HEAD_UPDATED = "repository-head-updated";
 
     public static List<String> CHANGE_EVENTS = List.of(
             ASSIGNEE_CHANGED,

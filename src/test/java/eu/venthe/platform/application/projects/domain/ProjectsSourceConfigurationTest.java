@@ -1,13 +1,13 @@
 /*
-package eu.venthe.platform.application.projects.domain;
+package eu.venthe.platform.application.repositorys.domain;
 
-import eu.venthe.platform.project.application.ProjectsCommandService;
-import eu.venthe.platform.project.application.ProjectsQueryService;
-import eu.venthe.platform.project.application.model.CreateProjectSpecification;
-import eu.venthe.platform.project.domain.ProjectId;
-import eu.venthe.platform.shared_kernel.project.ProjectStatus;
-import eu.venthe.platform.source_configuration.domain.plugins.template.ProjectSourcePlugin;
-import eu.venthe.platform.source_configuration.domain.plugins.template.Project;
+import eu.venthe.platform.repository.application.RepositoryCommandService;
+import eu.venthe.platform.repository.application.RepositoryQueryService;
+import eu.venthe.platform.repository.application.model.CreateRepositorySpecification;
+import eu.venthe.platform.repository.domain.RepositoryId;
+import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
+import eu.venthe.platform.source_configuration.domain.plugins.template.RepositorySourcePlugin;
+import eu.venthe.platform.source_configuration.domain.plugins.template.Repository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,41 +21,41 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @ExtendWith(MockitoExtension.class)
-class ProjectsSourceConfigurationTest {
+class RepositorySourceConfigurationTest {
     @Mock
-    ProjectSourcePlugin.PluginInstance pluginInstance;
+    RepositorySourcePlugin.PluginInstance pluginInstance;
     @Mock
-    ProjectsCommandService projectCommands;
+    RepositoryCommandService repositoryCommands;
     @Spy
-    ProjectsQueryService projectQueries;
+    RepositoryQueryService repositoryQueries;
 
-    ProjectsSourceConfiguration projectsSourceConfiguration;
+    RepositorySourceConfiguration repositorysSourceConfiguration;
 
     @BeforeEach
     void beforeEach() {
-        projectsSourceConfiguration = ProjectsSourceConfiguration.reconstitute(new SourceConfigurationId("TestName"), pluginInstance, projectCommands, projectQueries);
+        repositorysSourceConfiguration = RepositorySourceConfiguration.reconstitute(new SourceConfigurationId("TestName"), pluginInstance, repositoryCommands, repositoryQueries);
     }
 
     @Test
     void name() {
-        Mockito.when(pluginInstance.getProjectIds()).thenReturn(Stream.of(new Project.Id("123")));
-        Mockito.when(projectQueries.getProjectIds(new SourceConfigurationId("TestName"))).thenReturn(Stream.empty());
-        Mockito.when(pluginInstance.getProject("123")).thenReturn(Optional.of(new Project("123", ProjectStatus.ACTIVE)));
+        Mockito.when(pluginInstance.getRepositoryIds()).thenReturn(Stream.of(new Repository.Id("123")));
+        Mockito.when(repositoryQueries.getRepositoryIds(new SourceConfigurationId("TestName"))).thenReturn(Stream.empty());
+        Mockito.when(pluginInstance.getRepository("123")).thenReturn(Optional.of(new Repository("123", RepositoryStatus.ACTIVE)));
 
         // FIXME: Uncomment
-        // projectsSourceConfiguration.synchronize();
+        // repositorysSourceConfiguration.synchronize();
 
-        Mockito.verify(projectCommands).add(new SourceConfigurationId("TestName"), new CreateProjectSpecification(ProjectId.builder().name("123").configurationId(new SourceConfigurationId("TestName")).build(), ProjectStatus.ACTIVE));
+        Mockito.verify(repositoryCommands).add(new SourceConfigurationId("TestName"), new CreateRepositorySpecification(RepositoryId.builder().name("123").configurationId(new SourceConfigurationId("TestName")).build(), RepositoryStatus.ACTIVE));
     }
 
     @Test
     void name2() {
-        Project expectedValue = new Project("123", ProjectStatus.ACTIVE);
-        Mockito.when(pluginInstance.getProject("123")).thenReturn(Optional.of(expectedValue));
+        Repository expectedValue = new Repository("123", RepositoryStatus.ACTIVE);
+        Mockito.when(pluginInstance.getRepository("123")).thenReturn(Optional.of(expectedValue));
 
-        var project = projectsSourceConfiguration.getProject("123");
+        var repository = repositorysSourceConfiguration.getRepository("123");
 
-        Assertions.assertThat(project).isPresent().hasValue(expectedValue);
+        Assertions.assertThat(repository).isPresent().hasValue(expectedValue);
     }
 }
 */

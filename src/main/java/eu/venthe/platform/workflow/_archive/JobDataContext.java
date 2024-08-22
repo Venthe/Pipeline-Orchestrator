@@ -4,7 +4,7 @@ package eu.venthe.pipeline.orchestrator.workflow_executions.domain.dto;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.projects.domain.utilities.ContextUtilities;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.utilities.ContextUtilities;
 
 import java.util.Optional;
 

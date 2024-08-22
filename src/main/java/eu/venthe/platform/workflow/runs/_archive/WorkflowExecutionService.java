@@ -1,15 +1,15 @@
 /*
-package eu.venthe.pipeline.orchestrator.projects.application;
+package eu.venthe.pipeline.orchestrator.repositorys.application;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.JobExecutionStatus;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflow_executions.WorkflowExecution;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.Workflow;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.EnvironmentContext;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.StepJobContext;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.contexts.OutputsContext;
-import eu.venthe.pipeline.orchestrator.projects.domain.workflows.contexts.jobs.contexts.StepsContext;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.workflow_executions.JobExecutionStatus;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.workflow_executions.WorkflowExecution;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.workflows.Workflow;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.workflows.contexts.EnvironmentContext;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.workflows.contexts.jobs.StepJobContext;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.workflows.contexts.jobs.contexts.OutputsContext;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.workflows.contexts.jobs.contexts.StepsContext;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +51,7 @@ public class WorkflowExecutionService {
             objectNode.set("workflowRef", objectMapper.getNodeFactory().textNode(workflow.getRef().toRef()));
             objectNode.set("workflowSha", objectMapper.getNodeFactory().textNode(workflow.getRef().getSha()));
 
-            objectNode.set("projectName", objectMapper.getNodeFactory().textNode("Example-Project"));
+            objectNode.set("repositoryName", objectMapper.getNodeFactory().textNode("Example-Repository"));
             objectNode.set("ref", objectMapper.getNodeFactory().textNode("refs/heads/main"));
 
             StepJobContext stepJobContext = workflow.getJobs().getJob(jobId).specify(StepJobContext::create);

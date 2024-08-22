@@ -12,7 +12,7 @@ public enum ArchitectureDimension implements Dimension.Value {
         this.value = new Dimension(key, value);
     }
 
-    Dimension value;
+    final Dimension value;
 
     private static class Constants {
         private static final String ARCHITECTURE_KEY = "architecture";

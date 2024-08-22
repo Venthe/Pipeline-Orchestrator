@@ -34,11 +34,11 @@ class RepositoryTest extends AbstractBaseTest {
 
     @Test
     void trigger() throws JsonProcessingException {
-        Mockito.when(gerritApi.getCommitForProject(any(), any(), any())).thenReturn(objectMapper.createObjectNode());
-        Mockito.when(gerritApi.getCommitFilesForProject(any(), any(), any())).thenReturn(objectMapper.createObjectNode());
+        Mockito.when(gerritApi.getCommitForRepository(any(), any(), any())).thenReturn(objectMapper.createObjectNode());
+        Mockito.when(gerritApi.getCommitFilesForRepository(any(), any(), any())).thenReturn(objectMapper.createObjectNode());
         String event =
                 "type: \"workflow-dispatch\"\n" +
-                "projectName: \"State-Repository\"\n" +
+                "repositoryName: \"State-Repository\"\n" +
                 "branchName: \"main\"\n" +
                 "workflow: update-property\n" +
                 "inputs:\n" +

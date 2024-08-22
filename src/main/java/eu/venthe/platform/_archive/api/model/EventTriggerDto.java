@@ -16,14 +16,14 @@ public class EventTriggerDto {
     @Jacksonized
     @Builder(access = AccessLevel.PROTECTED)
     public EventTriggerDto(@NonNull String type,
-                           @NonNull String projectName,
+                           @NonNull String repositoryName,
                            @Nullable String revision,
                            @Nullable String branchName,
                            @Nullable String originId,
                            @Nullable String workflow,
                            @Nullable Map<String, JsonNode> inputs) {
         this.type = type;
-        this.projectName = projectName;
+        this.repositoryName = repositoryName;
         this.revision = revision;
         this.branchName = branchName;
         this.originId = originId;
@@ -36,7 +36,7 @@ public class EventTriggerDto {
     }
 
     @NonNull String type;
-    @NonNull String projectName;
+    @NonNull String repositoryName;
     @Nullable
     String revision;
     @Nullable

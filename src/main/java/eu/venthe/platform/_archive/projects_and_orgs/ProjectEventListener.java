@@ -1,11 +1,11 @@
 /*
-package eu.venthe.pipeline.orchestrator.projects.api;
+package eu.venthe.pipeline.orchestrator.repositorys.api;
 
 import eu.venthe.pipeline.orchestrator.infrastructure.message_broker.MessageListenerRegistry;
-import eu.venthe.pipeline.orchestrator.projects.api.dto.CreateProjectSpecificationDto;
-import eu.venthe.pipeline.orchestrator.projects.api.dto.ProjectDto;
-import eu.venthe.pipeline.orchestrator.projects.api.dto.UpdateProjectSpecificationDto;
-import eu.venthe.pipeline.orchestrator.projects._archive.api.events.ProjectDiscoveredEvent;
+import eu.venthe.pipeline.orchestrator.repositorys.api.dto.CreateRepositorySpecificationDto;
+import eu.venthe.pipeline.orchestrator.repositorys.api.dto.RepositoryDto;
+import eu.venthe.pipeline.orchestrator.repositorys.api.dto.UpdateRepositorySpecificationDto;
+import eu.venthe.pipeline.orchestrator.repositorys._archive.api.events.RepositoryDiscoveredEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,25 +13,25 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class ProjectEventListener {
-    private final ProjectsCommandService projectsService;
-    private final ProjectsQueryService queryService;
+public class RepositoryEventListener {
+    private final RepositoryCommandService repositorysService;
+    private final RepositoryQueryService queryService;
 
-    public ProjectEventListener(MessageListenerRegistry listener, ProjectsCommandService projectsService, ProjectsQueryService queryService) {
-        this.projectsService = projectsService;
+    public RepositoryEventListener(MessageListenerRegistry listener, RepositoryCommandService repositorysService, RepositoryQueryService queryService) {
+        this.repositorysService = repositorysService;
         this.queryService = queryService;
 
-        listener.observe(ProjectDiscoveredEvent.class, (envelope -> projectDiscovered(envelope.getData())));
+        listener.observe(RepositoryDiscoveredEvent.class, (envelope -> repositoryDiscovered(envelope.getData())));
     }
 
-    public void projectDiscovered(ProjectDiscoveredEvent event) {
-        log.info("Received ProjectSourceConfigurationAddedEvent. {}", event);
+    public void repositoryDiscovered(RepositoryDiscoveredEvent event) {
+        log.info("Received RepositorySourceConfigurationAddedEvent. {}", event);
 
-        Optional<ProjectDto> projectDto = queryService.find(event.getSystemId(), event.getProjectName());
-        if (projectDto.isEmpty()) {
-            projectsService.add(new CreateProjectSpecificationDto(event.getProjectName(), event.getSystemId()));
-        } else if (event.getStatus() != projectDto.get().getStatus() || !event.getProjectName().equalsIgnoreCase(projectDto.get().getName())) {
-            projectsService.updateDetails(event.getSystemId(), new UpdateProjectSpecificationDto(event.getStatus(), event.getProjectName()));
+        Optional<RepositoryDto> repositoryDto = queryService.find(event.getSystemId(), event.getRepositoryName());
+        if (repositoryDto.isEmpty()) {
+            repositorysService.add(new CreateRepositorySpecificationDto(event.getRepositoryName(), event.getSystemId()));
+        } else if (event.getStatus() != repositoryDto.get().getStatus() || !event.getRepositoryName().equalsIgnoreCase(repositoryDto.get().getName())) {
+            repositorysService.updateDetails(event.getSystemId(), new UpdateRepositorySpecificationDto(event.getStatus(), event.getRepositoryName()));
         }
     }
 }

@@ -11,8 +11,8 @@ public class RunnerListener {
         registry.register(RequestJobRunCommand.class, new MessageListenerRegistry.Observer<>(RunnerProvider.class.getSimpleName(), envelope -> {
             RequestJobRunCommand runRequest = envelope.getData();
 
-            // FIXME: Get token from the project
-            runnerProvider.queueExecution(runRequest.projectId(), runRequest.workflowRunId(), runRequest.runId(), null, RunnerDimensions.none());
+            // FIXME: Get token from the repository
+            runnerProvider.queueExecution(runRequest.repositoryId(), runRequest.workflowRunId(), runRequest.runId(), null, RunnerDimensions.none());
         }));
     }
 }

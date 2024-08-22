@@ -43,7 +43,7 @@ public class DispatchEvent extends AbstractContinuousIntegrationEvent {
         root.set("type", new TextNode(trigger.getType()));
 
         ObjectNode metadata = objectMapper.createObjectNode();
-        metadata.set("projectName", new TextNode(trigger.getProjectName()));
+        metadata.set("repositoryName", new TextNode(trigger.getRepositoryName()));
         String revision = getRevision(trigger, gerritApi, traceId);
         metadata.set("revision", new TextNode(revision));
         metadata.set("branchName", new TextNode(getBranchName(trigger, revision)));
@@ -52,8 +52,8 @@ public class DispatchEvent extends AbstractContinuousIntegrationEvent {
         ObjectNode additionalProperties = objectMapper.createObjectNode();
         additionalProperties.set("workflow", new TextNode(trigger.getWorkflow()));
         additionalProperties.set("inputs", objectMapper.valueToTree(trigger.getInputs()));
-        additionalProperties.set("commit", gerritApi.getCommitForProject(trigger.getProjectName(), revision, traceId));
-        additionalProperties.set("files", gerritApi.getCommitFilesForProject(trigger.getProjectName(), revision, traceId));
+        additionalProperties.set("commit", gerritApi.getCommitForRepository(trigger.getRepositoryName(), revision, traceId));
+        additionalProperties.set("files", gerritApi.getCommitFilesForRepository(trigger.getRepositoryName(), revision, traceId));
         root.set("additionalProperties", additionalProperties);
 
         return new DispatchEvent(root);
@@ -70,7 +70,7 @@ public class DispatchEvent extends AbstractContinuousIntegrationEvent {
                                       GerritApi gerritApi,
                                       HttpEntity<?> traceId) {
         return trigger.getRevision() == null
-                ? gerritApi.getRevisionForBranchOrRevision(trigger.getProjectName(), trigger.getBranchName(), traceId)
+                ? gerritApi.getRevisionForBranchOrRevision(trigger.getRepositoryName(), trigger.getBranchName(), traceId)
                 : trigger.getRevision();
     }
 

@@ -1,24 +1,24 @@
 /*
-package eu.venthe.pipeline.orchestrator._archive2.projects;
+package eu.venthe.pipeline.orchestrator._archive2.repositorys;
 
 import eu.venthe.pipeline.orchestrator.AbstractIntegrationTest;
-import eu.venthe.pipeline.orchestrator.projects.domain.application.WorkflowTriggerService;
-import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.EventHandlerProvider;
-import eu.venthe.pipeline.orchestrator.projects.domain.event_handlers.handlers.WorkflowDispatchEventHandler;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.application.WorkflowTriggerService;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.event_handlers.EventHandlerProvider;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.event_handlers.handlers.WorkflowDispatchEventHandler;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @MockBean(classes = {WorkflowTriggerService.class, EventHandlerProvider.class, WorkflowDispatchEventHandler.class})
-class ProjectSynchronizerTest extends AbstractIntegrationTest {
+class RepositorySynchronizerTest extends AbstractIntegrationTest {
     @Autowired
-    ProjectSynchronizer projectSynchronizer;
+    RepositorySynchronizer repositorySynchronizer;
 
     @SneakyThrows
     @Test
     void name() {
-        projectSynchronizer.test();
+        repositorySynchronizer.test();
     }
 }
 */

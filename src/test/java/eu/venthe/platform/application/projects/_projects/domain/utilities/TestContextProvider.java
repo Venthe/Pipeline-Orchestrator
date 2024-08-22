@@ -1,5 +1,5 @@
 /*
-package eu.venthe.pipeline.orchestrator.projects.domain.utilities;
+package eu.venthe.pipeline.orchestrator.repositorys.domain.utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import static eu.venthe.pipeline.orchestrator.projects.domain.utilities.ObjectNodeUtilities.pathHelper;
+import static eu.venthe.pipeline.orchestrator.repositorys.domain.utilities.ObjectNodeUtilities.pathHelper;
 
 public class TestContextProvider {
     private final ObjectMapper objectMapper;

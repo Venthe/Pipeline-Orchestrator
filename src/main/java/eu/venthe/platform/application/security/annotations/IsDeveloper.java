@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Developers responsible for writing code and configuring CI/CD pipelines for their projects.
+ * Developers responsible for writing code and configuring CI/CD pipelines for their repositorys.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

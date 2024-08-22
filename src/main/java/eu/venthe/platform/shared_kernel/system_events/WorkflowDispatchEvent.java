@@ -22,10 +22,9 @@ import java.nio.file.Path;
  */
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
-@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @SuperBuilder
-public class WorkflowDispatchEvent extends AbstractProjectEvent {
+public class WorkflowDispatchEvent extends AbstractRepositoryEvent {
     private final WorkflowDispatchInputsContext inputs;
     private final SimpleRevision revision;
     private final Path workflow;
