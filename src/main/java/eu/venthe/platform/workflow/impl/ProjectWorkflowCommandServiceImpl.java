@@ -78,7 +78,7 @@ public class RepositoryWorkflowCommandServiceImpl implements WorkflowRunCommandS
 
     @Override
     public WorkflowRunId triggerWorkflow(WorkflowDefinition definition, Context context, TriggeringEntity triggeringEntity) {
-        var pair = WorkflowRun.crate(definition, context, timeService, triggeringEntity);
+        var pair = WorkflowRun.crate(definition, context, timeService, context, triggeringEntity);
         var workflowRun = pair.getRight();
         repository.save(workflowRun);
         var runEvents = workflowRun.run();

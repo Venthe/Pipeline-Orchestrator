@@ -2,6 +2,7 @@ package eu.venthe.platform.workflow.definition;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.platform.workflow.data_interpolation.Expression;
 import eu.venthe.platform.workflow.definition.contexts.*;
 import eu.venthe.platform.workflow.definition.contexts.on.WorkflowDefinitionOnContext;
 import eu.venthe.platform.workflow.events.EventWrapper;
@@ -22,7 +23,7 @@ public class WorkflowDefinition {
     @Nullable
     private final String name;
     @Nullable
-    private final String runName;
+    private final Expression runName;
     private final WorkflowDefinitionOnContext on;
     @Nullable
     private final WorkflowDefinitionPermissionsContext permissions;

@@ -2,7 +2,10 @@ package eu.venthe.platform.workflow.runs;
 
 import eu.venthe.platform.repository.domain.RepositoryId;
 import eu.venthe.platform.shared_kernel.Aggregate;
+import eu.venthe.platform.shared_kernel.dynamic_variable.DynamicProperty;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
+import eu.venthe.platform.shared_kernel.git.Revision;
+import eu.venthe.platform.shared_kernel.system_events.RepositoryEvent;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
 import eu.venthe.platform.workflow.definition._archive.steps.StepId;
@@ -15,17 +18,18 @@ import eu.venthe.platform.workflow.runs.events.WorkflowRunCreatedEvent;
 import eu.venthe.platform.workflow.runs.jobs.JobRunStatus;
 import eu.venthe.platform.workflow.runs.jobs.JobRuns;
 import jakarta.annotation.Nullable;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.nio.file.Path;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -56,6 +60,13 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
                 Collections.singletonList(new WorkflowRunCreatedEvent(run.getRepositoryId(), run.getId())),
                 run
         );
+    }
+
+    public static Pair<List<DomainTrigger>, WorkflowRun> crate(WorkflowData workflow,
+                                                               EventData eventData,,
+                                                               final Map<String, DynamicProperty> inputs,
+                                                               TimeService service) {
+        throw new UnsupportedOperationException();
     }
 
     private RepositoryId getRepositoryId() {
@@ -120,5 +131,10 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
 
     List<DomainTrigger> progress(JobRunId id, StepId key, JobRunStatus value, ZonedDateTime timeOfChange) {
         return jobs.progress(id, key, value, timeOfChange);
+    }
+
+    public record WorkflowData(WorkflowDefinition workflowDefinition, Revision revision, Path path) {}
+
+    public record EventData(RepositoryEvent event, String runName) {
     }
 }
