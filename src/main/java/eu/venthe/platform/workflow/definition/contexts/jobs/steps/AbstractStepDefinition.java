@@ -3,6 +3,7 @@ package eu.venthe.platform.workflow.definition.contexts.jobs.steps;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
+import eu.venthe.platform.workflow.data_interpolation.Expression;
 import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +15,9 @@ public abstract class AbstractStepDefinition {
     @Nullable
     private final String id;
     @Nullable
-    private final String _if;
+    private final Expression<String> _if;
     @Nullable
-    private final String name;
+    private final Expression<String> name;
     @Nullable
     private final StepEnvironmentVariablesContext environmentVariables;
     @Nullable

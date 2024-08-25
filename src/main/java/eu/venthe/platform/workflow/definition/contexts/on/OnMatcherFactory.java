@@ -46,6 +46,9 @@ public class OnMatcherFactory {
         }
 
         if (EventTypeMatcher.matchType(key, "workflow_call")) {
+            // TODO: Implement context interpolation
+            //  inputs.<inputs_id>.default	github, inputs, vars
+            //  outputs.<output_id>.value	github, jobs, vars, inputs
             throw new UnsupportedOperationException();
         }
 

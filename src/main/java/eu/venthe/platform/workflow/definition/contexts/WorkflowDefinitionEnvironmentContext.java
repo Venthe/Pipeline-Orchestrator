@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 
 // TODO: Implement context
+//  github, secrets, inputs, vars
 @RequiredArgsConstructor
 public class WorkflowDefinitionEnvironmentContext {
     private WorkflowDefinitionEnvironmentContext(JsonNode node) {

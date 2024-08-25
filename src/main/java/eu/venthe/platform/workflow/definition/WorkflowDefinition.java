@@ -23,7 +23,7 @@ public class WorkflowDefinition {
     @Nullable
     private final String name;
     @Nullable
-    private final Expression runName;
+    private final Expression<String> runName;
     private final WorkflowDefinitionOnContext on;
     @Nullable
     private final WorkflowDefinitionPermissionsContext permissions;
