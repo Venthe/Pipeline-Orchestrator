@@ -61,7 +61,7 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         throw new UnsupportedOperationException();
     }
 
-    public List<RequestJobRunCommand> run() {
+    public List<RequestJobRunCommand> trigger() {
         return jobs.run().stream()
                 .map(e -> new RequestJobRunCommand(context.id(), getId(), new JobRunId(e.jobId(), e.runAttempt())))
                 .toList();

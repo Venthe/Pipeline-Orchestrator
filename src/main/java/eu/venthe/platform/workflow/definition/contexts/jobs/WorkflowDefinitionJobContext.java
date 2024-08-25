@@ -2,7 +2,7 @@ package eu.venthe.platform.workflow.definition.contexts.jobs;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.platform.workflow.definition.contexts.JobId;
+import eu.venthe.platform.workflow.definition.contexts.JobName;
 import eu.venthe.platform.workflow.definition.contexts.WorkflowDefinitionPermissionsContext;
 import eu.venthe.platform.workflow.definition.contexts.jobs.steps.WorkflowDefinitionStepsContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
@@ -54,7 +54,7 @@ public class WorkflowDefinitionJobContext {
         return ContextUtilities.ensure(value, WorkflowDefinitionJobContext::new, () -> new IllegalArgumentException("Job must exist"));
     }
 
-    public Set<JobId> getNeeds() {
+    public Set<JobName> getNeeds() {
         return needs == null ? Collections.emptySet() : needs.getNeeds();
     }
 

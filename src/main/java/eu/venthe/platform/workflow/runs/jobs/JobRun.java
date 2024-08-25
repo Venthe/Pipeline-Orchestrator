@@ -2,7 +2,7 @@ package eu.venthe.platform.workflow.runs.jobs;
 
 import eu.venthe.platform.runner.runner_engine.template.model.RunCallbackToken;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
-import eu.venthe.platform.workflow.definition.contexts.JobId;
+import eu.venthe.platform.workflow.definition.contexts.JobName;
 import eu.venthe.platform.workflow.definition.contexts.jobs.WorkflowDefinitionJobContext;
 import eu.venthe.platform.workflow.model.JobRunId;
 import lombok.Getter;
@@ -17,10 +17,10 @@ public class JobRun {
     private JobRunAttempt attempt;
 
     @Getter
-    private JobId jobId;
+    private JobName jobId;
     private WorkflowDefinitionJobContext jobContext;
 
-    JobRun(JobId jobId, WorkflowDefinitionJobContext jobContext) {
+    JobRun(JobName jobId, WorkflowDefinitionJobContext jobContext) {
         this.jobContext = jobContext;
         this.jobId = jobId;
     }
@@ -38,5 +38,5 @@ public class JobRun {
         return List.of();
     }
 
-    public record RequestJobRunSpecification(JobId jobId, int runAttempt, RunCallbackToken token) {}
+    public record RequestJobRunSpecification(JobName jobId, int runAttempt, RunCallbackToken token) {}
 }

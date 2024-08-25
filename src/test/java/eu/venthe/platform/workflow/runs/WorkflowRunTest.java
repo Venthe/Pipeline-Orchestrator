@@ -2,11 +2,12 @@ package eu.venthe.platform.workflow.runs;
 
 import eu.venthe.platform.organization.domain.OrganizationName;
 import eu.venthe.platform.repository.domain.RepositoryName;
-import eu.venthe.platform.shared_kernel.dynamic_variable.TextDynamicProperty;
 import eu.venthe.platform.shared_kernel.git.RevisionHash;
-import eu.venthe.platform.shared_kernel.system_events.model.EventType;
 import eu.venthe.platform.workflow.data_interpolation.Expression;
+import eu.venthe.platform.workflow.definition.contexts.JobName;
+import eu.venthe.platform.workflow.definition.contexts.jobs.WorkflowDefinitionJobContext;
 import eu.venthe.platform.workflow.runs.dependencies.TimeService;
+import eu.venthe.platform.workflow.runs.events.RequestJobRunCommand;
 import eu.venthe.platform.workflow.runs.events.WorkflowRunCreatedEvent;
 import lombok.NonNull;
 import org.assertj.core.api.Assertions;
@@ -17,8 +18,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Answers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
-import java.net.URI;
 import java.nio.file.Path;
 import java.time.*;
 import java.util.Map;
@@ -46,7 +47,7 @@ class WorkflowRunTest {
     @Test
     void should_set_the_creation_date_when_created() {
         // Given
-        when(eventData.event().getTimestamp()).thenReturn(EXAMPLE_DATE);
+        when(eventData.getEvent().getTimestamp()).thenReturn(EXAMPLE_DATE);
 
         // When
         var run = WorkflowRun.crate(workflowData, eventData, timeService).getRight();
@@ -73,6 +74,43 @@ class WorkflowRunTest {
                 );
     }
 
+    @Test
+    void name() {
+        // Given
+        var jobName = new JobName("Example-1");
+        Mockito.when(workflowData.workflowDefinition().getJobs().getJobs()).thenReturn(
+                Map.of(jobName, WorkflowDefinitionJobContext.builder().build())
+        );
+        var workflowRun = WorkflowRun.crate(workflowData, eventData, timeService).getRight();
+
+        // When
+        var trigger = workflowRun.trigger();
+
+        // Then
+
+        Assertions.assertThat(trigger).containsExactlyInAnyOrder(
+                new RequestJobRunCommand(EXAMPLE_ORGANIZATION_NAME, EXAMPLE_REPOSITORY_NAME, workflowRun.getId(), jobName, 1)
+        );
+    }
+
+    @Nested
+    class Inputs {
+        @Test
+        void should_throw_exception_when_inputs_are_not_satisfied() {
+            Assertions.fail("");
+        }
+
+        @Test
+        void should_create_a_workflow_run_when_inputs_are_satisfied() {
+            Assertions.fail("");
+        }
+
+        @Test
+        void should_create_a_workflow_run_when_non_required_inputs_are_not_satisfied() {
+            Assertions.fail("");
+        }
+    }
+
     @Nested
     class Name {
 
@@ -91,7 +129,7 @@ class WorkflowRunTest {
         }
 
         @Test
-        void should_provide_path_as_name_when_workflow_name_is_not_provided() {
+        void should_provide_path_as_name_when_workflow_name_is_provided() {
             // Given
             when(workflowData.workflowDefinition().getName()).thenReturn(WHITESPACE);
             var workflowPath = Path.of(".pipeline/workflows/example.yml");
@@ -186,6 +224,7 @@ class WorkflowRunTest {
         public static Stream<Arguments> workflowEventContext() {
             return Stream.<Arguments>builder()
                     .add(testCase(NO_OP, "${{system.event.type}}", "workflow_run"))
+                    .add(testCase(NO_OP, "${{system[\"event\"][\"type\"]}}", "workflow_run"))
                     .build();
         }
 

@@ -81,7 +81,7 @@ public class RepositoryWorkflowCommandServiceImpl implements WorkflowRunCommandS
         var pair = WorkflowRun.crate(definition, context, timeService, context, triggeringEntity);
         var workflowRun = pair.getRight();
         repository.save(workflowRun);
-        var runEvents = workflowRun.run();
+        var runEvents = workflowRun.trigger();
         var creationEvents = pair.getLeft();
         Collection<Envelope<?>> allEvents = Stream.concat(runEvents.stream(), creationEvents.stream())
                 .map(Envelope::new)

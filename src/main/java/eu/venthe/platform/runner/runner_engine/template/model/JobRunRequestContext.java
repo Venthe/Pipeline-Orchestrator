@@ -1,6 +1,6 @@
 package eu.venthe.platform.runner.runner_engine.template.model;
 
-import eu.venthe.platform.workflow.definition.contexts.JobId;
+import eu.venthe.platform.workflow.definition.contexts.JobName;
 import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
 import eu.venthe.platform.repository.domain.RepositoryId;
@@ -15,8 +15,8 @@ public record JobRunRequestContext(
         SystemContext system,
         Map<String, String> initialEnvironmentVariables,
         Map<String, String> initialConstantVariables,
-        Map<JobId, PreviousJobContext> jobs,
-        Map<JobId, PreviousJobContext> needs,
+        Map<JobName, PreviousJobContext> jobs,
+        Map<JobName, PreviousJobContext> needs,
         Strategy strategy,
         @Nullable Matrix matrix,
         Map<String, DynamicProperty> inputs,

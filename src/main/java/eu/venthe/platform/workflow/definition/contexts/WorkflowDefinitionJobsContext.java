@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 // TODO: Implement context
 public class WorkflowDefinitionJobsContext {
     @Singular
-    private final Map<JobId, WorkflowDefinitionJobContext> jobs;
+    private final Map<JobName, WorkflowDefinitionJobContext> jobs;
 
     private WorkflowDefinitionJobsContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
 
         jobs = CollectionUtilities.iteratorToStream(root.fields())
                 .collect(Collectors.toMap(
-                        entry -> new JobId(entry.getKey()),
+                        entry -> new JobName(entry.getKey()),
                         entry -> WorkflowDefinitionJobContext.ensure(entry.getValue())
                 ));
     }
