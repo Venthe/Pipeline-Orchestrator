@@ -1,11 +1,7 @@
 package eu.venthe.platform.workflow.runs;
 
-import eu.venthe.platform.repository.domain.RepositoryId;
 import eu.venthe.platform.shared_kernel.Aggregate;
-import eu.venthe.platform.shared_kernel.dynamic_variable.DynamicProperty;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
-import eu.venthe.platform.shared_kernel.git.Revision;
-import eu.venthe.platform.shared_kernel.system_events.RepositoryEvent;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
 import eu.venthe.platform.workflow.definition._archive.steps.StepId;
@@ -14,20 +10,16 @@ import eu.venthe.platform.workflow.runs.dependencies.Actor;
 import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import eu.venthe.platform.workflow.runs.dependencies.TriggeringEntity;
 import eu.venthe.platform.workflow.runs.events.RequestJobRunCommand;
-import eu.venthe.platform.workflow.runs.events.WorkflowRunCreatedEvent;
 import eu.venthe.platform.workflow.runs.jobs.JobRunStatus;
 import eu.venthe.platform.workflow.runs.jobs.JobRuns;
 import jakarta.annotation.Nullable;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.nio.file.Path;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -56,21 +48,17 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
                                                                TriggeringEntity triggeringEntity) {
         var run = new WorkflowRun(workflow, context, timeService, triggeringEntity);
 
-        return Pair.of(
+        throw new UnsupportedOperationException();
+        /*return Pair.of(
                 Collections.singletonList(new WorkflowRunCreatedEvent(run.getRepositoryId(), run.getId())),
                 run
-        );
+        );*/
     }
 
     public static Pair<List<DomainTrigger>, WorkflowRun> crate(WorkflowData workflow,
-                                                               EventData eventData,,
-                                                               final Map<String, DynamicProperty> inputs,
+                                                               EventData eventData,
                                                                TimeService service) {
         throw new UnsupportedOperationException();
-    }
-
-    private RepositoryId getRepositoryId() {
-        return context.id();
     }
 
     public List<RequestJobRunCommand> run() {
@@ -86,12 +74,13 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
                         TriggeringEntity triggeringEntity) {
         this.context = context;
         this.triggeringEntity = triggeringEntity;
-        id = WorkflowRunId.generate(context.id());
-        startDate = timeService.offset().now();
-        status = WorkflowRunStatus.REQUESTED;
-        this.workflow = workflow;
-
-        jobs = new JobRuns(this.workflow.getJobs(), timeService);
+        throw new UnsupportedOperationException();
+        // id = WorkflowRunId.generate(context.id());
+        // startDate = timeService.offset().now();
+        // status = WorkflowRunStatus.REQUESTED;
+        // this.workflow = workflow;
+        //
+        // jobs = new JobRuns(this.workflow.getJobs(), timeService);
     }
 
     public Actor getTriggeringActor() {
@@ -133,8 +122,11 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
         return jobs.progress(id, key, value, timeOfChange);
     }
 
-    public record WorkflowData(WorkflowDefinition workflowDefinition, Revision revision, Path path) {}
+    public String getRunName() {
+        throw new UnsupportedOperationException();
+    }
 
-    public record EventData(RepositoryEvent event, String runName) {
+    public String getName() {
+        throw new UnsupportedOperationException();
     }
 }

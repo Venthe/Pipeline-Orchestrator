@@ -20,7 +20,7 @@ import java.text.MessageFormat;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @SuperBuilder
-public abstract class AbstractRepositoryEvent implements RepositoryEvent {
+public abstract class AbstractRepositoryEvent implements RepositoryEvent, SystemEvent {
     @EqualsAndHashCode.Include
     private final EventId id;
 
