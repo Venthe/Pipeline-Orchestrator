@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 public interface RepositoryProvider {
     Stream<Repository> getRepository();
 
-    Stream<SourceRepositoryId> getRepositoryIdentifiers();
+    Stream<SourceRepositoryName> getRepositoryIdentifiers();
 
-    Optional<Repository> getRepository(SourceRepositoryId id);
+    Optional<Repository> getRepository(SourceRepositoryName id);
 }

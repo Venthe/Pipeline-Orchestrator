@@ -2,7 +2,7 @@ package eu.venthe.platform.application.repositorys.shared_kernel;
 
 import eu.venthe.platform.organization.domain.OrganizationName;
 import eu.venthe.platform.repository.domain.RepositoryId;
-import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryId;
+import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,12 +12,12 @@ class RepositoryIdTest {
     @Test
     void deserialize() {
         assertThat(RepositoryId.from("internal-name"))
-                .isEqualTo(new RepositoryId(new OrganizationName("default"), new SourceRepositoryId("internal-name")));
+                .isEqualTo(new RepositoryId(new OrganizationName("default"), new SourceRepositoryName("internal-name")));
     }
 
     @Test
     void serialize() {
-        assertThat(new RepositoryId(new OrganizationName("test2"), new SourceRepositoryId("internal-name")).serialize())
+        assertThat(new RepositoryId(new OrganizationName("test2"), new SourceRepositoryName("internal-name")).serialize())
                 .isEqualTo("test2/internal-name");
     }
 

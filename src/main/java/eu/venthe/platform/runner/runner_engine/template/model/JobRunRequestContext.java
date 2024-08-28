@@ -57,7 +57,7 @@ public record JobRunRequestContext(
             @Nullable GitRevision revision,
             SystemEvent event,
             JobRunId jobRunId,
-            RepositoryId repositoryId,
+            RepositoryName repositoryId,
             UserContext triggeringActor,
             UserContext repositoryOwner,
             Integer retentionDays,

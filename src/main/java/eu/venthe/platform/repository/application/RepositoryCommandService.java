@@ -9,19 +9,19 @@ public interface RepositoryCommandService {
 
     void add(CreateRepositorySpecification createRepositorySpecification);
 
-    default void synchronize(RepositoryId repositoryId) {
+    default void synchronize(RepositoryName repositoryId) {
         throw new UnsupportedOperationException();
     }
 
-    default void changeStatus(RepositoryId repositoryId, RepositoryStatus status) {
+    default void changeStatus(RepositoryName repositoryId, RepositoryStatus status) {
         throw new UnsupportedOperationException();
     }
 
-    default void registerTrackedRevision(RepositoryId repositoryId, GitRevision revision) {
+    default void registerTrackedRevision(RepositoryName repositoryId, GitRevision revision) {
         throw new UnsupportedOperationException();
     }
 
-    default void unregisterTrackedRevision(RepositoryId repositoryId, GitRevision revision) {
+    default void unregisterTrackedRevision(RepositoryName repositoryId, GitRevision revision) {
         throw new UnsupportedOperationException();
     }
 }

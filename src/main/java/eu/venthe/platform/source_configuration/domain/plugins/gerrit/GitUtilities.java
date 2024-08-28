@@ -19,7 +19,7 @@ import java.util.function.Function;
 
 @Slf4j
 public class GitUtilities {
-    public static void onRepository(String remoteRepositoryUrl, SimpleRevision refspec, Consumer<File> action) {
+    public static void onRepository(String remoteRepositoryUrl, RevisionShortName refspec, Consumer<File> action) {
         onRepository(remoteRepositoryUrl, refspec, repository -> {
             action.accept(repository);
             return null;
@@ -27,7 +27,7 @@ public class GitUtilities {
     }
 
     @SneakyThrows
-    public static <T> T onRepository(String remoteRepositoryUrl, SimpleRevision refspec, Function<File, T> action) {
+    public static <T> T onRepository(String remoteRepositoryUrl, RevisionShortName refspec, Function<File, T> action) {
         try (AutoClosableFile tempDirectoryWrapper = createTempDirectory()) {
             File workingDirectory = tempDirectoryWrapper.directory();
 

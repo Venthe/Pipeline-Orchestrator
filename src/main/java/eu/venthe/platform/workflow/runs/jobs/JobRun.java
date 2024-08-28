@@ -3,7 +3,7 @@ package eu.venthe.platform.workflow.runs.jobs;
 import eu.venthe.platform.runner.runner_engine.template.model.RunCallbackToken;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.workflow.definition.contexts.JobName;
-import eu.venthe.platform.workflow.definition.contexts.jobs.WorkflowDefinitionJobContext;
+import eu.venthe.platform.workflow.definition.contexts.jobs.JobWithStepsDefinition;
 import eu.venthe.platform.workflow.model.JobRunId;
 import lombok.Getter;
 import lombok.ToString;
@@ -18,9 +18,9 @@ public class JobRun {
 
     @Getter
     private JobName jobId;
-    private WorkflowDefinitionJobContext jobContext;
+    private JobWithStepsDefinition jobContext;
 
-    JobRun(JobName jobId, WorkflowDefinitionJobContext jobContext) {
+    JobRun(JobName jobId, JobWithStepsDefinition jobContext) {
         this.jobContext = jobContext;
         this.jobId = jobId;
     }

@@ -4,8 +4,11 @@ import eu.venthe.platform.organization.domain.OrganizationName;
 import eu.venthe.platform.repository.domain.RepositoryName;
 import eu.venthe.platform.shared_kernel.git.RevisionHash;
 import eu.venthe.platform.workflow.data_interpolation.Expression;
+import eu.venthe.platform.workflow.definition.WorkflowDefinition;
+import eu.venthe.platform.workflow.definition._archive.steps.StepId;
 import eu.venthe.platform.workflow.definition.contexts.JobName;
-import eu.venthe.platform.workflow.definition.contexts.jobs.WorkflowDefinitionJobContext;
+import eu.venthe.platform.workflow.definition.contexts.jobs.JobWithStepsDefinition;
+import eu.venthe.platform.workflow.definition.contexts.jobs.steps.RunStepDefinition;
 import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import eu.venthe.platform.workflow.runs.events.RequestJobRunCommand;
 import eu.venthe.platform.workflow.runs.events.WorkflowRunCreatedEvent;
@@ -22,7 +25,7 @@ import org.mockito.Mockito;
 
 import java.nio.file.Path;
 import java.time.*;
-import java.util.Map;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
@@ -78,8 +81,17 @@ class WorkflowRunTest {
     void name() {
         // Given
         var jobName = new JobName("Example-1");
-        Mockito.when(workflowData.workflowDefinition().getJobs().getJobs()).thenReturn(
-                Map.of(jobName, WorkflowDefinitionJobContext.builder().build())
+        Mockito.when(workflowData.workflowDefinition()).thenReturn(
+                WorkflowDefinition.builder()
+                        .job(
+                                jobName,
+                                JobWithStepsDefinition.builder()
+                                        .addStep(RunStepDefinition.builder()
+                                                .run("Echo 1")
+                                                .build())
+                                        .build()
+                        )
+                        .build()
         );
         var workflowRun = WorkflowRun.crate(workflowData, eventData, timeService).getRight();
 
@@ -89,7 +101,14 @@ class WorkflowRunTest {
         // Then
 
         Assertions.assertThat(trigger).containsExactlyInAnyOrder(
-                new RequestJobRunCommand(EXAMPLE_ORGANIZATION_NAME, EXAMPLE_REPOSITORY_NAME, workflowRun.getId(), jobName, 1)
+                new RequestJobRunCommand(
+                        EXAMPLE_ORGANIZATION_NAME,
+                        EXAMPLE_REPOSITORY_NAME,
+                        workflowRun.getId(),
+                        jobName,
+                        1,
+                        List.of(new RequestJobRunCommand.RunStep(new StepId("__step1"), "Echo 1"))
+                )
         );
     }
 
@@ -177,7 +196,7 @@ class WorkflowRunTest {
         @Test
         void should_display_event_specific_information_when_run_name_is_a_whitespace() {
             // Given
-            when(workflowData.workflowDefinition().getRunName()).thenReturn(new Expression(WHITESPACE));
+            when(workflowData.workflowDefinition().getRunName()).thenReturn(Expression.<String>builder().value(WHITESPACE).build());
 
             // When
             var run = WorkflowRun.crate(workflowData, eventData, timeService).getRight();
@@ -190,7 +209,7 @@ class WorkflowRunTest {
         @Test
         void should_display_simple_run_name_when_run_name_is_provided() {
             // Given
-            when(workflowData.workflowDefinition().getRunName()).thenReturn(new Expression(EXAMPLE_RUN_NAME));
+            when(workflowData.workflowDefinition().getRunName()).thenReturn(Expression.<String>builder().value(EXAMPLE_RUN_NAME).build());
 
             // When
             var run = WorkflowRun.crate(workflowData, eventData, timeService).getRight();
@@ -283,7 +302,7 @@ class WorkflowRunTest {
             var workflowData = mock(WorkflowData.class, RETURNS_DEEP_STUBS);
             pre.accept(eventData, workflowData);
             return Arguments.of(
-                    new Expression(expression),
+                    Expression.<String>builder().value(expression).build(),
                     expected,
                     eventData,
                     workflowData

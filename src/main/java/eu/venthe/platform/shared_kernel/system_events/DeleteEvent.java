@@ -2,11 +2,12 @@ package eu.venthe.platform.shared_kernel.system_events;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.platform.shared_kernel.git.SimpleRevision;
+import eu.venthe.platform.shared_kernel.git.RevisionShortName;
 import eu.venthe.platform.shared_kernel.system_events.contexts.git.ReferenceTypeContext;
-import eu.venthe.platform.shared_kernel.system_events.contexts.git.SimpleRevisionContext;
+import eu.venthe.platform.shared_kernel.system_events.contexts.git.RevisionShortNameContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.platform.shared_kernel.system_events.model.EventType;
+import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -29,21 +30,21 @@ public class DeleteEvent extends AbstractRepositoryEvent {
     /**
      * The name of the repository's default branch (usually main).
      */
-    private final SimpleRevision mainBranch;
-    private final SimpleRevision ref;
+    private final RevisionShortName mainBranch;
+    private final RevisionShortName ref;
     private final String refType;
 
-    public DeleteEvent(ObjectNode _root) {
-        super(_root);
+    public DeleteEvent(ObjectNode _root, TimeService timeService) {
+        super(_root, timeService);
 
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         final JsonNode description1 = root.get("description");
         description = ContextUtilities.Text.create(description1);
         // TODO: Full revision?
-        mainBranch = SimpleRevisionContext.ensure(root.get("mainBranch"));
+        mainBranch = RevisionShortNameContext.ensure(root.get("mainBranch"));
         // TODO: Full revision?
-        ref = SimpleRevisionContext.ensure(root.get("ref"));
+        ref = RevisionShortNameContext.ensure(root.get("ref"));
         refType = ReferenceTypeContext.ensure(root.get("refType"));
     }
 

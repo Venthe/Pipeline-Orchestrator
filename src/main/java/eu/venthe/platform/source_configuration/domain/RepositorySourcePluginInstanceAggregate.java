@@ -8,7 +8,7 @@ import eu.venthe.platform.shared_kernel.io.Metadata;
 import eu.venthe.platform.source_configuration.domain.model.*;
 import eu.venthe.platform.source_configuration.domain.plugins.template.Repository;
 import eu.venthe.platform.source_configuration.domain.plugins.template.RepositoryDataProvider;
-import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryId;
+import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryName;
 import eu.venthe.platform.source_configuration.domain.plugins.template.RepositorySourcePluginInstance;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -35,12 +35,12 @@ public class RepositorySourcePluginInstanceAggregate implements Aggregate<Config
     }
 
     @Override
-    public Optional<File> getFile(final SourceRepositoryId sourceRepositoryId, final SimpleRevision simpleRevision, final Path path) {
+    public Optional<File> getFile(final SourceRepositoryName sourceRepositoryId, final RevisionShortName simpleRevision, final Path path) {
         return pluginInstance.getFile(sourceRepositoryId, simpleRevision, path);
     }
 
     @Override
-    public Collection<Metadata> getFileList(final SourceRepositoryId sourceRepositoryId, final SimpleRevision simpleRevision, final Path path) {
+    public Collection<Metadata> getFileList(final SourceRepositoryName sourceRepositoryId, final RevisionShortName simpleRevision, final Path path) {
         return pluginInstance.getFileList(sourceRepositoryId, simpleRevision, path);
     }
 
@@ -48,11 +48,11 @@ public class RepositorySourcePluginInstanceAggregate implements Aggregate<Config
         return pluginInstance.getRepository().map(this::toSourceOwnedRepository);
     }
 
-    public Stream<SourceOwnedRepositoryId> getRepositoryIdentifiers() {
+    public Stream<SourceOwnedRepositoryName> getRepositoryIdentifiers() {
         return pluginInstance.getRepositoryIdentifiers().map(this::toSourceOwnedRepositoryId);
     }
 
-    public Optional<SourceOwnedRepository> getRepository(final SourceRepositoryId id) {
+    public Optional<SourceOwnedRepository> getRepository(final SourceRepositoryName id) {
         return pluginInstance.getRepository(id).map(this::toSourceOwnedRepository);
     }
 
@@ -60,7 +60,7 @@ public class RepositorySourcePluginInstanceAggregate implements Aggregate<Config
         return new SourceOwnedRepository(toSourceOwnedRepositoryId(e.sourceRepositoryId()), e);
     }
 
-    private SourceOwnedRepositoryId toSourceOwnedRepositoryId(final SourceRepositoryId e) {
-        return new SourceOwnedRepositoryId(id, e);
+    private SourceOwnedRepositoryName toSourceOwnedRepositoryId(final SourceRepositoryName e) {
+        return new SourceOwnedRepositoryName(id, e);
     }
 }

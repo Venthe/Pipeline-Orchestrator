@@ -2,15 +2,17 @@ package eu.venthe.platform.shared_kernel.system_events;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.platform.shared_kernel.git.RevisionShortName;
 import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.system_events.contexts.CommitDetailsContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.UserContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.common.BooleanContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.common.UrlContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.git.GitHashContext;
-import eu.venthe.platform.shared_kernel.system_events.contexts.git.SimpleRevisionContext;
+import eu.venthe.platform.shared_kernel.system_events.contexts.git.RevisionShortNameContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.platform.shared_kernel.system_events.model.EventType;
+import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -37,7 +39,7 @@ public class PushEvent extends AbstractRepositoryEvent {
      * The SHA of the most recent commit on ref before the push.
      */
     private final String before;
-    private final Optional<SimpleRevision> baseRef;
+    private final Optional<RevisionShortName> baseRef;
     private final List<CommitDetailsContext> commits;
     /**
      * URL that shows the changes in this ref update, from the before commit to the after commit. For a newly created
@@ -62,16 +64,16 @@ public class PushEvent extends AbstractRepositoryEvent {
     /**
      * The full git ref that was pushed. Example: refs/heads/main or refs/tags/v3.14.1.
      */
-    private final SimpleRevision ref;
+    private final RevisionShortName ref;
 
-    public PushEvent(ObjectNode _root) {
-        super(_root);
+    public PushEvent(ObjectNode _root, TimeService timeService) {
+        super(_root, timeService);
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         after = GitHashContext.ensure(root.get("after"));
         before = GitHashContext.ensure(root.get("before"));
         // TODO: Full revision?
-        baseRef = SimpleRevisionContext.create(root.get("baseRef"));
+        baseRef = RevisionShortNameContext.create(root.get("baseRef"));
         commits = CommitDetailsContext.list(root.get("commits"));
         compare = UrlContext.ensure(root.get("compare"));
         final JsonNode forced1 = root.get("created");
@@ -83,7 +85,7 @@ public class PushEvent extends AbstractRepositoryEvent {
         headCommit = CommitDetailsContext.create(root.get("headCommit"));
         pusher = UserContext.ensure(root.get("pusher"));
         // TODO: Full revision?
-        ref = SimpleRevisionContext.ensure(root.get("ref"));
+        ref = RevisionShortNameContext.ensure(root.get("ref"));
     }
 
     public EventType getType() {

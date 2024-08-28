@@ -48,7 +48,7 @@ public class RunnerManagerImpl implements RunnerManager {
     }
 
     @Override
-    public boolean queueExecution(final RepositoryId repositoryId,
+    public boolean queueExecution(final RepositoryName repositoryId,
                                   final WorkflowRunId workflowRunId,
                                   final JobRunId executionId,
                                   final RunCallbackToken runCallbackToken,

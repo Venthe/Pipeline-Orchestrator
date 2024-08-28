@@ -44,14 +44,14 @@ public abstract class AbstractStepDefinition {
     }
 
     private static class StepIfContext {
-        private static Optional<String> create(final JsonNode id) {
+        private static Optional<Expression<String>> create(final JsonNode id) {
             // TODO: Fixme
             return Optional.empty();
         }
     }
 
     private static class StepNameContext {
-        private static Optional<String> create(final JsonNode id) {
+        private static Optional<Expression<String>> create(final JsonNode id) {
             // TODO: Fixme
             return Optional.empty();
         }

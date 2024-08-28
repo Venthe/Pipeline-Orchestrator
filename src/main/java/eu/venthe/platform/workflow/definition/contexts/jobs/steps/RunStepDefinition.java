@@ -3,8 +3,10 @@ package eu.venthe.platform.workflow.definition.contexts.jobs.steps;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
+import eu.venthe.platform.workflow.data_interpolation.Expression;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import lombok.Builder;
 import lombok.ToString;
 
 @ToString
@@ -16,9 +18,10 @@ public class RunStepDefinition extends AbstractStepDefinition {
     @Nullable
     private final String shell;
 
+    @Builder
     public RunStepDefinition(@Nullable final String id,
-                             @Nullable final String _if,
-                             @Nullable final String name,
+                             @Nullable final Expression<String> _if,
+                             @Nullable final Expression<String> name,
                              @Nullable final StepEnvironmentVariablesContext environmentVariables,
                              @Nullable final Boolean continueOnError,
                              @Nullable final Integer timeoutMinutes,

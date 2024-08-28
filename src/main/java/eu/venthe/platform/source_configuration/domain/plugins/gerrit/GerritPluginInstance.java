@@ -7,7 +7,7 @@ import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
 import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
 import eu.venthe.platform.source_configuration.domain.plugins.template.Repository;
-import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryId;
+import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryName;
 import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.source_configuration.domain.model.SourceType;
 import eu.venthe.platform.source_configuration.domain.plugins.template.RepositorySourcePluginInstance;
@@ -80,7 +80,7 @@ public class GerritPluginInstance implements RepositorySourcePluginInstance {
     }*/
 
     @Override
-    public Optional<File> getFile(SourceRepositoryId sourceRepositoryId, SimpleRevision simpleRevision, Path path) {
+    public Optional<File> getFile(SourceRepositoryName sourceRepositoryId, RevisionShortName simpleRevision, Path path) {
         String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceRepositoryId.value()).toString();
         return GitUtilities.onRepository(string, simpleRevision, rootDirectory -> {
             // FIXME
@@ -94,7 +94,7 @@ public class GerritPluginInstance implements RepositorySourcePluginInstance {
     }
 
     @Override
-    public Collection<Metadata> getFileList(SourceRepositoryId sourceRepositoryId, SimpleRevision simpleRevision, Path path) {
+    public Collection<Metadata> getFileList(SourceRepositoryName sourceRepositoryId, RevisionShortName simpleRevision, Path path) {
         String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceRepositoryId.value()).toString();
         throw new UnsupportedOperationException();
         // return GitUtilities.onRepository(string, revision, rootDirectory -> {
@@ -122,17 +122,17 @@ public class GerritPluginInstance implements RepositorySourcePluginInstance {
     public Stream<Repository> getRepository() {
         return getListRepository().entrySet().stream()
                 .filter(repository -> !Objects.equals(repository.getValue().getState(), RepositoryInfo.StateEnum.HIDDEN))
-                .map(repository -> new Repository(new SourceRepositoryId(repository.getKey()), statusMapper(repository.getValue().getState())))
+                .map(repository -> new Repository(new SourceRepositoryName(repository.getKey()), statusMapper(repository.getValue().getState())))
                 .distinct();
     }
 
     @Override
-    public Stream<SourceRepositoryId> getRepositoryIdentifiers() {
+    public Stream<SourceRepositoryName> getRepositoryIdentifiers() {
         return getRepository().map(Repository::sourceRepositoryId);
     }
 
     @Override
-    public Optional<Repository> getRepository(SourceRepositoryId id) {
+    public Optional<Repository> getRepository(SourceRepositoryName id) {
         // FIXME: Don't ask for all repositorys
         return getRepository()
                 .filter(p -> p.sourceRepositoryId().equals(id))

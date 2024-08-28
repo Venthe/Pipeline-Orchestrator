@@ -5,6 +5,7 @@ import eu.venthe.platform.shared_kernel.system_events.contexts.WorkflowContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.WorkflowRunContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.platform.shared_kernel.system_events.model.EventType;
+import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -22,8 +23,8 @@ public class WorkflowRunEvent extends AbstractRepositoryEvent {
     private final WorkflowContext workflow;
     private final WorkflowRunContext workflowRun;
 
-    public WorkflowRunEvent(ObjectNode _root) {
-        super(_root);
+    public WorkflowRunEvent(ObjectNode _root, TimeService timeService) {
+        super(_root, timeService);
 
         var root = ContextUtilities.validateIsObjectNode(_root);
 

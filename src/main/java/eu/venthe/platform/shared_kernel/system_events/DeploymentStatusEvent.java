@@ -9,6 +9,7 @@ import eu.venthe.platform.shared_kernel.system_events.contexts.model.DeploymentS
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.platform.shared_kernel.system_events.model.DeploymentStatusAction;
 import eu.venthe.platform.shared_kernel.system_events.model.EventType;
+import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -32,8 +33,8 @@ public class DeploymentStatusEvent extends AbstractRepositoryEvent {
     private final Optional<WorkflowContext> workflow;
     private final Optional<WorkflowRunContext> workflowRun;
 
-    public DeploymentStatusEvent(ObjectNode _root) {
-        super(_root);
+    public DeploymentStatusEvent(ObjectNode _root, TimeService timeService) {
+        super(_root, timeService);
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         action = DeploymentStatusActionContext.ensure(root.get("action"));

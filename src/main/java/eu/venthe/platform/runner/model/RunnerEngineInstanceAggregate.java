@@ -22,7 +22,7 @@ public class RunnerEngineInstanceAggregate implements Aggregate<RunnerEngineInst
     RunnerEngineInstance runnerEngineInstance;
 
     // TODO: Add logs
-    public void queueJobExecution(RepositoryId repositoryId,
+    public void queueJobExecution(RepositoryName repositoryId,
                                   WorkflowRunId workflowRunId,
                                   JobRunId executionId,
                                   URL systemApiUrl,

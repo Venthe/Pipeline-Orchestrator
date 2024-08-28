@@ -11,10 +11,8 @@ import java.util.Set;
 @Value
 public class Expression<T> {
     T value;
-    @Builder.Default
     @Singular
     Set<ContextKey> allowedKeys = Collections.emptySet();
     @Singular
-    @Builder.Default
     Set<ExpressionFunction> allowedFunctions = Collections.emptySet();
 }

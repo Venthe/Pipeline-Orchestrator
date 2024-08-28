@@ -2,7 +2,7 @@ package eu.venthe.platform.workflow.definition.contexts;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.venthe.platform.workflow.definition.contexts.jobs.WorkflowDefinitionJobContext;
+import eu.venthe.platform.workflow.definition.contexts.jobs.JobWithStepsDefinition;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.platform.application.utilities.CollectionUtilities;
 import lombok.Getter;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 // TODO: Implement context
 public class WorkflowDefinitionJobsContext {
     @Singular
-    private final Map<JobName, WorkflowDefinitionJobContext> jobs;
+    private final Map<JobName, JobWithStepsDefinition> jobs;
 
     private WorkflowDefinitionJobsContext(JsonNode _root) {
         ObjectNode root = ContextUtilities.validateIsObjectNode(_root);
@@ -27,7 +27,7 @@ public class WorkflowDefinitionJobsContext {
         jobs = CollectionUtilities.iteratorToStream(root.fields())
                 .collect(Collectors.toMap(
                         entry -> new JobName(entry.getKey()),
-                        entry -> WorkflowDefinitionJobContext.ensure(entry.getValue())
+                        entry -> JobWithStepsDefinition.ensure(entry.getValue())
                 ));
     }
 

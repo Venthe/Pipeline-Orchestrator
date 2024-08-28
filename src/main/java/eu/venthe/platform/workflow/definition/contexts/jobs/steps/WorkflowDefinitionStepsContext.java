@@ -2,7 +2,9 @@ package eu.venthe.platform.workflow.definition.contexts.jobs.steps;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.Singular;
 import lombok.ToString;
 
 import java.util.List;
@@ -11,7 +13,9 @@ import java.util.function.Predicate;
 
 @RequiredArgsConstructor
 @ToString
+@Builder
 public class WorkflowDefinitionStepsContext {
+    @Singular
     private final List<? extends AbstractStepDefinition> steps;
 
     public static Optional<WorkflowDefinitionStepsContext> create(final JsonNode root) {

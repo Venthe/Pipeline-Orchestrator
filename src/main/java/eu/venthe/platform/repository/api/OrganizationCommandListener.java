@@ -15,7 +15,7 @@ public class OrganizationCommandListener {
             var data = envelope.getData();
             var organizationName = data.getOrganizationName();
             var configurationSourceId = data.getRepositoryId().configurationSourceId();
-            var sourceRepositoryId = data.getRepositoryId().sourceRepositoryId();
+            var sourceRepositoryName = data.getRepositoryId().sourceRepositoryId();
 
             var repository = sourceQueryService.getRepository(configurationSourceId, sourceRepositoryId).orElseThrow();
 

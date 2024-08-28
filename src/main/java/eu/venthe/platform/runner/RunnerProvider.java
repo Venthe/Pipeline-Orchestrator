@@ -7,7 +7,7 @@ import eu.venthe.platform.workflow.runs.WorkflowRunId;
 import eu.venthe.platform.repository.domain.RepositoryId;
 
 public interface RunnerProvider {
-    boolean queueExecution(RepositoryId repositoryId,
+    boolean queueExecution(RepositoryName repositoryId,
                            WorkflowRunId workflowRunId,
                            JobRunId executionId,
                            RunCallbackToken runCallbackToken,

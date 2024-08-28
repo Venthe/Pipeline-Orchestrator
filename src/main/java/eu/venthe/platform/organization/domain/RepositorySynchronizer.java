@@ -7,7 +7,7 @@ import eu.venthe.platform.organization.domain.events.SynchronizeRepositoryComman
 import eu.venthe.platform.repository.application.RepositoryQueryService;
 import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.shared_kernel.events.MessageBroker;
-import eu.venthe.platform.source_configuration.domain.model.SourceOwnedRepositoryId;
+import eu.venthe.platform.source_configuration.domain.model.SourceOwnedRepositoryName;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -24,8 +24,8 @@ record RepositorySynchronizer(
         OrganizationName organizationName
 ) {
     List<DomainTrigger> synchronize() {
-        final Set<SourceOwnedRepositoryId> allRepositoryFromSource = getAllAvailableRepositoryIds();
-        final Set<SourceOwnedRepositoryId> registeredRepository = getAlreadyRegisteredRepository();
+        final Set<SourceOwnedRepositoryName> allRepositoryFromSource = getAllAvailableRepositoryIds();
+        final Set<SourceOwnedRepositoryName> registeredRepository = getAlreadyRegisteredRepository();
 
         return Stream.<List<DomainTrigger>>builder()
                 .add(updateRepository(allRepositoryFromSource, registeredRepository))
@@ -36,43 +36,43 @@ record RepositorySynchronizer(
                 .toList();
     }
 
-    private Set<SourceOwnedRepositoryId> getAllAvailableRepositoryIds() {
+    private Set<SourceOwnedRepositoryName> getAllAvailableRepositoryIds() {
         return new HashSet<>(source.getAllAvailableRepositoryIds());
     }
 
-    private Set<SourceOwnedRepositoryId> getAlreadyRegisteredRepository() {
+    private Set<SourceOwnedRepositoryName> getAlreadyRegisteredRepository() {
         return repositorysQueryService.getRepositoryIds(organizationName)
-                .map(e -> new SourceOwnedRepositoryId(source.getConfigurationSourceId(), e.name()))
+                .map(e -> new SourceOwnedRepositoryName(source.getConfigurationSourceId(), e.name()))
                 .collect(toSet());
     }
 
-    private List<DomainTrigger> updateRepository(Set<SourceOwnedRepositoryId> allRepositoryFromSource, Set<SourceOwnedRepositoryId> registeredRepository) {
+    private List<DomainTrigger> updateRepository(Set<SourceOwnedRepositoryName> allRepositoryFromSource, Set<SourceOwnedRepositoryName> registeredRepository) {
         return getRepositoryToUpdate(allRepositoryFromSource, registeredRepository)
                 .<DomainTrigger>map(SynchronizeRepositoryCommand::new)
                 .toList();
     }
 
-    private Stream<SourceOwnedRepositoryId> getRepositoryToUpdate(Set<SourceOwnedRepositoryId> allRepositoryFromSource, Set<SourceOwnedRepositoryId> registeredRepository) {
+    private Stream<SourceOwnedRepositoryName> getRepositoryToUpdate(Set<SourceOwnedRepositoryName> allRepositoryFromSource, Set<SourceOwnedRepositoryName> registeredRepository) {
         return Sets.intersection(allRepositoryFromSource, registeredRepository).stream();
     }
 
-    private List<DomainTrigger> archiveRepository(Set<SourceOwnedRepositoryId> allRepositoryFromSource, Set<SourceOwnedRepositoryId> registeredRepository) {
+    private List<DomainTrigger> archiveRepository(Set<SourceOwnedRepositoryName> allRepositoryFromSource, Set<SourceOwnedRepositoryName> registeredRepository) {
         return getRepositoryToArchive(allRepositoryFromSource, registeredRepository)
                 .<DomainTrigger>map(ArchiveRepositoryCommand::new)
                 .toList();
     }
 
-    private Stream<SourceOwnedRepositoryId> getRepositoryToArchive(Set<SourceOwnedRepositoryId> allRepositoryFromSource, Set<SourceOwnedRepositoryId> registeredRepository) {
+    private Stream<SourceOwnedRepositoryName> getRepositoryToArchive(Set<SourceOwnedRepositoryName> allRepositoryFromSource, Set<SourceOwnedRepositoryName> registeredRepository) {
         return Sets.difference(registeredRepository, allRepositoryFromSource).stream();
     }
 
-    private List<DomainTrigger> createRepository(Set<SourceOwnedRepositoryId> allRepositoryFromSource, Set<SourceOwnedRepositoryId> registeredRepository) {
+    private List<DomainTrigger> createRepository(Set<SourceOwnedRepositoryName> allRepositoryFromSource, Set<SourceOwnedRepositoryName> registeredRepository) {
         return getRepositoryToCreate(allRepositoryFromSource, registeredRepository)
                 .<DomainTrigger>map(e -> new CreateRepositoryCommand(organizationName(), e))
                 .toList();
     }
 
-    private Stream<SourceOwnedRepositoryId> getRepositoryToCreate(Set<SourceOwnedRepositoryId> allRepositoryFromSource, Set<SourceOwnedRepositoryId> registeredRepository) {
+    private Stream<SourceOwnedRepositoryName> getRepositoryToCreate(Set<SourceOwnedRepositoryName> allRepositoryFromSource, Set<SourceOwnedRepositoryName> registeredRepository) {
         return Sets.difference(allRepositoryFromSource, registeredRepository).stream();
     }
 }

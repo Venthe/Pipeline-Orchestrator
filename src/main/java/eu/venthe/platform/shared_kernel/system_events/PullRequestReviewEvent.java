@@ -7,6 +7,7 @@ import eu.venthe.platform.shared_kernel.system_events.contexts.PullRequestReview
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.platform.shared_kernel.system_events.model.EventType;
 import eu.venthe.platform.shared_kernel.system_events.model.PullRequestReviewAction;
+import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -27,8 +28,8 @@ public class PullRequestReviewEvent extends AbstractRepositoryEvent {
     private final PullRequestContext pullRequest;
     private final PullRequestReviewContext review;
 
-    public PullRequestReviewEvent(ObjectNode _root) {
-        super(_root);
+    public PullRequestReviewEvent(ObjectNode _root, TimeService timeService) {
+        super(_root, timeService);
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         action = PullRequestReviewActionContext.ensure(root.get("action"));

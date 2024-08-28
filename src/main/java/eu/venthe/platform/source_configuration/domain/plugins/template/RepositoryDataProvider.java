@@ -18,11 +18,11 @@ public interface RepositoryDataProvider {
      * @param path              Path of the file to access
      * @return Either {@code Optional} or bytes for a file
      */
-    default Optional<File> getFile(SourceRepositoryId sourceRepositoryId, SimpleRevision simpleRevision, Path path) {
+    default Optional<File> getFile(SourceRepositoryName sourceRepositoryId, RevisionShortName simpleRevision, Path path) {
         throw new UnsupportedOperationException();
     }
 
-    default Collection<Metadata> getFileList(SourceRepositoryId sourceRepositoryId, SimpleRevision simpleRevision, Path path) {
+    default Collection<Metadata> getFileList(SourceRepositoryName sourceRepositoryId, RevisionShortName simpleRevision, Path path) {
         throw new UnsupportedOperationException();
     }
 

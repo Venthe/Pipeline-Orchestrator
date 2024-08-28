@@ -15,7 +15,7 @@ import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
 import eu.venthe.platform.source_configuration.application.SourceConfigurationSpecification;
 import eu.venthe.platform.source_configuration.domain.plugins.template.Repository;
-import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryId;
+import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryName;
 import eu.venthe.platform.workflow.JobExecutorCallbackService;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.WorkflowRunQueryService;
@@ -73,7 +73,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void name() {
-        val repositoryName = new SourceRepositoryId("Example-Repository");
+        val repositoryName = new SourceRepositoryName("Example-Repository");
         val organizationName = "default";
         val sourceType = "test";
         val engineInstanceId = "default";

@@ -6,7 +6,7 @@ import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.shared_kernel.events.MessageBroker;
 import eu.venthe.platform.source_configuration.application.SourceQueryService;
 import eu.venthe.platform.source_configuration.domain.model.ConfigurationSourceId;
-import eu.venthe.platform.source_configuration.domain.model.SourceOwnedRepositoryId;
+import eu.venthe.platform.source_configuration.domain.model.SourceOwnedRepositoryName;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -46,7 +46,7 @@ public class Organization implements Aggregate<OrganizationName> {
             this.sourceQueryService = sourceQueryService;
         }
 
-        Set<SourceOwnedRepositoryId> getAllAvailableRepositoryIds() {
+        Set<SourceOwnedRepositoryName> getAllAvailableRepositoryIds() {
             return sourceQueryService.getRepositoryIdentifiers(configurationSourceId).collect(Collectors.toSet());
         }
     }

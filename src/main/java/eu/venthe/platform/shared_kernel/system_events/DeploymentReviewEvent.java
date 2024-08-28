@@ -11,6 +11,7 @@ import eu.venthe.platform.shared_kernel.system_events.contexts.model.DeploymentR
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 import eu.venthe.platform.shared_kernel.system_events.model.DeploymentReviewAction;
 import eu.venthe.platform.shared_kernel.system_events.model.EventType;
+import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -38,8 +39,8 @@ public class DeploymentReviewEvent extends AbstractRepositoryEvent {
     private final List<WorkflowJobRunContext> workflowJobRuns;
     private final List<ReviewersContext> reviewers;
 
-    public DeploymentReviewEvent(ObjectNode _root) {
-        super(_root);
+    public DeploymentReviewEvent(ObjectNode _root, TimeService timeService) {
+        super(_root, timeService);
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         action = DeploymentReviewActionContext.ensure(root.get("action"));

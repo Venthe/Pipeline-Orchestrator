@@ -7,8 +7,8 @@ import eu.venthe.platform.source_configuration.domain.RepositorySourcePluginInst
 import eu.venthe.platform.source_configuration.domain.model.ConfigurationSourceId;
 import eu.venthe.platform.source_configuration.domain.infrastructure.SourceConfigurationRepository;
 import eu.venthe.platform.source_configuration.domain.model.SourceOwnedRepository;
-import eu.venthe.platform.source_configuration.domain.model.SourceOwnedRepositoryId;
-import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryId;
+import eu.venthe.platform.source_configuration.domain.model.SourceOwnedRepositoryName;
+import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryName;
 import eu.venthe.platform.source_configuration.domain.plugins.PluginProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,13 +39,13 @@ public class SourceConfigurationManager implements SourceQueryService {
     }
 
     @Override
-    public Optional<File> getFile(final ConfigurationSourceId configurationSourceId, final SourceRepositoryId sourceRepositoryId, final SimpleRevision simpleRevision, final Path path) {
+    public Optional<File> getFile(final ConfigurationSourceId configurationSourceId, final SourceRepositoryName sourceRepositoryId, final RevisionShortName simpleRevision, final Path path) {
         var sourceConfiguration = getConfiguration(configurationSourceId);
         return sourceConfiguration.getFile(sourceRepositoryId, simpleRevision, path);
     }
 
     @Override
-    public Collection<Metadata> getFileList(final ConfigurationSourceId configurationSourceId, final SourceRepositoryId sourceRepositoryId, final SimpleRevision simpleRevision, final Path path) {
+    public Collection<Metadata> getFileList(final ConfigurationSourceId configurationSourceId, final SourceRepositoryName sourceRepositoryId, final RevisionShortName simpleRevision, final Path path) {
         var sourceConfiguration = getConfiguration(configurationSourceId);
         return sourceConfiguration.getFileList(sourceRepositoryId, simpleRevision, path);
     }
@@ -57,13 +57,13 @@ public class SourceConfigurationManager implements SourceQueryService {
     }
 
     @Override
-    public Stream<SourceOwnedRepositoryId> getRepositoryIdentifiers(final ConfigurationSourceId configurationSourceId) {
+    public Stream<SourceOwnedRepositoryName> getRepositoryIdentifiers(final ConfigurationSourceId configurationSourceId) {
         var sourceConfiguration = getConfiguration(configurationSourceId);
         return sourceConfiguration.getRepositoryIdentifiers();
     }
 
     @Override
-    public Optional<SourceOwnedRepository> getRepository(final ConfigurationSourceId configurationSourceId, final SourceRepositoryId id) {
+    public Optional<SourceOwnedRepository> getRepository(final ConfigurationSourceId configurationSourceId, final SourceRepositoryName id) {
         var sourceConfiguration = getConfiguration(configurationSourceId);
         return sourceConfiguration.getRepository(id);
     }

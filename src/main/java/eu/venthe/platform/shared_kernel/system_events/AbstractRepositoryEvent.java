@@ -6,12 +6,14 @@ import eu.venthe.platform.shared_kernel.system_events.contexts.RepositoryContext
 import eu.venthe.platform.shared_kernel.system_events.contexts.UserContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.model.EventTypeContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
+import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.text.MessageFormat;
+import java.time.OffsetDateTime;
 
 // TODO: Add optional enterprise context
 // TODO: Add optional installation context
@@ -31,7 +33,10 @@ public abstract class AbstractRepositoryEvent implements RepositoryEvent, System
      */
     private final UserContext sender;
 
-    protected AbstractRepositoryEvent(JsonNode _root) {
+    @Getter
+    private final OffsetDateTime timestamp;
+
+    protected AbstractRepositoryEvent(JsonNode _root, TimeService timeService) {
         var root = ContextUtilities.validateIsObjectNode(_root);
 
         this.id = EventIdContext.ensure(root.get("id"));
@@ -41,5 +46,7 @@ public abstract class AbstractRepositoryEvent implements RepositoryEvent, System
         if (!getType().equals(EventTypeContext.ensure(root.get("type")))) {
             throw new IllegalArgumentException(MessageFormat.format("Unsupported event type {0}. Expected {1}", getType(), EventTypeContext.ensure(root.get("type"))));
         }
+
+        timestamp = timeService.offset().now();
     }
 }

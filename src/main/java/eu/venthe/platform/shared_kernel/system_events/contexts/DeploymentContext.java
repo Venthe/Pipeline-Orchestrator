@@ -5,7 +5,7 @@ import eu.venthe.platform.shared_kernel.git.SimpleRevision;
 import eu.venthe.platform.shared_kernel.system_events.contexts.common.BooleanContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.common.DateTimeContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.git.GitHashContext;
-import eu.venthe.platform.shared_kernel.system_events.contexts.git.SimpleRevisionContext;
+import eu.venthe.platform.shared_kernel.system_events.contexts.git.RevisionShortNameContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.utilities.ContextUtilities;
 
 import java.time.OffsetDateTime;
@@ -19,7 +19,7 @@ public class DeploymentContext {
      */
     private final String id;
     private final String sha;
-    private final SimpleRevision ref;
+    private final RevisionShortName ref;
     /**
      * The name of the task for the deployment (e.g., deploy or deploy:migrations).
      */
@@ -42,7 +42,7 @@ public class DeploymentContext {
         this.id = ContextUtilities.Text.ensure(root.get("id"));
         this.sha = GitHashContext.ensure(root.get("sha"));
         // TODO: Full revision?
-        this.ref = SimpleRevisionContext.ensure(root.get("ref"));
+        this.ref = RevisionShortNameContext.ensure(root.get("ref"));
         this.task = ContextUtilities.Text.create(root.get("task"));
         this.createdAt = DateTimeContext.ensure(root.get("createdAt"));
         this.updatedAt = DateTimeContext.ensure(root.get("updatedAt"));

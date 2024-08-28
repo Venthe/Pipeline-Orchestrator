@@ -31,7 +31,7 @@ public class RepositoryQueryServiceImpl implements RepositoryQueryService {
     }
 
     @Override
-    public Optional<RepositoryDto> find(RepositoryId repositoryId) {
+    public Optional<RepositoryDto> find(RepositoryName repositoryId) {
         return repositoryRepository.find(repositoryId).map(RepositoryQueryServiceImpl::toRepositoryDto);
     }
 
@@ -41,7 +41,7 @@ public class RepositoryQueryServiceImpl implements RepositoryQueryService {
     }
 
     @Override
-    public Optional<File> getFile(final RepositoryId id, final SimpleRevision revision, final Path file) {
+    public Optional<File> getFile(final RepositoryName id, final RevisionShortName revision, final Path file) {
         if (!featureManager.isActive(new NamedFeature("GENERAL_WIP"))) {
             throw new UnsupportedOperationException();
         }

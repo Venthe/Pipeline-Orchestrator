@@ -2,15 +2,17 @@ package eu.venthe.platform.workflow.definition;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.venthe.platform.shared_kernel.system_events.SystemEvent;
 import eu.venthe.platform.workflow.data_interpolation.Expression;
 import eu.venthe.platform.workflow.definition.contexts.*;
+import eu.venthe.platform.workflow.definition.contexts.jobs.JobWithStepsDefinition;
 import eu.venthe.platform.workflow.definition.contexts.on.WorkflowDefinitionOnContext;
 import eu.venthe.platform.workflow.events.EventWrapper;
-import eu.venthe.platform.shared_kernel.system_events.SystemEvent;
 import jakarta.annotation.Nullable;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Set;
@@ -18,12 +20,13 @@ import java.util.Set;
 @Slf4j
 @Getter
 @ToString(onlyExplicitlyIncluded = true)
-@SuperBuilder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class WorkflowDefinition {
     @Nullable
     private final String name;
     @Nullable
     private final Expression<String> runName;
+    @Nullable
     private final WorkflowDefinitionOnContext on;
     @Nullable
     private final WorkflowDefinitionPermissionsContext permissions;
@@ -56,5 +59,36 @@ public class WorkflowDefinition {
         log.info("[id:{}][type:{}] Event match: {}", event.getId(), event.getType(), result);
 
         return result;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        @Nullable
+        private String name;
+        @Nullable
+        private Expression<String> runName;
+        @Nullable
+        private WorkflowDefinitionOnContext on;
+        @Nullable
+        private WorkflowDefinitionPermissionsContext permissions;
+        @Nullable
+        private WorkflowDefinitionEnvironmentContext environment;
+        @Nullable
+        private WorkflowDefinitionDefaultsContext defaults;
+        @Nullable
+        private WorkflowDefinitionConcurrencyContext concurrency;
+        private final WorkflowDefinitionJobsContext.WorkflowDefinitionJobsContextBuilder jobsBuilder = WorkflowDefinitionJobsContext.builder();
+
+        public WorkflowDefinition build() {
+            return new WorkflowDefinition(name, runName, on, permissions, environment, defaults, concurrency, jobsBuilder.build());
+        }
+
+        public Builder job(JobName name, JobWithStepsDefinition definition) {
+            jobsBuilder.job(name, definition);
+            return this;
+        }
     }
 }

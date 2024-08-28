@@ -1,10 +1,10 @@
 package eu.venthe.platform.workflow;
 
-import eu.venthe.platform.repository.domain.RepositoryId;
+import eu.venthe.platform.repository.domain.RepositoryName;
 import eu.venthe.platform.runner.runner_engine.template.model.dimensions.Dimension;
-import eu.venthe.platform.shared_kernel.git.SimpleRevision;
+import eu.venthe.platform.shared_kernel.git.RevisionShortName;
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
-import eu.venthe.platform.workflow.model.JobRunId;
+import eu.venthe.platform.workflow.definition.contexts.JobName;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
 import eu.venthe.platform.workflow.runs.dependencies.TriggeringEntity;
 
@@ -12,17 +12,17 @@ import java.nio.file.Path;
 import java.util.Set;
 
 public interface WorkflowRunCommandService {
-    WorkflowRunId triggerWorkflowDispatch(final RepositoryId id, final SimpleRevision simpleRevision, final Path workflowPath);
+    WorkflowRunId triggerWorkflowDispatch(final RepositoryName id, final RevisionShortName simpleRevision, final Path workflowPath);
 
     default void retriggerWorkflow(WorkflowRunId executionId) {
         throw new UnsupportedOperationException();
     }
 
-    default void retriggerJobExecution(WorkflowRunId executionId, JobRunId jobRunId) {
+    default void retriggerJobExecution(WorkflowRunId executionId, JobName jobName, int runAttempt) {
         throw new UnsupportedOperationException();
     }
 
-    default void stopJobExecution(WorkflowRunId executionId, JobRunId jobRunId) {
+    default void stopJobExecution(WorkflowRunId executionId, JobName jobName, int runAttempt) {
         throw new UnsupportedOperationException();
     }
 
@@ -34,8 +34,8 @@ public interface WorkflowRunCommandService {
     WorkflowRunId triggerWorkflow(WorkflowDefinition definition, Context context, TriggeringEntity triggeringEntity);
 
     record Context(
-            RepositoryId id,
-            SimpleRevision revision,
+            RepositoryName id,
+            RevisionShortName revision,
             Set<Dimension> dimensions
     ) {
     }

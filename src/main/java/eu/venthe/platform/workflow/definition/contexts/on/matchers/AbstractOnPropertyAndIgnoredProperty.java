@@ -42,7 +42,7 @@ public class AbstractOnPropertyAndIgnoredProperty {
                         .toList());
     }
 
-    public boolean match(SimpleRevision property) {
+    public boolean match(RevisionShortName property) {
         return match(List.of(property.value()));
     }
 

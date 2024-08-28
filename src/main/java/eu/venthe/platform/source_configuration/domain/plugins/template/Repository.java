@@ -1,9 +1,9 @@
 package eu.venthe.platform.source_configuration.domain.plugins.template;
 
-import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
+import eu.venthe.platform.shared_kernel.project.RepositoryStatus;
 
 public record Repository(
-        SourceRepositoryId sourceRepositoryId,
+        SourceRepositoryName sourceRepositoryId,
         RepositoryStatus status
 ) {
 }
