@@ -1,6 +1,6 @@
 package eu.venthe.platform.source_configuration.application;
 
-import eu.venthe.platform.shared_kernel.git.SimpleRevision;
+import eu.venthe.platform.shared_kernel.git.RevisionShortName;
 import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
 import eu.venthe.platform.source_configuration.domain.RepositorySourcePluginInstanceAggregate;
@@ -39,15 +39,15 @@ public class SourceConfigurationManager implements SourceQueryService {
     }
 
     @Override
-    public Optional<File> getFile(final ConfigurationSourceId configurationSourceId, final SourceRepositoryName sourceRepositoryId, final RevisionShortName simpleRevision, final Path path) {
+    public Optional<File> getFile(final ConfigurationSourceId configurationSourceId, final SourceRepositoryName sourceRepositoryName, final RevisionShortName simpleRevision, final Path path) {
         var sourceConfiguration = getConfiguration(configurationSourceId);
-        return sourceConfiguration.getFile(sourceRepositoryId, simpleRevision, path);
+        return sourceConfiguration.getFile(sourceRepositoryName, simpleRevision, path);
     }
 
     @Override
-    public Collection<Metadata> getFileList(final ConfigurationSourceId configurationSourceId, final SourceRepositoryName sourceRepositoryId, final RevisionShortName simpleRevision, final Path path) {
+    public Collection<Metadata> getFileList(final ConfigurationSourceId configurationSourceId, final SourceRepositoryName sourceRepositoryName, final RevisionShortName simpleRevision, final Path path) {
         var sourceConfiguration = getConfiguration(configurationSourceId);
-        return sourceConfiguration.getFileList(sourceRepositoryId, simpleRevision, path);
+        return sourceConfiguration.getFileList(sourceRepositoryName, simpleRevision, path);
     }
 
     @Override
@@ -57,9 +57,9 @@ public class SourceConfigurationManager implements SourceQueryService {
     }
 
     @Override
-    public Stream<SourceOwnedRepositoryName> getRepositoryIdentifiers(final ConfigurationSourceId configurationSourceId) {
+    public Stream<SourceOwnedRepositoryName> getRepositoryNameentifiers(final ConfigurationSourceId configurationSourceId) {
         var sourceConfiguration = getConfiguration(configurationSourceId);
-        return sourceConfiguration.getRepositoryIdentifiers();
+        return sourceConfiguration.getRepositoryNameentifiers();
     }
 
     @Override

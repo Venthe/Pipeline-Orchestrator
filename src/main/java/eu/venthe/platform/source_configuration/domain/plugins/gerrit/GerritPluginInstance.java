@@ -5,10 +5,10 @@ import eu.venthe.platform.gerrit.api.RepositoryApi;
 import eu.venthe.platform.gerrit.model.RepositoryInfo;
 import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
-import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
+import eu.venthe.platform.shared_kernel.project.RepositoryStatus;
 import eu.venthe.platform.source_configuration.domain.plugins.template.Repository;
 import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryName;
-import eu.venthe.platform.shared_kernel.git.SimpleRevision;
+import eu.venthe.platform.shared_kernel.git.RevisionShortName;
 import eu.venthe.platform.source_configuration.domain.model.SourceType;
 import eu.venthe.platform.source_configuration.domain.plugins.template.RepositorySourcePluginInstance;
 import jakarta.ws.rs.core.UriBuilder;
@@ -80,8 +80,8 @@ public class GerritPluginInstance implements RepositorySourcePluginInstance {
     }*/
 
     @Override
-    public Optional<File> getFile(SourceRepositoryName sourceRepositoryId, RevisionShortName simpleRevision, Path path) {
-        String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceRepositoryId.value()).toString();
+    public Optional<File> getFile(SourceRepositoryName sourceRepositoryName, RevisionShortName simpleRevision, Path path) {
+        String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceRepositoryName.value()).toString();
         return GitUtilities.onRepository(string, simpleRevision, rootDirectory -> {
             // FIXME
             return Optional.of(rootDirectory.toPath().resolve(path)).map(Path::toFile).filter(java.io.File::exists).map(GerritPluginInstance::getBytes).map(e -> null);
@@ -94,8 +94,8 @@ public class GerritPluginInstance implements RepositorySourcePluginInstance {
     }
 
     @Override
-    public Collection<Metadata> getFileList(SourceRepositoryName sourceRepositoryId, RevisionShortName simpleRevision, Path path) {
-        String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceRepositoryId.value()).toString();
+    public Collection<Metadata> getFileList(SourceRepositoryName sourceRepositoryName, RevisionShortName simpleRevision, Path path) {
+        String string = UriBuilder.fromUri(configuration.getBasePath()).path("/a/").path(sourceRepositoryName.value()).toString();
         throw new UnsupportedOperationException();
         // return GitUtilities.onRepository(string, revision, rootDirectory -> {
         //     java.io.File relativeDirectory = rootDirectory.toPath().resolve(path).toFile();
@@ -127,15 +127,15 @@ public class GerritPluginInstance implements RepositorySourcePluginInstance {
     }
 
     @Override
-    public Stream<SourceRepositoryName> getRepositoryIdentifiers() {
-        return getRepository().map(Repository::sourceRepositoryId);
+    public Stream<SourceRepositoryName> getRepositoryNameentifiers() {
+        return getRepository().map(Repository::sourceRepositoryName);
     }
 
     @Override
     public Optional<Repository> getRepository(SourceRepositoryName id) {
         // FIXME: Don't ask for all repositorys
         return getRepository()
-                .filter(p -> p.sourceRepositoryId().equals(id))
+                .filter(p -> p.sourceRepositoryName().equals(id))
                 .collect(MoreCollectors.toOptional());
     }
 

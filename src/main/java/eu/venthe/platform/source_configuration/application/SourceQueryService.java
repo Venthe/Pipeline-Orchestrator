@@ -14,13 +14,13 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public interface SourceQueryService {
-    Optional<File> getFile(ConfigurationSourceId configurationSourceId, SourceRepositoryName sourceRepositoryId, RevisionShortName simpleRevision, Path path);
+    Optional<File> getFile(ConfigurationSourceId configurationSourceId, SourceRepositoryName sourceRepositoryName, RevisionShortName simpleRevision, Path path);
 
-    Collection<Metadata> getFileList(ConfigurationSourceId configurationSourceId, SourceRepositoryName SourceRepositoryId, RevisionShortName simpleRevision, Path path);
+    Collection<Metadata> getFileList(ConfigurationSourceId configurationSourceId, SourceRepositoryName SourceRepositoryName, RevisionShortName simpleRevision, Path path);
 
     Stream<SourceOwnedRepository> getRepository(ConfigurationSourceId configurationSourceId);
 
-    Stream<SourceOwnedRepositoryName> getRepositoryIdentifiers(ConfigurationSourceId configurationSourceId);
+    Stream<SourceOwnedRepositoryName> getRepositoryNameentifiers(ConfigurationSourceId configurationSourceId);
 
     Optional<SourceOwnedRepository> getRepository(ConfigurationSourceId configurationSourceId, SourceRepositoryName id);
 }

@@ -4,9 +4,9 @@ import eu.venthe.platform.organization.domain.OrganizationName;
 import eu.venthe.platform.repository.application.RepositoryQueryService;
 import eu.venthe.platform.repository.application.model.RepositoryDto;
 import eu.venthe.platform.repository.domain.Repository;
-import eu.venthe.platform.repository.domain.RepositoryId;
+import eu.venthe.platform.repository.domain.RepositoryName;
 import eu.venthe.platform.repository.domain.infrastructure.RepositoryRepository;
-import eu.venthe.platform.shared_kernel.git.SimpleRevision;
+import eu.venthe.platform.shared_kernel.git.RevisionShortName;
 import eu.venthe.platform.shared_kernel.io.File;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class RepositoryQueryServiceImpl implements RepositoryQueryService {
     }
 
     @Override
-    public Stream<RepositoryId> getRepositoryIds(OrganizationName organizationName) {
+    public Stream<RepositoryName> getRepositoryNames(OrganizationName organizationName) {
         return repositoryRepository.findAll().stream().map(Repository::getId).filter(id -> id.organizationName().equals(organizationName));
     }
 

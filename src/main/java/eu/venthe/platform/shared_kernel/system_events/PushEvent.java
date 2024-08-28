@@ -3,7 +3,7 @@ package eu.venthe.platform.shared_kernel.system_events;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.venthe.platform.shared_kernel.git.RevisionShortName;
-import eu.venthe.platform.shared_kernel.git.SimpleRevision;
+import eu.venthe.platform.shared_kernel.git.RevisionShortName;
 import eu.venthe.platform.shared_kernel.system_events.contexts.CommitDetailsContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.UserContext;
 import eu.venthe.platform.shared_kernel.system_events.contexts.common.BooleanContext;

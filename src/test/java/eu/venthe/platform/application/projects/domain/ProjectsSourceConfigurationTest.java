@@ -4,8 +4,8 @@ package eu.venthe.platform.application.repositorys.domain;
 import eu.venthe.platform.repository.application.RepositoryCommandService;
 import eu.venthe.platform.repository.application.RepositoryQueryService;
 import eu.venthe.platform.repository.application.model.CreateRepositorySpecification;
-import eu.venthe.platform.repository.domain.RepositoryId;
-import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
+import eu.venthe.platform.repository.domain.RepositoryName;
+import eu.venthe.platform.shared_kernel.project.RepositoryStatus;
 import eu.venthe.platform.source_configuration.domain.plugins.template.RepositorySourcePlugin;
 import eu.venthe.platform.source_configuration.domain.plugins.template.Repository;
 import org.assertj.core.api.Assertions;
@@ -38,14 +38,14 @@ class RepositorySourceConfigurationTest {
 
     @Test
     void name() {
-        Mockito.when(pluginInstance.getRepositoryIds()).thenReturn(Stream.of(new Repository.Id("123")));
-        Mockito.when(repositoryQueries.getRepositoryIds(new SourceConfigurationId("TestName"))).thenReturn(Stream.empty());
+        Mockito.when(pluginInstance.getRepositoryNames()).thenReturn(Stream.of(new Repository.Id("123")));
+        Mockito.when(repositoryQueries.getRepositoryNames(new SourceConfigurationId("TestName"))).thenReturn(Stream.empty());
         Mockito.when(pluginInstance.getRepository("123")).thenReturn(Optional.of(new Repository("123", RepositoryStatus.ACTIVE)));
 
         // FIXME: Uncomment
         // repositorysSourceConfiguration.synchronize();
 
-        Mockito.verify(repositoryCommands).add(new SourceConfigurationId("TestName"), new CreateRepositorySpecification(RepositoryId.builder().name("123").configurationId(new SourceConfigurationId("TestName")).build(), RepositoryStatus.ACTIVE));
+        Mockito.verify(repositoryCommands).add(new SourceConfigurationId("TestName"), new CreateRepositorySpecification(RepositoryName.builder().name("123").configurationId(new SourceConfigurationId("TestName")).build(), RepositoryStatus.ACTIVE));
     }
 
     @Test

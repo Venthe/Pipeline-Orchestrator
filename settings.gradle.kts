@@ -8,10 +8,6 @@ pluginManagement {
     }
 
     includeBuild("plugins/generate-openapi-client")
-//    includeBuild("generate-openapi-client")
-//    project(":generate-openapi-client").projectDir = file("plugins/generate-openapi-client")
-    // Include 'plugins build' to define convention plugins.
-    includeBuild("build-logic")
 }
 
 rootProject.name = "orchestrator"

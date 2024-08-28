@@ -24,7 +24,7 @@ record RepositorySynchronizer(
         OrganizationName organizationName
 ) {
     List<DomainTrigger> synchronize() {
-        final Set<SourceOwnedRepositoryName> allRepositoryFromSource = getAllAvailableRepositoryIds();
+        final Set<SourceOwnedRepositoryName> allRepositoryFromSource = getAllAvailableRepositoryNames();
         final Set<SourceOwnedRepositoryName> registeredRepository = getAlreadyRegisteredRepository();
 
         return Stream.<List<DomainTrigger>>builder()
@@ -36,12 +36,12 @@ record RepositorySynchronizer(
                 .toList();
     }
 
-    private Set<SourceOwnedRepositoryName> getAllAvailableRepositoryIds() {
-        return new HashSet<>(source.getAllAvailableRepositoryIds());
+    private Set<SourceOwnedRepositoryName> getAllAvailableRepositoryNames() {
+        return new HashSet<>(source.getAllAvailableRepositoryNames());
     }
 
     private Set<SourceOwnedRepositoryName> getAlreadyRegisteredRepository() {
-        return repositorysQueryService.getRepositoryIds(organizationName)
+        return repositorysQueryService.getRepositoryNames(organizationName)
                 .map(e -> new SourceOwnedRepositoryName(source.getConfigurationSourceId(), e.name()))
                 .collect(toSet());
     }

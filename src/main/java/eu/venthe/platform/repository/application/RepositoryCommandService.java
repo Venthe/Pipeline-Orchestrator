@@ -1,9 +1,9 @@
 package eu.venthe.platform.repository.application;
 
 import eu.venthe.platform.repository.application.model.CreateRepositorySpecification;
-import eu.venthe.platform.repository.domain.RepositoryId;
-import eu.venthe.platform.shared_kernel.git.GitRevision;
-import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
+import eu.venthe.platform.repository.domain.RepositoryName;
+import eu.venthe.platform.shared_kernel.git.RevisionName;
+import eu.venthe.platform.shared_kernel.project.RepositoryStatus;
 
 public interface RepositoryCommandService {
 
@@ -17,11 +17,11 @@ public interface RepositoryCommandService {
         throw new UnsupportedOperationException();
     }
 
-    default void registerTrackedRevision(RepositoryName repositoryId, GitRevision revision) {
+    default void registerTrackedRevision(RepositoryName repositoryId, RevisionName revision) {
         throw new UnsupportedOperationException();
     }
 
-    default void unregisterTrackedRevision(RepositoryName repositoryId, GitRevision revision) {
+    default void unregisterTrackedRevision(RepositoryName repositoryId, RevisionName revision) {
         throw new UnsupportedOperationException();
     }
 }

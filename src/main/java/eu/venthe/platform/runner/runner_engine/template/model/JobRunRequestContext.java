@@ -1,11 +1,11 @@
+/*
 package eu.venthe.platform.runner.runner_engine.template.model;
 
+import eu.venthe.platform.shared_kernel.git.RevisionShortName;
 import eu.venthe.platform.workflow.definition.contexts.JobName;
-import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
-import eu.venthe.platform.repository.domain.RepositoryId;
+import eu.venthe.platform.repository.domain.RepositoryName;
 import eu.venthe.platform.shared_kernel.dynamic_variable.DynamicProperty;
-import eu.venthe.platform.shared_kernel.git.GitRevision;
 import eu.venthe.platform.shared_kernel.system_events.SystemEvent;
 import jakarta.annotation.Nullable;
 
@@ -23,7 +23,8 @@ public record JobRunRequestContext(
         Map<String, Service> services
 ) {
 
-    /**
+    */
+/**
      * The type Run context.
      *
      * @param actor              user that triggered the initial workflow run.
@@ -49,12 +50,13 @@ public record JobRunRequestContext(
      * @param callbackToken
      * @param workflowName
      * @param workflowRevision
-     */
+     *//*
+
     public record SystemContext(
             UserContext actor,
-            @Nullable GitRevision baseRevision,
-            @Nullable GitRevision headRevision,
-            @Nullable GitRevision revision,
+            @Nullable RevisionShortName baseRevision,
+            @Nullable RevisionShortName headRevision,
+            @Nullable RevisionShortName revision,
             SystemEvent event,
             JobRunId jobRunId,
             RepositoryName repositoryId,
@@ -64,26 +66,30 @@ public record JobRunRequestContext(
             WorkflowRunId workflowRunId,
             Integer workflowRunAttempt,
             String workflowName,
-            GitRevision workflowRevision) {
+            RevisionShortName workflowRevision) {
     }
 
     public record Service(String image, Map<Integer, Integer> ports, Map<String, String> options) {
     }
 
-    /**
+    */
+/**
      * jobs.<job_id>.result	string	The result of a job in the reusable workflow. Possible values are success, failure,
      * cancelled, or skipped. jobs.<job_id>.outputs	object	The set of outputs of a job in a reusable workflow.
      * jobs.<job_id>.outputs.<output_name>	string	The value of a specific output for a job in a reusable workflow.
-     */
+     *//*
+
     public record PreviousJobContext() {
     }
 
-    /**
+    */
+/**
      * strategy.fail-fast	boolean	When this evaluates to true, all in-progress jobs are canceled if any job in a matrix fails. For more information, see "Workflow syntax for GitHub Actions."
      * strategy.job-index	number	The index of the current job in the matrix. Note: This number is a zero-based number. The first job's index in the matrix is 0.
      * strategy.job-total	number	The total number of jobs in the matrix. Note: This number is not a zero-based number. For example, for a matrix with four jobs, the value of job-total is 4.
      * strategy.max-parallel	number	The maximum number of jobs that can run simultaneously when using a matrix job strategy. For more information, see "Workflow syntax for GitHub Actions."
-     */
+     *//*
+
     public record Strategy() {
 
     }
@@ -93,3 +99,4 @@ public record JobRunRequestContext(
     public record UserContext() {
     }
 }
+*/

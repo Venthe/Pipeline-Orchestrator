@@ -1,7 +1,7 @@
 /*
 package eu.venthe.platform.application.repositorys.plugin.gerrit;
 
-import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
+import eu.venthe.platform.shared_kernel.project.RepositoryStatus;
 import eu.venthe.platform.source_configuration.domain.plugins.gerrit.GerritConfiguration;
 import eu.venthe.platform.source_configuration.domain.plugins.gerrit.GerritPluginInstance;
 import eu.venthe.platform.source_configuration.domain.plugins.template.RepositorySourcePluginInstance;

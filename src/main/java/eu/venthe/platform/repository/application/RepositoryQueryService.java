@@ -16,7 +16,7 @@ public interface RepositoryQueryService {
 
     Optional<RepositoryDto> find(RepositoryName repositoryId);
 
-    Stream<RepositoryName> getRepositoryIds(OrganizationName id);
+    Stream<RepositoryName> getRepositoryNames(OrganizationName id);
 
     Optional<File> getFile(RepositoryName id, RevisionShortName revision, Path file);
 }

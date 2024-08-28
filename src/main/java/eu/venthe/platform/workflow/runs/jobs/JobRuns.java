@@ -5,7 +5,7 @@ import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.workflow.definition._archive.steps.StepId;
 import eu.venthe.platform.workflow.definition.contexts.JobName;
 import eu.venthe.platform.workflow.definition.contexts.WorkflowDefinitionJobsContext;
-import eu.venthe.platform.workflow.model.JobRunId;
+import eu.venthe.platform.workflow.runs.JobRunId;
 import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import eu.venthe.platform.workflow.utilities.GraphUtility;
 import lombok.RequiredArgsConstructor;

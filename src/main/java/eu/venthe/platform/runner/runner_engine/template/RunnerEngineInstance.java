@@ -1,6 +1,5 @@
 package eu.venthe.platform.runner.runner_engine.template;
 
-import eu.venthe.platform.runner.runner_engine.template.model.RunnerContext;
 import eu.venthe.platform.runner.runner_engine.template.model.RunnerId;
 import eu.venthe.platform.runner.runner_engine.template.model.dimensions.RunnerDimensions;
 
@@ -15,7 +14,7 @@ public interface RunnerEngineInstance {
      */
     // TODO: Add generic method to pick a runner based on the dimensions
     // TODO: Add generic method to get the JobExecution to be executed per runner
-    boolean queueExecution(RunnerContext context,
+    boolean queueExecution(Object context,
                            RunnerDimensions dimensions);
 
     // TODO: Add generic runner handling code in the abstract class

@@ -5,7 +5,6 @@ import eu.venthe.platform.shared_kernel.events.DomainTrigger;
 import eu.venthe.platform.workflow.WorkflowRunCommandService;
 import eu.venthe.platform.workflow.definition.WorkflowDefinition;
 import eu.venthe.platform.workflow.definition._archive.steps.StepId;
-import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.dependencies.Actor;
 import eu.venthe.platform.workflow.runs.dependencies.TimeService;
 import eu.venthe.platform.workflow.runs.dependencies.TriggeringEntity;
@@ -50,7 +49,7 @@ public class WorkflowRun implements Aggregate<WorkflowRunId> {
 
         throw new UnsupportedOperationException();
         /*return Pair.of(
-                Collections.singletonList(new WorkflowRunCreatedEvent(run.getRepositoryId(), run.getId())),
+                Collections.singletonList(new WorkflowRunCreatedEvent(run.getRepositoryName(), run.getId())),
                 run
         );*/
     }

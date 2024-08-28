@@ -46,8 +46,8 @@ public class Organization implements Aggregate<OrganizationName> {
             this.sourceQueryService = sourceQueryService;
         }
 
-        Set<SourceOwnedRepositoryName> getAllAvailableRepositoryIds() {
-            return sourceQueryService.getRepositoryIdentifiers(configurationSourceId).collect(Collectors.toSet());
+        Set<SourceOwnedRepositoryName> getAllAvailableRepositoryNames() {
+            return sourceQueryService.getRepositoryNameentifiers(configurationSourceId).collect(Collectors.toSet());
         }
     }
 }

@@ -1,3 +1,4 @@
+/*
 package eu.venthe.platform.workflow.runs;
 
 import java.util.Set;
@@ -9,3 +10,4 @@ public interface ContextAccessor extends Substitution {
     }
 
 }
+*/

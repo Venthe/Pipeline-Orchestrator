@@ -1,7 +1,7 @@
 package eu.venthe.platform.workflow;
 
 import eu.venthe.platform.workflow.runs._archive._1.model.query.WorkflowExecutionDto;
-import eu.venthe.platform.workflow.model.JobRunId;
+import eu.venthe.platform.workflow.runs.JobRunId;
 import eu.venthe.platform.workflow.runs.WorkflowCorrelationId;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
 

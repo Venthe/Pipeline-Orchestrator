@@ -1,14 +1,11 @@
 package eu.venthe.platform.runner.model;
 
-import eu.venthe.platform.repository.domain.RepositoryId;
+import eu.venthe.platform.repository.domain.RepositoryName;
 import eu.venthe.platform.runner.runner_engine.template.RunnerEngineInstance;
-import eu.venthe.platform.runner.runner_engine.template.model.JobRunRequestContext;
 import eu.venthe.platform.runner.runner_engine.template.model.RunCallbackToken;
-import eu.venthe.platform.runner.runner_engine.template.model.RunnerContext;
 import eu.venthe.platform.runner.runner_engine.template.model.RunnerId;
 import eu.venthe.platform.runner.runner_engine.template.model.dimensions.RunnerDimensions;
 import eu.venthe.platform.shared_kernel.Aggregate;
-import eu.venthe.platform.workflow.model.JobRunId;
 import eu.venthe.platform.workflow.runs.WorkflowRunId;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -24,11 +21,11 @@ public class RunnerEngineInstanceAggregate implements Aggregate<RunnerEngineInst
     // TODO: Add logs
     public void queueJobExecution(RepositoryName repositoryId,
                                   WorkflowRunId workflowRunId,
-                                  JobRunId executionId,
+                                  Object executionId,
                                   URL systemApiUrl,
                                   RunCallbackToken runCallbackToken,
                                   RunnerDimensions dimensions) {
-        var context = new RunnerContext(
+        /*var context = new RunnerContext(
                 new JobRunRequestContext(
                         new JobRunRequestContext.SystemContext(
                                 null,
@@ -36,7 +33,7 @@ public class RunnerEngineInstanceAggregate implements Aggregate<RunnerEngineInst
                                 null,
                                 null,
                                 null,
-                                executionId,
+                                null,
                                 null,
                                 null,
                                 null,
@@ -57,8 +54,8 @@ public class RunnerEngineInstanceAggregate implements Aggregate<RunnerEngineInst
                 ),
                 systemApiUrl,
                 runCallbackToken
-        );
-        runnerEngineInstance.queueExecution(context,
+        );*/
+        runnerEngineInstance.queueExecution(null,
                 dimensions);
     }
 

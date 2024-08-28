@@ -6,13 +6,13 @@ import eu.venthe.platform.organization.application.OrganizationCommandService;
 import eu.venthe.platform.organization.application.model.CreateOrganizationSpecification;
 import eu.venthe.platform.repository.application.RepositoryCommandService;
 import eu.venthe.platform.repository.application.RepositoryQueryService;
-import eu.venthe.platform.repository.domain.RepositoryId;
+import eu.venthe.platform.repository.domain.RepositoryName;
 import eu.venthe.platform.runner.RunnerManager;
 import eu.venthe.platform.runner.model.RegisterRunnerEngineInstanceSpecification;
 import eu.venthe.platform.runner.runner_engine.template.model.dimensions.RunnerDimensions;
-import eu.venthe.platform.shared_kernel.git.SimpleRevision;
+import eu.venthe.platform.shared_kernel.git.RevisionShortName;
 import eu.venthe.platform.shared_kernel.io.File;
-import eu.venthe.platform.shared_kernel.repository.RepositoryStatus;
+import eu.venthe.platform.shared_kernel.project.RepositoryStatus;
 import eu.venthe.platform.source_configuration.application.SourceConfigurationSpecification;
 import eu.venthe.platform.source_configuration.domain.plugins.template.Repository;
 import eu.venthe.platform.source_configuration.domain.plugins.template.SourceRepositoryName;
@@ -81,7 +81,7 @@ class FullIntegrationTest extends AbstractIntegrationTest {
         val revision = new SimpleRevision("main");
 
         repositorySourceFixture.onInstance(repositorySource -> {
-            when(repositorySource.getRepositoryIdentifiers()).thenReturn(Stream.of(repositoryName));
+            when(repositorySource.getRepositoryNameentifiers()).thenReturn(Stream.of(repositoryName));
             when(repositorySource.getRepository(repositoryName)).thenReturn(Optional.of(new Repository(repositoryName, RepositoryStatus.ACTIVE)));
             when(repositorySource.getFile(eq(repositoryName), eq(revision), eq(Path.of(".mantle", "workflows", "test-workflow.yml"))))
                     .thenReturn(Optional.of(new File(new ByteArrayInputStream("""
@@ -116,9 +116,9 @@ class FullIntegrationTest extends AbstractIntegrationTest {
 
         // At this point, auto synchronization should happen. Let's wait for it.
         await("Synchronization done")
-                .until(() -> !repositorysQueryService.getRepositoryIds(createdOrganizationName).collect(toSet()).isEmpty());
+                .until(() -> !repositorysQueryService.getRepositoryNames(createdOrganizationName).collect(toSet()).isEmpty());
 
-        val repositoryId = new RepositoryId(createdOrganizationName, repositoryName);
+        val repositoryId = new RepositoryName(createdOrganizationName, repositoryName);
         await("Repository found")
                 .untilAsserted(() -> assertThat(repositorysQueryService.find(repositoryId)).isPresent());
 

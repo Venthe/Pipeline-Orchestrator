@@ -4,7 +4,7 @@ package eu.venthe.pipeline.orchestrator.repositorys.domain.repositorys;
 import eu.venthe.pipeline.orchestrator.repositorys.domain.Repository;
 import eu.venthe.pipeline.orchestrator.repositorys.domain.RepositorySourceConfiguration;
 import eu.venthe.pipeline.orchestrator.repositorys.domain.model.SourceType;
-import eu.venthe.pipeline.orchestrator.repositorys.domain.RepositoryId;
+import eu.venthe.pipeline.orchestrator.repositorys.domain.RepositoryName;
 import eu.venthe.pipeline.orchestrator.repositorys.domain.repositorys.model.RepositoryStatus;
 import eu.venthe.pipeline.orchestrator.repositorys.shared_kernel.events.RepositoryAddedEvent;
 import eu.venthe.pipeline.orchestrator.shared_kernel.events.DomainTrigger;
@@ -18,7 +18,7 @@ import static eu.venthe.pipeline.orchestrator.repositorys.domain.repositorys.mod
 class RepositoryTest {
     private final static SourceType EXAMPLE_SOURCE_TYPE = new SourceType("Gerrit");
     private final static String EXAMPLE_NAME = "All-Repository";
-    private final static RepositoryName EXAMPLE_PROJECT_ID = RepositoryId.of(EXAMPLE_SOURCE_TYPE, EXAMPLE_NAME);
+    private final static RepositoryName EXAMPLE_PROJECT_ID = RepositoryName.of(EXAMPLE_SOURCE_TYPE, EXAMPLE_NAME);
     private static final RepositoryStatus EXAMPLE_PROJECT_STATUS = ACTIVE;
     private static final RepositorySourceConfiguration EMPTY_CONFIGURATION = null;
     private final RepositoryFactory factory = new RepositoryFactory();

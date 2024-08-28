@@ -1,6 +1,6 @@
 package eu.venthe.platform.source_configuration.domain.plugins.template;
 
-import eu.venthe.platform.shared_kernel.git.SimpleRevision;
+import eu.venthe.platform.shared_kernel.git.RevisionShortName;
 import eu.venthe.platform.shared_kernel.io.File;
 import eu.venthe.platform.shared_kernel.io.Metadata;
 
@@ -18,11 +18,11 @@ public interface RepositoryDataProvider {
      * @param path              Path of the file to access
      * @return Either {@code Optional} or bytes for a file
      */
-    default Optional<File> getFile(SourceRepositoryName sourceRepositoryId, RevisionShortName simpleRevision, Path path) {
+    default Optional<File> getFile(SourceRepositoryName sourceRepositoryName, RevisionShortName simpleRevision, Path path) {
         throw new UnsupportedOperationException();
     }
 
-    default Collection<Metadata> getFileList(SourceRepositoryName sourceRepositoryId, RevisionShortName simpleRevision, Path path) {
+    default Collection<Metadata> getFileList(SourceRepositoryName sourceRepositoryName, RevisionShortName simpleRevision, Path path) {
         throw new UnsupportedOperationException();
     }
 
