@@ -26,4 +26,7 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+
+    // Added to explicitly enable ByteBuddy injection for IntelliJ IDEA debugging
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
 }
