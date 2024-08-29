@@ -1,3 +1,5 @@
 spring:
   application:
     name: platform
+  main:
+    banner-mode: off
