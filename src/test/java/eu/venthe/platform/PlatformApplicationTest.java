@@ -1,10 +1,8 @@
 package eu.venthe.platform;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class PlatformApplicationTest {
+class PlatformApplicationTest extends IntegrationTest {
 
     @Test
     void contextLoads() {
