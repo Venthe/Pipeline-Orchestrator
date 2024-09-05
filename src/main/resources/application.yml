@@ -3,3 +3,6 @@ spring:
     name: platform
   main:
     banner-mode: off
+logging:
+  level:
+    eu.venthe.platform: DEBUG
