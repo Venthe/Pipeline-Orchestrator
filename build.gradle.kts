@@ -1,11 +1,7 @@
-import gradle.kotlin.dsl.accessors._4b51223d572bfee998f38a2d8ad9814e.implementation
-import gradle.kotlin.dsl.accessors._4b51223d572bfee998f38a2d8ad9814e.testImplementation
-import gradle.kotlin.dsl.accessors._4b51223d572bfee998f38a2d8ad9814e.testRuntimeOnly
-
 plugins {
     java
 
-    id("io.freefair.lombok")
+    id("io.freefair.lombok") version "8.6"
     id("org.springframework.boot") version "3.2.3"
     id("io.spring.dependency-management") version "1.1.4"
     id("eu.venthe.gradle.generate_openapi_client") version "internal"
