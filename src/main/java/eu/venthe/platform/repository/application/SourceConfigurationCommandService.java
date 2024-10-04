@@ -37,4 +37,13 @@ public class SourceConfigurationCommandService {
         messageBroker.exchange(result.messages());
         log.debug("Source configuration {} registered", name);
     }
+
+    public void synchronize(String name) {
+        log.trace("Synchronizing source configuration {}", name);
+        var sourceConfiguration = sourceConfigurationRepository.find(name).orElseThrow();
+        var result = sourceConfiguration.synchronize();
+        sourceConfigurationRepository.save(sourceConfiguration);
+        messageBroker.exchange(result);
+        log.debug("Source configuration {} synchronized", name);
+    }
 }

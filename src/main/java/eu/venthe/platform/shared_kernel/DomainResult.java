@@ -19,4 +19,12 @@ public record DomainResult<T>(T data, Collection<DomainMessage> messages) {
     public static <T> DomainResult<T> from(T data) {
         return from(data, Collections.emptyList());
     }
+
+    public static DomainResult<Void> from(DomainMessage... message) {
+        return from(Arrays.stream(message).toList());
+    }
+
+    public static DomainResult<Void> from(Collection<DomainMessage> messages) {
+        return from(null, messages);
+    }
 }
