@@ -1,5 +1,6 @@
 package eu.venthe.platform.projects.plugin.filesystem;
 
+import eu.venthe.platform.projects.plugin.template.ProjectRetrievalException;
 import eu.venthe.platform.projects.plugin.template.Repository;
 import eu.venthe.platform.projects.plugin.template.RepositorySourcePluginInstance;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +52,7 @@ public class FilesystemRepositorySourcePluginInstance implements RepositorySourc
                     .collect(Collectors.toSet());
         } catch (IOException exception) {
             log.error("Cannot retrieve repositories", exception);
-            throw new ProjectRetrievalException();
+            throw new ProjectRetrievalException(exception);
         }
     }
 
