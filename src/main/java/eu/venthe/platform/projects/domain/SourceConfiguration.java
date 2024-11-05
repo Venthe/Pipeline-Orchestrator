@@ -1,13 +1,19 @@
 package eu.venthe.platform.projects.domain;
 
 import eu.venthe.platform.shared_kernel.DomainResult;
+import eu.venthe.platform.shared_kernel.events.DomainMessage;
+import eu.venthe.platform.projects.domain.events.RegisterProjectCommand;
 import eu.venthe.platform.projects.domain.events.SourceRegisteredEvent;
+import eu.venthe.platform.projects.domain.events.SynchronizeProjectsCommand;
 import eu.venthe.platform.projects.plugin.template.Repository;
 import eu.venthe.platform.projects.plugin.template.RepositorySourcePluginInstance;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
@@ -37,5 +43,19 @@ public class SourceConfiguration {
 
     public Set<Repository> getAllRepositories() {
         return plugin.getAllRepositories();
+    }
+
+    public Collection<DomainMessage> synchronizeAll() {
+        var createRepositoryEvents = plugin.getAllRepositories().stream()
+                .map(Repository::repositoryName)
+                .collect(Collectors.toSet()).stream()
+                .<DomainMessage>map(repositoryName -> new RegisterProjectCommand(getName(), repositoryName));
+
+        var synchronizeRepositoriesCommand = new SynchronizeProjectsCommand(getName());
+
+        return Stream.concat(
+                Stream.of(synchronizeRepositoriesCommand),
+                createRepositoryEvents
+        ).collect(Collectors.toSet());
     }
 }
