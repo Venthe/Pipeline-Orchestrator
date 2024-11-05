@@ -18,7 +18,7 @@ import java.util.UUID;
 import static eu.venthe.platform.projects.SourceConfigurationTestConfiguration.MOCK_SOURCE_PLUGIN_TYPE;
 import static eu.venthe.platform.projects.SourceConfigurationTestConfiguration.MockRepositorySourcePluginInstance;
 
-@Import(SourceConfigurationTestConfiguration.class)
+@Import({SourceConfigurationTestConfiguration.class, TestTimeConfiguration.class})
 class SourceConfigurationIntegrationTest extends IntegrationTest {
     @Autowired
     private SourceConfigurationCommandService sourceConfigurationCommandService;
@@ -105,7 +105,8 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
 
         // Then
         Awaitility.await().untilAsserted(() ->
-                Assertions.assertThat(projectQueryService.getProject(name, dummyRepository.repositoryName())).isPresent().hasValue(new ProjectDto(name, dummyRepository.repositoryName()))
+                Assertions.assertThat(projectQueryService.getProject(name, dummyRepository.repositoryName())).isPresent()
+                        .hasValue(new ProjectDto(name, dummyRepository.repositoryName(), TestTimeConfiguration.NOW))
         );
     }
 
