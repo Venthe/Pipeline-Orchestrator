@@ -38,4 +38,13 @@ public class SourceConfigurationCommandService {
 
         return result.data().getName();
     }
+
+    public void synchronizeAll(String name) {
+        log.trace("Fully synchronizing source configuration {}", name);
+        var sourceConfiguration = sourceConfigurationRepository.find(name).orElseThrow();
+        var result = sourceConfiguration.synchronizeAll();
+        sourceConfigurationRepository.save(sourceConfiguration);
+        messageBroker.exchange(result);
+        log.debug("Source configuration {} synchronized", name);
+    }
 }

@@ -1,5 +1,6 @@
 package eu.venthe.platform.projects.plugin.filesystem;
 
+import eu.venthe.platform.projects.plugin.template.ProjectRetrievalException;
 import eu.venthe.platform.projects.plugin.template.Repository;
 import eu.venthe.platform.projects.plugin.template.RepositorySourcePluginInstance;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -51,7 +53,28 @@ public class FilesystemRepositorySourcePluginInstance implements RepositorySourc
                     .collect(Collectors.toSet());
         } catch (IOException exception) {
             log.error("Cannot retrieve repositories", exception);
-            throw new ProjectRetrievalException();
+            throw new ProjectRetrievalException(exception);
+        }
+    }
+
+    @Override
+    public Optional<Repository> getRepository(String repositoryName) {
+        try {
+            var repositoryPath = rootPath.resolve(repositoryName);
+            if (!Files.exists(repositoryPath)) {
+                return Optional.empty();
+            }
+
+            if (!Files.exists(repositoryPath.resolve(".git"))) {
+                log.debug(".git directory not found in {}", repositoryPath);
+                throw new ProjectRetrievalException();
+            }
+            var relativeRepositoryDirectory = rootPath.relativize(repositoryPath);
+            var mappedRepositoryName = FilesystemRepositorySourcePluginInstance.mapDirectoryNameToRepositoryName(relativeRepositoryDirectory.toString());
+            return Optional.of(new Repository(mappedRepositoryName));
+        } catch (Exception exception) {
+            log.error("Cannot retrieve repositories", exception);
+            throw new ProjectRetrievalException(exception);
         }
     }
 

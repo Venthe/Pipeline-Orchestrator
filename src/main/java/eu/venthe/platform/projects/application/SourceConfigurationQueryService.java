@@ -27,6 +27,12 @@ public class SourceConfigurationQueryService {
                 .getAllRepositories();
     }
 
+    public Optional<Repository> getRepository(String sourceName, String repositoryName) {
+        return sourceConfigurationRepository.find(sourceName)
+                .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceName))
+                .getRepository(repositoryName);
+    }
+
     private static class ConfigurationVisitor implements SourceConfigurationVisitor {
         private final SourceConfigurationDto.SourceConfigurationDtoBuilder builder = SourceConfigurationDto.builder();
 
