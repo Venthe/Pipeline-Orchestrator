@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Project {
     private final Id id;
+    private final SourceConfiguration sourceConfiguration;
 
     public static DomainResult<Project> create(SourceConfigurationRepository sourceConfigurationRepository, String sourceName, String projectName) {
         var sourceConfigurationCandidate = sourceConfigurationRepository.find(sourceName);
@@ -27,7 +28,8 @@ public class Project {
         var repositoryData = repositoryDataCandidate.get();
 
         var project = new Project(
-                new Id(sourceConfiguration.getName(), repositoryData.repositoryName())
+                new Id(sourceConfiguration.getName(), repositoryData.repositoryName()),
+                sourceConfiguration
         );
         return DomainResult.from(
                 project,
