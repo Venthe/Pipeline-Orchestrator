@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -57,5 +58,9 @@ public class SourceConfiguration {
                 Stream.of(synchronizeRepositoriesCommand),
                 createRepositoryEvents
         ).collect(Collectors.toSet());
+    }
+
+    public Optional<Repository> getRepository(String repositoryName) {
+        return plugin.getRepository(repositoryName);
     }
 }
