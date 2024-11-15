@@ -29,11 +29,11 @@ enum class Version(val value: String) {
 dependencies {
     implementation("com.google.guava:guava:${Version.GUAVA.value}")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${Version.JACKSON_DATATYPE_JDK8.value}")
+    implementation("org.eclipse.jgit:org.eclipse.jgit:${Version.JGIT.value}")
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.assertj:assertj-core:${Version.ASSERTJ.value}")
-    testImplementation("org.eclipse.jgit:org.eclipse.jgit:${Version.JGIT.value}")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

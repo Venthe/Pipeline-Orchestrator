@@ -1,11 +1,17 @@
 package eu.venthe.platform.projects.plugin.filesystem;
 
+import com.google.common.collect.MoreCollectors;
 import eu.venthe.platform.projects.plugin.template.ProjectRetrievalException;
 import eu.venthe.platform.projects.plugin.template.Repository;
 import eu.venthe.platform.projects.plugin.template.RepositorySourcePluginInstance;
+import eu.venthe.platform.shared_kernel.git.GitUtilities;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.transport.URIish;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,12 +51,8 @@ public class FilesystemRepositorySourcePluginInstance implements RepositorySourc
             Set<Path> results = new HashSet<>();
             Files.walkFileTree(rootPath, EnumSet.noneOf(FileVisitOption.class), maxDepth + 1, new RecursiveGitDirectoryFinder(results));
             return results.stream()
-                    .map(rootPath::relativize)
-                    .map(Object::toString)
-                    .map(FilesystemRepositorySourcePluginInstance::mapDirectoryNameToRepositoryName)
                     // TODO: Add mapping for nested projects
-                    // TODO: Add tracked branch information
-                    .map((String repositoryName) -> new Repository(repositoryName, null, null))
+                    .map(this::getRepository)
                     .collect(Collectors.toSet());
         } catch (IOException exception) {
             log.error("Cannot retrieve repositories", exception);
@@ -70,14 +72,52 @@ public class FilesystemRepositorySourcePluginInstance implements RepositorySourc
                 log.debug(".git directory not found in {}", repositoryPath);
                 throw new ProjectRetrievalException();
             }
-            var relativeRepositoryDirectory = rootPath.relativize(repositoryPath);
-            var mappedRepositoryName = FilesystemRepositorySourcePluginInstance.mapDirectoryNameToRepositoryName(relativeRepositoryDirectory.toString());
-            // TODO: Add tracked branch information
-            return Optional.of(new Repository(mappedRepositoryName, null, null));
+
+            return Optional.of(getRepository(repositoryPath));
         } catch (Exception exception) {
             log.error("Cannot retrieve repositories", exception);
             throw new ProjectRetrievalException(exception);
         }
+    }
+
+    private Repository getRepository(Path repositoryPath) {
+        var ref = getHeadRef(repositoryPath);
+        var relativePath = rootPath.relativize(repositoryPath);
+        var mappedRepositoryName = FilesystemRepositorySourcePluginInstance.mapDirectoryNameToRepositoryName(relativePath.toString());
+        return new Repository(mappedRepositoryName, ref.getName(), getCommitHash(ref));
+    }
+
+    private static Ref getHeadRef(Path repositoryPath) {
+        return GitUtilities.emptyRepository(git -> {
+            try {
+                git.remoteAdd()
+                        .setName(GitUtilities.DEFAULT_REMOTE_NAME)
+                        .setUri(toUri(repositoryPath))
+                        .call();
+
+                // TODO: Handle detached heads
+                var heads = git.lsRemote().setRemote(GitUtilities.DEFAULT_REMOTE_NAME).call().stream()
+                        .filter(e -> e.getName().equals("HEAD"))
+                        .collect(Collectors.toSet());
+
+                return heads.stream()
+                        .map(Ref::getTarget)
+                        .collect(MoreCollectors.onlyElement());
+            } catch (GitAPIException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private static String getCommitHash(Ref ref) {
+        StringBuilder sb = new StringBuilder();
+        char[] tmp = new char[40];
+        ref.getTarget().getObjectId().copyTo(tmp, sb);
+        return sb.toString();
+    }
+
+    private static URIish toUri(Path first) throws MalformedURLException {
+        return new URIish(first.toAbsolutePath().toUri().toURL());
     }
 
     private static String mapDirectoryNameToRepositoryName(String dir) {

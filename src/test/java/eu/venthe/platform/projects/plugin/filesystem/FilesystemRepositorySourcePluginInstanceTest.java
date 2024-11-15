@@ -8,10 +8,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.eclipse.jgit.api.Git;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.util.FileSystemUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,6 +17,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 @Slf4j
 class FilesystemRepositorySourcePluginInstanceTest {
@@ -29,11 +28,6 @@ class FilesystemRepositorySourcePluginInstanceTest {
     void setup() throws IOException {
         temporaryDirectory = Files.createTempDirectory("test_%s".formatted(UUID.randomUUID().toString()));
         temporaryDirectory.toFile().deleteOnExit();
-    }
-
-    @AfterEach
-    void teardown() throws IOException {
-        FileSystemUtils.deleteRecursively(temporaryDirectory);
     }
 
     @Test
@@ -48,18 +42,28 @@ class FilesystemRepositorySourcePluginInstanceTest {
 
         // Then
         Assertions.assertThat(repositories)
-                .containsExactlyInAnyOrder(
-                        // TODO: Add correct tracked branch/tracked branch hash
-                        new Repository("Repository-1", null, null),
-                        new Repository("Repository-2", null, null)
+                .satisfiesExactlyInAnyOrder(
+                        assertRepository("Repository-1"),
+                        assertRepository("Repository-2")
                 );
+    }
+
+    private static Consumer<Repository> assertRepository(String name) {
+        return repository -> {
+            String shaRegex = "^[a-fA-F0-9]{40}$";
+            Assertions.assertThat(repository.trackedBranchHash()).matches(shaRegex);
+            Assertions.assertThat(repository.trackedBranch()).isEqualTo("refs/heads/main");
+            Assertions.assertThat(repository.repositoryName()).matches(name);
+        };
     }
 
     @SneakyThrows
     private void createRepository(String other) {
         var repository = temporaryDirectory.resolve(other).toFile();
         repository.mkdir();
-        Git.init().setDirectory(repository).call().close();
+        var git = Git.init().setDirectory(repository).call();
+        git.commit().setAllowEmpty(true).setMessage("Initial message").call();
+        git.close();
     }
 
     public RepositorySourcePluginInstance providePlugin() {
