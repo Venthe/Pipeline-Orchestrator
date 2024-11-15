@@ -71,8 +71,8 @@ class SourceConfigurationTest {
         var mockPluginInstance = Mockito.mock(RepositorySourcePluginInstance.class);
         var sourceConfiguration = SourceConfiguration.create("Example-Source", mockPluginInstance).data();
         Mockito.when(mockPluginInstance.getAllRepositories()).thenReturn(Set.of(
-                new Repository("Repository-1"),
-                new Repository("Repository-2")
+                new Repository("Repository-1", "main", "123"),
+                new Repository("Repository-2", "master", "456")
         ));
 
         // When

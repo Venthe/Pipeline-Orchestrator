@@ -49,8 +49,9 @@ class FilesystemRepositorySourcePluginInstanceTest {
         // Then
         Assertions.assertThat(repositories)
                 .containsExactlyInAnyOrder(
-                        new Repository("Repository-1"),
-                        new Repository("Repository-2")
+                        // TODO: Add correct tracked branch/tracked branch hash
+                        new Repository("Repository-1", null, null),
+                        new Repository("Repository-2", null, null)
                 );
     }
 

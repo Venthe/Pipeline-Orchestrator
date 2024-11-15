@@ -49,7 +49,8 @@ public class FilesystemRepositorySourcePluginInstance implements RepositorySourc
                     .map(Object::toString)
                     .map(FilesystemRepositorySourcePluginInstance::mapDirectoryNameToRepositoryName)
                     // TODO: Add mapping for nested projects
-                    .map(Repository::new)
+                    // TODO: Add tracked branch information
+                    .map((String repositoryName) -> new Repository(repositoryName, null, null))
                     .collect(Collectors.toSet());
         } catch (IOException exception) {
             log.error("Cannot retrieve repositories", exception);
@@ -71,7 +72,8 @@ public class FilesystemRepositorySourcePluginInstance implements RepositorySourc
             }
             var relativeRepositoryDirectory = rootPath.relativize(repositoryPath);
             var mappedRepositoryName = FilesystemRepositorySourcePluginInstance.mapDirectoryNameToRepositoryName(relativeRepositoryDirectory.toString());
-            return Optional.of(new Repository(mappedRepositoryName));
+            // TODO: Add tracked branch information
+            return Optional.of(new Repository(mappedRepositoryName, null, null));
         } catch (Exception exception) {
             log.error("Cannot retrieve repositories", exception);
             throw new ProjectRetrievalException(exception);

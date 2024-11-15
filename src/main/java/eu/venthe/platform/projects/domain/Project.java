@@ -15,6 +15,8 @@ public class Project {
     private final Id id;
     private final SourceConfiguration sourceConfiguration;
     private ZonedDateTime lastUpdate;
+    private String trackedBranch;
+    private String trackedBranchHash;
 
     public static DomainResult<Project> create(SourceConfigurationRepository sourceConfigurationRepository, ClockService clockService, String sourceName, String projectName) {
         var sourceConfigurationCandidate = sourceConfigurationRepository.find(sourceName);
@@ -37,6 +39,8 @@ public class Project {
         );
 
         project.lastUpdate = ZonedDateTime.now(clockService.getClock());
+        project.trackedBranch = repositoryData.trackedBranch();
+        project.trackedBranchHash = repositoryData.trackedBranchHash();
 
         return DomainResult.from(
                 project,

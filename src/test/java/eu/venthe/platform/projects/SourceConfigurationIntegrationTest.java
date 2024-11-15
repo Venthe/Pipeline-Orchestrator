@@ -20,6 +20,8 @@ import static eu.venthe.platform.projects.SourceConfigurationTestConfiguration.M
 
 @Import({SourceConfigurationTestConfiguration.class, TestTimeConfiguration.class})
 class SourceConfigurationIntegrationTest extends IntegrationTest {
+    private static final Repository EXAMPLE_REPOSITORY = new Repository("Dummy-Repository", "main", "1234");
+
     @Autowired
     private SourceConfigurationCommandService sourceConfigurationCommandService;
     @Autowired
@@ -62,7 +64,7 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
     void sourceProvidesRepositories() {
         // Given
         var name = randomSourceConfigurationName();
-        var dummyRepository = new Repository("Dummy-Repository");
+        var dummyRepository = EXAMPLE_REPOSITORY;
         Mockito.when(mockRepositorySourcePluginInstance.getAllRepositories()).thenReturn(Set.of(dummyRepository));
         sourceConfigurationCommandService.register(name, MOCK_SOURCE_PLUGIN_TYPE);
 
@@ -78,7 +80,7 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
     void sourceResolvesRepositories() {
         // Given
         var name = randomSourceConfigurationName();
-        var dummyRepository = new Repository("Dummy-Repository");
+        var dummyRepository = EXAMPLE_REPOSITORY;
         Mockito.when(mockRepositorySourcePluginInstance.getRepository("Dummy-Repository")).thenReturn(Optional.of(dummyRepository));
         sourceConfigurationCommandService.register(name, MOCK_SOURCE_PLUGIN_TYPE);
 
@@ -95,7 +97,7 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
     void synchronizationCreatesRepositories() {
         // Given
         var name = randomSourceConfigurationName();
-        var dummyRepository = new Repository("Dummy-Repository");
+        var dummyRepository = EXAMPLE_REPOSITORY;
         Mockito.when(mockRepositorySourcePluginInstance.getAllRepositories()).thenReturn(Set.of(dummyRepository));
         Mockito.when(mockRepositorySourcePluginInstance.getRepository(dummyRepository.repositoryName())).thenReturn(Optional.of(dummyRepository));
         sourceConfigurationCommandService.register(name, MOCK_SOURCE_PLUGIN_TYPE);
