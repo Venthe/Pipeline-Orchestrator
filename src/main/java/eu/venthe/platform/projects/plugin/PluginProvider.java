@@ -18,13 +18,13 @@ public class PluginProvider {
     public PluginProvider(Collection<RepositorySourcePlugin> repositorySourcePlugins) {
         this.pluginProviders = repositorySourcePlugins.stream()
                 .collect(Collectors.toMap(
-                        RepositorySourcePlugin::getSourceType,
+                        repositorySourcePlugin -> repositorySourcePlugin.getSourceType().toLowerCase(Locale.ROOT),
                         UnaryOperator.identity()
                 ));
     }
 
     public RepositorySourcePluginInstance provide(String sourceType, Map<String, DynamicValue> properties) {
-        var sourcePlugin = Optional.ofNullable(pluginProviders.get(sourceType)).orElseThrow();
+        var sourcePlugin = Optional.ofNullable(pluginProviders.get(sourceType.toLowerCase(Locale.ROOT))).orElseThrow(() -> new RuntimeException("No provider of type %s found".formatted(sourceType)));
 
         if (!sourceType.equals(sourcePlugin.getSourceType())) {
             log.error("Source of type {} not supported", sourceType);
