@@ -1,9 +1,9 @@
 package eu.venthe.platform.projects.application;
 
+import eu.venthe.platform.projects.domain.ManagedRepository;
 import eu.venthe.platform.projects.domain.SourceConfiguration;
 import eu.venthe.platform.projects.domain.SourceConfigurationRepository;
 import eu.venthe.platform.projects.domain.SourceConfigurationVisitor;
-import eu.venthe.platform.projects.plugin.template.Repository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,13 +21,13 @@ public class SourceConfigurationQueryService {
         return sourceConfigurationRepository.find(name).map(ConfigurationVisitor::toDto);
     }
 
-    public Set<Repository> getAllRepositories(String sourceName) {
+    public Set<ManagedRepository> getAllRepositories(String sourceName) {
         return sourceConfigurationRepository.find(sourceName)
                 .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceName))
                 .getAllRepositories();
     }
 
-    public Optional<Repository> getRepository(String sourceName, String repositoryName) {
+    public Optional<ManagedRepository> getRepository(String sourceName, String repositoryName) {
         return sourceConfigurationRepository.find(sourceName)
                 .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceName))
                 .getRepository(repositoryName);

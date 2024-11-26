@@ -42,8 +42,10 @@ public class SourceConfiguration {
         visitor.setType(plugin.getSourceType());
     }
 
-    public Set<Repository> getAllRepositories() {
-        return plugin.getAllRepositories();
+    public Set<ManagedRepository> getAllRepositories() {
+        return plugin.getAllRepositories().stream()
+                .map(SourceConfiguration::toManagedRepository)
+                .collect(Collectors.toSet());
     }
 
     public Collection<DomainMessage> synchronizeAll() {
@@ -60,7 +62,12 @@ public class SourceConfiguration {
         ).collect(Collectors.toSet());
     }
 
-    public Optional<Repository> getRepository(String repositoryName) {
-        return plugin.getRepository(repositoryName);
+    public Optional<ManagedRepository> getRepository(String repositoryName) {
+        return plugin.getRepository(repositoryName)
+                .map(SourceConfiguration::toManagedRepository);
+    }
+
+    private static ManagedRepository toManagedRepository(Repository repository) {
+        return new ManagedRepository(repository.repositoryName(), repository.trackedBranch(), repository.trackedBranchHash());
     }
 }

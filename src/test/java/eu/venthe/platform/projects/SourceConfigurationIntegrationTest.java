@@ -2,6 +2,7 @@ package eu.venthe.platform.projects;
 
 import eu.venthe.platform.IntegrationTest;
 import eu.venthe.platform.projects.application.*;
+import eu.venthe.platform.projects.domain.ManagedRepository;
 import eu.venthe.platform.projects.plugin.template.Repository;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ThrowableAssert;
@@ -73,7 +74,7 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
 
         // Then
         Assertions.assertThat(repositories)
-                .containsExactlyInAnyOrder(dummyRepository);
+                .containsExactlyInAnyOrder(toManagedRepository(dummyRepository));
     }
 
     @Test
@@ -90,7 +91,7 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
         // Then
         Assertions.assertThat(repository)
                 .isPresent()
-                .hasValue(dummyRepository);
+                .hasValue(toManagedRepository(dummyRepository));
     }
 
     @Test
@@ -114,5 +115,9 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
 
     private static String randomSourceConfigurationName() {
         return "Test-Source-Configuration-%s".formatted(UUID.randomUUID().toString());
+    }
+
+    private static ManagedRepository toManagedRepository(Repository repository) {
+        return new ManagedRepository(repository.repositoryName(), repository.trackedBranch(), repository.trackedBranchHash());
     }
 }
