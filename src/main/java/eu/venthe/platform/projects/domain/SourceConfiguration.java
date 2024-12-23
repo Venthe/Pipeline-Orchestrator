@@ -24,7 +24,7 @@ public class SourceConfiguration {
     private final RepositorySourcePluginInstance plugin;
 
     private SourceConfiguration(String name, RepositorySourcePluginInstance plugin) {
-        if (name == null || name.isBlank() || name.isEmpty()) {
+        if (name == null || name.isBlank()) {
             throw new InvalidSourceConfigurationNameException(name);
         }
 
