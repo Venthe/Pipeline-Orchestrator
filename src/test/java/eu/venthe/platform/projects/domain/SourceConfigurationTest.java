@@ -20,7 +20,7 @@ class SourceConfigurationTest {
     void sourceCanBeCreated() {
         var sourceConfiguration = SourceConfiguration.create("Example-Source", Mockito.mock());
 
-        Assertions.assertThat(sourceConfiguration.data().getName()).isEqualTo("Example-Source");
+        Assertions.assertThat(sourceConfiguration.data().getIdentifier()).isEqualTo("Example-Source");
         Assertions.assertThat(sourceConfiguration.messages()).containsExactlyInAnyOrder(new SourceRegisteredEvent("Example-Source"));
     }
 
@@ -31,8 +31,8 @@ class SourceConfigurationTest {
         ThrowableAssert.ThrowingCallable action = () -> SourceConfiguration.create(value, Mockito.mock());
 
         Assertions.assertThatThrownBy(action)
-                .isInstanceOf(InvalidSourceConfigurationNameException.class)
-                .hasMessage("Source configuration name \"%s\" is not correct.".formatted(value));
+                .isInstanceOf(InvalidSourceConfigurationIdentifierException.class)
+                .hasMessage("Source configuration identifier \"%s\" is not correct.".formatted(value));
     }
 
     @Test

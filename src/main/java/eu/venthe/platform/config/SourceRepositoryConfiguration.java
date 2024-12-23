@@ -16,18 +16,18 @@ public class SourceRepositoryConfiguration {
             private final InMemoryRepository<String, SourceConfiguration> repository = new InMemoryRepository<>();
 
             @Override
-            public boolean exists(String name) {
-                return repository.exists(name);
+            public boolean exists(String identifier) {
+                return repository.exists(identifier);
             }
 
             @Override
             public void save(SourceConfiguration sourceConfiguration) {
-                repository.save(sourceConfiguration.getName(), sourceConfiguration);
+                repository.save(sourceConfiguration.getIdentifier(), sourceConfiguration);
             }
 
             @Override
-            public Optional<SourceConfiguration> find(String name) {
-                return repository.find(name);
+            public Optional<SourceConfiguration> find(String identifier) {
+                return repository.find(identifier);
             }
         };
     }

@@ -1,7 +1,7 @@
 package eu.venthe.platform.projects.domain;
 
 public interface SourceConfigurationVisitor {
-    void setName(String name);
+    void setIdentifier(String identifier);
 
     void setType(String type);
 }

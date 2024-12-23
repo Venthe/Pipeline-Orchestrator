@@ -20,25 +20,25 @@ import java.util.stream.Stream;
 @Getter
 public class SourceConfiguration {
     @EqualsAndHashCode.Include
-    private final String name;
+    private final String identifier;
     private final RepositorySourcePluginInstance plugin;
 
-    private SourceConfiguration(String name, RepositorySourcePluginInstance plugin) {
-        if (name == null || name.isBlank()) {
-            throw new InvalidSourceConfigurationNameException(name);
+    private SourceConfiguration(String identifier, RepositorySourcePluginInstance plugin) {
+        if (identifier == null || identifier.isBlank()) {
+            throw new InvalidSourceConfigurationIdentifierException(identifier);
         }
 
-        this.name = name;
+        this.identifier = identifier;
         this.plugin = plugin;
     }
 
-    public static DomainResult<SourceConfiguration> create(String name, RepositorySourcePluginInstance plugin) {
-        var sourceConfiguration = new SourceConfiguration(name, plugin);
-        return DomainResult.from(sourceConfiguration, new SourceRegisteredEvent(name));
+    public static DomainResult<SourceConfiguration> create(String identifier, RepositorySourcePluginInstance plugin) {
+        var sourceConfiguration = new SourceConfiguration(identifier, plugin);
+        return DomainResult.from(sourceConfiguration, new SourceRegisteredEvent(identifier));
     }
 
     public void visit(SourceConfigurationVisitor visitor) {
-        visitor.setName(name);
+        visitor.setIdentifier(identifier);
         visitor.setType(plugin.getSourceType());
     }
 
@@ -52,9 +52,9 @@ public class SourceConfiguration {
         var createRepositoryEvents = plugin.getAllRepositories().stream()
                 .map(Repository::repositoryName)
                 .collect(Collectors.toSet()).stream()
-                .<DomainMessage>map(repositoryName -> new RegisterProjectCommand(getName(), repositoryName));
+                .<DomainMessage>map(repositoryName -> new RegisterProjectCommand(getIdentifier(), repositoryName));
 
-        var synchronizeRepositoriesCommand = new SynchronizeProjectsCommand(getName());
+        var synchronizeRepositoriesCommand = new SynchronizeProjectsCommand(getIdentifier());
 
         return Stream.concat(
                 Stream.of(synchronizeRepositoriesCommand),

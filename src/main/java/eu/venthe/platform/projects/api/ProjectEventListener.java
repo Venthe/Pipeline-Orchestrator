@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class ProjectEventListener {
     public ProjectEventListener(DomainMessageListenerRegistry registry, ProjectCommandService projectCommandService) {
         registry.<RegisterProjectCommand>register(RegisterProjectCommand.REGISTER_PROJECT, message -> {
-            projectCommandService.registerProject(message.sourceName(), message.projectName());
+            projectCommandService.registerProject(message.sourceConfigurationIdentifier(), message.projectName());
         });
     }
 }

@@ -38,7 +38,7 @@ public class FilesystemRepositorySourcePluginInstance implements RepositorySourc
 
         if (maxDepth != 1) {
             // TODO: Handle nested projects
-            //  Currently, raising max depth would result in incorrectly mapped project name
+            //  Currently, raising max depth would result in incorrectly mapped project identifier
             throw new IllegalArgumentException();
         }
 

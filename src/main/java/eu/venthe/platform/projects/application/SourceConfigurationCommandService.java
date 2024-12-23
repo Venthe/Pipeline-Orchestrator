@@ -20,31 +20,31 @@ public class SourceConfigurationCommandService {
     private final DomainMessagesBroker messageBroker;
     private final PluginProvider pluginProvider;
 
-    public String register(String name, String sourceType) {
-        return register(name, sourceType, Collections.emptyMap());
+    public String register(String sourceIdentifier, String sourceType) {
+        return register(sourceIdentifier, sourceType, Collections.emptyMap());
     }
 
-    public String register(String name, String sourceType, Map<String, DynamicValue> properties) {
-        log.trace("Registering source configuration {}", name);
-        if (sourceConfigurationRepository.exists(name)) {
-            throw new SourceConfigurationAlreadyExistsException(name);
+    public String register(String sourceIdentifier, String sourceType, Map<String, DynamicValue> properties) {
+        log.trace("Registering source configuration {}", sourceIdentifier);
+        if (sourceConfigurationRepository.exists(sourceIdentifier)) {
+            throw new SourceConfigurationAlreadyExistsException(sourceIdentifier);
         }
 
         var plugin = pluginProvider.provide(sourceType, properties);
-        var result = SourceConfiguration.create(name, plugin);
+        var result = SourceConfiguration.create(sourceIdentifier, plugin);
         sourceConfigurationRepository.save(result.data());
         messageBroker.exchange(result.messages());
-        log.debug("Source configuration {} registered", name);
+        log.debug("Source configuration {} registered", sourceIdentifier);
 
-        return result.data().getName();
+        return result.data().getIdentifier();
     }
 
-    public void synchronizeAll(String name) {
-        log.trace("Fully synchronizing source configuration {}", name);
-        var sourceConfiguration = sourceConfigurationRepository.find(name).orElseThrow();
+    public void synchronizeAll(String sourceIdentifier) {
+        log.trace("Fully synchronizing source configuration {}", sourceIdentifier);
+        var sourceConfiguration = sourceConfigurationRepository.find(sourceIdentifier).orElseThrow();
         var result = sourceConfiguration.synchronizeAll();
         sourceConfigurationRepository.save(sourceConfiguration);
         messageBroker.exchange(result);
-        log.debug("Source configuration {} synchronized", name);
+        log.debug("Source configuration {} synchronized", sourceIdentifier);
     }
 }

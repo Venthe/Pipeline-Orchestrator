@@ -21,19 +21,19 @@ public class SourceConfigurationController {
 
     @PostMapping
     public String register(@RequestBody RegisterSpecification specification) {
-        return sourceConfigurationCommandService.register(specification.name(), specification.sourceType(), specification.properties());
+        return sourceConfigurationCommandService.register(specification.identifier(), specification.sourceType(), specification.properties());
     }
 
-    @GetMapping("/{name}")
-    public Optional<SourceConfigurationDto> getSourceConfiguration(@PathVariable String name) {
-        return sourceConfigurationQueryService.getSourceInformation(name);
+    @GetMapping("/{sourceIdentifier}")
+    public Optional<SourceConfigurationDto> getSourceConfiguration(@PathVariable String sourceIdentifier) {
+        return sourceConfigurationQueryService.getSourceInformation(sourceIdentifier);
     }
 
-    @GetMapping("/{name}/projects")
-    Set<ManagedRepository> getProjectsForSource(@PathVariable String name) {
-        return sourceConfigurationQueryService.getAllRepositories(name);
+    @GetMapping("/{sourceIdentifier}/projects")
+    Set<ManagedRepository> getProjectsForSource(@PathVariable String sourceIdentifier) {
+        return sourceConfigurationQueryService.getAllRepositories(sourceIdentifier);
     }
 
-    public record RegisterSpecification(String name, String sourceType, Map<String, DynamicValue> properties) {
+    public record RegisterSpecification(String identifier, String sourceType, Map<String, DynamicValue> properties) {
     }
 }

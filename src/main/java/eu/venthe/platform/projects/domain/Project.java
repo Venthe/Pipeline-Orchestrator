@@ -34,7 +34,7 @@ public class Project {
         var repositoryData = repositoryDataCandidate.get();
 
         var project = new Project(
-                new Id(sourceConfiguration.getName(), repositoryData.repositoryName()),
+                new Id(sourceConfiguration.getIdentifier(), repositoryData.repositoryName()),
                 sourceConfiguration
         );
 

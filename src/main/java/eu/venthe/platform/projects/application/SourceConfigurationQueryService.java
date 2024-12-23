@@ -17,19 +17,19 @@ import java.util.Set;
 public class SourceConfigurationQueryService {
     private final SourceConfigurationRepository sourceConfigurationRepository;
 
-    public Optional<SourceConfigurationDto> getSourceInformation(String name) {
-        return sourceConfigurationRepository.find(name).map(ConfigurationVisitor::toDto);
+    public Optional<SourceConfigurationDto> getSourceInformation(String sourceIdentifier) {
+        return sourceConfigurationRepository.find(sourceIdentifier).map(ConfigurationVisitor::toDto);
     }
 
-    public Set<ManagedRepository> getAllRepositories(String sourceName) {
-        return sourceConfigurationRepository.find(sourceName)
-                .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceName))
+    public Set<ManagedRepository> getAllRepositories(String sourceIdentifier) {
+        return sourceConfigurationRepository.find(sourceIdentifier)
+                .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceIdentifier))
                 .getAllRepositories();
     }
 
-    public Optional<ManagedRepository> getRepository(String sourceName, String repositoryName) {
-        return sourceConfigurationRepository.find(sourceName)
-                .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceName))
+    public Optional<ManagedRepository> getRepository(String sourceIdentifier, String repositoryName) {
+        return sourceConfigurationRepository.find(sourceIdentifier)
+                .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceIdentifier))
                 .getRepository(repositoryName);
     }
 
@@ -37,8 +37,8 @@ public class SourceConfigurationQueryService {
         private final SourceConfigurationDto.SourceConfigurationDtoBuilder builder = SourceConfigurationDto.builder();
 
         @Override
-        public void setName(String name) {
-            builder.name(name);
+        public void setIdentifier(String identifier) {
+            builder.identifier(identifier);
         }
 
         @Override
