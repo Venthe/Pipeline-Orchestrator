@@ -23,7 +23,7 @@ public class ProjectCommandService {
         var existingRepository = projectRepository.find(sourceName, projectName);
 
         if (existingRepository.isPresent()) {
-            log.warn("Project already existing");
+            log.warn("Project already exists");
             return;
         }
 
