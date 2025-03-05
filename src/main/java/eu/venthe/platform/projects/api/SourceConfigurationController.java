@@ -22,7 +22,7 @@ public class SourceConfigurationController {
 
     @PostMapping
     public SourceConfigurationInternalIdentifier register(@RequestBody RegisterSpecification specification) {
-        return sourceConfigurationCommandService.register(specification.identifier(), specification.sourceType(), specification.properties());
+        return sourceConfigurationCommandService.register(specification.sourceType(), specification.properties());
     }
 
     @GetMapping("/{sourceIdentifier}")
@@ -36,7 +36,6 @@ public class SourceConfigurationController {
     }
 
     public record RegisterSpecification(
-            SourceConfigurationInternalIdentifier identifier,
             String sourceType,
             Map<String, DynamicValue> properties
     ) {

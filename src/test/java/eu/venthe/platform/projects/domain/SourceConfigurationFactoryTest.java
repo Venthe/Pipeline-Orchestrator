@@ -17,10 +17,9 @@ class SourceConfigurationFactoryTest {
 
     @Test
     void sourceCanBeCreated() {
-        var identifier = new SourceConfigurationInternalIdentifier("Example-Source");
-        var sourceConfiguration = factory.create(identifier, EXAMPLE_SOURCE_TYPE, NO_PROPERTIES);
+        var sourceConfiguration = factory.create(EXAMPLE_SOURCE_TYPE, NO_PROPERTIES);
 
-        Assertions.assertThat(sourceConfiguration.data().getInternalIdentifier()).isEqualTo(identifier);
-        Assertions.assertThat(sourceConfiguration.messages()).containsExactlyInAnyOrder(new SourceRegisteredEvent(identifier));
+        Assertions.assertThat(sourceConfiguration.data().getInternalIdentifier()).isNotNull();
+        Assertions.assertThat(sourceConfiguration.messages()).containsExactlyInAnyOrder(new SourceRegisteredEvent(sourceConfiguration.data().getInternalIdentifier()));
     }
 }

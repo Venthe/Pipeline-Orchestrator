@@ -21,20 +21,21 @@ public class SourceConfigurationCommandService {
     private final DomainMessagesBroker messageBroker;
     private final SourceConfigurationFactory sourceConfigurationFactory;
 
-    public SourceConfigurationInternalIdentifier register(SourceConfigurationInternalIdentifier sourceIdentifier, String sourceType) {
-        return register(sourceIdentifier, sourceType, Collections.emptyMap());
+    public SourceConfigurationInternalIdentifier register(String sourceType) {
+        return register(sourceType, Collections.emptyMap());
     }
 
-    public SourceConfigurationInternalIdentifier register(SourceConfigurationInternalIdentifier sourceIdentifier, String sourceType, Map<String, DynamicValue> properties) {
-        log.trace("Registering source configuration {}", sourceIdentifier);
-        if (sourceConfigurationRepository.exists(sourceIdentifier)) {
-            throw new SourceConfigurationAlreadyExistsException(sourceIdentifier);
-        }
+    public SourceConfigurationInternalIdentifier register(String sourceType, Map<String, DynamicValue> properties) {
 
-        var result = sourceConfigurationFactory.create(sourceIdentifier, sourceType, properties);
+        var result = sourceConfigurationFactory.create(sourceType, properties);
+
+        log.trace("Registering source configuration {}", result.data().getInternalIdentifier());
+        if (sourceConfigurationRepository.exists(result.data().getInternalIdentifier())) {
+            throw new SourceConfigurationAlreadyExistsException(result.data().getInternalIdentifier());
+        }
         sourceConfigurationRepository.save(result.data());
         messageBroker.exchange(result.messages());
-        log.debug("Source configuration {} registered", sourceIdentifier);
+        log.debug("Source configuration {} registered", result.data().getInternalIdentifier());
 
         return result.data().getInternalIdentifier();
     }
