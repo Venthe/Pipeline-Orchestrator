@@ -1,11 +1,11 @@
 package eu.venthe.platform.projects.domain;
 
 import eu.venthe.platform.projects.domain.events.ProjectRegisteredEvent;
-import eu.venthe.platform.shared_kernel.ClockService;
 import eu.venthe.platform.shared_kernel.DomainResult;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Clock;
 import java.time.ZonedDateTime;
 
 @Getter
@@ -18,7 +18,7 @@ public class Project {
     private String trackedBranchHash;
 
     public static DomainResult<Project> create(SourceConfigurationRepository sourceConfigurationRepository,
-                                               ClockService clockService,
+                                               Clock clock,
                                                SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier,
                                                String projectName) {
         var sourceConfiguration = sourceConfigurationRepository.find(sourceConfigurationInternalIdentifier)
@@ -32,7 +32,7 @@ public class Project {
                 sourceConfiguration
         );
 
-        project.lastUpdate = ZonedDateTime.now(clockService.getClock());
+        project.lastUpdate = ZonedDateTime.now(clock);
         project.trackedBranch = repositoryData.trackedBranch();
         project.trackedBranchHash = repositoryData.trackedBranchHash();
 

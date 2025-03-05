@@ -4,11 +4,12 @@ import eu.venthe.platform.projects.domain.Project;
 import eu.venthe.platform.projects.domain.ProjectRepository;
 import eu.venthe.platform.projects.domain.SourceConfigurationInternalIdentifier;
 import eu.venthe.platform.projects.domain.SourceConfigurationRepository;
-import eu.venthe.platform.shared_kernel.ClockService;
 import eu.venthe.platform.shared_kernel.events.DomainMessagesBroker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.time.Clock;
 
 @RequiredArgsConstructor
 @Service
@@ -17,7 +18,7 @@ public class ProjectCommandService {
     private final ProjectRepository projectRepository;
     private final SourceConfigurationRepository sourceConfigurationRepository;
     private final DomainMessagesBroker messageBroker;
-    private final ClockService clockService;
+    private final Clock clock;
 
     public void registerProject(SourceConfigurationInternalIdentifier sourceIdentifier, String projectName) {
         log.info("Registering project {} for {}", projectName, sourceIdentifier);
@@ -30,7 +31,7 @@ public class ProjectCommandService {
 
         var project = Project.create(
                 sourceConfigurationRepository,
-                clockService,
+                clock,
                 sourceIdentifier,
                 projectName
         );
