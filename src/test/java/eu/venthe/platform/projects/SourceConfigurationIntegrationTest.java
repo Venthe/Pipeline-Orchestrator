@@ -3,6 +3,7 @@ package eu.venthe.platform.projects;
 import eu.venthe.platform.IntegrationTest;
 import eu.venthe.platform.projects.application.*;
 import eu.venthe.platform.projects.domain.ManagedRepository;
+import eu.venthe.platform.projects.domain.SourceConfigurationInternalIdentifier;
 import eu.venthe.platform.projects.plugin.template.Repository;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ThrowableAssert;
@@ -35,26 +36,26 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
     @Test
     void sourceCanBeCreated() {
         // Given
-        var name = randomSourceConfigurationName();
+        var sourceIdentifier = randomSourceConfigurationName();
 
         // When
-        sourceConfigurationCommandService.register(name, MOCK_SOURCE_PLUGIN_TYPE);
-        var sourceInformation = sourceConfigurationQueryService.getSourceInformation(name);
+        sourceConfigurationCommandService.register(sourceIdentifier, MOCK_SOURCE_PLUGIN_TYPE);
+        var sourceInformation = sourceConfigurationQueryService.getSourceInformation(sourceIdentifier);
 
         // Then
         Assertions.assertThat(sourceInformation)
                 .isPresent()
-                .hasValue(new SourceConfigurationDto(name, MOCK_SOURCE_PLUGIN_TYPE));
+                .hasValue(new SourceConfigurationDto(sourceIdentifier, MOCK_SOURCE_PLUGIN_TYPE));
     }
 
     @Test
     void duplicateSourceCreationFails() {
         // Given
-        var name = randomSourceConfigurationName();
-        sourceConfigurationCommandService.register(name, MOCK_SOURCE_PLUGIN_TYPE);
+        var sourceIdentifier = randomSourceConfigurationName();
+        sourceConfigurationCommandService.register(sourceIdentifier, MOCK_SOURCE_PLUGIN_TYPE);
 
         // When
-        ThrowableAssert.ThrowingCallable action = () -> sourceConfigurationCommandService.register(name, MOCK_SOURCE_PLUGIN_TYPE);
+        ThrowableAssert.ThrowingCallable action = () -> sourceConfigurationCommandService.register(sourceIdentifier, MOCK_SOURCE_PLUGIN_TYPE);
 
         // Then
         Assertions.assertThatThrownBy(action)
@@ -64,13 +65,13 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
     @Test
     void sourceProvidesRepositories() {
         // Given
-        var name = randomSourceConfigurationName();
+        var sourceIdentifier = randomSourceConfigurationName();
         var dummyRepository = EXAMPLE_REPOSITORY;
         Mockito.when(mockRepositorySourcePluginInstance.getAllRepositories()).thenReturn(Set.of(dummyRepository));
-        sourceConfigurationCommandService.register(name, MOCK_SOURCE_PLUGIN_TYPE);
+        sourceConfigurationCommandService.register(sourceIdentifier, MOCK_SOURCE_PLUGIN_TYPE);
 
         // When
-        var repositories = sourceConfigurationQueryService.getAllRepositories(name);
+        var repositories = sourceConfigurationQueryService.getAllRepositories(sourceIdentifier);
 
         // Then
         Assertions.assertThat(repositories)
@@ -80,13 +81,13 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
     @Test
     void sourceResolvesRepositories() {
         // Given
-        var name = randomSourceConfigurationName();
+        var sourceIdentifier = randomSourceConfigurationName();
         var dummyRepository = EXAMPLE_REPOSITORY;
         Mockito.when(mockRepositorySourcePluginInstance.getRepository("Dummy-Repository")).thenReturn(Optional.of(dummyRepository));
-        sourceConfigurationCommandService.register(name, MOCK_SOURCE_PLUGIN_TYPE);
+        sourceConfigurationCommandService.register(sourceIdentifier, MOCK_SOURCE_PLUGIN_TYPE);
 
         // When
-        var repository = sourceConfigurationQueryService.getRepository(name, dummyRepository.repositoryName());
+        var repository = sourceConfigurationQueryService.getRepository(sourceIdentifier, dummyRepository.repositoryName());
 
         // Then
         Assertions.assertThat(repository)
@@ -97,24 +98,24 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
     @Test
     void synchronizationCreatesRepositories() {
         // Given
-        var name = randomSourceConfigurationName();
+        var sourceIdentifier = randomSourceConfigurationName();
         var dummyRepository = EXAMPLE_REPOSITORY;
         Mockito.when(mockRepositorySourcePluginInstance.getAllRepositories()).thenReturn(Set.of(dummyRepository));
         Mockito.when(mockRepositorySourcePluginInstance.getRepository(dummyRepository.repositoryName())).thenReturn(Optional.of(dummyRepository));
-        sourceConfigurationCommandService.register(name, MOCK_SOURCE_PLUGIN_TYPE);
+        sourceConfigurationCommandService.register(sourceIdentifier, MOCK_SOURCE_PLUGIN_TYPE);
 
         // When
-        sourceConfigurationCommandService.synchronizeAll(name);
+        sourceConfigurationCommandService.synchronizeAll(sourceIdentifier);
 
         // Then
         Awaitility.await().untilAsserted(() ->
-                Assertions.assertThat(projectQueryService.getProject(name, dummyRepository.repositoryName())).isPresent()
-                        .hasValue(new ProjectDto(name, dummyRepository.repositoryName(), TestTimeConfiguration.NOW))
+                Assertions.assertThat(projectQueryService.getProject(sourceIdentifier, dummyRepository.repositoryName())).isPresent()
+                        .hasValue(new ProjectDto(sourceIdentifier, dummyRepository.repositoryName(), TestTimeConfiguration.NOW))
         );
     }
 
-    private static String randomSourceConfigurationName() {
-        return "Test-Source-Configuration-%s".formatted(UUID.randomUUID().toString());
+    private static SourceConfigurationInternalIdentifier randomSourceConfigurationName() {
+        return new SourceConfigurationInternalIdentifier("Test-Source-Configuration-%s".formatted(UUID.randomUUID().toString()));
     }
 
     private static ManagedRepository toManagedRepository(Repository repository) {

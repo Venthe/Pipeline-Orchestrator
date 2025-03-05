@@ -3,7 +3,7 @@ package eu.venthe.platform.projects.domain;
 import java.time.ZonedDateTime;
 
 public interface ProjectVisitor {
-    void setSourceConfigurationName(String sourceConfigurationName);
+    void setSourceConfigurationIdentifier(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier);
 
     void setName(String name);
 

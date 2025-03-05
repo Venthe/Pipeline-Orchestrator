@@ -3,6 +3,7 @@ package eu.venthe.platform.config;
 import eu.venthe.platform.infrastructure.InMemoryRepository;
 import eu.venthe.platform.projects.domain.Project;
 import eu.venthe.platform.projects.domain.ProjectRepository;
+import eu.venthe.platform.projects.domain.SourceConfigurationInternalIdentifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,8 +22,8 @@ public class ProjectRepositoryConfiguration {
             }
 
             @Override
-            public Optional<Project> find(String sourceName, String projectName) {
-                return repository.find(new Project.Id(sourceName, projectName));
+            public Optional<Project> find(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier, String projectName) {
+                return repository.find(new Project.Id(sourceConfigurationInternalIdentifier, projectName));
             }
         };
     }

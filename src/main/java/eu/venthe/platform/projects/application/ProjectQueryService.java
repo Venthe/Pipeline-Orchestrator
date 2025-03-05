@@ -2,6 +2,7 @@ package eu.venthe.platform.projects.application;
 
 import eu.venthe.platform.projects.domain.Project;
 import eu.venthe.platform.projects.domain.ProjectRepository;
+import eu.venthe.platform.projects.domain.SourceConfigurationInternalIdentifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,8 @@ import java.util.Optional;
 public class ProjectQueryService {
     private final ProjectRepository projectRepository;
 
-    public Optional<ProjectDto> getProject(String sourceName, String projectName) {
-        return projectRepository.find(sourceName, projectName).map(ProjectVisitor::toDto);
+    public Optional<ProjectDto> getProject(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier, String projectName) {
+        return projectRepository.find(sourceConfigurationInternalIdentifier, projectName).map(ProjectVisitor::toDto);
     }
 
     private static class ProjectVisitor implements eu.venthe.platform.projects.domain.ProjectVisitor {
@@ -31,8 +32,8 @@ public class ProjectQueryService {
         }
 
         @Override
-        public void setSourceConfigurationName(String type) {
-            builder.sourceName(type);
+        public void setSourceConfigurationIdentifier(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier) {
+            builder.sourceInternalIdentifier(sourceConfigurationInternalIdentifier);
         }
 
         public ProjectDto build() {

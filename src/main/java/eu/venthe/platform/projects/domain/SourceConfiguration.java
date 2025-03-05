@@ -7,6 +7,7 @@ import eu.venthe.platform.projects.plugin.template.RepositorySourcePluginInstanc
 import eu.venthe.platform.shared_kernel.events.DomainMessage;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -18,20 +19,17 @@ import java.util.stream.Stream;
 @Getter
 public class SourceConfiguration {
     @EqualsAndHashCode.Include
-    private final String identifier;
+    private final SourceConfigurationInternalIdentifier internalIdentifier;
     private final RepositorySourcePluginInstance plugin;
 
-    SourceConfiguration(String identifier, RepositorySourcePluginInstance plugin) {
-        if (identifier == null || identifier.isBlank()) {
-            throw new InvalidSourceConfigurationIdentifierException(identifier);
-        }
-
-        this.identifier = identifier;
+    SourceConfiguration(@NonNull SourceConfigurationInternalIdentifier identifier,
+                        RepositorySourcePluginInstance plugin) {
+        this.internalIdentifier = identifier;
         this.plugin = plugin;
     }
 
     public void visit(SourceConfigurationVisitor visitor) {
-        visitor.setIdentifier(identifier);
+        visitor.setInternalIdentifier(internalIdentifier);
         visitor.setType(plugin.getSourceType());
     }
 
@@ -45,9 +43,9 @@ public class SourceConfiguration {
         var createRepositoryEvents = plugin.getAllRepositories().stream()
                 .map(Repository::repositoryName)
                 .collect(Collectors.toSet()).stream()
-                .<DomainMessage>map(repositoryName -> new RegisterProjectCommand(getIdentifier(), repositoryName));
+                .<DomainMessage>map(repositoryName -> new RegisterProjectCommand(getInternalIdentifier(), repositoryName));
 
-        var synchronizeRepositoriesCommand = new SynchronizeProjectsCommand(getIdentifier());
+        var synchronizeRepositoriesCommand = new SynchronizeProjectsCommand(getInternalIdentifier());
 
         return Stream.concat(
                 Stream.of(synchronizeRepositoriesCommand),

@@ -1,9 +1,6 @@
 package eu.venthe.platform.projects.application;
 
-import eu.venthe.platform.projects.domain.ManagedRepository;
-import eu.venthe.platform.projects.domain.SourceConfiguration;
-import eu.venthe.platform.projects.domain.SourceConfigurationRepository;
-import eu.venthe.platform.projects.domain.SourceConfigurationVisitor;
+import eu.venthe.platform.projects.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,19 +14,20 @@ import java.util.Set;
 public class SourceConfigurationQueryService {
     private final SourceConfigurationRepository sourceConfigurationRepository;
 
-    public Optional<SourceConfigurationDto> getSourceInformation(String sourceIdentifier) {
-        return sourceConfigurationRepository.find(sourceIdentifier).map(ConfigurationVisitor::toDto);
+    public Optional<SourceConfigurationDto> getSourceInformation(SourceConfigurationInternalIdentifier sourceIdentifier) {
+        return sourceConfigurationRepository.find(sourceIdentifier)
+                .map(ConfigurationVisitor::toDto);
     }
 
-    public Set<ManagedRepository> getAllRepositories(String sourceIdentifier) {
+    public Set<ManagedRepository> getAllRepositories(SourceConfigurationInternalIdentifier sourceIdentifier) {
         return sourceConfigurationRepository.find(sourceIdentifier)
                 .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceIdentifier))
                 .getAllRepositories();
     }
 
-    public Optional<ManagedRepository> getRepository(String sourceIdentifier, String repositoryName) {
+    public Optional<ManagedRepository> getRepository(SourceConfigurationInternalIdentifier sourceIdentifier, String repositoryName) {
         return sourceConfigurationRepository.find(sourceIdentifier)
-                .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceIdentifier))
+                .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceIdentifier.value()))
                 .getRepository(repositoryName);
     }
 
@@ -37,8 +35,8 @@ public class SourceConfigurationQueryService {
         private final SourceConfigurationDto.SourceConfigurationDtoBuilder builder = SourceConfigurationDto.builder();
 
         @Override
-        public void setIdentifier(String identifier) {
-            builder.identifier(identifier);
+        public void setInternalIdentifier(SourceConfigurationInternalIdentifier identifier) {
+            builder.internalIdentifier(identifier);
         }
 
         @Override

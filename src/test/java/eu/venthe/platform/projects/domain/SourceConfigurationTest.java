@@ -16,32 +16,32 @@ import java.util.Set;
 
 class SourceConfigurationTest {
 
+    private static final SourceConfigurationInternalIdentifier EXAMPLE_SOURCE_IDENTIFIER = new SourceConfigurationInternalIdentifier("Example-Source");
     private final RepositorySourcePluginInstance mockRepositoryPluginInstance = Mockito.mock();
 
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = " ")
-    void invalidSourceNameResultsInError(String value) {
-        ThrowableAssert.ThrowingCallable action = () -> new SourceConfiguration(value, mockRepositoryPluginInstance);
+    void invalidSourceIdentifierResultsInError(String value) {
+        ThrowableAssert.ThrowingCallable action = () -> new SourceConfiguration(new SourceConfigurationInternalIdentifier(value), mockRepositoryPluginInstance);
 
         Assertions.assertThatThrownBy(action)
                 .isInstanceOf(InvalidSourceConfigurationIdentifierException.class)
-                .hasMessage("Source configuration identifier \"%s\" is not correct.".formatted(value));
+                .hasMessage("Source configuration sourceConfigurationInternalIdentifier \"%s\" is not correct.".formatted(value));
     }
 
     @Test
-    void twoSourcesOfSameNameAreEqual() {
-        var exampleSourceConfigurationName = "Example-Source";
-        var a1 = new SourceConfiguration(exampleSourceConfigurationName, mockRepositoryPluginInstance);
-        var a2 = new SourceConfiguration(exampleSourceConfigurationName, mockRepositoryPluginInstance);
+    void twoSourcesOfSameIdentifierAreEqual() {
+        var a1 = new SourceConfiguration(EXAMPLE_SOURCE_IDENTIFIER, mockRepositoryPluginInstance);
+        var a2 = new SourceConfiguration(EXAMPLE_SOURCE_IDENTIFIER, mockRepositoryPluginInstance);
 
         Assertions.assertThat(a1).isEqualTo(a2);
     }
 
     @Test
-    void twoSourcesOfDifferingNameAreNotEqual() {
-        var a = new SourceConfiguration("Example-Source-a", mockRepositoryPluginInstance);
-        var b = new SourceConfiguration("Example-Source-b", mockRepositoryPluginInstance);
+    void twoSourcesOfDifferingIdentifierAreNotEqual() {
+        var a = new SourceConfiguration(new SourceConfigurationInternalIdentifier("Example-Source-a"), mockRepositoryPluginInstance);
+        var b = new SourceConfiguration(new SourceConfigurationInternalIdentifier("Example-Source-b"), mockRepositoryPluginInstance);
 
         Assertions.assertThat(a).isNotEqualTo(b);
     }
@@ -49,20 +49,20 @@ class SourceConfigurationTest {
     @Test
     void shouldSendSynchronizationEventOnSynchronizeAll() {
         // Given
-        var sourceConfiguration = new SourceConfiguration("Example-Source", mockRepositoryPluginInstance);
+        var sourceConfiguration = new SourceConfiguration(EXAMPLE_SOURCE_IDENTIFIER, mockRepositoryPluginInstance);
 
         // When
         var messages = sourceConfiguration.synchronizeAll();
 
         // Then
         Assertions.assertThat(messages)
-                .containsExactly(new SynchronizeProjectsCommand("Example-Source"));
+                .containsExactly(new SynchronizeProjectsCommand(EXAMPLE_SOURCE_IDENTIFIER));
     }
 
     @Test
     void shouldSendCreateEventForEachRepository() {
         // Given
-        var sourceConfiguration = new SourceConfiguration("Example-Source", mockRepositoryPluginInstance);
+        var sourceConfiguration = new SourceConfiguration(EXAMPLE_SOURCE_IDENTIFIER, mockRepositoryPluginInstance);
         Mockito.when(mockRepositoryPluginInstance.getAllRepositories()).thenReturn(Set.of(
                 new Repository("Repository-1", "main", "123"),
                 new Repository("Repository-2", "master", "456")
@@ -74,9 +74,9 @@ class SourceConfigurationTest {
         // Then
         Assertions.assertThat(messages)
                 .containsExactlyInAnyOrder(
-                        new SynchronizeProjectsCommand("Example-Source"),
-                        new RegisterProjectCommand("Example-Source", "Repository-1"),
-                        new RegisterProjectCommand("Example-Source", "Repository-2")
+                        new SynchronizeProjectsCommand(EXAMPLE_SOURCE_IDENTIFIER),
+                        new RegisterProjectCommand(EXAMPLE_SOURCE_IDENTIFIER, "Repository-1"),
+                        new RegisterProjectCommand(EXAMPLE_SOURCE_IDENTIFIER, "Repository-2")
                 );
     }
 }

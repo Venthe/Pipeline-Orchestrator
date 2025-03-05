@@ -14,7 +14,9 @@ import java.util.Map;
 public class SourceConfigurationFactory {
     private final PluginProvider pluginProvider;
 
-    public DomainResult<SourceConfiguration> create(String identifier, String sourceType, Map<String, DynamicValue> properties) {
+    public DomainResult<SourceConfiguration> create(SourceConfigurationInternalIdentifier identifier,
+                                                    String sourceType,
+                                                    Map<String, DynamicValue> properties) {
         var plugin = pluginProvider.provide(sourceType, properties);
         var sourceConfiguration = new SourceConfiguration(identifier, plugin);
         return DomainResult.from(sourceConfiguration, new SourceRegisteredEvent(identifier));

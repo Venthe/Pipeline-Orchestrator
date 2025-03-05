@@ -2,6 +2,7 @@ package eu.venthe.platform.projects.application;
 
 import eu.venthe.platform.projects.domain.Project;
 import eu.venthe.platform.projects.domain.ProjectRepository;
+import eu.venthe.platform.projects.domain.SourceConfigurationInternalIdentifier;
 import eu.venthe.platform.projects.domain.SourceConfigurationRepository;
 import eu.venthe.platform.shared_kernel.ClockService;
 import eu.venthe.platform.shared_kernel.events.DomainMessagesBroker;
@@ -18,18 +19,23 @@ public class ProjectCommandService {
     private final DomainMessagesBroker messageBroker;
     private final ClockService clockService;
 
-    public void registerProject(String sourceName, String projectName) {
-        log.info("Registering project {} for {}", projectName, sourceName);
-        var existingRepository = projectRepository.find(sourceName, projectName);
+    public void registerProject(SourceConfigurationInternalIdentifier sourceIdentifier, String projectName) {
+        log.info("Registering project {} for {}", projectName, sourceIdentifier);
+        var existingRepository = projectRepository.find(sourceIdentifier, projectName);
 
         if (existingRepository.isPresent()) {
             log.warn("Project already exists");
             return;
         }
 
-        var project = Project.create(sourceConfigurationRepository, clockService, sourceName, projectName);
+        var project = Project.create(
+                sourceConfigurationRepository,
+                clockService,
+                sourceIdentifier,
+                projectName
+        );
         projectRepository.save(project.data());
         messageBroker.exchange(project.messages());
-        log.debug("Project {} registered for {}", projectName, sourceName);
+        log.debug("Project {} registered for {}", projectName, sourceIdentifier);
     }
 }

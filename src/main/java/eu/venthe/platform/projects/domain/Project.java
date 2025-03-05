@@ -19,16 +19,16 @@ public class Project {
 
     public static DomainResult<Project> create(SourceConfigurationRepository sourceConfigurationRepository,
                                                ClockService clockService,
-                                               String sourceName,
+                                               SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier,
                                                String projectName) {
-        var sourceConfiguration = sourceConfigurationRepository.find(sourceName)
-                .orElseThrow(() -> new SourceConfigurationMissingException(sourceName));
+        var sourceConfiguration = sourceConfigurationRepository.find(sourceConfigurationInternalIdentifier)
+                .orElseThrow(() -> new SourceConfigurationMissingException(sourceConfigurationInternalIdentifier));
 
         var repositoryData = sourceConfiguration.getRepository(projectName)
                 .orElseThrow(() -> new RepositoryDataMissingException(projectName));
 
         var project = new Project(
-                new Id(sourceConfiguration.getIdentifier(), repositoryData.repositoryName()),
+                new Id(sourceConfiguration.getInternalIdentifier(), repositoryData.repositoryName()),
                 sourceConfiguration
         );
 
@@ -38,16 +38,19 @@ public class Project {
 
         return DomainResult.from(
                 project,
-                new ProjectRegisteredEvent(project.getId().name(), project.getId().sourceConfigurationName())
+                new ProjectRegisteredEvent(
+                        project.getId().sourceConfigurationInternalIdentifier(),
+                        project.getId().name()
+                )
         );
     }
 
     public void visit(ProjectVisitor visitor) {
-        visitor.setSourceConfigurationName(getId().sourceConfigurationName());
+        visitor.setSourceConfigurationIdentifier(getId().sourceConfigurationInternalIdentifier());
         visitor.setName(getId().name());
         visitor.setLastUpdated(getLastUpdate());
     }
 
-    public record Id(String sourceConfigurationName, String name) {
+    public record Id(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier, String name) {
     }
 }
