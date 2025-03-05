@@ -18,20 +18,15 @@ public class Project {
     private String trackedBranch;
     private String trackedBranchHash;
 
-    public static DomainResult<Project> create(SourceConfigurationRepository sourceConfigurationRepository, ClockService clockService, String sourceName, String projectName) {
-        var sourceConfigurationCandidate = sourceConfigurationRepository.find(sourceName);
+    public static DomainResult<Project> create(SourceConfigurationRepository sourceConfigurationRepository,
+                                               ClockService clockService,
+                                               String sourceName,
+                                               String projectName) {
+        var sourceConfiguration = sourceConfigurationRepository.find(sourceName)
+                .orElseThrow(() -> new SourceConfigurationMissingException(sourceName));
 
-        if (!sourceConfigurationCandidate.isPresent()) {
-            throw new SourceConfigurationMissingException();
-        }
-        var sourceConfiguration = sourceConfigurationCandidate.get();
-
-        var repositoryDataCandidate = sourceConfiguration.getRepository(projectName);
-
-        if (!repositoryDataCandidate.isPresent()) {
-            throw new RepositoryDataMissingException();
-        }
-        var repositoryData = repositoryDataCandidate.get();
+        var repositoryData = sourceConfiguration.getRepository(projectName)
+                .orElseThrow(() -> new RepositoryDataMissingException(projectName));
 
         var project = new Project(
                 new Id(sourceConfiguration.getIdentifier(), repositoryData.repositoryName()),
