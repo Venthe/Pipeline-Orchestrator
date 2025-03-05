@@ -3,7 +3,6 @@ package eu.venthe.platform.projects.domain;
 import eu.venthe.platform.projects.domain.events.ProjectRegisteredEvent;
 import eu.venthe.platform.shared_kernel.ClockService;
 import eu.venthe.platform.shared_kernel.DomainResult;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -39,21 +38,16 @@ public class Project {
 
         return DomainResult.from(
                 project,
-                new ProjectRegisteredEvent(project.getId().getName(), project.getId().getSourceConfigurationName())
+                new ProjectRegisteredEvent(project.getId().name(), project.getId().sourceConfigurationName())
         );
     }
 
     public void visit(ProjectVisitor visitor) {
-        visitor.setSourceConfigurationName(getId().getSourceConfigurationName());
-        visitor.setName(getId().getName());
+        visitor.setSourceConfigurationName(getId().sourceConfigurationName());
+        visitor.setName(getId().name());
         visitor.setLastUpdated(getLastUpdate());
     }
 
-    @RequiredArgsConstructor
-    @EqualsAndHashCode
-    @Getter
-    public static final class Id {
-        private final String sourceConfigurationName;
-        private final String name;
+    public record Id(String sourceConfigurationName, String name) {
     }
 }
