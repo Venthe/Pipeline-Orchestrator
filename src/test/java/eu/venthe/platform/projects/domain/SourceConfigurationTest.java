@@ -1,7 +1,6 @@
 package eu.venthe.platform.projects.domain;
 
 import eu.venthe.platform.projects.domain.events.RegisterProjectCommand;
-import eu.venthe.platform.projects.domain.events.SourceRegisteredEvent;
 import eu.venthe.platform.projects.domain.events.SynchronizeProjectsCommand;
 import eu.venthe.platform.projects.plugin.template.Repository;
 import eu.venthe.platform.projects.plugin.template.RepositorySourcePluginInstance;
@@ -16,19 +15,14 @@ import org.mockito.Mockito;
 import java.util.Set;
 
 class SourceConfigurationTest {
-    @Test
-    void sourceCanBeCreated() {
-        var sourceConfiguration = SourceConfiguration.create("Example-Source", Mockito.mock());
 
-        Assertions.assertThat(sourceConfiguration.data().getIdentifier()).isEqualTo("Example-Source");
-        Assertions.assertThat(sourceConfiguration.messages()).containsExactlyInAnyOrder(new SourceRegisteredEvent("Example-Source"));
-    }
+    private final RepositorySourcePluginInstance mockRepositoryPluginInstance = Mockito.mock();
 
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = " ")
     void invalidSourceNameResultsInError(String value) {
-        ThrowableAssert.ThrowingCallable action = () -> SourceConfiguration.create(value, Mockito.mock());
+        ThrowableAssert.ThrowingCallable action = () -> new SourceConfiguration(value, mockRepositoryPluginInstance);
 
         Assertions.assertThatThrownBy(action)
                 .isInstanceOf(InvalidSourceConfigurationIdentifierException.class)
@@ -38,16 +32,16 @@ class SourceConfigurationTest {
     @Test
     void twoSourcesOfSameNameAreEqual() {
         var exampleSourceConfigurationName = "Example-Source";
-        var a1 = SourceConfiguration.create(exampleSourceConfigurationName, Mockito.mock()).data();
-        var a2 = SourceConfiguration.create(exampleSourceConfigurationName, Mockito.mock()).data();
+        var a1 = new SourceConfiguration(exampleSourceConfigurationName, mockRepositoryPluginInstance);
+        var a2 = new SourceConfiguration(exampleSourceConfigurationName, mockRepositoryPluginInstance);
 
         Assertions.assertThat(a1).isEqualTo(a2);
     }
 
     @Test
     void twoSourcesOfDifferingNameAreNotEqual() {
-        var a = SourceConfiguration.create("Example-Source-a", Mockito.mock()).data();
-        var b = SourceConfiguration.create("Example-Source-b", Mockito.mock()).data();
+        var a = new SourceConfiguration("Example-Source-a", mockRepositoryPluginInstance);
+        var b = new SourceConfiguration("Example-Source-b", mockRepositoryPluginInstance);
 
         Assertions.assertThat(a).isNotEqualTo(b);
     }
@@ -55,7 +49,7 @@ class SourceConfigurationTest {
     @Test
     void shouldSendSynchronizationEventOnSynchronizeAll() {
         // Given
-        var sourceConfiguration = SourceConfiguration.create("Example-Source", Mockito.mock()).data();
+        var sourceConfiguration = new SourceConfiguration("Example-Source", mockRepositoryPluginInstance);
 
         // When
         var messages = sourceConfiguration.synchronizeAll();
@@ -68,9 +62,8 @@ class SourceConfigurationTest {
     @Test
     void shouldSendCreateEventForEachRepository() {
         // Given
-        var mockPluginInstance = Mockito.mock(RepositorySourcePluginInstance.class);
-        var sourceConfiguration = SourceConfiguration.create("Example-Source", mockPluginInstance).data();
-        Mockito.when(mockPluginInstance.getAllRepositories()).thenReturn(Set.of(
+        var sourceConfiguration = new SourceConfiguration("Example-Source", mockRepositoryPluginInstance);
+        Mockito.when(mockRepositoryPluginInstance.getAllRepositories()).thenReturn(Set.of(
                 new Repository("Repository-1", "main", "123"),
                 new Repository("Repository-2", "master", "456")
         ));

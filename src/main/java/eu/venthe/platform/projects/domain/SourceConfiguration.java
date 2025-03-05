@@ -1,12 +1,10 @@
 package eu.venthe.platform.projects.domain;
 
-import eu.venthe.platform.shared_kernel.DomainResult;
-import eu.venthe.platform.shared_kernel.events.DomainMessage;
 import eu.venthe.platform.projects.domain.events.RegisterProjectCommand;
-import eu.venthe.platform.projects.domain.events.SourceRegisteredEvent;
 import eu.venthe.platform.projects.domain.events.SynchronizeProjectsCommand;
 import eu.venthe.platform.projects.plugin.template.Repository;
 import eu.venthe.platform.projects.plugin.template.RepositorySourcePluginInstance;
+import eu.venthe.platform.shared_kernel.events.DomainMessage;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -23,18 +21,13 @@ public class SourceConfiguration {
     private final String identifier;
     private final RepositorySourcePluginInstance plugin;
 
-    private SourceConfiguration(String identifier, RepositorySourcePluginInstance plugin) {
+    SourceConfiguration(String identifier, RepositorySourcePluginInstance plugin) {
         if (identifier == null || identifier.isBlank()) {
             throw new InvalidSourceConfigurationIdentifierException(identifier);
         }
 
         this.identifier = identifier;
         this.plugin = plugin;
-    }
-
-    public static DomainResult<SourceConfiguration> create(String identifier, RepositorySourcePluginInstance plugin) {
-        var sourceConfiguration = new SourceConfiguration(identifier, plugin);
-        return DomainResult.from(sourceConfiguration, new SourceRegisteredEvent(identifier));
     }
 
     public void visit(SourceConfigurationVisitor visitor) {

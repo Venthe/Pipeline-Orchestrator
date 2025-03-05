@@ -1,8 +1,7 @@
 package eu.venthe.platform.projects.application;
 
-import eu.venthe.platform.projects.domain.SourceConfiguration;
+import eu.venthe.platform.projects.domain.SourceConfigurationFactory;
 import eu.venthe.platform.projects.domain.SourceConfigurationRepository;
-import eu.venthe.platform.projects.plugin.PluginProvider;
 import eu.venthe.platform.shared_kernel.dynamic_value.DynamicValue;
 import eu.venthe.platform.shared_kernel.events.DomainMessagesBroker;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,7 @@ import java.util.Map;
 public class SourceConfigurationCommandService {
     private final SourceConfigurationRepository sourceConfigurationRepository;
     private final DomainMessagesBroker messageBroker;
-    private final PluginProvider pluginProvider;
+    private final SourceConfigurationFactory sourceConfigurationFactory;
 
     public String register(String sourceIdentifier, String sourceType) {
         return register(sourceIdentifier, sourceType, Collections.emptyMap());
@@ -30,8 +29,7 @@ public class SourceConfigurationCommandService {
             throw new SourceConfigurationAlreadyExistsException(sourceIdentifier);
         }
 
-        var plugin = pluginProvider.provide(sourceType, properties);
-        var result = SourceConfiguration.create(sourceIdentifier, plugin);
+        var result = sourceConfigurationFactory.create(sourceIdentifier, sourceType, properties);
         sourceConfigurationRepository.save(result.data());
         messageBroker.exchange(result.messages());
         log.debug("Source configuration {} registered", sourceIdentifier);
