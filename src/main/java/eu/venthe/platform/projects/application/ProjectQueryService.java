@@ -1,6 +1,7 @@
 package eu.venthe.platform.projects.application;
 
 import eu.venthe.platform.projects.domain.Project;
+import eu.venthe.platform.projects.domain.ProjectCorrelationId;
 import eu.venthe.platform.projects.domain.ProjectRepository;
 import eu.venthe.platform.projects.domain.SourceConfigurationInternalIdentifier;
 import lombok.RequiredArgsConstructor;
@@ -14,16 +15,17 @@ import java.util.Optional;
 public class ProjectQueryService {
     private final ProjectRepository projectRepository;
 
-    public Optional<ProjectDto> getProject(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier, String projectName) {
-        return projectRepository.find(sourceConfigurationInternalIdentifier, projectName).map(ProjectVisitor::toDto);
+    public Optional<ProjectDto> getProject(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier,
+                                           ProjectCorrelationId projectCorrelationId) {
+        return projectRepository.find(sourceConfigurationInternalIdentifier, projectCorrelationId).map(ProjectVisitor::toDto);
     }
 
     private static class ProjectVisitor implements eu.venthe.platform.projects.domain.ProjectVisitor {
         private final ProjectDto.ProjectDtoBuilder builder = ProjectDto.builder();
 
         @Override
-        public void setName(String name) {
-            builder.name(name);
+        public void setCorrelationId(ProjectCorrelationId projectCorrelationId) {
+            builder.projectCorrelationId(projectCorrelationId);
         }
 
         @Override

@@ -25,10 +25,11 @@ public class SourceConfigurationQueryService {
                 .getAllRepositories();
     }
 
-    public Optional<ManagedRepository> getRepository(SourceConfigurationInternalIdentifier sourceIdentifier, String repositoryName) {
+    public Optional<ManagedRepository> getRepository(SourceConfigurationInternalIdentifier sourceIdentifier,
+                                                     ProjectCorrelationId projectCorrelationId) {
         return sourceConfigurationRepository.find(sourceIdentifier)
-                .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceIdentifier.value()))
-                .getRepository(repositoryName);
+                .orElseThrow(() -> new SourceConfigurationNotFoundException(sourceIdentifier))
+                .getRepository(projectCorrelationId);
     }
 
     private static class ConfigurationVisitor implements SourceConfigurationVisitor {

@@ -1,6 +1,7 @@
 package eu.venthe.platform.projects.plugin.filesystem;
 
 import com.google.common.collect.MoreCollectors;
+import eu.venthe.platform.projects.domain.ProjectCorrelationId;
 import eu.venthe.platform.projects.plugin.template.ProjectRetrievalException;
 import eu.venthe.platform.projects.plugin.template.Repository;
 import eu.venthe.platform.projects.plugin.template.RepositorySourcePluginInstance;
@@ -61,9 +62,9 @@ public class FilesystemRepositorySourcePluginInstance implements RepositorySourc
     }
 
     @Override
-    public Optional<Repository> getRepository(String repositoryName) {
+    public Optional<Repository> getRepository(ProjectCorrelationId projectCorrelationId) {
         try {
-            var repositoryPath = rootPath.resolve(repositoryName);
+            var repositoryPath = rootPath.resolve(projectCorrelationId.value());
             if (!Files.exists(repositoryPath)) {
                 return Optional.empty();
             }
@@ -83,8 +84,8 @@ public class FilesystemRepositorySourcePluginInstance implements RepositorySourc
     private Repository getRepository(Path repositoryPath) {
         var ref = getHeadRef(repositoryPath);
         var relativePath = rootPath.relativize(repositoryPath);
-        var mappedRepositoryName = FilesystemRepositorySourcePluginInstance.mapDirectoryNameToRepositoryName(relativePath.toString());
-        return new Repository(mappedRepositoryName, ref.getName(), getCommitHash(ref));
+        var correlationId = FilesystemRepositorySourcePluginInstance.mapDirectoryNameToCorrelationId(relativePath.toString());
+        return new Repository(correlationId, ref.getName(), getCommitHash(ref));
     }
 
     private static Ref getHeadRef(Path repositoryPath) {
@@ -120,7 +121,7 @@ public class FilesystemRepositorySourcePluginInstance implements RepositorySourc
         return new URIish(first.toAbsolutePath().toUri().toURL());
     }
 
-    private static String mapDirectoryNameToRepositoryName(String dir) {
-        return dir.replace(" ", "-");
+    private static ProjectCorrelationId mapDirectoryNameToCorrelationId(String dir) {
+        return new ProjectCorrelationId(dir.replace(" ", "-"));
     }
 }

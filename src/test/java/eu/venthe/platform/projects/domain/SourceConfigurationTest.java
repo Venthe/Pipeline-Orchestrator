@@ -63,9 +63,11 @@ class SourceConfigurationTest {
     void shouldSendCreateEventForEachRepository() {
         // Given
         var sourceConfiguration = new SourceConfiguration(EXAMPLE_SOURCE_IDENTIFIER, mockRepositoryPluginInstance);
+        var correlationId1 = new ProjectCorrelationId("Repository-1");
+        var correlationId2 = new ProjectCorrelationId("Repository-2");
         Mockito.when(mockRepositoryPluginInstance.getAllRepositories()).thenReturn(Set.of(
-                new Repository("Repository-1", "main", "123"),
-                new Repository("Repository-2", "master", "456")
+                new Repository(correlationId1, "main", "123"),
+                new Repository(correlationId2, "master", "456")
         ));
 
         // When
@@ -75,8 +77,8 @@ class SourceConfigurationTest {
         Assertions.assertThat(messages)
                 .containsExactlyInAnyOrder(
                         new SynchronizeProjectsCommand(EXAMPLE_SOURCE_IDENTIFIER),
-                        new RegisterProjectCommand(EXAMPLE_SOURCE_IDENTIFIER, "Repository-1"),
-                        new RegisterProjectCommand(EXAMPLE_SOURCE_IDENTIFIER, "Repository-2")
+                        new RegisterProjectCommand(EXAMPLE_SOURCE_IDENTIFIER, correlationId1),
+                        new RegisterProjectCommand(EXAMPLE_SOURCE_IDENTIFIER, correlationId2)
                 );
     }
 }

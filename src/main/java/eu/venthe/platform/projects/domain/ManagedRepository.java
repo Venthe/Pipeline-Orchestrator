@@ -1,7 +1,7 @@
 package eu.venthe.platform.projects.domain;
 
 public record ManagedRepository(
-        String repositoryName,
+        ProjectCorrelationId correlationId,
         String trackedBranch,
         String trackedBranchHash
 ) {

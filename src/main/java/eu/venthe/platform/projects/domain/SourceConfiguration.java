@@ -41,9 +41,9 @@ public class SourceConfiguration {
 
     public Collection<DomainMessage> synchronizeAll() {
         var createRepositoryEvents = plugin.getAllRepositories().stream()
-                .map(Repository::repositoryName)
+                .map(Repository::correlationId)
                 .collect(Collectors.toSet()).stream()
-                .<DomainMessage>map(repositoryName -> new RegisterProjectCommand(getInternalIdentifier(), repositoryName));
+                .<DomainMessage>map(correlationId -> new RegisterProjectCommand(getInternalIdentifier(), correlationId));
 
         var synchronizeRepositoriesCommand = new SynchronizeProjectsCommand(getInternalIdentifier());
 
@@ -53,12 +53,16 @@ public class SourceConfiguration {
         ).collect(Collectors.toSet());
     }
 
-    public Optional<ManagedRepository> getRepository(String repositoryName) {
-        return plugin.getRepository(repositoryName)
+    public Optional<ManagedRepository> getRepository(ProjectCorrelationId projectCorrelationId) {
+        return plugin.getRepository(projectCorrelationId)
                 .map(SourceConfiguration::toManagedRepository);
     }
 
     private static ManagedRepository toManagedRepository(Repository repository) {
-        return new ManagedRepository(repository.repositoryName(), repository.trackedBranch(), repository.trackedBranchHash());
+        return new ManagedRepository(
+                repository.correlationId(),
+                repository.trackedBranch(),
+                repository.trackedBranchHash()
+        );
     }
 }

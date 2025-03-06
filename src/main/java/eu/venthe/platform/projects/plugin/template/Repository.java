@@ -1,4 +1,6 @@
 package eu.venthe.platform.projects.plugin.template;
 
-public record Repository(String repositoryName, String trackedBranch, String trackedBranchHash) {
+import eu.venthe.platform.projects.domain.ProjectCorrelationId;
+
+public record Repository(ProjectCorrelationId correlationId, String trackedBranch, String trackedBranchHash) {
 }

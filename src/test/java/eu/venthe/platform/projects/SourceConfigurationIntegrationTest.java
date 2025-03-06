@@ -3,6 +3,7 @@ package eu.venthe.platform.projects;
 import eu.venthe.platform.IntegrationTest;
 import eu.venthe.platform.projects.application.*;
 import eu.venthe.platform.projects.domain.ManagedRepository;
+import eu.venthe.platform.projects.domain.ProjectCorrelationId;
 import eu.venthe.platform.projects.plugin.template.Repository;
 import org.assertj.core.api.Assertions;
 import org.awaitility.Awaitility;
@@ -19,7 +20,7 @@ import static eu.venthe.platform.projects.SourceConfigurationTestConfiguration.M
 
 @Import({SourceConfigurationTestConfiguration.class, TestTimeConfiguration.class})
 class SourceConfigurationIntegrationTest extends IntegrationTest {
-    private static final Repository EXAMPLE_REPOSITORY = new Repository("Dummy-Repository", "main", "1234");
+    private static final Repository EXAMPLE_REPOSITORY = new Repository(new ProjectCorrelationId("Dummy-Repository"), "main", "1234");
 
     @Autowired
     private SourceConfigurationCommandService sourceConfigurationCommandService;
@@ -61,11 +62,11 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
     void sourceResolvesRepositories() {
         // Given
         var dummyRepository = EXAMPLE_REPOSITORY;
-        Mockito.when(mockRepositorySourcePluginInstance.getRepository("Dummy-Repository")).thenReturn(Optional.of(dummyRepository));
+        Mockito.when(mockRepositorySourcePluginInstance.getRepository(new ProjectCorrelationId("Dummy-Repository"))).thenReturn(Optional.of(dummyRepository));
         var sourceIdentifier = sourceConfigurationCommandService.register(MOCK_SOURCE_PLUGIN_TYPE);
 
         // When
-        var repository = sourceConfigurationQueryService.getRepository(sourceIdentifier, dummyRepository.repositoryName());
+        var repository = sourceConfigurationQueryService.getRepository(sourceIdentifier, dummyRepository.correlationId());
 
         // Then
         Assertions.assertThat(repository)
@@ -78,7 +79,7 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
         // Given
         var dummyRepository = EXAMPLE_REPOSITORY;
         Mockito.when(mockRepositorySourcePluginInstance.getAllRepositories()).thenReturn(Set.of(dummyRepository));
-        Mockito.when(mockRepositorySourcePluginInstance.getRepository(dummyRepository.repositoryName())).thenReturn(Optional.of(dummyRepository));
+        Mockito.when(mockRepositorySourcePluginInstance.getRepository(dummyRepository.correlationId())).thenReturn(Optional.of(dummyRepository));
         var sourceIdentifier = sourceConfigurationCommandService.register(MOCK_SOURCE_PLUGIN_TYPE);
 
         // When
@@ -86,12 +87,12 @@ class SourceConfigurationIntegrationTest extends IntegrationTest {
 
         // Then
         Awaitility.await().untilAsserted(() ->
-                Assertions.assertThat(projectQueryService.getProject(sourceIdentifier, dummyRepository.repositoryName())).isPresent()
-                        .hasValue(new ProjectDto(sourceIdentifier, dummyRepository.repositoryName(), TestTimeConfiguration.NOW))
+                Assertions.assertThat(projectQueryService.getProject(sourceIdentifier, dummyRepository.correlationId())).isPresent()
+                        .hasValue(new ProjectDto(sourceIdentifier, dummyRepository.correlationId(), TestTimeConfiguration.NOW))
         );
     }
 
     private static ManagedRepository toManagedRepository(Repository repository) {
-        return new ManagedRepository(repository.repositoryName(), repository.trackedBranch(), repository.trackedBranchHash());
+        return new ManagedRepository(repository.correlationId(), repository.trackedBranch(), repository.trackedBranchHash());
     }
 }

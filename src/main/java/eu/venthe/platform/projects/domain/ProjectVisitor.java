@@ -5,7 +5,7 @@ import java.time.ZonedDateTime;
 public interface ProjectVisitor {
     void setSourceConfigurationIdentifier(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier);
 
-    void setName(String name);
+    void setCorrelationId(ProjectCorrelationId projectCorrelationId);
 
     void setLastUpdated(ZonedDateTime lastUpdate);
 }

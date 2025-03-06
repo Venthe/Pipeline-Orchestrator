@@ -2,16 +2,18 @@ package eu.venthe.platform.projects.domain;
 
 import eu.venthe.platform.projects.domain.events.ProjectRegisteredEvent;
 import eu.venthe.platform.shared_kernel.DomainResult;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Clock;
 import java.time.ZonedDateTime;
 
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @RequiredArgsConstructor
 public class Project {
-    private final Id id;
+    private final ProjectCorrelationId projectCorrelationId;
     private final SourceConfiguration sourceConfiguration;
     private ZonedDateTime lastUpdate;
     private String trackedBranch;
@@ -20,15 +22,15 @@ public class Project {
     public static DomainResult<Project> create(SourceConfigurationRepository sourceConfigurationRepository,
                                                Clock clock,
                                                SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier,
-                                               String projectName) {
+                                               ProjectCorrelationId projectCorrelationId) {
         var sourceConfiguration = sourceConfigurationRepository.find(sourceConfigurationInternalIdentifier)
                 .orElseThrow(() -> new SourceConfigurationMissingException(sourceConfigurationInternalIdentifier));
 
-        var repositoryData = sourceConfiguration.getRepository(projectName)
-                .orElseThrow(() -> new RepositoryDataMissingException(projectName));
+        var repositoryData = sourceConfiguration.getRepository(projectCorrelationId)
+                .orElseThrow(() -> new RepositoryDataMissingException(sourceConfigurationInternalIdentifier, projectCorrelationId));
 
         var project = new Project(
-                new Id(sourceConfiguration.getInternalIdentifier(), repositoryData.repositoryName()),
+                repositoryData.correlationId(),
                 sourceConfiguration
         );
 
@@ -39,18 +41,28 @@ public class Project {
         return DomainResult.from(
                 project,
                 new ProjectRegisteredEvent(
-                        project.getId().sourceConfigurationInternalIdentifier(),
-                        project.getId().name()
+                        project.getSourceConfigurationInternalIdentifier(),
+                        project.getProjectCorrelationId()
                 )
         );
     }
 
+    public SourceConfigurationInternalIdentifier getSourceConfigurationInternalIdentifier() {
+        return sourceConfiguration.getInternalIdentifier();
+    }
+
+    @EqualsAndHashCode.Include
+    public Id getId() {
+        return new Id(getSourceConfigurationInternalIdentifier(), getProjectCorrelationId());
+    }
+
     public void visit(ProjectVisitor visitor) {
-        visitor.setSourceConfigurationIdentifier(getId().sourceConfigurationInternalIdentifier());
-        visitor.setName(getId().name());
+        visitor.setSourceConfigurationIdentifier(getSourceConfigurationInternalIdentifier());
+        visitor.setCorrelationId(getProjectCorrelationId());
         visitor.setLastUpdated(getLastUpdate());
     }
 
-    public record Id(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier, String name) {
+    public record Id(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier,
+                     ProjectCorrelationId projectCorrelationId) {
     }
 }

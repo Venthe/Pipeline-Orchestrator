@@ -11,7 +11,7 @@ public class ProjectEventListener {
         registry.<RegisterProjectCommand>register(RegisterProjectCommand.REGISTER_PROJECT, message -> {
             projectCommandService.registerProject(
                     message.sourceConfigurationInternalIdentifier(),
-                    message.projectName()
+                    message.projectCorrelationId()
             );
         });
     }

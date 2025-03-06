@@ -1,5 +1,6 @@
 package eu.venthe.platform.projects.plugin.filesystem;
 
+import eu.venthe.platform.projects.domain.ProjectCorrelationId;
 import eu.venthe.platform.projects.plugin.PluginProvider;
 import eu.venthe.platform.projects.plugin.template.Repository;
 import eu.venthe.platform.projects.plugin.template.RepositorySourcePluginInstance;
@@ -48,12 +49,12 @@ class FilesystemRepositorySourcePluginInstanceTest {
                 );
     }
 
-    private static Consumer<Repository> assertRepository(String name) {
+    private static Consumer<Repository> assertRepository(String correlationId) {
         return repository -> {
             String shaRegex = "^[a-fA-F0-9]{40}$";
             Assertions.assertThat(repository.trackedBranchHash()).matches(shaRegex);
             Assertions.assertThat(repository.trackedBranch()).isEqualTo("refs/heads/main");
-            Assertions.assertThat(repository.repositoryName()).matches(name);
+            Assertions.assertThat(repository.correlationId()).isEqualTo(new ProjectCorrelationId(correlationId));
         };
     }
 

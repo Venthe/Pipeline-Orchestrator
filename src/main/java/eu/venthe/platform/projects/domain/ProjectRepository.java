@@ -6,5 +6,6 @@ public interface ProjectRepository {
 
     void save(Project project);
 
-    Optional<Project> find(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier, String repositoryName);
+    Optional<Project> find(SourceConfigurationInternalIdentifier sourceConfigurationInternalIdentifier,
+                           ProjectCorrelationId projectCorrelationId);
 }

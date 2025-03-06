@@ -1,9 +1,6 @@
 package eu.venthe.platform.projects.application;
 
-import eu.venthe.platform.projects.domain.Project;
-import eu.venthe.platform.projects.domain.ProjectRepository;
-import eu.venthe.platform.projects.domain.SourceConfigurationInternalIdentifier;
-import eu.venthe.platform.projects.domain.SourceConfigurationRepository;
+import eu.venthe.platform.projects.domain.*;
 import eu.venthe.platform.shared_kernel.events.DomainMessagesBroker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +17,9 @@ public class ProjectCommandService {
     private final DomainMessagesBroker messageBroker;
     private final Clock clock;
 
-    public void registerProject(SourceConfigurationInternalIdentifier sourceIdentifier, String projectName) {
-        log.info("Registering project {} for {}", projectName, sourceIdentifier);
-        var existingRepository = projectRepository.find(sourceIdentifier, projectName);
+    public void registerProject(SourceConfigurationInternalIdentifier sourceIdentifier, ProjectCorrelationId projectCorrelationId) {
+        log.info("Registering project {} for {}", projectCorrelationId, sourceIdentifier);
+        var existingRepository = projectRepository.find(sourceIdentifier, projectCorrelationId);
 
         if (existingRepository.isPresent()) {
             log.warn("Project already exists");
@@ -33,10 +30,10 @@ public class ProjectCommandService {
                 sourceConfigurationRepository,
                 clock,
                 sourceIdentifier,
-                projectName
+                projectCorrelationId
         );
         projectRepository.save(project.data());
         messageBroker.exchange(project.messages());
-        log.debug("Project {} registered for {}", projectName, sourceIdentifier);
+        log.debug("Project {} registered for {}", projectCorrelationId, sourceIdentifier);
     }
 }
