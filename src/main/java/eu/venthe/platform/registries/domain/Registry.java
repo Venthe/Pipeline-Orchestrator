@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 @Slf4j
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @RequiredArgsConstructor(access = AccessLevel.MODULE)
@@ -26,5 +29,11 @@ public class Registry {
 
     public RegistryType getType() {
         return registryPlugin.getType();
+    }
+
+    public Collection<UnmanagedRepository> getRepositories() {
+        return registryPlugin.getRepositories().stream()
+                .map(repositoryBuilder -> repositoryBuilder.build(identifier))
+                .collect(Collectors.toSet());
     }
 }
