@@ -1,0 +1,3 @@
+logging:
+  level:
+    "eu.venthe.platform": DEBUG
